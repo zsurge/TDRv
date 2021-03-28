@@ -32,7 +32,5 @@ namespace TDRv
         public string SaveImage { get; set; }
         public string DielectricConstant { get; set; }
         public string DataPointCheck { get; set; }
-
-
-    }//end class
-}//end namespace
+    }
+}

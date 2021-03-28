@@ -27,12 +27,6 @@ namespace TDRv
             error = analyzer.GetInstrumentIdentifier(out idn);
             return error;
         }
-
-
-        public void CloseDev()
-        {
-            analyzer.viClose();
-        }
     }
 
 
