@@ -39,6 +39,31 @@
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dgv_param = new System.Windows.Forms.DataGridView();
+            this.pID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTestStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pRemark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pImpedanceDefine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pImpedanceLimitLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pImpedanceLimitUpper = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pImpedanceLimitUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pInputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pInputMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTestMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTestFromThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTestToThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pOpenThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTraceStartPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pTraceEndPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pCalibratedTimeScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pCalibrateOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pRecordPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pSaveCurve = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pSaveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pDielectricConstant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pDataPointCheck = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tx_p_Description = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -93,34 +118,10 @@
             this.radio_p_tag_point = new System.Windows.Forms.RadioButton();
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.dgv_param = new System.Windows.Forms.DataGridView();
-            this.pID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTestStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pRemark = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pImpedanceDefine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pImpedanceLimitLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pImpedanceLimitUpper = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pImpedanceLimitUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pInputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pInputMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTestMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTestFromThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTestToThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pOpenThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTraceStartPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pTraceEndPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pCalibratedTimeScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pCalibrateOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pRecordPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pSaveCurve = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pSaveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pDielectricConstant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pDataPointCheck = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btn_cancel = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -130,7 +131,6 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -221,6 +221,241 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(813, 207);
             this.panel1.TabIndex = 1;
+            // 
+            // dgv_param
+            // 
+            this.dgv_param.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_param.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgv_param.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_param.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.pID,
+            this.pTestStep,
+            this.pDescription,
+            this.pLayer,
+            this.pRemark,
+            this.pImpedanceDefine,
+            this.pImpedanceLimitLower,
+            this.pImpedanceLimitUpper,
+            this.pImpedanceLimitUnit,
+            this.pInputChannel,
+            this.pInputMode,
+            this.pTestMethod,
+            this.pTestFromThreshold,
+            this.pTestToThreshold,
+            this.pOpenThreshold,
+            this.pTraceStartPosition,
+            this.pTraceEndPosition,
+            this.pCalibratedTimeScale,
+            this.pCalibrateOffset,
+            this.pRecordPath,
+            this.pSaveCurve,
+            this.pSaveImage,
+            this.pDielectricConstant,
+            this.pDataPointCheck});
+            this.dgv_param.Location = new System.Drawing.Point(0, 0);
+            this.dgv_param.MultiSelect = false;
+            this.dgv_param.Name = "dgv_param";
+            this.dgv_param.ReadOnly = true;
+            this.dgv_param.RowHeadersVisible = false;
+            this.dgv_param.RowTemplate.Height = 23;
+            this.dgv_param.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_param.Size = new System.Drawing.Size(813, 195);
+            this.dgv_param.TabIndex = 5;
+            this.dgv_param.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_param_CellClick);
+            // 
+            // pID
+            // 
+            this.pID.DataPropertyName = "id";
+            this.pID.HeaderText = "id";
+            this.pID.Name = "pID";
+            this.pID.ReadOnly = true;
+            this.pID.Width = 42;
+            // 
+            // pTestStep
+            // 
+            this.pTestStep.DataPropertyName = "TestStep";
+            this.pTestStep.HeaderText = "TestStep";
+            this.pTestStep.Name = "pTestStep";
+            this.pTestStep.ReadOnly = true;
+            this.pTestStep.Width = 78;
+            // 
+            // pDescription
+            // 
+            this.pDescription.DataPropertyName = "Description";
+            this.pDescription.HeaderText = "Description";
+            this.pDescription.Name = "pDescription";
+            this.pDescription.ReadOnly = true;
+            this.pDescription.Width = 96;
+            // 
+            // pLayer
+            // 
+            this.pLayer.DataPropertyName = "Layer";
+            this.pLayer.HeaderText = "Layer";
+            this.pLayer.Name = "pLayer";
+            this.pLayer.ReadOnly = true;
+            this.pLayer.Width = 60;
+            // 
+            // pRemark
+            // 
+            this.pRemark.DataPropertyName = "Remark";
+            this.pRemark.HeaderText = "Remark";
+            this.pRemark.Name = "pRemark";
+            this.pRemark.ReadOnly = true;
+            this.pRemark.Width = 66;
+            // 
+            // pImpedanceDefine
+            // 
+            this.pImpedanceDefine.DataPropertyName = "ImpedanceDefine";
+            this.pImpedanceDefine.HeaderText = "ImpedanceDefine";
+            this.pImpedanceDefine.Name = "pImpedanceDefine";
+            this.pImpedanceDefine.ReadOnly = true;
+            this.pImpedanceDefine.Width = 120;
+            // 
+            // pImpedanceLimitLower
+            // 
+            this.pImpedanceLimitLower.DataPropertyName = "ImpedanceLimitLower";
+            this.pImpedanceLimitLower.HeaderText = "ImpedanceLimitLower";
+            this.pImpedanceLimitLower.Name = "pImpedanceLimitLower";
+            this.pImpedanceLimitLower.ReadOnly = true;
+            this.pImpedanceLimitLower.Width = 144;
+            // 
+            // pImpedanceLimitUpper
+            // 
+            this.pImpedanceLimitUpper.DataPropertyName = "ImpedanceLimitUpper";
+            this.pImpedanceLimitUpper.HeaderText = "ImpedanceLimitUpper";
+            this.pImpedanceLimitUpper.Name = "pImpedanceLimitUpper";
+            this.pImpedanceLimitUpper.ReadOnly = true;
+            this.pImpedanceLimitUpper.Width = 144;
+            // 
+            // pImpedanceLimitUnit
+            // 
+            this.pImpedanceLimitUnit.DataPropertyName = "ImpedanceLimitUnit";
+            this.pImpedanceLimitUnit.HeaderText = "ImpedanceLimitUnit";
+            this.pImpedanceLimitUnit.Name = "pImpedanceLimitUnit";
+            this.pImpedanceLimitUnit.ReadOnly = true;
+            this.pImpedanceLimitUnit.Width = 138;
+            // 
+            // pInputChannel
+            // 
+            this.pInputChannel.DataPropertyName = "InputChannel";
+            this.pInputChannel.HeaderText = "InputChannel";
+            this.pInputChannel.Name = "pInputChannel";
+            this.pInputChannel.ReadOnly = true;
+            this.pInputChannel.Width = 102;
+            // 
+            // pInputMode
+            // 
+            this.pInputMode.DataPropertyName = "InputMode";
+            this.pInputMode.HeaderText = "InputMode";
+            this.pInputMode.Name = "pInputMode";
+            this.pInputMode.ReadOnly = true;
+            this.pInputMode.Width = 84;
+            // 
+            // pTestMethod
+            // 
+            this.pTestMethod.DataPropertyName = "TestMethod";
+            this.pTestMethod.HeaderText = "TestMethod";
+            this.pTestMethod.Name = "pTestMethod";
+            this.pTestMethod.ReadOnly = true;
+            this.pTestMethod.Width = 90;
+            // 
+            // pTestFromThreshold
+            // 
+            this.pTestFromThreshold.DataPropertyName = "TestFromThreshold";
+            this.pTestFromThreshold.HeaderText = "TestFromThreshold";
+            this.pTestFromThreshold.Name = "pTestFromThreshold";
+            this.pTestFromThreshold.ReadOnly = true;
+            this.pTestFromThreshold.Width = 132;
+            // 
+            // pTestToThreshold
+            // 
+            this.pTestToThreshold.DataPropertyName = "TestToThreshold";
+            this.pTestToThreshold.HeaderText = "TestToThreshold";
+            this.pTestToThreshold.Name = "pTestToThreshold";
+            this.pTestToThreshold.ReadOnly = true;
+            this.pTestToThreshold.Width = 120;
+            // 
+            // pOpenThreshold
+            // 
+            this.pOpenThreshold.DataPropertyName = "OpenThreshold";
+            this.pOpenThreshold.HeaderText = "OpenThreshold";
+            this.pOpenThreshold.Name = "pOpenThreshold";
+            this.pOpenThreshold.ReadOnly = true;
+            this.pOpenThreshold.Width = 108;
+            // 
+            // pTraceStartPosition
+            // 
+            this.pTraceStartPosition.DataPropertyName = "TraceStartPosition";
+            this.pTraceStartPosition.HeaderText = "TraceStartPosition";
+            this.pTraceStartPosition.Name = "pTraceStartPosition";
+            this.pTraceStartPosition.ReadOnly = true;
+            this.pTraceStartPosition.Width = 138;
+            // 
+            // pTraceEndPosition
+            // 
+            this.pTraceEndPosition.DataPropertyName = "TraceEndPosition";
+            this.pTraceEndPosition.HeaderText = "TraceEndPosition";
+            this.pTraceEndPosition.Name = "pTraceEndPosition";
+            this.pTraceEndPosition.ReadOnly = true;
+            this.pTraceEndPosition.Width = 126;
+            // 
+            // pCalibratedTimeScale
+            // 
+            this.pCalibratedTimeScale.DataPropertyName = "CalibratedTimeScale";
+            this.pCalibratedTimeScale.HeaderText = "CalibratedTimeScale";
+            this.pCalibratedTimeScale.Name = "pCalibratedTimeScale";
+            this.pCalibratedTimeScale.ReadOnly = true;
+            this.pCalibratedTimeScale.Width = 144;
+            // 
+            // pCalibrateOffset
+            // 
+            this.pCalibrateOffset.DataPropertyName = "CalibrateOffset";
+            this.pCalibrateOffset.HeaderText = "CalibrateOffset";
+            this.pCalibrateOffset.Name = "pCalibrateOffset";
+            this.pCalibrateOffset.ReadOnly = true;
+            this.pCalibrateOffset.Width = 120;
+            // 
+            // pRecordPath
+            // 
+            this.pRecordPath.DataPropertyName = "RecordPath";
+            this.pRecordPath.HeaderText = "RecordPath";
+            this.pRecordPath.Name = "pRecordPath";
+            this.pRecordPath.ReadOnly = true;
+            this.pRecordPath.Width = 90;
+            // 
+            // pSaveCurve
+            // 
+            this.pSaveCurve.DataPropertyName = "SaveCurve";
+            this.pSaveCurve.HeaderText = "SaveCurve";
+            this.pSaveCurve.Name = "pSaveCurve";
+            this.pSaveCurve.ReadOnly = true;
+            this.pSaveCurve.Width = 84;
+            // 
+            // pSaveImage
+            // 
+            this.pSaveImage.DataPropertyName = "SaveImage";
+            this.pSaveImage.HeaderText = "SaveImage";
+            this.pSaveImage.Name = "pSaveImage";
+            this.pSaveImage.ReadOnly = true;
+            this.pSaveImage.Width = 84;
+            // 
+            // pDielectricConstant
+            // 
+            this.pDielectricConstant.DataPropertyName = "DielectricConstant";
+            this.pDielectricConstant.HeaderText = "DielectricConstant";
+            this.pDielectricConstant.Name = "pDielectricConstant";
+            this.pDielectricConstant.ReadOnly = true;
+            this.pDielectricConstant.Width = 138;
+            // 
+            // pDataPointCheck
+            // 
+            this.pDataPointCheck.DataPropertyName = "DataPointCheck";
+            this.pDataPointCheck.HeaderText = "DataPointCheck";
+            this.pDataPointCheck.Name = "pDataPointCheck";
+            this.pDataPointCheck.ReadOnly = true;
+            this.pDataPointCheck.Width = 114;
             // 
             // groupBox1
             // 
@@ -755,256 +990,22 @@
             this.button1.Text = "确定";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btn_cancel
             // 
-            this.button2.Location = new System.Drawing.Point(638, 337);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "取消";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // dgv_param
-            // 
-            this.dgv_param.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv_param.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.dgv_param.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_param.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.pID,
-            this.pTestStep,
-            this.pDescription,
-            this.pLayer,
-            this.pRemark,
-            this.pImpedanceDefine,
-            this.pImpedanceLimitLower,
-            this.pImpedanceLimitUpper,
-            this.pImpedanceLimitUnit,
-            this.pInputChannel,
-            this.pInputMode,
-            this.pTestMethod,
-            this.pTestFromThreshold,
-            this.pTestToThreshold,
-            this.pOpenThreshold,
-            this.pTraceStartPosition,
-            this.pTraceEndPosition,
-            this.pCalibratedTimeScale,
-            this.pCalibrateOffset,
-            this.pRecordPath,
-            this.pSaveCurve,
-            this.pSaveImage,
-            this.pDielectricConstant,
-            this.pDataPointCheck});
-            this.dgv_param.Location = new System.Drawing.Point(0, 0);
-            this.dgv_param.MultiSelect = false;
-            this.dgv_param.Name = "dgv_param";
-            this.dgv_param.ReadOnly = true;
-            this.dgv_param.RowHeadersVisible = false;
-            this.dgv_param.RowTemplate.Height = 23;
-            this.dgv_param.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_param.Size = new System.Drawing.Size(813, 195);
-            this.dgv_param.TabIndex = 5;
-            this.dgv_param.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_param_CellClick);
-            // 
-            // pID
-            // 
-            this.pID.DataPropertyName = "id";
-            this.pID.HeaderText = "id";
-            this.pID.Name = "pID";
-            this.pID.ReadOnly = true;
-            this.pID.Width = 42;
-            // 
-            // pTestStep
-            // 
-            this.pTestStep.DataPropertyName = "TestStep";
-            this.pTestStep.HeaderText = "TestStep";
-            this.pTestStep.Name = "pTestStep";
-            this.pTestStep.ReadOnly = true;
-            this.pTestStep.Width = 78;
-            // 
-            // pDescription
-            // 
-            this.pDescription.DataPropertyName = "Description";
-            this.pDescription.HeaderText = "Description";
-            this.pDescription.Name = "pDescription";
-            this.pDescription.ReadOnly = true;
-            this.pDescription.Width = 96;
-            // 
-            // pLayer
-            // 
-            this.pLayer.DataPropertyName = "Layer";
-            this.pLayer.HeaderText = "Layer";
-            this.pLayer.Name = "pLayer";
-            this.pLayer.ReadOnly = true;
-            this.pLayer.Width = 60;
-            // 
-            // pRemark
-            // 
-            this.pRemark.DataPropertyName = "Remark";
-            this.pRemark.HeaderText = "Remark";
-            this.pRemark.Name = "pRemark";
-            this.pRemark.ReadOnly = true;
-            this.pRemark.Width = 66;
-            // 
-            // pImpedanceDefine
-            // 
-            this.pImpedanceDefine.DataPropertyName = "ImpedanceDefine";
-            this.pImpedanceDefine.HeaderText = "ImpedanceDefine";
-            this.pImpedanceDefine.Name = "pImpedanceDefine";
-            this.pImpedanceDefine.ReadOnly = true;
-            this.pImpedanceDefine.Width = 120;
-            // 
-            // pImpedanceLimitLower
-            // 
-            this.pImpedanceLimitLower.DataPropertyName = "ImpedanceLimitLower";
-            this.pImpedanceLimitLower.HeaderText = "ImpedanceLimitLower";
-            this.pImpedanceLimitLower.Name = "pImpedanceLimitLower";
-            this.pImpedanceLimitLower.ReadOnly = true;
-            this.pImpedanceLimitLower.Width = 144;
-            // 
-            // pImpedanceLimitUpper
-            // 
-            this.pImpedanceLimitUpper.DataPropertyName = "ImpedanceLimitUpper";
-            this.pImpedanceLimitUpper.HeaderText = "ImpedanceLimitUpper";
-            this.pImpedanceLimitUpper.Name = "pImpedanceLimitUpper";
-            this.pImpedanceLimitUpper.ReadOnly = true;
-            this.pImpedanceLimitUpper.Width = 144;
-            // 
-            // pImpedanceLimitUnit
-            // 
-            this.pImpedanceLimitUnit.DataPropertyName = "ImpedanceLimitUnit";
-            this.pImpedanceLimitUnit.HeaderText = "ImpedanceLimitUnit";
-            this.pImpedanceLimitUnit.Name = "pImpedanceLimitUnit";
-            this.pImpedanceLimitUnit.ReadOnly = true;
-            this.pImpedanceLimitUnit.Width = 138;
-            // 
-            // pInputChannel
-            // 
-            this.pInputChannel.DataPropertyName = "InputChannel";
-            this.pInputChannel.HeaderText = "InputChannel";
-            this.pInputChannel.Name = "pInputChannel";
-            this.pInputChannel.ReadOnly = true;
-            this.pInputChannel.Width = 102;
-            // 
-            // pInputMode
-            // 
-            this.pInputMode.DataPropertyName = "InputMode";
-            this.pInputMode.HeaderText = "InputMode";
-            this.pInputMode.Name = "pInputMode";
-            this.pInputMode.ReadOnly = true;
-            this.pInputMode.Width = 84;
-            // 
-            // pTestMethod
-            // 
-            this.pTestMethod.DataPropertyName = "TestMethod";
-            this.pTestMethod.HeaderText = "TestMethod";
-            this.pTestMethod.Name = "pTestMethod";
-            this.pTestMethod.ReadOnly = true;
-            this.pTestMethod.Width = 90;
-            // 
-            // pTestFromThreshold
-            // 
-            this.pTestFromThreshold.DataPropertyName = "TestFromThreshold";
-            this.pTestFromThreshold.HeaderText = "TestFromThreshold";
-            this.pTestFromThreshold.Name = "pTestFromThreshold";
-            this.pTestFromThreshold.ReadOnly = true;
-            this.pTestFromThreshold.Width = 132;
-            // 
-            // pTestToThreshold
-            // 
-            this.pTestToThreshold.DataPropertyName = "TestToThreshold";
-            this.pTestToThreshold.HeaderText = "TestToThreshold";
-            this.pTestToThreshold.Name = "pTestToThreshold";
-            this.pTestToThreshold.ReadOnly = true;
-            this.pTestToThreshold.Width = 120;
-            // 
-            // pOpenThreshold
-            // 
-            this.pOpenThreshold.DataPropertyName = "OpenThreshold";
-            this.pOpenThreshold.HeaderText = "OpenThreshold";
-            this.pOpenThreshold.Name = "pOpenThreshold";
-            this.pOpenThreshold.ReadOnly = true;
-            this.pOpenThreshold.Width = 108;
-            // 
-            // pTraceStartPosition
-            // 
-            this.pTraceStartPosition.DataPropertyName = "TraceStartPosition";
-            this.pTraceStartPosition.HeaderText = "TraceStartPosition";
-            this.pTraceStartPosition.Name = "pTraceStartPosition";
-            this.pTraceStartPosition.ReadOnly = true;
-            this.pTraceStartPosition.Width = 138;
-            // 
-            // pTraceEndPosition
-            // 
-            this.pTraceEndPosition.DataPropertyName = "TraceEndPosition";
-            this.pTraceEndPosition.HeaderText = "TraceEndPosition";
-            this.pTraceEndPosition.Name = "pTraceEndPosition";
-            this.pTraceEndPosition.ReadOnly = true;
-            this.pTraceEndPosition.Width = 126;
-            // 
-            // pCalibratedTimeScale
-            // 
-            this.pCalibratedTimeScale.DataPropertyName = "CalibratedTimeScale";
-            this.pCalibratedTimeScale.HeaderText = "CalibratedTimeScale";
-            this.pCalibratedTimeScale.Name = "pCalibratedTimeScale";
-            this.pCalibratedTimeScale.ReadOnly = true;
-            this.pCalibratedTimeScale.Width = 144;
-            // 
-            // pCalibrateOffset
-            // 
-            this.pCalibrateOffset.DataPropertyName = "CalibrateOffset";
-            this.pCalibrateOffset.HeaderText = "CalibrateOffset";
-            this.pCalibrateOffset.Name = "pCalibrateOffset";
-            this.pCalibrateOffset.ReadOnly = true;
-            this.pCalibrateOffset.Width = 120;
-            // 
-            // pRecordPath
-            // 
-            this.pRecordPath.DataPropertyName = "RecordPath";
-            this.pRecordPath.HeaderText = "RecordPath";
-            this.pRecordPath.Name = "pRecordPath";
-            this.pRecordPath.ReadOnly = true;
-            this.pRecordPath.Width = 90;
-            // 
-            // pSaveCurve
-            // 
-            this.pSaveCurve.DataPropertyName = "SaveCurve";
-            this.pSaveCurve.HeaderText = "SaveCurve";
-            this.pSaveCurve.Name = "pSaveCurve";
-            this.pSaveCurve.ReadOnly = true;
-            this.pSaveCurve.Width = 84;
-            // 
-            // pSaveImage
-            // 
-            this.pSaveImage.DataPropertyName = "SaveImage";
-            this.pSaveImage.HeaderText = "SaveImage";
-            this.pSaveImage.Name = "pSaveImage";
-            this.pSaveImage.ReadOnly = true;
-            this.pSaveImage.Width = 84;
-            // 
-            // pDielectricConstant
-            // 
-            this.pDielectricConstant.DataPropertyName = "DielectricConstant";
-            this.pDielectricConstant.HeaderText = "DielectricConstant";
-            this.pDielectricConstant.Name = "pDielectricConstant";
-            this.pDielectricConstant.ReadOnly = true;
-            this.pDielectricConstant.Width = 138;
-            // 
-            // pDataPointCheck
-            // 
-            this.pDataPointCheck.DataPropertyName = "DataPointCheck";
-            this.pDataPointCheck.HeaderText = "DataPointCheck";
-            this.pDataPointCheck.Name = "pDataPointCheck";
-            this.pDataPointCheck.ReadOnly = true;
-            this.pDataPointCheck.Width = 114;
+            this.btn_cancel.Location = new System.Drawing.Point(638, 337);
+            this.btn_cancel.Name = "btn_cancel";
+            this.btn_cancel.Size = new System.Drawing.Size(75, 23);
+            this.btn_cancel.TabIndex = 8;
+            this.btn_cancel.Text = "取消";
+            this.btn_cancel.UseVisualStyleBackColor = true;
+            this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
             // DevParamSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 569);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -1020,6 +1021,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1038,7 +1040,6 @@
             this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1108,7 +1109,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_cancel;
         private System.Windows.Forms.TextBox tx_p_Description;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.DataGridView dgv_param;

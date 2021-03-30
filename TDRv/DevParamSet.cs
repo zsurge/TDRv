@@ -16,8 +16,16 @@ namespace TDRv
         {
             InitializeComponent();
         }
+
+        public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
+        public event ChangeDgvHandler ChangeDgv;  //定义事件
+
         public string xmlFilePath = string.Empty;
 
+        /// <summary>
+        /// 获取XML文件数据到datagrid
+        /// </summary>
+        /// <param name="filePath">XML文件路径</param>
         private void getXmlInfo(string filePath)
         {
             DataSet myds = new DataSet();
@@ -32,6 +40,16 @@ namespace TDRv
             }
         }
 
+        private void TranToParentForm()
+        {
+            if (ChangeDgv != null)
+            {                
+                ChangeDgv(dgv_param);
+                this.Close();
+            }
+        }
+
+
 
         private void tsb_measure_loadXml_Click(object sender, EventArgs e)
         {
@@ -45,7 +63,7 @@ namespace TDRv
             if (pOpenFileDialog.ShowDialog() == DialogResult.OK)  //如果点击的是打开文件
             {
                 xmlFilePath = pOpenFileDialog.FileName;  //获取全路径文件名        
-                getXmlInfo(xmlFilePath);
+                getXmlInfo(xmlFilePath);               
             }
         }
 
@@ -120,10 +138,13 @@ namespace TDRv
                 else
                 {
                     radio_p_tag_avg.Checked = true;
-                }
+                }             
             }
         }
 
-
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            TranToParentForm();
+        }
     }//end class
 }//end namespace

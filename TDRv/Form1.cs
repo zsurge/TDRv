@@ -33,7 +33,26 @@ namespace TDRv
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
             DevParamSet devParamSet = new DevParamSet();
+            devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
             devParamSet.Show();
+        }
+
+        public void Change_DataGridView(DataGridView dt)
+        {
+            dataGridView1.Visible = true;
+
+            for (int i = 0; i < dt.Rows.Count-1; i++)
+            {
+                //dataGridView1.Rows[i].Cells[0].Value = dt.Rows[i].Cells[1].Value;
+                //dataGridView1.Rows[i].Cells[1].Value = dt.Rows[i].Cells[2].Value;
+                //dataGridView1.Rows[i].Cells[2].Value = dt.Rows[i].Cells[3].Value;
+
+                int index = dataGridView1.Rows.Add();
+
+                dataGridView1.Rows[index].Cells[0].Value = dt.Rows[i].Cells[1].Value;
+                dataGridView1.Rows[index].Cells[1].Value = dt.Rows[i].Cells[2].Value;
+                dataGridView1.Rows[index].Cells[2].Value = dt.Rows[i].Cells[3].Value;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
