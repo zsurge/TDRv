@@ -115,9 +115,9 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Location = new System.Drawing.Point(0, 28);
+            this.panel1.Location = new System.Drawing.Point(0, 55);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(251, 574);
+            this.panel1.Size = new System.Drawing.Size(251, 547);
             this.panel1.TabIndex = 1;
             // 
             // dataGridView1
@@ -131,11 +131,11 @@
             this.mStep,
             this.mDescription,
             this.mLayer});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(240, 123);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             // 
@@ -166,9 +166,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.chart1);
-            this.panel2.Location = new System.Drawing.Point(257, 28);
+            this.panel2.Location = new System.Drawing.Point(257, 55);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(854, 574);
+            this.panel2.Size = new System.Drawing.Size(854, 547);
             this.panel2.TabIndex = 2;
             // 
             // chart1
@@ -180,7 +180,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Location = new System.Drawing.Point(0, 27);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -202,7 +202,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(854, 574);
+            this.chart1.Size = new System.Drawing.Size(854, 520);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -543,51 +543,61 @@
             this.tsb_StartTest});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1123, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1123, 39);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // tsb_DevConnect
             // 
+            this.tsb_DevConnect.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_DevConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsb_DevConnect.Image")));
+            this.tsb_DevConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevConnect.Name = "tsb_DevConnect";
-            this.tsb_DevConnect.Size = new System.Drawing.Size(76, 22);
+            this.tsb_DevConnect.Size = new System.Drawing.Size(110, 36);
             this.tsb_DevConnect.Text = "仪器设置";
             this.tsb_DevConnect.Click += new System.EventHandler(this.tsb_DevConnect_Click);
             // 
             // tsb_DevPOptSet
             // 
+            this.tsb_DevPOptSet.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_DevPOptSet.Image = ((System.Drawing.Image)(resources.GetObject("tsb_DevPOptSet.Image")));
+            this.tsb_DevPOptSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevPOptSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevPOptSet.Name = "tsb_DevPOptSet";
-            this.tsb_DevPOptSet.Size = new System.Drawing.Size(76, 22);
+            this.tsb_DevPOptSet.Size = new System.Drawing.Size(110, 36);
             this.tsb_DevPOptSet.Text = "操作设置";
             this.tsb_DevPOptSet.Click += new System.EventHandler(this.tsb_DevOptSet_Click);
             // 
             // tsb_DevParamSet
             // 
+            this.tsb_DevParamSet.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_DevParamSet.Image = ((System.Drawing.Image)(resources.GetObject("tsb_DevParamSet.Image")));
+            this.tsb_DevParamSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevParamSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevParamSet.Name = "tsb_DevParamSet";
-            this.tsb_DevParamSet.Size = new System.Drawing.Size(76, 22);
+            this.tsb_DevParamSet.Size = new System.Drawing.Size(111, 36);
             this.tsb_DevParamSet.Text = "量测参数";
             this.tsb_DevParamSet.Click += new System.EventHandler(this.tsb_DevParamSet_Click);
             // 
             // tsb_GetTestIndex
             // 
+            this.tsb_GetTestIndex.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_GetTestIndex.Image = ((System.Drawing.Image)(resources.GetObject("tsb_GetTestIndex.Image")));
+            this.tsb_GetTestIndex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_GetTestIndex.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_GetTestIndex.Name = "tsb_GetTestIndex";
-            this.tsb_GetTestIndex.Size = new System.Drawing.Size(76, 22);
+            this.tsb_GetTestIndex.Size = new System.Drawing.Size(110, 36);
             this.tsb_GetTestIndex.Text = "开路定义";
             // 
             // tsb_StartTest
             // 
+            this.tsb_StartTest.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_StartTest.Image = ((System.Drawing.Image)(resources.GetObject("tsb_StartTest.Image")));
+            this.tsb_StartTest.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_StartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_StartTest.Name = "tsb_StartTest";
-            this.tsb_StartTest.Size = new System.Drawing.Size(52, 22);
+            this.tsb_StartTest.Size = new System.Drawing.Size(78, 36);
             this.tsb_StartTest.Text = "量测";
             // 
             // Form1

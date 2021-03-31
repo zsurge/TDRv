@@ -146,70 +146,84 @@
             this.toolStripButton7});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(813, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(813, 39);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripButton1
             // 
+            this.toolStripButton1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(76, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(110, 36);
             this.toolStripButton1.Text = "新建档案";
             // 
             // tsb_measure_loadXml
             // 
+            this.tsb_measure_loadXml.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_measure_loadXml.Image = ((System.Drawing.Image)(resources.GetObject("tsb_measure_loadXml.Image")));
+            this.tsb_measure_loadXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_measure_loadXml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_measure_loadXml.Name = "tsb_measure_loadXml";
-            this.tsb_measure_loadXml.Size = new System.Drawing.Size(52, 22);
+            this.tsb_measure_loadXml.Size = new System.Drawing.Size(78, 36);
             this.tsb_measure_loadXml.Text = "载入";
             this.tsb_measure_loadXml.Click += new System.EventHandler(this.tsb_measure_loadXml_Click);
             // 
             // toolStripButton3
             // 
+            this.toolStripButton3.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(78, 36);
             this.toolStripButton3.Text = "保存";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // toolStripButton4
             // 
+            this.toolStripButton4.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(78, 36);
             this.toolStripButton4.Text = "编辑";
             // 
             // toolStripButton5
             // 
+            this.toolStripButton5.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton5.Size = new System.Drawing.Size(78, 36);
             this.toolStripButton5.Text = "新增";
             // 
             // toolStripButton6
             // 
+            this.toolStripButton6.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton6.Size = new System.Drawing.Size(78, 36);
             this.toolStripButton6.Text = "复制";
             // 
             // toolStripButton7
             // 
+            this.toolStripButton7.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton7.Size = new System.Drawing.Size(78, 36);
             this.toolStripButton7.Text = "删除";
             // 
             // panel1
@@ -217,9 +231,9 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.dgv_param);
-            this.panel1.Location = new System.Drawing.Point(0, 28);
+            this.panel1.Location = new System.Drawing.Point(0, 42);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(813, 207);
+            this.panel1.Size = new System.Drawing.Size(813, 193);
             this.panel1.TabIndex = 1;
             // 
             // dgv_param
@@ -254,14 +268,14 @@
             this.pSaveImage,
             this.pDielectricConstant,
             this.pDataPointCheck});
-            this.dgv_param.Location = new System.Drawing.Point(0, 0);
+            this.dgv_param.Location = new System.Drawing.Point(0, 3);
             this.dgv_param.MultiSelect = false;
             this.dgv_param.Name = "dgv_param";
             this.dgv_param.ReadOnly = true;
             this.dgv_param.RowHeadersVisible = false;
             this.dgv_param.RowTemplate.Height = 23;
             this.dgv_param.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_param.Size = new System.Drawing.Size(813, 195);
+            this.dgv_param.Size = new System.Drawing.Size(813, 187);
             this.dgv_param.TabIndex = 5;
             this.dgv_param.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_param_CellClick);
             // 
