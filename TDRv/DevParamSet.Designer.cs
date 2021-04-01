@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DevParamSet));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tsb_create_xml = new System.Windows.Forms.ToolStripButton();
             this.tsb_measure_loadXml = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.tsb_save_xml = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.tsb_add_param = new System.Windows.Forms.ToolStripButton();
+            this.tsb_copy_param = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgv_param = new System.Windows.Forms.DataGridView();
@@ -136,13 +136,13 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
+            this.tsb_create_xml,
             this.tsb_measure_loadXml,
-            this.toolStripButton3,
+            this.tsb_save_xml,
             this.toolStripSeparator1,
             this.toolStripButton4,
-            this.toolStripButton5,
-            this.toolStripButton6,
+            this.tsb_add_param,
+            this.tsb_copy_param,
             this.toolStripButton7});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -150,15 +150,16 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // tsb_create_xml
             // 
-            this.toolStripButton1.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(110, 36);
-            this.toolStripButton1.Text = "新建档案";
+            this.tsb_create_xml.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_create_xml.Image = ((System.Drawing.Image)(resources.GetObject("tsb_create_xml.Image")));
+            this.tsb_create_xml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsb_create_xml.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_create_xml.Name = "tsb_create_xml";
+            this.tsb_create_xml.Size = new System.Drawing.Size(109, 36);
+            this.tsb_create_xml.Text = "新建档案";
+            this.tsb_create_xml.Click += new System.EventHandler(this.tsb_create_xml_Click);
             // 
             // tsb_measure_loadXml
             // 
@@ -167,19 +168,20 @@
             this.tsb_measure_loadXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_measure_loadXml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_measure_loadXml.Name = "tsb_measure_loadXml";
-            this.tsb_measure_loadXml.Size = new System.Drawing.Size(78, 36);
+            this.tsb_measure_loadXml.Size = new System.Drawing.Size(77, 36);
             this.tsb_measure_loadXml.Text = "载入";
             this.tsb_measure_loadXml.Click += new System.EventHandler(this.tsb_measure_loadXml_Click);
             // 
-            // toolStripButton3
+            // tsb_save_xml
             // 
-            this.toolStripButton3.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(78, 36);
-            this.toolStripButton3.Text = "保存";
+            this.tsb_save_xml.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_save_xml.Image = ((System.Drawing.Image)(resources.GetObject("tsb_save_xml.Image")));
+            this.tsb_save_xml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsb_save_xml.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_save_xml.Name = "tsb_save_xml";
+            this.tsb_save_xml.Size = new System.Drawing.Size(77, 36);
+            this.tsb_save_xml.Text = "保存";
+            this.tsb_save_xml.Click += new System.EventHandler(this.tsb_save_xml_Click);
             // 
             // toolStripSeparator1
             // 
@@ -193,28 +195,30 @@
             this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(78, 36);
+            this.toolStripButton4.Size = new System.Drawing.Size(77, 36);
             this.toolStripButton4.Text = "编辑";
             // 
-            // toolStripButton5
+            // tsb_add_param
             // 
-            this.toolStripButton5.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(78, 36);
-            this.toolStripButton5.Text = "新增";
+            this.tsb_add_param.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_add_param.Image = ((System.Drawing.Image)(resources.GetObject("tsb_add_param.Image")));
+            this.tsb_add_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsb_add_param.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_add_param.Name = "tsb_add_param";
+            this.tsb_add_param.Size = new System.Drawing.Size(77, 36);
+            this.tsb_add_param.Text = "新增";
+            this.tsb_add_param.Click += new System.EventHandler(this.tsb_add_param_Click);
             // 
-            // toolStripButton6
+            // tsb_copy_param
             // 
-            this.toolStripButton6.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(78, 36);
-            this.toolStripButton6.Text = "复制";
+            this.tsb_copy_param.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_copy_param.Image = ((System.Drawing.Image)(resources.GetObject("tsb_copy_param.Image")));
+            this.tsb_copy_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsb_copy_param.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_copy_param.Name = "tsb_copy_param";
+            this.tsb_copy_param.Size = new System.Drawing.Size(77, 36);
+            this.tsb_copy_param.Text = "复制";
+            this.tsb_copy_param.Click += new System.EventHandler(this.tsb_copy_param_Click);
             // 
             // toolStripButton7
             // 
@@ -223,7 +227,7 @@
             this.toolStripButton7.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(78, 36);
+            this.toolStripButton7.Size = new System.Drawing.Size(77, 36);
             this.toolStripButton7.Text = "删除";
             // 
             // panel1
@@ -1062,13 +1066,13 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsb_create_xml;
         private System.Windows.Forms.ToolStripButton tsb_measure_loadXml;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton tsb_save_xml;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton tsb_add_param;
+        private System.Windows.Forms.ToolStripButton tsb_copy_param;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;

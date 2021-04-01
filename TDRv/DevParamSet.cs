@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,57 @@ namespace TDRv
                 xmlFilePath = pOpenFileDialog.FileName;  //获取全路径文件名        
                 getXmlInfo(xmlFilePath);               
             }
+        }
+
+        //新建
+        private void tsb_create_xml_Click(object sender, EventArgs e)
+        {
+            //清空参数表格
+            dgv_param.Rows.Clear();
+
+            //新建一默认行
+            string[] defaultValue = { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
+            dgv_param.Rows.Add(defaultValue);
+        }
+
+        //保存
+        private void tsb_save_xml_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "保存XML文件";
+            sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            sfd.Filter = "XML文件|*.xml";
+            sfd.ShowDialog();
+
+            string path = sfd.FileName;
+            if (path == "")
+            {
+                return;
+            }
+
+            using (FileStream fsWrite = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                //这里需要把要写入的内容给写入到XML文件中去 未完成
+            }
+        }
+
+        //增加
+        private void tsb_add_param_Click(object sender, EventArgs e)
+        {
+           // int index = dgv_param.Rows.Add();
+            string[] defaultValue = { "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20" };
+            dgv_param.Rows.Add(defaultValue);
+        }
+
+        //复制
+        private void tsb_copy_param_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index];
+
+            DataRow dr = ((DataTable)dgv_param.DataSource).NewRow();
+
+            ((DataTable)dgv_param.DataSource).Rows.Add(dr);
+            
         }
 
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -146,5 +198,7 @@ namespace TDRv
         {
             TranToParentForm();
         }
+
+
     }//end class
 }//end namespace
