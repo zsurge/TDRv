@@ -68,7 +68,7 @@ namespace TDRv
             }
         }
 
-        //新建
+        //新建一个新的配置文件
         private void tsb_create_xml_Click(object sender, EventArgs e)
         {
             //清空参数表格
@@ -79,28 +79,57 @@ namespace TDRv
             dgv_param.Rows.Add(defaultValue);
         }
 
-        //保存
+
+        /// <summary>
+        /// Converts data grid view to a data table
+        /// </summary>
+        /// <param name="dgv"></param>
+        /// <returns></returns>
+        private DataTable GetDataTableFromDGV(DataGridView dgv)
+        {
+            var dt = new DataTable();
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                if (column.Visible)
+                {
+                    // You could potentially name the column based on the DGV column name (beware of dupes)
+                    // or assign a type based on the data type of the data bound to this DGV column.
+                    dt.Columns.Add(column.Name);
+                }
+            }
+
+            object[] cellValues = new object[dgv.Columns.Count];
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    cellValues[i] = row.Cells[i].Value;
+                }
+                dt.Rows.Add(cellValues);
+            }
+
+            return dt;
+        }
+
+        //保存新的配置文件
         private void tsb_save_xml_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "保存XML文件";
             sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             sfd.Filter = "XML文件|*.xml";
-            sfd.ShowDialog();
 
-            string path = sfd.FileName;
-            if (path == "")
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                return;
+                DataTable dT = GetDataTableFromDGV(dgv_param);
+                DataSet dS = new DataSet();
+                dS.Tables.Add(dT);
+                dS.WriteXml(File.OpenWrite(sfd.FileName));
             }
 
-            using (FileStream fsWrite = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
-            {
-                //这里需要把要写入的内容给写入到XML文件中去 未完成
-            }
         }
 
-        //增加
+        //增加一行
         private void tsb_add_param_Click(object sender, EventArgs e)
         {
            // int index = dgv_param.Rows.Add();
@@ -108,7 +137,7 @@ namespace TDRv
             dgv_param.Rows.Add(defaultValue);
         }
 
-        //复制
+        //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index];
@@ -117,6 +146,12 @@ namespace TDRv
 
             ((DataTable)dgv_param.DataSource).Rows.Add(dr);
             
+        }
+
+        //删除选中行
+        private void tsb_del_param_Click(object sender, EventArgs e)
+        {
+            dgv_param.Rows.Remove(dgv_param.CurrentRow);
         }
 
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)

@@ -37,7 +37,7 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.tsb_add_param = new System.Windows.Forms.ToolStripButton();
             this.tsb_copy_param = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.tsb_del_param = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgv_param = new System.Windows.Forms.DataGridView();
             this.pID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -143,7 +143,7 @@
             this.toolStripButton4,
             this.tsb_add_param,
             this.tsb_copy_param,
-            this.toolStripButton7});
+            this.tsb_del_param});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(813, 39);
@@ -220,15 +220,16 @@
             this.tsb_copy_param.Text = "复制";
             this.tsb_copy_param.Click += new System.EventHandler(this.tsb_copy_param_Click);
             // 
-            // toolStripButton7
+            // tsb_del_param
             // 
-            this.toolStripButton7.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
-            this.toolStripButton7.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(77, 36);
-            this.toolStripButton7.Text = "删除";
+            this.tsb_del_param.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_del_param.Image = ((System.Drawing.Image)(resources.GetObject("tsb_del_param.Image")));
+            this.tsb_del_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tsb_del_param.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_del_param.Name = "tsb_del_param";
+            this.tsb_del_param.Size = new System.Drawing.Size(77, 36);
+            this.tsb_del_param.Text = "删除";
+            this.tsb_del_param.Click += new System.EventHandler(this.tsb_del_param_Click);
             // 
             // panel1
             // 
@@ -1073,7 +1074,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton tsb_add_param;
         private System.Windows.Forms.ToolStripButton tsb_copy_param;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton tsb_del_param;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
