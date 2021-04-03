@@ -117,7 +117,7 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.radio_p_tag_point = new System.Windows.Forms.RadioButton();
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_update = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -834,6 +834,7 @@
             this.radio_units_percent.TabIndex = 3;
             this.radio_units_percent.Text = "%";
             this.radio_units_percent.UseVisualStyleBackColor = true;
+            this.radio_units_percent.CheckedChanged += new System.EventHandler(this.radio_units_percent_CheckedChanged);
             // 
             // lab_highlimit_unit
             // 
@@ -856,6 +857,7 @@
             this.radio_units_ohm.TabStop = true;
             this.radio_units_ohm.Text = "欧姆";
             this.radio_units_ohm.UseVisualStyleBackColor = true;
+            this.radio_units_ohm.CheckedChanged += new System.EventHandler(this.radio_units_ohm_CheckedChanged);
             // 
             // label15
             // 
@@ -1002,14 +1004,15 @@
             this.radio_p_tag_avg.Text = "平均值";
             this.radio_p_tag_avg.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btn_update
             // 
-            this.button1.Location = new System.Drawing.Point(732, 337);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "确定";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_update.Location = new System.Drawing.Point(732, 337);
+            this.btn_update.Name = "btn_update";
+            this.btn_update.Size = new System.Drawing.Size(75, 23);
+            this.btn_update.TabIndex = 7;
+            this.btn_update.Text = "确定";
+            this.btn_update.UseVisualStyleBackColor = true;
+            this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
             // btn_cancel
             // 
@@ -1027,7 +1030,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 569);
             this.Controls.Add(this.btn_cancel);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_update);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -1039,6 +1042,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "DevParamSet";
             this.Text = "TDR 量测试参数";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DevParamSet_FormClosed);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1129,7 +1133,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_update;
         private System.Windows.Forms.Button btn_cancel;
         private System.Windows.Forms.TextBox tx_p_Description;
         private System.Windows.Forms.Label label21;

@@ -41,17 +41,13 @@ namespace TDRv
         {
             dataGridView1.Visible = true;
 
-            for (int i = 0; i < dt.Rows.Count-1; i++)
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                //dataGridView1.Rows[i].Cells[0].Value = dt.Rows[i].Cells[1].Value;
-                //dataGridView1.Rows[i].Cells[1].Value = dt.Rows[i].Cells[2].Value;
-                //dataGridView1.Rows[i].Cells[2].Value = dt.Rows[i].Cells[3].Value;
-
                 int index = dataGridView1.Rows.Add();
 
-                dataGridView1.Rows[index].Cells[0].Value = dt.Rows[i].Cells[1].Value;
-                dataGridView1.Rows[index].Cells[1].Value = dt.Rows[i].Cells[2].Value;
-                dataGridView1.Rows[index].Cells[2].Value = dt.Rows[i].Cells[3].Value;
+                dataGridView1.Rows[index].Cells[1].Value = dt.Rows[i].Cells[1].Value;
+                dataGridView1.Rows[index].Cells[2].Value = dt.Rows[i].Cells[2].Value;
+                dataGridView1.Rows[index].Cells[3].Value = dt.Rows[i].Cells[3].Value;
             }
         }
 

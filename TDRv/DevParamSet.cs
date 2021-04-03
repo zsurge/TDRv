@@ -47,8 +47,7 @@ namespace TDRv
         {
             if (ChangeDgv != null)
             {                
-                ChangeDgv(dgv_param);
-                this.Close();
+                ChangeDgv(dgv_param);          
             }
         }
 
@@ -289,5 +288,112 @@ namespace TDRv
             }
         }
 
-     }//end class
+        private void radio_units_ohm_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radio_units_ohm.Checked)
+            {
+                label15.Text = "欧姆";
+                lab_highlimit_unit.Text = "欧姆";
+                lab_lowlimit_unit.Text = "欧姆";
+
+                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+            }
+        }
+
+        private void radio_units_percent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radio_units_percent.Checked)
+            {
+                label15.Text = "%";
+                lab_highlimit_unit.Text = "%";
+                lab_lowlimit_unit.Text = "%";
+                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+            }
+        }
+
+        private void DevParamSet_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            TranToParentForm();
+        }
+
+        private void btn_update_Click(object sender, EventArgs e)
+        {
+            int index = dgv_param.CurrentRow.Index;
+
+            this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
+            this.dgv_param.Rows[index].Cells[1].Value = index+1;            
+            this.dgv_param.Rows[index].Cells[2].Value = tx_p_Description.Text;
+            this.dgv_param.Rows[index].Cells[3].Value = tx_p_Layer.Text;
+            this.dgv_param.Rows[index].Cells[4].Value = tx_p_Remark.Text;
+            this.dgv_param.Rows[index].Cells[5].Value = tx_p_TargetValue.Text;
+            this.dgv_param.Rows[index].Cells[6].Value = tx_p_highLimit.Text;
+            this.dgv_param.Rows[index].Cells[7].Value = tx_p_lowLimit.Text;
+
+            if (radio_units_ohm.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[8].Value = "ohms";
+            }
+            if (radio_units_percent.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[8].Value = "%";
+            }
+
+            this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
+
+            if (radio_p_diff.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[10].Value = "Differential";
+            }
+            if (radio_p_single.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[10].Value = "SingleEnded";
+            }
+
+            this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
+
+            this.dgv_param.Rows[index].Cells[12].Value = tx_p_highLimit.Text;
+
+            this.dgv_param.Rows[index].Cells[13].Value = tx_p_lowLimit.Text;
+            this.dgv_param.Rows[index].Cells[14].Value = tx_p_Index.Text;
+            this.dgv_param.Rows[index].Cells[15].Value = tx_p_begin.Text;
+            this.dgv_param.Rows[index].Cells[16].Value = tx_p_end.Text;
+            this.dgv_param.Rows[index].Cells[17].Value = "0";
+            this.dgv_param.Rows[index].Cells[18].Value = "0";
+            this.dgv_param.Rows[index].Cells[19].Value = tx_p_savePath.Text;
+
+            if (radio_p_data_open.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[20].Value = "Enable";
+            }
+            if (radio_p_data_close.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[20].Value = "Disable";
+            }
+
+            if (radio_p_image_open.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[21].Value = "Enable";
+            }
+            if (radio_p_image_close.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[21].Value = "Disable";
+            }
+
+
+            this.dgv_param.Rows[index].Cells[22].Value = "4.2";
+
+
+            if (radio_p_tag_avg.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[23].Value = "AverageValue";
+            }
+            if (radio_p_tag_point.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[23].Value = "DataPoints";
+            }
+        
+        }
+    }//end class
 }//end namespace
