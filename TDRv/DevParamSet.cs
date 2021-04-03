@@ -23,6 +23,8 @@ namespace TDRv
 
         public string xmlFilePath = string.Empty;
 
+        devParam dp = new devParam();
+
         /// <summary>
         /// 获取XML文件数据到datagrid
         /// </summary>
@@ -75,10 +77,8 @@ namespace TDRv
             dgv_param.Rows.Clear();
 
             //新建一默认行
-            string[] defaultValue = { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
-            dgv_param.Rows.Add(defaultValue);
+            CreateOrAddRow();
         }
-
 
         /// <summary>
         /// Converts data grid view to a data table
@@ -129,23 +129,60 @@ namespace TDRv
 
         }
 
+        //新增或者是新添加一行
+        private void CreateOrAddRow()
+        {
+            int index = this.dgv_param.Rows.Add();
+            this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
+            this.dgv_param.Rows[index].Cells[1].Value = dp.TestStep.ToString();
+            dp.TestStep += 1;
+            this.dgv_param.Rows[index].Cells[2].Value = dp.Description;
+            this.dgv_param.Rows[index].Cells[3].Value = dp.Layer;
+            this.dgv_param.Rows[index].Cells[4].Value = dp.Remark;
+            this.dgv_param.Rows[index].Cells[5].Value = dp.ImpedanceDefine;
+            this.dgv_param.Rows[index].Cells[6].Value = dp.ImpedanceLimitLower;
+            this.dgv_param.Rows[index].Cells[7].Value = dp.ImpedanceLimitUpper;
+            this.dgv_param.Rows[index].Cells[8].Value = dp.ImpedanceLimitUnit;
+            this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
+            this.dgv_param.Rows[index].Cells[10].Value = dp.InputMode;
+            this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
+            this.dgv_param.Rows[index].Cells[12].Value = dp.TestFromThreshold;
+            this.dgv_param.Rows[index].Cells[13].Value = dp.TestToThreshold;
+            this.dgv_param.Rows[index].Cells[14].Value = dp.OpenThreshold;
+            this.dgv_param.Rows[index].Cells[15].Value = dp.TraceStartPosition;
+            this.dgv_param.Rows[index].Cells[16].Value = dp.TraceEndPosition;
+            this.dgv_param.Rows[index].Cells[17].Value = dp.CalibratedTimeScale;
+            this.dgv_param.Rows[index].Cells[18].Value = dp.CalibrateOffset;
+            this.dgv_param.Rows[index].Cells[19].Value = dp.RecordPath;
+            this.dgv_param.Rows[index].Cells[20].Value = dp.SaveCurve;
+            this.dgv_param.Rows[index].Cells[21].Value = dp.SaveImage;
+            this.dgv_param.Rows[index].Cells[22].Value = dp.DielectricConstant;
+            this.dgv_param.Rows[index].Cells[23].Value = dp.DataPointCheck;
+        }
         //增加一行
         private void tsb_add_param_Click(object sender, EventArgs e)
         {
-           // int index = dgv_param.Rows.Add();
-            string[] defaultValue = { "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20" };
-            dgv_param.Rows.Add(defaultValue);
+            // int index = dgv_param.Rows.Add();
+
+            //string[] defaultValue = { "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20" ,"20", "20", "20", "20", "20", "20", "20" };
+
+            //dgv_param.Rows.Add(defaultValue); 
+
+            CreateOrAddRow();
         }
 
         //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index];
+            int index = dgv_param.Rows.Add();
+            DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index];    
+            //DataRow dr = ((DataTable)dgv_param.DataSource).NewRow();
+            //((DataTable)dgv_param.DataSource).Rows.Add(row);
 
-            DataRow dr = ((DataTable)dgv_param.DataSource).NewRow();
-
-            ((DataTable)dgv_param.DataSource).Rows.Add(dr);
-            
+            for(int i=0;i<row.Cells.Count;i++)
+            {
+                dgv_param.Rows[index].Cells[i].Value = row.Cells[i].Value;
+            }
         }
 
         //删除选中行
@@ -234,6 +271,23 @@ namespace TDRv
             TranToParentForm();
         }
 
+        //选择要保存文件的地址
+        private void btn_p_SavePath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog sOpt = new FolderBrowserDialog();
+            sOpt.Description = "请选择文件路径";
+            DialogResult result = sOpt.ShowDialog();
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+            string folderPath = sOpt.SelectedPath.Trim();
+            DirectoryInfo theFolder = new DirectoryInfo(folderPath);
+            if (theFolder.Exists)
+            {
+                tx_p_savePath.Text = folderPath;
+            }
+        }
 
-    }//end class
+     }//end class
 }//end namespace

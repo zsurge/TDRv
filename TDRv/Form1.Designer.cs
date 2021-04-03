@@ -115,13 +115,14 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Location = new System.Drawing.Point(0, 55);
+            this.panel1.Location = new System.Drawing.Point(0, 42);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(251, 547);
+            this.panel1.Size = new System.Drawing.Size(251, 560);
             this.panel1.TabIndex = 1;
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -131,11 +132,11 @@
             this.mStep,
             this.mDescription,
             this.mLayer});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 27);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 123);
+            this.dataGridView1.Size = new System.Drawing.Size(240, 136);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             // 
@@ -166,9 +167,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.chart1);
-            this.panel2.Location = new System.Drawing.Point(257, 55);
+            this.panel2.Location = new System.Drawing.Point(257, 42);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(854, 547);
+            this.panel2.Size = new System.Drawing.Size(854, 560);
             this.panel2.TabIndex = 2;
             // 
             // chart1
@@ -180,7 +181,7 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 27);
+            this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
@@ -202,7 +203,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(854, 520);
+            this.chart1.Size = new System.Drawing.Size(854, 560);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -241,6 +242,7 @@
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -350,6 +352,7 @@
             // 
             // dataGridView3
             // 
+            this.dataGridView3.AllowUserToAddRows = false;
             this.dataGridView3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -458,6 +461,7 @@
             // 
             // dataGridView4
             // 
+            this.dataGridView4.AllowUserToAddRows = false;
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.hResult,

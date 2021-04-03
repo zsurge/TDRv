@@ -157,7 +157,7 @@
             this.tsb_create_xml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_create_xml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_create_xml.Name = "tsb_create_xml";
-            this.tsb_create_xml.Size = new System.Drawing.Size(109, 36);
+            this.tsb_create_xml.Size = new System.Drawing.Size(110, 36);
             this.tsb_create_xml.Text = "新建档案";
             this.tsb_create_xml.Click += new System.EventHandler(this.tsb_create_xml_Click);
             // 
@@ -168,7 +168,7 @@
             this.tsb_measure_loadXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_measure_loadXml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_measure_loadXml.Name = "tsb_measure_loadXml";
-            this.tsb_measure_loadXml.Size = new System.Drawing.Size(77, 36);
+            this.tsb_measure_loadXml.Size = new System.Drawing.Size(78, 36);
             this.tsb_measure_loadXml.Text = "载入";
             this.tsb_measure_loadXml.Click += new System.EventHandler(this.tsb_measure_loadXml_Click);
             // 
@@ -179,7 +179,7 @@
             this.tsb_save_xml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_save_xml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_save_xml.Name = "tsb_save_xml";
-            this.tsb_save_xml.Size = new System.Drawing.Size(77, 36);
+            this.tsb_save_xml.Size = new System.Drawing.Size(78, 36);
             this.tsb_save_xml.Text = "保存";
             this.tsb_save_xml.Click += new System.EventHandler(this.tsb_save_xml_Click);
             // 
@@ -195,7 +195,7 @@
             this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(77, 36);
+            this.toolStripButton4.Size = new System.Drawing.Size(78, 36);
             this.toolStripButton4.Text = "编辑";
             // 
             // tsb_add_param
@@ -205,7 +205,7 @@
             this.tsb_add_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_add_param.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_add_param.Name = "tsb_add_param";
-            this.tsb_add_param.Size = new System.Drawing.Size(77, 36);
+            this.tsb_add_param.Size = new System.Drawing.Size(78, 36);
             this.tsb_add_param.Text = "新增";
             this.tsb_add_param.Click += new System.EventHandler(this.tsb_add_param_Click);
             // 
@@ -216,7 +216,7 @@
             this.tsb_copy_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_copy_param.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_copy_param.Name = "tsb_copy_param";
-            this.tsb_copy_param.Size = new System.Drawing.Size(77, 36);
+            this.tsb_copy_param.Size = new System.Drawing.Size(78, 36);
             this.tsb_copy_param.Text = "复制";
             this.tsb_copy_param.Click += new System.EventHandler(this.tsb_copy_param_Click);
             // 
@@ -227,7 +227,7 @@
             this.tsb_del_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_del_param.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_del_param.Name = "tsb_del_param";
-            this.tsb_del_param.Size = new System.Drawing.Size(77, 36);
+            this.tsb_del_param.Size = new System.Drawing.Size(78, 36);
             this.tsb_del_param.Text = "删除";
             this.tsb_del_param.Click += new System.EventHandler(this.tsb_del_param_Click);
             // 
@@ -243,6 +243,7 @@
             // 
             // dgv_param
             // 
+            this.dgv_param.AllowUserToAddRows = false;
             this.dgv_param.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -645,6 +646,7 @@
             this.btn_p_SavePath.TabIndex = 1;
             this.btn_p_SavePath.Text = "...";
             this.btn_p_SavePath.UseVisualStyleBackColor = true;
+            this.btn_p_SavePath.Click += new System.EventHandler(this.btn_p_SavePath_Click);
             // 
             // tx_p_savePath
             // 
