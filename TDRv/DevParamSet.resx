@@ -134,17 +134,17 @@
   <data name="tsb_measure_loadXml.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI7SURBVFhH7Za/axRBFMevC5jD3ZkkiJ1YiyRYpQsEKxUs
-        LVJYKUiK+BecRUhMQPJjd2YvFgFDiKAoWAgWgYAQsAjaBO72zYY0gUDEJmCtb+be3O1tds/Em4MU94FH
-        8n1z8+a7M7OzU+rT59LhSRjjQm0yEe9kw68ePKCf9QYWQsil+sOESrKD81B9120YC6UVGKAubrm6qo6Y
-        TJ6QbOP62t4VLqFSXqr/5jLZHaomk9TkBi9QE/oJSRbSWCJ425gNqHSKkXC/TN3+zXkNWHCmHmWXKRu6
-        HpNqnbp05qIGzoOt6UW1G5QqphcGNFjzB4/UNMliemWgsRRQIVlMngEewF3sPJPeWBcNa8DGsEzuUPl2
-        sgZ8Ub/NQ/jFZLyX3ljdhh7DWzr0aZgWWQNMwpwnVI2kM4yBMB4l2SJrwBNQQ/2SpBN8Ac/0GNc2jgcp
-        1SJtYEioh/p/Fqhx0+gILuv7uAwbJNtJG8Dpf4Pr/9U0OMIP4L55qGrBQ6UNDAZwyiN4bhocgbXf+UJ9
-        I3kWa4BHyWP915PxTWrqGr2U5umj+CmlzmIN4PRv4/n9gdJOQANCf2lJ5tOcAQzcrVOU7pryCozg/eIE
-        6y5QKp/mDKzCz9zX5D+xrx5+PW9RKp/mDISwRiknmNNPwBbJYvQZbZwK9QKvZrN4Cs7j3XARz+9XuCeW
-        6boWoX7NZH3dvKp4d9SXE1/E75mAjyyMP6H+zEX8BfW2PXqx/R4N0xn9sbBntqvQNal8nz6XkVLpL4qf
-        49O5g373AAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI8SURBVFhH7Za/axRBFMevE+Lh7kwMwU6sRZRUdoJYGSGl
+        RQorBbFI/oKzEE0EfyS7M3tJEUgIERQFC8EiIAiBFCFpAnf7ZkOaQCDBRkgd38y9udvb7F4Sbw5S3Ace
+        yffNzZvvzszOTqlPnwuHJ+EOF2qZifhXNvzqziP6WW9gIYRcqmMmVJIdnIdqU7dhTJdm4BJ1ccuVWbXH
+        ZPKUZBvX5jYGuIRK+X39iMtkbbCa3KcmN3iBuqefkGQhjSWCT43ZgEqnGAq3y9TtdM5qwIIz9Ti7TNnQ
+        9ZhUC9SlM+c1cBZsTS+qXadUMb0woMGaWzxSL0gW0ysDjaWACsli8gzwAB5g54n0xjpvWAM2rspkhMq3
+        kzXgi/otHsIfJuON9MbqNvQY3oddn4ZpkTXAJLz2hKqRdIYxEMa3SbbIGvAE1FBPkXSCL+C5HmN4af8y
+        pVqkDQwKNab/Z4G6axodwWV9G5dhiWQ7aQM4/Yu4/r9NgyP8AEbNQ1ULHiptYCCAvzyCSdPgCKz92Rdq
+        neRJrAEeJU/0X0/GN6ipa/RSmqeP4meUOok1gNO/iuf3V0o7AQ0I/aUlmU9zBjBwt45TumvKMzCE94sD
+        rDtNqXyaMzALh7mvyX9iXz38et6kVD7NGQhhjlJOMKefgBWSxegz2jgV6iVezV7hKfgG74Zv8fx+h3vi
+        I13XItTzTNYXzKuKd0d9OfFF/IUJ+MbC+DvqH1zEP1Gv2qMX2x/SMJ3RHwt7ZrsKXZPK9+lzESmV/gF3
+        wOPRR+Qm+gAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="tsb_save_xml.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -162,17 +162,17 @@
     <value>
         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
-        +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
+        +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
 </value>
   </data>
   <data name="tsb_add_param.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -207,78 +207,6 @@
         mGWO1V9SWebl2jyH/QwWYevJDA+ThVbS6qxsZsEgnKAougLVnk/gGEQ44QAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="pID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestStep.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pDescription.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pLayer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pRemark.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceDefine.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceLimitLower.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceLimitUpper.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceLimitUnit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pInputChannel.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pInputMode.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestMethod.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestFromThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestToThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pOpenThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTraceStartPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTraceEndPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pCalibratedTimeScale.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pCalibrateOffset.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pRecordPath.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pSaveCurve.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pSaveImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pDielectricConstant.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pDataPointCheck.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="pID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

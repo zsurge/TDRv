@@ -23,8 +23,8 @@ namespace TDRv
         public string TestFromThreshold { get; set; } = "20";
         public string TestToThreshold { get; set; } = "80";
         public string OpenThreshold { get; set; } = "125";
-        public string TraceStartPosition { get; set; } = "20";
-        public string TraceEndPosition { get; set; } = "80";
+        public string TraceStartPosition { get; set; } = "0";
+        public string TraceEndPosition { get; set; } = "0";
         public string CalibratedTimeScale { get; set; } = "0";
         public string CalibrateOffset { get; set; } = "0";
         public string RecordPath { get; set; } = @"D:\";

@@ -22,4 +22,3 @@ E:\CsharpPro\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
 E:\CsharpPro\TDRv\TDRv\obj\Debug\TDRv.exe
 E:\CsharpPro\TDRv\TDRv\obj\Debug\TDRv.pdb
 E:\CsharpPro\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
-H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
