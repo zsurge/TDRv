@@ -27,9 +27,20 @@ namespace TDRv
             error = analyzer.GetInstrumentIdentifier(out idn);
             return error;
         }
+
+        public int GetDevInitIndexValue()
+        {
+            int error = 0;
+
+            string cmd2 = "FORM:DATA ASCII";
+            analyzer.ExecuteCmd(cmd2);
+
+            string cmd3 = "MMEM:STOR:TRAC:FORM:SNP MA";
+            analyzer.ExecuteCmd(cmd3);
+
+            return error;
+        }
     }
-
-
 }
 
 

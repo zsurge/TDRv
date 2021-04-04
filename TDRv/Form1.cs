@@ -16,13 +16,23 @@ namespace TDRv
         public Form1()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
             DevConnectSet devConnectSet = new DevConnectSet();
+            devConnectSet.ChangeValue += new DevConnectSet.ChangeTsbHandler(Change_Tsb_Index);
             devConnectSet.Show();
         }
+
+        //根据连接设置传过来的值，控制是否可以使用
+        public void Change_Tsb_Index(bool flag)
+        {
+            tsb_GetTestIndex.Enabled = flag;
+            tsb_StartTest.Enabled = flag;
+        }
+
 
         private void tsb_DevOptSet_Click(object sender, EventArgs e)
         {
@@ -40,6 +50,7 @@ namespace TDRv
         public void Change_DataGridView(DataGridView dt)
         {
             dataGridView1.Visible = true;
+            dataGridView1.Rows.Clear();
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -59,7 +70,10 @@ namespace TDRv
         private void initChart()
         {
             //chart1.Series.Clear();
-            chart1.Series[0].LegendText = "测试曲线";
+            chart1.Series[0].LegendText = "TDR Curve";
+            chart1.Series[1].LegendText = "limit";
+            chart1.Series[2].LegendText = "limit";
+            chart1.Series[3].LegendText = "100";
             chart1.Series[0].ChartType = SeriesChartType.Spline;
             chart1.Series[0].BorderWidth = 2;
             chart1.Series[1].BorderWidth = 2;
@@ -91,6 +105,12 @@ namespace TDRv
             //网格线颜色白色
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = Color.White;
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.White;
+        }
+
+        //开路定义
+        private void tsb_GetTestIndex_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
