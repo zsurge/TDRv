@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -61,6 +62,10 @@
             this.cSeDiff = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cCurveData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cCurveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_delAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_delselect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_export = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,6 +109,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CurrentResult)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_OutPutResult)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -126,7 +132,6 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.mFlag,
@@ -137,7 +142,8 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 136);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(248, 557);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             // 
@@ -193,7 +199,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
             series2.Legend = "Legend1";
             series2.Name = "Series2";
             series3.ChartArea = "ChartArea1";
@@ -268,6 +274,7 @@
             this.cSeDiff,
             this.cCurveData,
             this.cCurveImage});
+            this.dgv_CurrentResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_CurrentResult.Location = new System.Drawing.Point(0, 0);
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
             this.dgv_CurrentResult.RowHeadersVisible = false;
@@ -359,6 +366,36 @@
             this.cCurveImage.HeaderText = "CurveImage";
             this.cCurveImage.Name = "cCurveImage";
             this.cCurveImage.Width = 90;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_delAll,
+            this.tsmi_delselect,
+            this.tsmi_export});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 70);
+            // 
+            // tsmi_delAll
+            // 
+            this.tsmi_delAll.Name = "tsmi_delAll";
+            this.tsmi_delAll.Size = new System.Drawing.Size(148, 22);
+            this.tsmi_delAll.Text = "删除所有数据";
+            this.tsmi_delAll.Click += new System.EventHandler(this.tsmi_delAll_Click);
+            // 
+            // tsmi_delselect
+            // 
+            this.tsmi_delselect.Name = "tsmi_delselect";
+            this.tsmi_delselect.Size = new System.Drawing.Size(148, 22);
+            this.tsmi_delselect.Text = "删除所选数据";
+            this.tsmi_delselect.Click += new System.EventHandler(this.tsmi_delselect_Click);
+            // 
+            // tsmi_export
+            // 
+            this.tsmi_export.Name = "tsmi_export";
+            this.tsmi_export.Size = new System.Drawing.Size(148, 22);
+            this.tsmi_export.Text = "输出测试报告";
+            this.tsmi_export.Click += new System.EventHandler(this.tsmi_export_Click);
             // 
             // tabPage2
             // 
@@ -676,6 +713,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_CurrentResult)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_OutPutResult)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -749,6 +787,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn hTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn hRemark;
         private System.Windows.Forms.DataGridViewTextBoxColumn hSD;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_delAll;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_delselect;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_export;
     }
 }
 

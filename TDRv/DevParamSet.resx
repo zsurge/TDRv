@@ -134,17 +134,17 @@
   <data name="tsb_measure_loadXml.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI7SURBVFhH7Za/axRBFMevC5rD3ZkYxE6sJRhSpRPESgXL
-        FBZWCmKhf8FZiDGBEJPdmb1YBAwhgqJgIVgEAgHBIpgmcLdvNqQJBAw2Qurkzdybu73N7uXHzUGK+8Aj
-        +b65efPdmdnZKfXpc+HwJIxyoZaZiNey4Ve3H9LPegMLIeRSHTKhkuzgPFR/dBvGVGkOBqiLW67Mq10m
-        k6ck27i+sHGZS6iUZ+oHXCa/hqrJXWpygxeoO/oJSRbSWCL41JgNqHSK4XCrTN1O5rQGLDhTE9llyoau
-        x6RapC6dOauB02BrelHtBqWK6YUBDdbc5JF6QbKYXhloLAVUSBaTZ4AHcA87v0xvrLOGNWDjqkzGqHw7
-        WQO+qI/wEP4xGW+kN1a3ocfwZnd8GqZF1gCT8NYTqkbSGcZAGN8m2SJrwBNQQ/2OpBN8Ac/1GNeW9gYp
-        1SJtYEioR/p/Fqhx0+gILutbuAxLJNtJG8Dp/4jrv24aHOEH8MA8VLXgodIGLgXwn0fwyjQ4Amt/9oX6
-        TfI41gCPkif6ryfjm9TUNXopzdNH8TNKHccawOlfxfP7K6WdgAaE/tKSzKc5Axi4Wx9TumvKczCM94u/
-        WHeKUvk0Z2Ae9nNfk3NiXz38et6iVD7NGQhhgVJOMKefgBWSxegz2jgV6jVezd7gKTiJd8NpPL9ncE+8
-        p+tahPoDk/VF86ri3VFfTnwRf2ECvrEw/o76BxfxT9Sr9ujF9vs0TGf0x8Ke2a5C16TyffpcREqlI2Th
-        48+wX7HnAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAI7SURBVFhH7ZaxaxRBFMavE+Ph7kwMYifWQZRUdkKwigFL
+        ixRWCmKR/AVnIWqCYpLdmb2kCCRIBMVACsEiIAiBFCFpAnf7ZsVGEBLSBKz1zdybu73N7iXx5iDF/eCR
+        fG9u3nw7Mzs7pT59zh2ehNtcqPdMxN+y4Vd/jNPPegMLIeRS/WVCJdnBeah2dBvGdGkOLlAXt1yeV7+Y
+        TB6TbOPawvYAl1Apv6n/4TLZHKwmo9TkBi9Qd/UTkiyksUTwoTEbUOkUQ+FembqdzGkNWHCmHmaXKRu6
+        HpNqibp05qwGToOt6UW165QqphcGNFhzl0fqGcliemWgsRRQIVlMngEewD3sPJneWGcNa8DGFZmMUPl2
+        sgZ8Ub/JQzhkMt5Ob6xuQ4/hvfvp0zAtsgaYhJeeUDWSzjAGwvgWyRZZA56AGurXJJ3gC3iqx7i68vsS
+        pVqkDQwK9UD/zwJ1xzQ6gsv6Hi7DCsl20gZw+pdx/b+bBkf4Adw3D1UteKi0gYsBHPEIpkyDI7D2R1+o
+        LZLHsQZ4lDzSfz0Z36CmrtFLaZ4+ip9Q6jjWAE7/Bp7fnyntBDQg9JeWZD7NGcDA3TpB6a4pz8EQ3i/2
+        se40pfJpzsA8HOS+Jv+JffXw6zlMqXyaMxDCAqWcYE4/Aaski9FntHEq1HO8mr3AU/AV3g1n8Px+i3ti
+        lq5rEepFJutL5lXFu6O+nPgi/sQErLEwXkf9hYv4K+oNe/Ri+xgN0xn9sbBntqvQNal8nz7nkVLpH1h6
+        487vdMxCAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="tsb_save_xml.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -162,7 +162,7 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKESURBVFhH7VZLaBRBEN2LJ0NmukcRPQTiRS9ePStoRAU/
-        EH8oHhRFUISIHwx+EG9CgslO9+wqKHj0IvgD8SDiVRA87M5UT9SDKIKfkyB60Kqa7mVjNi47zuSSPGhm
+        EH8oHhRFUISIHwx+EG8SgslO9+wqKHj0IvgD8SDiVRA87M5UT9SDKIKfkyB60Kqa7mVjNi47zuSSPGhm
         6s2r6jdDTXdXFjAvIEN4LFTyTEbJWkvNHaQ2d3H85hHCl0CZHfbR3EAquNkygIO+hH00E+3CPENUjbKl
         KkLBbeR20b3U6cWWrmresqATWqJ847ktg5ObU208mwi0OZ7FcJlFneCSvKpZ1+sIdHMV14imNro6IkrP
         MqfgMF0x3kfXWeESbdgzvMl4UOrmN1snIg4nv2TjURb9C1aY2wBO9oLyfW2eLLvzcbHUyQauOQY/AxV3
@@ -172,7 +172,7 @@
         3F5w+WhuiIUWhRqgIk4ndHqUuGmNiAsPC9tQigG3qy2pNZZzt2eTcy/8jdIM4BfYjPf3szz4LOpTA1Y2
         DeUY0LFxeo5Ds9tKZqAUA31j8Xc+Zim4hiedYfu4Iwo3gPv9Hu/Gu0FLdUWhBvJgwUDPBgLVXE8rHK50
         m/AYtQUPGNtklO7E3W4YV8G9fgT7ccc7iM13CLv/CO50x7IzH27LIYxgc55G7hzGoxjjgbRHA2WNrgZ4
-        cSlxdDUwD1Gp/AFyiPnpFsI18wAAAABJRU5ErkJggg==
+        cSlxdDUwD1Gp/AFjCPnn0D6ZDAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="tsb_add_param.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -207,148 +207,76 @@
         mGWO1V9SWebl2jyH/QwWYevJDA+ThVbS6qxsZsEgnKAougLVnk/gGEQ44QAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="pID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="id.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pTestStep.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TestStep.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pDescription.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="Description.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pLayer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="Layer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pRemark.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="Remark.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pImpedanceDefine.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ImpedanceDefine.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pImpedanceLimitLower.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ImpedanceLimitLower.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pImpedanceLimitUpper.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ImpedanceLimitUpper.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pImpedanceLimitUnit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="ImpedanceLimitUnit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pInputChannel.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="InputChannel.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pInputMode.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="InputMode.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pTestMethod.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TestMethod.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pTestFromThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TestFromThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pTestToThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TestToThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pOpenThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="OpenThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pTraceStartPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TraceStartPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pTraceEndPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="TraceEndPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pCalibratedTimeScale.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="CalibratedTimeScale.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pCalibrateOffset.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="CalibrateOffset.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pRecordPath.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="RecordPath.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pSaveCurve.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="SaveCurve.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pSaveImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="SaveImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pDielectricConstant.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="DielectricConstant.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="pDataPointCheck.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestStep.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pDescription.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pLayer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pRemark.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceDefine.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceLimitLower.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceLimitUpper.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pImpedanceLimitUnit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pInputChannel.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pInputMode.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestMethod.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestFromThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTestToThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pOpenThreshold.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTraceStartPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pTraceEndPosition.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pCalibratedTimeScale.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pCalibrateOffset.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pRecordPath.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pSaveCurve.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pSaveImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pDielectricConstant.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="pDataPointCheck.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="DataPointCheck.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
 </root>

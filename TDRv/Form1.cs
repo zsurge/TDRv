@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -20,6 +22,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
+        public string exPortFilePath = string.Empty;
         public const int SINGLE = 1;
         public const int DIFFERENCE = 2;
         public int gSerialInc = 0;
@@ -126,15 +129,19 @@ namespace TDRv
                     tr.DevMode = SINGLE;
                 }
 
-                //if (!diff && !single)
-                //{
-                //    break;
-                //}
-
-                tr.Layer = dt.Rows[i].Cells["pLayer"].Value.ToString();
-                tr.Spec = dt.Rows[i].Cells["pImpedanceDefine"].Value.ToString();
-                tr.Upper_limit = dt.Rows[i].Cells["pImpedanceLimitUpper"].Value.ToString();
-                tr.Low_limit = dt.Rows[i].Cells["pImpedanceLimitLower"].Value.ToString();
+                if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "SingleEnded") == 0)
+                {
+                    tr.DevMode = SINGLE;
+                }
+                else
+                {
+                    tr.DevMode = DIFFERENCE;
+                }
+                
+                tr.Layer = dt.Rows[i].Cells["Layer"].Value.ToString();
+                tr.Spec = dt.Rows[i].Cells["ImpedanceDefine"].Value.ToString();
+                tr.Upper_limit = dt.Rows[i].Cells["ImpedanceLimitUpper"].Value.ToString();
+                tr.Low_limit = dt.Rows[i].Cells["ImpedanceLimitLower"].Value.ToString();
                 //tr.Average = dt.Rows[i].Cells[].Value.ToString();
                 //tr.Max = dt.Rows[i].Cells[].Value.ToString();
                 //tr.Min = dt.Rows[i].Cells[].Value.ToString();
@@ -142,10 +149,12 @@ namespace TDRv
                 //tr.Serial = dt.Rows[i].Cells[].Value.ToString();
                 //tr.Date = dt.Rows[i].Cells[].Value.ToString();
                 //tr.Time = dt.Rows[i].Cells[].Value.ToString();
-                tr.Mode = dt.Rows[i].Cells["pInputMode"].Value.ToString();
+                tr.Valid_Begin = dt.Rows[i].Cells["TestFromThreshold"].Value.ToString();
+                tr.Valid_End = dt.Rows[i].Cells["TestToThreshold"].Value.ToString();
+                tr.Mode = dt.Rows[i].Cells["InputMode"].Value.ToString();
                 //tr.Std = dt.Rows[i].Cells[].Value.ToString();
-                tr.Curve_data = dt.Rows[i].Cells["pSaveCurve"].Value.ToString();
-                tr.Curve_image = dt.Rows[i].Cells["pSaveImage"].Value.ToString();
+                tr.Curve_data = dt.Rows[i].Cells["SaveCurve"].Value.ToString();
+                tr.Curve_image = dt.Rows[i].Cells["SaveImage"].Value.ToString();
 
                 paramList.Add(tr);
             }
@@ -264,6 +273,11 @@ namespace TDRv
             string[] tdd22_array = result.Split(new char[] { ',' });
             result = string.Empty;
 
+            if (tdd22_array.Length < 200)
+            {
+                MessageBox.Show("获取差分开路定义失败");
+            }
+
             //查找tdd22单端的索引值
             for (int i = 0; i < tdd22_array.Length; i++)
             {
@@ -275,6 +289,7 @@ namespace TDRv
                 }
             }
 
+            System.Threading.Thread.Sleep(50);
 
             string cmd13 = ":CALC:PAR:SEL \"win1_tr1\"";
             analyzer.ExecuteCmd(cmd13);
@@ -284,6 +299,11 @@ namespace TDRv
             analyzer.QueryCommand(cmd14, out result, 200000);
             tmpDiffMeasData = packetMaesData(result, 0, 0);
             string[] tdd11_array = result.Split(new char[] { ',' });
+
+            if (tdd11_array.Length < 200)
+            {
+                MessageBox.Show("获取单端开路定义失败");
+            }
 
             //查找tdd11差分的索引值
             for (int i = 0; i < tdd11_array.Length; i++)
@@ -311,10 +331,10 @@ namespace TDRv
 
             if (mode == 1) //单端模式
             {
-                for (i = index; i < tmpArray.Length; i++)
-                {
-                    //logger.Info(tmpArray[i]);
-                }
+                //for (i = index; i < tmpArray.Length; i++)
+                //{
+                //    //logger.Info(tmpArray[i]);
+                //}
 
                 for (i = index; i < tmpArray.Length; i++)
                 {
@@ -334,7 +354,6 @@ namespace TDRv
             {
                 for (i = index; i < tmpArray.Length; i++)
                 {
-
                     tmp = Convert.ToSingle(tmpArray[i]);
                     if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
                     {
@@ -434,8 +453,8 @@ namespace TDRv
             //计算有效区域起始结束位置 
             if (channel == SINGLE)
             {
-                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100;
-                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100;
+                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
+                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
 
                 chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = 125;//设置Y坐标最大值
@@ -456,8 +475,8 @@ namespace TDRv
             }
             else
             {
-                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100;
-                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100;
+                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
+                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
 
                 chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
@@ -487,7 +506,7 @@ namespace TDRv
                 chart1.ChartAreas[0].AxisX.Maximum = (float)measData.Count; //设置X坐标最大值
                 chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                chart1.Series[0].LegendText = "平均值：" + tmpResult.Average().ToString();
+                chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString();
                 chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
                 chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
             }
@@ -554,31 +573,18 @@ namespace TDRv
 
         private void upgradeTestResult(int channel)
         {
-            //string[] rowVals = new string[15];  
-            //rowVals[0] = paramList[measIndex.currentIndex].Layer;
-            //rowVals[1] = paramList[measIndex.currentIndex].Spec;
-            //rowVals[2] = paramList[measIndex.currentIndex].Upper_limit;
-            //rowVals[3] = paramList[measIndex.currentIndex].Low_limit;
-            //rowVals[4] = chart1.Series[0].LegendText;
-            //rowVals[5] = chart1.Series[1].LegendText;
-            //rowVals[6] = chart1.Series[2].LegendText;
-            //rowVals[7] = "这里等下再比较";
-            //rowVals[8] = "SN" + (gSerialInc++).ToString().PadLeft(6, '0');
-            //rowVals[9] = DateTime.Now.ToString("yyyy-MM-dd");
-            //rowVals[10] = DateTime.Now.ToString("hh:mm:ss"); ;
-            //rowVals[11] = "SE";
-            //rowVals[12] = "1.92";
-            //rowVals[13] = paramList[measIndex.currentIndex].Curve_data;
-            //rowVals[14] = paramList[measIndex.currentIndex].Curve_image;
-
             int index = this.dgv_CurrentResult.Rows.Add();
             this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;
             this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;
             this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;
             this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;
-            this.dgv_CurrentResult.Rows[index].Cells[4].Value = chart1.Series[0].LegendText;
-            this.dgv_CurrentResult.Rows[index].Cells[5].Value = chart1.Series[1].LegendText;
-            this.dgv_CurrentResult.Rows[index].Cells[6].Value = chart1.Series[2].LegendText;
+            this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+            this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+            this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
+
+            //这里需要添加对比
+
+
             this.dgv_CurrentResult.Rows[index].Cells[7].Value = "这里等下再比较";
             this.dgv_CurrentResult.Rows[index].Cells[8].Value = "SN" + (gSerialInc++).ToString().PadLeft(6, '0');
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");
@@ -588,6 +594,8 @@ namespace TDRv
             this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image;       
         }
 
+        
+
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
             if (optStatus.isConnect && optStatus.isGetIndex)
@@ -595,6 +603,101 @@ namespace TDRv
                 startMeasuration(paramList[measIndex.currentIndex].DevMode);
                 upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
                 measIndex.incIndex();
+            }
+            else
+            {
+                MessageBox.Show("设备未连接或者未开路");
+            }
+        }
+
+        private void tsmi_delAll_Click(object sender, EventArgs e)
+        {
+            //删除所有测试数据
+            dgv_CurrentResult.Rows.Clear();
+        }
+
+        private void tsmi_delselect_Click(object sender, EventArgs e)
+        {
+            dgv_CurrentResult.Rows.Remove(dgv_CurrentResult.CurrentRow);
+        }
+
+        private void tsmi_export_Click(object sender, EventArgs e)
+        {
+            DataGridViewToExcel(dgv_CurrentResult);
+        }
+
+        /// <summary>
+        /// DataGridView输出到CSV文件
+        /// </summary>
+        /// <param name="dgv">数据源文件</param>
+        public void DataGridViewToExcel(DataGridView dgv)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Execl files (*.csv)|*.csv";
+            dlg.FilterIndex = 0;
+            dlg.RestoreDirectory = true;
+            dlg.CreatePrompt = true;
+            dlg.Title = "保存为csv文件";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Stream myStream;
+                myStream = dlg.OpenFile();
+                StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
+                string columnTitle = "";
+                try
+                {
+                    //写入列标题    
+                    for (int i = 0; i < dgv.ColumnCount; i++)
+                    {
+                        if (i > 0)
+                        {
+                            columnTitle += ",";
+                        }
+                        columnTitle += dgv.Columns[i].HeaderText;
+                    }
+
+                    sw.WriteLine(columnTitle);
+
+                    //写入列内容    
+                    for (int j = 0; j < dgv.Rows.Count; j++)
+                    {
+                        string columnValue = "";
+                        for (int k = 0; k < dgv.Columns.Count; k++)
+                        {
+                            if (k > 0)
+                            {
+                                columnValue += ",";
+                            }
+                            if (dgv.Rows[j].Cells[k].Value == null)
+                                columnValue += "";
+                            else if (dgv.Rows[j].Cells[k].Value.ToString().Contains(","))
+                            {
+                                columnValue += "\"" + dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\"";
+                            }
+                            else
+                            {
+                                columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                            }
+                        }
+                        sw.WriteLine(columnValue);
+                    }
+                    sw.Close();
+                    myStream.Close();
+                    MessageBox.Show("导出表格成功！");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("导出表格失败！");
+                }
+                finally
+                {
+                    sw.Close();
+                    myStream.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("取消导出表格操作!");
             }
         }
     }//end form

@@ -23,6 +23,8 @@ namespace TDRv
         private string std = string.Empty;
         private string curve_data = string.Empty;
         private string curve_image = string.Empty;
+        private string valid_begin = string.Empty; //有效的起始量测位置
+        private string valid_end = string.Empty;    //有效的结束量测位置
         private int devmode = 0;        //为区分当前测试模式是单端还是差分
         private int current_index = 0;   //当前配方的索引,配方有几层，每块板子都要测试几条数据，由该参数来决定当前层的测试要求和测试结果
 
@@ -62,6 +64,17 @@ namespace TDRv
         {
             get { return min; }
             set { min = value; }
+        }
+        public string Valid_Begin
+        {
+            get { return valid_begin; }
+            set { valid_begin = value; }
+        }
+
+        public string Valid_End
+        {
+            get { return valid_end; }
+            set { valid_end = value; }
         }
         public string Serial
         {

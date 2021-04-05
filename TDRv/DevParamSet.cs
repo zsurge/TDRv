@@ -229,14 +229,14 @@ namespace TDRv
             if (e.RowIndex > -1)
             {
                 tx_p_testSn.Text = (e.RowIndex+1).ToString();
-                tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["pDescription"].Value.ToString();
-                tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["pLayer"].Value.ToString();
-                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["pRemark"].Value.ToString();
-                tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["pImpedanceDefine"].Value.ToString();
-                tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["pImpedanceLimitLower"].Value.ToString();
-                tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["pImpedanceLimitUpper"].Value.ToString();
+                tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
+                tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
+                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
+                tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
+                tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
+                tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
 
-                string units = dgv_param.Rows[e.RowIndex].Cells["pImpedanceLimitUnit"].Value.ToString();
+                string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
                 if (string.Compare(units, "ohms", true) == 0)
                 {
                     radio_units_ohm.Checked = true;
@@ -250,7 +250,7 @@ namespace TDRv
                     lab_lowlimit_unit.Text = "%";
                 }
 
-                string testMode = dgv_param.Rows[e.RowIndex].Cells["pInputMode"].Value.ToString();
+                string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
                 if (string.Compare(testMode, "Differential", true) == 0)
                 {
                     radio_p_diff.Checked = true;
@@ -260,14 +260,14 @@ namespace TDRv
                     radio_p_single.Checked = true;
                 }
 
-                tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["pTestFromThreshold"].Value.ToString();
-                tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["pTestToThreshold"].Value.ToString();
-                tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["pOpenThreshold"].Value.ToString();
-                tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["pCalibrateOffset"].Value.ToString();
-                tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["pRecordPath"].Value.ToString();
+                tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
+                tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
+                tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
+                tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
+                tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
 
 
-                string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["pSaveCurve"].Value.ToString();
+                string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
                 if (string.Compare(isSaveCsv, "Enable", true) == 0)
                 {
                     radio_p_data_open.Checked = true;
@@ -277,7 +277,7 @@ namespace TDRv
                     radio_p_data_close.Checked = true;
                 }
 
-                string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["pSaveImage"].Value.ToString();
+                string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
                 if (string.Compare(isSaveImage, "Enable", true) == 0)
                 {
                     radio_p_image_open.Checked = true;
@@ -287,7 +287,7 @@ namespace TDRv
                     radio_p_image_close.Checked = true;
                 }
 
-                string judgMode = dgv_param.Rows[e.RowIndex].Cells["pDataPointCheck"].Value.ToString();
+                string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
                 if (string.Compare(judgMode, "DataPoints", true) == 0)
                 {
                     radio_p_tag_point.Checked = true;
