@@ -8,10 +8,10 @@ namespace TDRv
 {
     class TestResult
     {
-        private string layer = string.Empty;
+        private string layer = string.Empty; //这个是配方上显示的layer，跟current_index不是同一个概念
         private string upper_limit = string.Empty;
         private string low_limit = string.Empty;
-        private string spec = string.Empty;
+        private string spec = string.Empty;        
         private string average = string.Empty;
         private string max = string.Empty;
         private string min = string.Empty;
@@ -23,6 +23,8 @@ namespace TDRv
         private string std = string.Empty;
         private string curve_data = string.Empty;
         private string curve_image = string.Empty;
+        private int devmode = 0;        //为区分当前测试模式是单端还是差分
+        private int current_index = 0;   //当前配方的索引,配方有几层，每块板子都要测试几条数据，由该参数来决定当前层的测试要求和测试结果
 
         public string Layer
         {
@@ -93,7 +95,11 @@ namespace TDRv
             get { return std; }
             set { std = value; }
         }
-
+        public int DevMode
+        {
+            get { return devmode; }
+            set { devmode = value; }
+        }
         public string Curve_data
         {
             get { return curve_data; }
@@ -103,6 +109,11 @@ namespace TDRv
         {
             get { return curve_image; }
             set { curve_image = value; }
+        }
+        public int Current_Index
+        {
+            get { return current_index; }
+            set { current_index = value; }
         }
     }
 }

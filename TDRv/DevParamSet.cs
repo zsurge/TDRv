@@ -429,5 +429,15 @@ namespace TDRv
             }
         
         }
+
+        private void DevParamSet_Load(object sender, EventArgs e)
+        {
+            //禁止列排序
+            for (int i = 0; i < dgv_param.Columns.Count; i++)
+            {
+                dgv_param.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+        }
     }//end class
 }//end namespace

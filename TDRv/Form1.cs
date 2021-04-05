@@ -22,10 +22,14 @@ namespace TDRv
 
         public const int SINGLE = 1;
         public const int DIFFERENCE = 2;
+        public int gSerialInc = 0;
         E5080B analyzer = new E5080B();
 
         List<TestResult> paramList = new List<TestResult>();
         public static int gCurrentIndex = 0;
+
+        //记录已测试到第几层
+        MeasIndex measIndex = new MeasIndex();
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -45,10 +49,11 @@ namespace TDRv
             string idn = string.Empty;
             error = analyzer.GetInstrumentIdentifier(out idn);
 
-            if (error != 0)
+            if (error == 0)
             {
                 tsb_GetTestIndex.Enabled = true;
                 tsb_StartTest.Enabled = true;
+                optStatus.isConnect = true;
             }
             else
             {
@@ -96,20 +101,29 @@ namespace TDRv
             bool single = true;
             bool diff = true;
 
-            TestResult tr = new TestResult();
+
+            //赋值总的层数
+            measIndex.total = dt.Rows.Count;
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                TestResult tr = new TestResult();
+
+                //记录配方当前层的索引
+                tr.Current_Index = i;
+
                 if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "Differential") == 0 && diff)
                 {
                     MeasPosition.tdd11start = Convert.ToInt32(dt.Rows[i].Cells[14].Value);
                     diff = false;
+                    tr.DevMode = DIFFERENCE;
                 }
 
                 if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "SingleEnded") == 0 && single)
                 {
                     MeasPosition.tdd22start = Convert.ToInt32(dt.Rows[i].Cells[14].Value);
                     single = false;
+                    tr.DevMode = SINGLE;
                 }
 
                 //if (!diff && !single)
@@ -140,6 +154,17 @@ namespace TDRv
         private void Form1_Load(object sender, EventArgs e)
         {
             initChart();
+
+            //禁止列排序
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            for (int i = 0; i < dgv_CurrentResult.Columns.Count; i++)
+            {
+                dgv_CurrentResult.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+            
         }
 
         private void initChart()
@@ -188,6 +213,18 @@ namespace TDRv
             List<float> tmpDiffMeasData = new List<float>();
             List<float> tmpSingleMeasData = new List<float>();
             string result = string.Empty;
+
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("请先装载配方");
+                return;
+            }
+
+            if (!optStatus.isConnect)
+            {
+                MessageBox.Show("请先连接设备");
+                return;
+            }
 
             string cmd2 = "FORM:DATA ASCII";
             analyzer.ExecuteCmd(cmd2);
@@ -259,9 +296,9 @@ namespace TDRv
                 }
             }
 
-
             MeasPosition.isOpen = true;
-            result = string.Empty;
+            optStatus.isGetIndex = true;
+ 
             CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
         }
         private List<float> packetMaesData(string measBuff, int index, int mode)
@@ -387,19 +424,18 @@ namespace TDRv
         private void CreateMeasChart(List<float> measData, int channel)
         {
             float xbegin = 0;
-            float xend = 0;
-            int index = gCurrentIndex++;
+            float xend = 0;           
 
             foreach (var series in chart1.Series)
             {
                 series.Points.Clear();
             }
-
+            
             //计算有效区域起始结束位置 
             if (channel == SINGLE)
             {
-                xbegin = measData.Count * Convert.ToSingle(paramList[index].Low_limit) / 100;
-                xend = measData.Count * Convert.ToSingle(paramList[index].Upper_limit) / 100;
+                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100;
+                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100;
 
                 chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = 125;//设置Y坐标最大值
@@ -420,8 +456,8 @@ namespace TDRv
             }
             else
             {
-                xbegin = measData.Count * Convert.ToSingle(paramList[index].Low_limit) / 100;
-                xend = measData.Count * Convert.ToSingle(paramList[index].Upper_limit) / 100;
+                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100;
+                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100;
 
                 chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
@@ -454,8 +490,6 @@ namespace TDRv
                 chart1.Series[0].LegendText = "平均值：" + tmpResult.Average().ToString();
                 chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
                 chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
-
-
             }
             else
             {
@@ -477,5 +511,118 @@ namespace TDRv
         }
 
 
+        private void startMeasuration(int channel)
+        {
+            string result = string.Empty;
+            int index = 0;
+            string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
+
+            if (channel == SINGLE)
+            {
+                index = MeasPosition.tdd22IndexValue;
+                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
+            }
+            else
+            {
+                index = MeasPosition.tdd11IndexValue;
+                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";
+            }
+            analyzer.ExecuteCmd(cmd1);
+
+            cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
+            analyzer.QueryCommand(cmd2, out result, 256);
+     
+
+            cmd3 = "DISPlay:ENABle ON";
+            analyzer.ExecuteCmd(cmd3);
+
+            analyzer.ExecuteCmd(cmd1);
+
+            cmd5 = ":INITiate1:CONTinuous ON";
+            analyzer.ExecuteCmd(cmd5);
+            analyzer.viClear();
+
+            cmd6 = ":CALCulate1:DATA? FDATa";
+            analyzer.QueryCommand(cmd6, out result, 200000);
+
+            //获取要生成报表的数据
+            CreateMeasChart(packetMaesData(result, index, channel), channel);
+
+            result = string.Empty;
+            analyzer.QueryErrorStatus(out result);
+        }
+
+        private void upgradeTestResult(int channel)
+        {
+            //string[] rowVals = new string[15];  
+            //rowVals[0] = paramList[measIndex.currentIndex].Layer;
+            //rowVals[1] = paramList[measIndex.currentIndex].Spec;
+            //rowVals[2] = paramList[measIndex.currentIndex].Upper_limit;
+            //rowVals[3] = paramList[measIndex.currentIndex].Low_limit;
+            //rowVals[4] = chart1.Series[0].LegendText;
+            //rowVals[5] = chart1.Series[1].LegendText;
+            //rowVals[6] = chart1.Series[2].LegendText;
+            //rowVals[7] = "这里等下再比较";
+            //rowVals[8] = "SN" + (gSerialInc++).ToString().PadLeft(6, '0');
+            //rowVals[9] = DateTime.Now.ToString("yyyy-MM-dd");
+            //rowVals[10] = DateTime.Now.ToString("hh:mm:ss"); ;
+            //rowVals[11] = "SE";
+            //rowVals[12] = "1.92";
+            //rowVals[13] = paramList[measIndex.currentIndex].Curve_data;
+            //rowVals[14] = paramList[measIndex.currentIndex].Curve_image;
+
+            int index = this.dgv_CurrentResult.Rows.Add();
+            this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;
+            this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;
+            this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;
+            this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;
+            this.dgv_CurrentResult.Rows[index].Cells[4].Value = chart1.Series[0].LegendText;
+            this.dgv_CurrentResult.Rows[index].Cells[5].Value = chart1.Series[1].LegendText;
+            this.dgv_CurrentResult.Rows[index].Cells[6].Value = chart1.Series[2].LegendText;
+            this.dgv_CurrentResult.Rows[index].Cells[7].Value = "这里等下再比较";
+            this.dgv_CurrentResult.Rows[index].Cells[8].Value = "SN" + (gSerialInc++).ToString().PadLeft(6, '0');
+            this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");
+            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss"); 
+            this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;
+            this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data;
+            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image;       
+        }
+
+        private void tsb_StartTest_Click(object sender, EventArgs e)
+        {
+            if (optStatus.isConnect && optStatus.isGetIndex)
+            {
+                startMeasuration(paramList[measIndex.currentIndex].DevMode);
+                upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
+                measIndex.incIndex();
+            }
+        }
     }//end form
+
+    public class MeasIndex
+    {
+        private int _total = 0;
+        private int _currentIndex = 0;
+
+        public int total
+        {
+            get { return _total; }
+            set { _total = value; }
+        }
+
+        public int currentIndex
+        {
+            get { return _currentIndex; }
+            set { _currentIndex = value; }
+        }
+        public int incIndex()
+        {
+            if (_currentIndex++ == _total - 1)
+            {
+                _currentIndex = 0;
+            }
+
+            return _currentIndex;
+        }
+    }//end class
 }
