@@ -74,7 +74,7 @@
             this.combDevString.Name = "combDevString";
             this.combDevString.Size = new System.Drawing.Size(234, 20);
             this.combDevString.TabIndex = 4;
-            this.combDevString.Text = "TCPIP0::192.168.1.112::hislip0::INSTR";
+            this.combDevString.Text = "TCPIP0::192.168.1.112::inst0::INSTR";
             // 
             // label2
             // 

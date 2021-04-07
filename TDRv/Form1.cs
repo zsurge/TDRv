@@ -266,6 +266,7 @@ namespace TDRv
             analyzer.ExecuteCmd(cmd11);
             analyzer.viClear();
 
+            result = string.Empty;
             string cmd12 = ":CALCulate1:DATA? FDATa";
             analyzer.QueryCommand(cmd12, out result, 200000);
 
@@ -289,21 +290,17 @@ namespace TDRv
                 }
             }
 
-            System.Threading.Thread.Sleep(50);
+
 
             string cmd13 = ":CALC:PAR:SEL \"win1_tr1\"";
             analyzer.ExecuteCmd(cmd13);
             analyzer.viClear();
 
+            result = string.Empty;
             string cmd14 = ":CALCulate1:DATA? FDATa";
             analyzer.QueryCommand(cmd14, out result, 200000);
             tmpDiffMeasData = packetMaesData(result, 0, 0);
             string[] tdd11_array = result.Split(new char[] { ',' });
-
-            if (tdd11_array.Length < 200)
-            {
-                MessageBox.Show("获取单端开路定义失败");
-            }
 
             //查找tdd11差分的索引值
             for (int i = 0; i < tdd11_array.Length; i++)
@@ -315,6 +312,8 @@ namespace TDRv
                     break;
                 }
             }
+
+            result = string.Empty;
 
             MeasPosition.isOpen = true;
             optStatus.isGetIndex = true;
@@ -698,6 +697,42 @@ namespace TDRv
             else
             {
                 MessageBox.Show("取消导出表格操作!");
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                if (optStatus.isConnect && optStatus.isGetIndex)
+                {
+                    startMeasuration(paramList[measIndex.currentIndex].DevMode);
+                    upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
+                    measIndex.incIndex();
+                }
+                else
+                {
+                    MessageBox.Show("设备未连接或者未开路");
+                }
+            }
+        }
+
+
+        //点击2号卡时，自动把已理测试数据添加到
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab.Name == "tabPage2")
+            {
+                for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
+                {
+                    //int index = dataGridView2.Rows.Add();//在gridview2中添加一空行
+
+                    //为空行添加列值
+                    for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
+                    {
+                        dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
+                    }
+                }
             }
         }
     }//end form
