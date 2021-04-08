@@ -13,16 +13,20 @@ namespace TDRv
 {
     public partial class DevParamSet : Form
     {
-        public DevParamSet()
+        public DevParamSet(DataTable tmp)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
+            this.tmpDt = tmp;
         }
+
+        DataTable tmpDt;
 
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
         public event ChangeDgvHandler ChangeDgv;  //定义事件
 
         public string xmlFilePath = string.Empty;
+        public int selectionIdx = 0;
 
         devParam dp = new devParam();
 
@@ -438,6 +442,79 @@ namespace TDRv
                 dgv_param.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
+            dgv_param.DataSource = tmpDt;
+
         }
+        #region -支持鼠标拖拽
+        //控制移动时鼠标的图形，否则是一个禁止移动的标识
+        private void dgv_param_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        //控制拖动的条件
+        //鼠标在单元格里移动时激活拖放功能，我这里判断了如果是只有单击才执行拖放，双击我要执行其他功能，而且只有点在每行的表头那一格拖动才行，否则会影响编辑其他单元格的值
+        private void dgv_param_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if ((e.Clicks < 2) && (e.Button == MouseButtons.Left))
+            {
+                if ((e.ColumnIndex == -1) && (e.RowIndex > -1))
+                    dgv_param.DoDragDrop(dgv_param.Rows[e.RowIndex], DragDropEffects.Move);
+            }
+        }
+
+        private void dgv_param_DragDrop(object sender, DragEventArgs e)
+        {
+            int idx = GetRowFromPoint(e.X, e.Y);
+
+            if (idx < 0) return;
+
+            if (e.Data.GetDataPresent(typeof(DataGridViewRow)))
+            {
+                DataTable dt = new DataTable();
+                dt = (DataTable)this.dgv_param.DataSource;
+
+                DataGridViewRow row = (DataGridViewRow)e.Data.GetData(typeof(DataGridViewRow));
+                dgv_param.Rows.Remove(row);
+                //selectionIdx = idx;
+                //dgv_param.Rows.Insert(idx, row);
+
+                DataRow dataRow = (row.DataBoundItem as DataRowView).Row;
+                selectionIdx = idx;
+                dt.Rows.InsertAt(dataRow, idx);
+
+            }
+        }
+        private int GetRowFromPoint(int x, int y)
+        {
+            for (int i = 0; i < dgv_param.RowCount; i++)
+            {
+                Rectangle rec = dgv_param.GetRowDisplayRectangle(i, false);
+
+                if (dgv_param.RectangleToScreen(rec).Contains(x, y))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private void dgv_param_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+                selectionIdx = e.RowIndex;
+        }
+
+        private void dgv_param_SizeChanged(object sender, EventArgs e)
+        {
+            if ((dgv_param.Rows.Count > 0) && (dgv_param.SelectedRows.Count > 0) && (dgv_param.SelectedRows[0].Index != selectionIdx))
+            {
+                if (dgv_param.Rows.Count <= selectionIdx)
+                    selectionIdx = dgv_param.Rows.Count - 1;
+                dgv_param.Rows[selectionIdx].Selected = true;
+                dgv_param.CurrentCell = dgv_param.Rows[selectionIdx].Cells[0];
+            }
+        }
+        #endregion
+
     }//end class
 }//end namespace

@@ -22,4 +22,3 @@ H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.pdb
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
-H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache

@@ -22,6 +22,9 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
+        //设置参数设置窗体的表数据
+        DataTable gdt;
+
         public string exPortFilePath = string.Empty;
         public const int SINGLE = 1;
         public const int DIFFERENCE = 2;
@@ -73,7 +76,7 @@ namespace TDRv
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            DevParamSet devParamSet = new DevParamSet();
+            DevParamSet devParamSet = new DevParamSet(gdt);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
             devParamSet.Show();
         }
@@ -97,6 +100,35 @@ namespace TDRv
             }
         }
 
+
+        /// <summary>
+        /// 将DataGridView里面的数据提取到DataTable中
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <returns></returns>
+        public DataTable DataGridViewToDataTable(DataGridView dataGridView)
+        {
+            var dataTable = new DataTable();
+
+            for (var i = 0; i < dataGridView.RowCount; i++)
+            {
+                var dr = dataTable.NewRow();
+                for (var j = 0; j < dataGridView.ColumnCount; j++)
+                {
+                    if (i == 0)
+                    {
+                        var dc = new DataColumn(dataGridView.Columns[j].Name);
+                        dataTable.Columns.Add(dc);
+                    }
+
+                    dr[j] = dataGridView[j, i].Value;
+                }
+                dataTable.Rows.Add(dr);
+            }
+
+            return dataTable;
+        }
+
         //获取配方中开路位置信息
         //并且记录所有的待测参数
         public void GetIndexStart(DataGridView dt)
@@ -104,6 +136,7 @@ namespace TDRv
             bool single = true;
             bool diff = true;
 
+            gdt = DataGridViewToDataTable(dt);
 
             //赋值总的层数
             measIndex.total = dt.Rows.Count;

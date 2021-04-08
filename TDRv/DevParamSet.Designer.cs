@@ -40,6 +40,30 @@
             this.tsb_del_param = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgv_param = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TestStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Layer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpedanceDefine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpedanceLimitLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpedanceLimitUpper = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImpedanceLimitUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.InputMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TestMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TestFromThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TestToThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OpenThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TraceStartPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TraceEndPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CalibratedTimeScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CalibrateOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RecordPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaveCurve = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DielectricConstant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DataPointCheck = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tx_p_Description = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -95,30 +119,6 @@
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TestStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Layer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpedanceDefine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpedanceLimitLower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpedanceLimitUpper = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ImpedanceLimitUnit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InputChannel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InputMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TestMethod = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TestFromThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TestToThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OpenThreshold = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TraceStartPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TraceEndPosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CalibratedTimeScale = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CalibrateOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RecordPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaveCurve = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DielectricConstant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DataPointCheck = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).BeginInit();
@@ -243,11 +243,11 @@
             // 
             // dgv_param
             // 
+            this.dgv_param.AllowDrop = true;
             this.dgv_param.AllowUserToAddRows = false;
             this.dgv_param.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv_param.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dgv_param.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_param.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -278,12 +278,232 @@
             this.dgv_param.MultiSelect = false;
             this.dgv_param.Name = "dgv_param";
             this.dgv_param.ReadOnly = true;
-            this.dgv_param.RowHeadersVisible = false;
             this.dgv_param.RowTemplate.Height = 23;
             this.dgv_param.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_param.Size = new System.Drawing.Size(813, 187);
             this.dgv_param.TabIndex = 5;
             this.dgv_param.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_param_CellClick);
+            this.dgv_param.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_param_CellMouseDown);
+            this.dgv_param.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_param_CellMouseMove);
+            this.dgv_param.SizeChanged += new System.EventHandler(this.dgv_param_SizeChanged);
+            this.dgv_param.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgv_param_DragDrop);
+            this.dgv_param.DragEnter += new System.Windows.Forms.DragEventHandler(this.dgv_param_DragEnter);
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.id.Width = 23;
+            // 
+            // TestStep
+            // 
+            this.TestStep.DataPropertyName = "TestStep";
+            this.TestStep.HeaderText = "TestStep";
+            this.TestStep.Name = "TestStep";
+            this.TestStep.ReadOnly = true;
+            this.TestStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TestStep.Width = 59;
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
+            this.Description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Description.Width = 77;
+            // 
+            // Layer
+            // 
+            this.Layer.DataPropertyName = "Layer";
+            this.Layer.HeaderText = "Layer";
+            this.Layer.Name = "Layer";
+            this.Layer.ReadOnly = true;
+            this.Layer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Layer.Width = 41;
+            // 
+            // Remark
+            // 
+            this.Remark.DataPropertyName = "Remark";
+            this.Remark.HeaderText = "Remark";
+            this.Remark.Name = "Remark";
+            this.Remark.ReadOnly = true;
+            this.Remark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Remark.Width = 47;
+            // 
+            // ImpedanceDefine
+            // 
+            this.ImpedanceDefine.DataPropertyName = "ImpedanceDefine";
+            this.ImpedanceDefine.HeaderText = "ImpedanceDefine";
+            this.ImpedanceDefine.Name = "ImpedanceDefine";
+            this.ImpedanceDefine.ReadOnly = true;
+            this.ImpedanceDefine.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ImpedanceDefine.Width = 101;
+            // 
+            // ImpedanceLimitLower
+            // 
+            this.ImpedanceLimitLower.DataPropertyName = "ImpedanceLimitLower";
+            this.ImpedanceLimitLower.HeaderText = "ImpedanceLimitLower";
+            this.ImpedanceLimitLower.Name = "ImpedanceLimitLower";
+            this.ImpedanceLimitLower.ReadOnly = true;
+            this.ImpedanceLimitLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ImpedanceLimitLower.Width = 125;
+            // 
+            // ImpedanceLimitUpper
+            // 
+            this.ImpedanceLimitUpper.DataPropertyName = "ImpedanceLimitUpper";
+            this.ImpedanceLimitUpper.HeaderText = "ImpedanceLimitUpper";
+            this.ImpedanceLimitUpper.Name = "ImpedanceLimitUpper";
+            this.ImpedanceLimitUpper.ReadOnly = true;
+            this.ImpedanceLimitUpper.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ImpedanceLimitUpper.Width = 125;
+            // 
+            // ImpedanceLimitUnit
+            // 
+            this.ImpedanceLimitUnit.DataPropertyName = "ImpedanceLimitUnit";
+            this.ImpedanceLimitUnit.HeaderText = "ImpedanceLimitUnit";
+            this.ImpedanceLimitUnit.Name = "ImpedanceLimitUnit";
+            this.ImpedanceLimitUnit.ReadOnly = true;
+            this.ImpedanceLimitUnit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ImpedanceLimitUnit.Width = 119;
+            // 
+            // InputChannel
+            // 
+            this.InputChannel.DataPropertyName = "InputChannel";
+            this.InputChannel.HeaderText = "InputChannel";
+            this.InputChannel.Name = "InputChannel";
+            this.InputChannel.ReadOnly = true;
+            this.InputChannel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.InputChannel.Width = 83;
+            // 
+            // InputMode
+            // 
+            this.InputMode.DataPropertyName = "InputMode";
+            this.InputMode.HeaderText = "InputMode";
+            this.InputMode.Name = "InputMode";
+            this.InputMode.ReadOnly = true;
+            this.InputMode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.InputMode.Width = 65;
+            // 
+            // TestMethod
+            // 
+            this.TestMethod.DataPropertyName = "TestMethod";
+            this.TestMethod.HeaderText = "TestMethod";
+            this.TestMethod.Name = "TestMethod";
+            this.TestMethod.ReadOnly = true;
+            this.TestMethod.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TestMethod.Width = 71;
+            // 
+            // TestFromThreshold
+            // 
+            this.TestFromThreshold.DataPropertyName = "TestFromThreshold";
+            this.TestFromThreshold.HeaderText = "TestFromThreshold";
+            this.TestFromThreshold.Name = "TestFromThreshold";
+            this.TestFromThreshold.ReadOnly = true;
+            this.TestFromThreshold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TestFromThreshold.Width = 113;
+            // 
+            // TestToThreshold
+            // 
+            this.TestToThreshold.DataPropertyName = "TestToThreshold";
+            this.TestToThreshold.HeaderText = "TestToThreshold";
+            this.TestToThreshold.Name = "TestToThreshold";
+            this.TestToThreshold.ReadOnly = true;
+            this.TestToThreshold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TestToThreshold.Width = 101;
+            // 
+            // OpenThreshold
+            // 
+            this.OpenThreshold.DataPropertyName = "OpenThreshold";
+            this.OpenThreshold.HeaderText = "OpenThreshold";
+            this.OpenThreshold.Name = "OpenThreshold";
+            this.OpenThreshold.ReadOnly = true;
+            this.OpenThreshold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.OpenThreshold.Width = 89;
+            // 
+            // TraceStartPosition
+            // 
+            this.TraceStartPosition.DataPropertyName = "TraceStartPosition";
+            this.TraceStartPosition.HeaderText = "TraceStartPosition";
+            this.TraceStartPosition.Name = "TraceStartPosition";
+            this.TraceStartPosition.ReadOnly = true;
+            this.TraceStartPosition.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TraceStartPosition.Width = 119;
+            // 
+            // TraceEndPosition
+            // 
+            this.TraceEndPosition.DataPropertyName = "TraceEndPosition";
+            this.TraceEndPosition.HeaderText = "TraceEndPosition";
+            this.TraceEndPosition.Name = "TraceEndPosition";
+            this.TraceEndPosition.ReadOnly = true;
+            this.TraceEndPosition.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TraceEndPosition.Width = 107;
+            // 
+            // CalibratedTimeScale
+            // 
+            this.CalibratedTimeScale.DataPropertyName = "CalibratedTimeScale";
+            this.CalibratedTimeScale.HeaderText = "CalibratedTimeScale";
+            this.CalibratedTimeScale.Name = "CalibratedTimeScale";
+            this.CalibratedTimeScale.ReadOnly = true;
+            this.CalibratedTimeScale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CalibratedTimeScale.Width = 125;
+            // 
+            // CalibrateOffset
+            // 
+            this.CalibrateOffset.DataPropertyName = "CalibrateOffset";
+            this.CalibrateOffset.HeaderText = "CalibrateOffset";
+            this.CalibrateOffset.Name = "CalibrateOffset";
+            this.CalibrateOffset.ReadOnly = true;
+            this.CalibrateOffset.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CalibrateOffset.Width = 101;
+            // 
+            // RecordPath
+            // 
+            this.RecordPath.DataPropertyName = "RecordPath";
+            this.RecordPath.HeaderText = "RecordPath";
+            this.RecordPath.Name = "RecordPath";
+            this.RecordPath.ReadOnly = true;
+            this.RecordPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.RecordPath.Width = 71;
+            // 
+            // SaveCurve
+            // 
+            this.SaveCurve.DataPropertyName = "SaveCurve";
+            this.SaveCurve.HeaderText = "SaveCurve";
+            this.SaveCurve.Name = "SaveCurve";
+            this.SaveCurve.ReadOnly = true;
+            this.SaveCurve.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SaveCurve.Width = 65;
+            // 
+            // SaveImage
+            // 
+            this.SaveImage.DataPropertyName = "SaveImage";
+            this.SaveImage.HeaderText = "SaveImage";
+            this.SaveImage.Name = "SaveImage";
+            this.SaveImage.ReadOnly = true;
+            this.SaveImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SaveImage.Width = 65;
+            // 
+            // DielectricConstant
+            // 
+            this.DielectricConstant.DataPropertyName = "DielectricConstant";
+            this.DielectricConstant.HeaderText = "DielectricConstant";
+            this.DielectricConstant.Name = "DielectricConstant";
+            this.DielectricConstant.ReadOnly = true;
+            this.DielectricConstant.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DielectricConstant.Width = 119;
+            // 
+            // DataPointCheck
+            // 
+            this.DataPointCheck.DataPropertyName = "DataPointCheck";
+            this.DataPointCheck.HeaderText = "DataPointCheck";
+            this.DataPointCheck.Name = "DataPointCheck";
+            this.DataPointCheck.ReadOnly = true;
+            this.DataPointCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DataPointCheck.Width = 95;
             // 
             // groupBox1
             // 
@@ -831,222 +1051,6 @@
             this.btn_cancel.Text = "取消";
             this.btn_cancel.UseVisualStyleBackColor = true;
             this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.id.Width = 23;
-            // 
-            // TestStep
-            // 
-            this.TestStep.DataPropertyName = "TestStep";
-            this.TestStep.HeaderText = "TestStep";
-            this.TestStep.Name = "TestStep";
-            this.TestStep.ReadOnly = true;
-            this.TestStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TestStep.Width = 59;
-            // 
-            // Description
-            // 
-            this.Description.DataPropertyName = "Description";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.ReadOnly = true;
-            this.Description.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Description.Width = 77;
-            // 
-            // Layer
-            // 
-            this.Layer.DataPropertyName = "Layer";
-            this.Layer.HeaderText = "Layer";
-            this.Layer.Name = "Layer";
-            this.Layer.ReadOnly = true;
-            this.Layer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Layer.Width = 41;
-            // 
-            // Remark
-            // 
-            this.Remark.DataPropertyName = "Remark";
-            this.Remark.HeaderText = "Remark";
-            this.Remark.Name = "Remark";
-            this.Remark.ReadOnly = true;
-            this.Remark.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Remark.Width = 47;
-            // 
-            // ImpedanceDefine
-            // 
-            this.ImpedanceDefine.DataPropertyName = "ImpedanceDefine";
-            this.ImpedanceDefine.HeaderText = "ImpedanceDefine";
-            this.ImpedanceDefine.Name = "ImpedanceDefine";
-            this.ImpedanceDefine.ReadOnly = true;
-            this.ImpedanceDefine.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ImpedanceDefine.Width = 101;
-            // 
-            // ImpedanceLimitLower
-            // 
-            this.ImpedanceLimitLower.DataPropertyName = "ImpedanceLimitLower";
-            this.ImpedanceLimitLower.HeaderText = "ImpedanceLimitLower";
-            this.ImpedanceLimitLower.Name = "ImpedanceLimitLower";
-            this.ImpedanceLimitLower.ReadOnly = true;
-            this.ImpedanceLimitLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ImpedanceLimitLower.Width = 125;
-            // 
-            // ImpedanceLimitUpper
-            // 
-            this.ImpedanceLimitUpper.DataPropertyName = "ImpedanceLimitUpper";
-            this.ImpedanceLimitUpper.HeaderText = "ImpedanceLimitUpper";
-            this.ImpedanceLimitUpper.Name = "ImpedanceLimitUpper";
-            this.ImpedanceLimitUpper.ReadOnly = true;
-            this.ImpedanceLimitUpper.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ImpedanceLimitUpper.Width = 125;
-            // 
-            // ImpedanceLimitUnit
-            // 
-            this.ImpedanceLimitUnit.DataPropertyName = "ImpedanceLimitUnit";
-            this.ImpedanceLimitUnit.HeaderText = "ImpedanceLimitUnit";
-            this.ImpedanceLimitUnit.Name = "ImpedanceLimitUnit";
-            this.ImpedanceLimitUnit.ReadOnly = true;
-            this.ImpedanceLimitUnit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ImpedanceLimitUnit.Width = 119;
-            // 
-            // InputChannel
-            // 
-            this.InputChannel.DataPropertyName = "InputChannel";
-            this.InputChannel.HeaderText = "InputChannel";
-            this.InputChannel.Name = "InputChannel";
-            this.InputChannel.ReadOnly = true;
-            this.InputChannel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.InputChannel.Width = 83;
-            // 
-            // InputMode
-            // 
-            this.InputMode.DataPropertyName = "InputMode";
-            this.InputMode.HeaderText = "InputMode";
-            this.InputMode.Name = "InputMode";
-            this.InputMode.ReadOnly = true;
-            this.InputMode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.InputMode.Width = 65;
-            // 
-            // TestMethod
-            // 
-            this.TestMethod.DataPropertyName = "TestMethod";
-            this.TestMethod.HeaderText = "TestMethod";
-            this.TestMethod.Name = "TestMethod";
-            this.TestMethod.ReadOnly = true;
-            this.TestMethod.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TestMethod.Width = 71;
-            // 
-            // TestFromThreshold
-            // 
-            this.TestFromThreshold.DataPropertyName = "TestFromThreshold";
-            this.TestFromThreshold.HeaderText = "TestFromThreshold";
-            this.TestFromThreshold.Name = "TestFromThreshold";
-            this.TestFromThreshold.ReadOnly = true;
-            this.TestFromThreshold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TestFromThreshold.Width = 113;
-            // 
-            // TestToThreshold
-            // 
-            this.TestToThreshold.DataPropertyName = "TestToThreshold";
-            this.TestToThreshold.HeaderText = "TestToThreshold";
-            this.TestToThreshold.Name = "TestToThreshold";
-            this.TestToThreshold.ReadOnly = true;
-            this.TestToThreshold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TestToThreshold.Width = 101;
-            // 
-            // OpenThreshold
-            // 
-            this.OpenThreshold.DataPropertyName = "OpenThreshold";
-            this.OpenThreshold.HeaderText = "OpenThreshold";
-            this.OpenThreshold.Name = "OpenThreshold";
-            this.OpenThreshold.ReadOnly = true;
-            this.OpenThreshold.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.OpenThreshold.Width = 89;
-            // 
-            // TraceStartPosition
-            // 
-            this.TraceStartPosition.DataPropertyName = "TraceStartPosition";
-            this.TraceStartPosition.HeaderText = "TraceStartPosition";
-            this.TraceStartPosition.Name = "TraceStartPosition";
-            this.TraceStartPosition.ReadOnly = true;
-            this.TraceStartPosition.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TraceStartPosition.Width = 119;
-            // 
-            // TraceEndPosition
-            // 
-            this.TraceEndPosition.DataPropertyName = "TraceEndPosition";
-            this.TraceEndPosition.HeaderText = "TraceEndPosition";
-            this.TraceEndPosition.Name = "TraceEndPosition";
-            this.TraceEndPosition.ReadOnly = true;
-            this.TraceEndPosition.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TraceEndPosition.Width = 107;
-            // 
-            // CalibratedTimeScale
-            // 
-            this.CalibratedTimeScale.DataPropertyName = "CalibratedTimeScale";
-            this.CalibratedTimeScale.HeaderText = "CalibratedTimeScale";
-            this.CalibratedTimeScale.Name = "CalibratedTimeScale";
-            this.CalibratedTimeScale.ReadOnly = true;
-            this.CalibratedTimeScale.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CalibratedTimeScale.Width = 125;
-            // 
-            // CalibrateOffset
-            // 
-            this.CalibrateOffset.DataPropertyName = "CalibrateOffset";
-            this.CalibrateOffset.HeaderText = "CalibrateOffset";
-            this.CalibrateOffset.Name = "CalibrateOffset";
-            this.CalibrateOffset.ReadOnly = true;
-            this.CalibrateOffset.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CalibrateOffset.Width = 101;
-            // 
-            // RecordPath
-            // 
-            this.RecordPath.DataPropertyName = "RecordPath";
-            this.RecordPath.HeaderText = "RecordPath";
-            this.RecordPath.Name = "RecordPath";
-            this.RecordPath.ReadOnly = true;
-            this.RecordPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.RecordPath.Width = 71;
-            // 
-            // SaveCurve
-            // 
-            this.SaveCurve.DataPropertyName = "SaveCurve";
-            this.SaveCurve.HeaderText = "SaveCurve";
-            this.SaveCurve.Name = "SaveCurve";
-            this.SaveCurve.ReadOnly = true;
-            this.SaveCurve.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SaveCurve.Width = 65;
-            // 
-            // SaveImage
-            // 
-            this.SaveImage.DataPropertyName = "SaveImage";
-            this.SaveImage.HeaderText = "SaveImage";
-            this.SaveImage.Name = "SaveImage";
-            this.SaveImage.ReadOnly = true;
-            this.SaveImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SaveImage.Width = 65;
-            // 
-            // DielectricConstant
-            // 
-            this.DielectricConstant.DataPropertyName = "DielectricConstant";
-            this.DielectricConstant.HeaderText = "DielectricConstant";
-            this.DielectricConstant.Name = "DielectricConstant";
-            this.DielectricConstant.ReadOnly = true;
-            this.DielectricConstant.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DielectricConstant.Width = 119;
-            // 
-            // DataPointCheck
-            // 
-            this.DataPointCheck.DataPropertyName = "DataPointCheck";
-            this.DataPointCheck.HeaderText = "DataPointCheck";
-            this.DataPointCheck.Name = "DataPointCheck";
-            this.DataPointCheck.ReadOnly = true;
-            this.DataPointCheck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DataPointCheck.Width = 95;
             // 
             // DevParamSet
             // 
