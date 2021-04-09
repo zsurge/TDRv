@@ -268,11 +268,11 @@ namespace TDRv
                 return;
             }
 
-            string cmd2 = "FORM:DATA ASCII";
-            analyzer.ExecuteCmd(cmd2);
+            //string cmd2 = "FORM:DATA ASCII";
+            //analyzer.ExecuteCmd(cmd2);
 
-            string cmd3 = "MMEM:STOR:TRAC:FORM:SNP MA";
-            analyzer.ExecuteCmd(cmd3);
+            //string cmd3 = "MMEM:STOR:TRAC:FORM:SNP MA";
+            //analyzer.ExecuteCmd(cmd3);
 
             string cmd4 = "CALCulate:PARameter:CAT?";
             analyzer.QueryCommand(cmd4, out result, 256);
