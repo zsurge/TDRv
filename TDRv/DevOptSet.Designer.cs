@@ -29,30 +29,30 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radio_key_space = new System.Windows.Forms.RadioButton();
+            this.radio_key_close = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radio_pro_only_pass = new System.Windows.Forms.RadioButton();
+            this.radio_pro_next = new System.Windows.Forms.RadioButton();
+            this.radio_pro_manual = new System.Windows.Forms.RadioButton();
+            this.radio_pro_pass = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.radioButton9 = new System.Windows.Forms.RadioButton();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.radioButton10 = new System.Windows.Forms.RadioButton();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.radio_save_param = new System.Windows.Forms.RadioButton();
+            this.cmbo_format = new System.Windows.Forms.ComboBox();
+            this.radio_save_date = new System.Windows.Forms.RadioButton();
+            this.tx_export_report = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tx_history_report = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tx_sn_begin = new System.Windows.Forms.TextBox();
+            this.tx_sn_prefix = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.radio_sn_auto = new System.Windows.Forms.RadioButton();
+            this.radio_sn_manual = new System.Windows.Forms.RadioButton();
+            this.btn_opt_ok = new System.Windows.Forms.Button();
+            this.btn_opt_cancel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -61,8 +61,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.radio_key_space);
+            this.groupBox1.Controls.Add(this.radio_key_close);
             this.groupBox1.Location = new System.Drawing.Point(12, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(129, 69);
@@ -70,34 +70,34 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "键盘触发";
             // 
-            // radioButton2
+            // radio_key_space
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(16, 42);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(59, 16);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.Text = "空格键";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radio_key_space.AutoSize = true;
+            this.radio_key_space.Location = new System.Drawing.Point(16, 42);
+            this.radio_key_space.Name = "radio_key_space";
+            this.radio_key_space.Size = new System.Drawing.Size(59, 16);
+            this.radio_key_space.TabIndex = 1;
+            this.radio_key_space.Text = "空格键";
+            this.radio_key_space.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // radio_key_close
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(16, 20);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 16);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "关闭";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radio_key_close.AutoSize = true;
+            this.radio_key_close.Checked = true;
+            this.radio_key_close.Location = new System.Drawing.Point(16, 20);
+            this.radio_key_close.Name = "radio_key_close";
+            this.radio_key_close.Size = new System.Drawing.Size(47, 16);
+            this.radio_key_close.TabIndex = 0;
+            this.radio_key_close.TabStop = true;
+            this.radio_key_close.Text = "关闭";
+            this.radio_key_close.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radioButton6);
-            this.groupBox2.Controls.Add(this.radioButton5);
-            this.groupBox2.Controls.Add(this.radioButton4);
-            this.groupBox2.Controls.Add(this.radioButton3);
+            this.groupBox2.Controls.Add(this.radio_pro_only_pass);
+            this.groupBox2.Controls.Add(this.radio_pro_next);
+            this.groupBox2.Controls.Add(this.radio_pro_manual);
+            this.groupBox2.Controls.Add(this.radio_pro_pass);
             this.groupBox2.Location = new System.Drawing.Point(12, 109);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(129, 109);
@@ -105,56 +105,56 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "测试流程";
             // 
-            // radioButton6
+            // radio_pro_only_pass
             // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(6, 86);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(83, 16);
-            this.radioButton6.TabIndex = 3;
-            this.radioButton6.Text = "仅记录通过";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radio_pro_only_pass.AutoSize = true;
+            this.radio_pro_only_pass.Location = new System.Drawing.Point(6, 86);
+            this.radio_pro_only_pass.Name = "radio_pro_only_pass";
+            this.radio_pro_only_pass.Size = new System.Drawing.Size(83, 16);
+            this.radio_pro_only_pass.TabIndex = 3;
+            this.radio_pro_only_pass.Text = "仅记录通过";
+            this.radio_pro_only_pass.UseVisualStyleBackColor = true;
             // 
-            // radioButton5
+            // radio_pro_next
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Checked = true;
-            this.radioButton5.Location = new System.Drawing.Point(6, 64);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(83, 16);
-            this.radioButton5.TabIndex = 2;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "直接下一笔";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radio_pro_next.AutoSize = true;
+            this.radio_pro_next.Checked = true;
+            this.radio_pro_next.Location = new System.Drawing.Point(6, 64);
+            this.radio_pro_next.Name = "radio_pro_next";
+            this.radio_pro_next.Size = new System.Drawing.Size(83, 16);
+            this.radio_pro_next.TabIndex = 2;
+            this.radio_pro_next.TabStop = true;
+            this.radio_pro_next.Text = "直接下一笔";
+            this.radio_pro_next.UseVisualStyleBackColor = true;
             // 
-            // radioButton4
+            // radio_pro_manual
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(6, 42);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(47, 16);
-            this.radioButton4.TabIndex = 1;
-            this.radioButton4.Text = "手动";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radio_pro_manual.AutoSize = true;
+            this.radio_pro_manual.Location = new System.Drawing.Point(6, 42);
+            this.radio_pro_manual.Name = "radio_pro_manual";
+            this.radio_pro_manual.Size = new System.Drawing.Size(47, 16);
+            this.radio_pro_manual.TabIndex = 1;
+            this.radio_pro_manual.Text = "手动";
+            this.radio_pro_manual.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // radio_pro_pass
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(6, 20);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(47, 16);
-            this.radioButton3.TabIndex = 0;
-            this.radioButton3.Text = "通过";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radio_pro_pass.AutoSize = true;
+            this.radio_pro_pass.Location = new System.Drawing.Point(6, 20);
+            this.radio_pro_pass.Name = "radio_pro_pass";
+            this.radio_pro_pass.Size = new System.Drawing.Size(47, 16);
+            this.radio_pro_pass.TabIndex = 0;
+            this.radio_pro_pass.Text = "通过";
+            this.radio_pro_pass.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.radioButton9);
-            this.groupBox4.Controls.Add(this.comboBox1);
-            this.groupBox4.Controls.Add(this.radioButton10);
-            this.groupBox4.Controls.Add(this.textBox3);
+            this.groupBox4.Controls.Add(this.radio_save_param);
+            this.groupBox4.Controls.Add(this.cmbo_format);
+            this.groupBox4.Controls.Add(this.radio_save_date);
+            this.groupBox4.Controls.Add(this.tx_export_report);
             this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.textBox4);
+            this.groupBox4.Controls.Add(this.tx_history_report);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Location = new System.Drawing.Point(171, 109);
             this.groupBox4.Name = "groupBox4";
@@ -163,47 +163,50 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "储存方式";
             // 
-            // radioButton9
+            // radio_save_param
             // 
-            this.radioButton9.AutoSize = true;
-            this.radioButton9.Location = new System.Drawing.Point(82, 20);
-            this.radioButton9.Name = "radioButton9";
-            this.radioButton9.Size = new System.Drawing.Size(83, 16);
-            this.radioButton9.TabIndex = 7;
-            this.radioButton9.Text = "按量测参数";
-            this.radioButton9.UseVisualStyleBackColor = true;
+            this.radio_save_param.AutoSize = true;
+            this.radio_save_param.Location = new System.Drawing.Point(82, 20);
+            this.radio_save_param.Name = "radio_save_param";
+            this.radio_save_param.Size = new System.Drawing.Size(83, 16);
+            this.radio_save_param.TabIndex = 7;
+            this.radio_save_param.Text = "按量测参数";
+            this.radio_save_param.UseVisualStyleBackColor = true;
+            this.radio_save_param.CheckedChanged += new System.EventHandler(this.radio_save_param_CheckedChanged);
             // 
-            // comboBox1
+            // cmbo_format
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cmbo_format.Enabled = false;
+            this.cmbo_format.FormattingEnabled = true;
+            this.cmbo_format.Items.AddRange(new object[] {
             "CSV",
             "TXT"});
-            this.comboBox1.Location = new System.Drawing.Point(286, 68);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(52, 20);
-            this.comboBox1.TabIndex = 12;
-            this.comboBox1.Text = "CSV";
+            this.cmbo_format.Location = new System.Drawing.Point(286, 68);
+            this.cmbo_format.Name = "cmbo_format";
+            this.cmbo_format.Size = new System.Drawing.Size(52, 20);
+            this.cmbo_format.TabIndex = 12;
+            this.cmbo_format.Text = "CSV";
             // 
-            // radioButton10
+            // radio_save_date
             // 
-            this.radioButton10.AutoSize = true;
-            this.radioButton10.Checked = true;
-            this.radioButton10.Location = new System.Drawing.Point(17, 20);
-            this.radioButton10.Name = "radioButton10";
-            this.radioButton10.Size = new System.Drawing.Size(59, 16);
-            this.radioButton10.TabIndex = 6;
-            this.radioButton10.TabStop = true;
-            this.radioButton10.Text = "按日期";
-            this.radioButton10.UseVisualStyleBackColor = true;
+            this.radio_save_date.AutoSize = true;
+            this.radio_save_date.Checked = true;
+            this.radio_save_date.Location = new System.Drawing.Point(17, 20);
+            this.radio_save_date.Name = "radio_save_date";
+            this.radio_save_date.Size = new System.Drawing.Size(59, 16);
+            this.radio_save_date.TabIndex = 6;
+            this.radio_save_date.TabStop = true;
+            this.radio_save_date.Text = "按日期";
+            this.radio_save_date.UseVisualStyleBackColor = true;
+            this.radio_save_date.CheckedChanged += new System.EventHandler(this.radio_save_date_CheckedChanged);
             // 
-            // textBox3
+            // tx_export_report
             // 
-            this.textBox3.Location = new System.Drawing.Point(74, 68);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(206, 21);
-            this.textBox3.TabIndex = 11;
+            this.tx_export_report.Location = new System.Drawing.Point(74, 68);
+            this.tx_export_report.Name = "tx_export_report";
+            this.tx_export_report.ReadOnly = true;
+            this.tx_export_report.Size = new System.Drawing.Size(206, 21);
+            this.tx_export_report.TabIndex = 11;
             // 
             // label3
             // 
@@ -214,13 +217,13 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "输出档案";
             // 
-            // textBox4
+            // tx_history_report
             // 
-            this.textBox4.Location = new System.Drawing.Point(74, 42);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(206, 21);
-            this.textBox4.TabIndex = 10;
+            this.tx_history_report.Location = new System.Drawing.Point(74, 42);
+            this.tx_history_report.Name = "tx_history_report";
+            this.tx_history_report.ReadOnly = true;
+            this.tx_history_report.Size = new System.Drawing.Size(206, 21);
+            this.tx_history_report.TabIndex = 10;
             // 
             // label4
             // 
@@ -233,12 +236,12 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox2);
-            this.groupBox5.Controls.Add(this.textBox1);
+            this.groupBox5.Controls.Add(this.tx_sn_begin);
+            this.groupBox5.Controls.Add(this.tx_sn_prefix);
             this.groupBox5.Controls.Add(this.label2);
             this.groupBox5.Controls.Add(this.label1);
-            this.groupBox5.Controls.Add(this.radioButton8);
-            this.groupBox5.Controls.Add(this.radioButton7);
+            this.groupBox5.Controls.Add(this.radio_sn_auto);
+            this.groupBox5.Controls.Add(this.radio_sn_manual);
             this.groupBox5.Location = new System.Drawing.Point(171, 2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(220, 101);
@@ -246,21 +249,21 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "待测物流水号";
             // 
-            // textBox2
+            // tx_sn_begin
             // 
-            this.textBox2.Location = new System.Drawing.Point(77, 76);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(137, 21);
-            this.textBox2.TabIndex = 9;
-            this.textBox2.Text = "0001";
+            this.tx_sn_begin.Location = new System.Drawing.Point(77, 76);
+            this.tx_sn_begin.Name = "tx_sn_begin";
+            this.tx_sn_begin.Size = new System.Drawing.Size(137, 21);
+            this.tx_sn_begin.TabIndex = 9;
+            this.tx_sn_begin.Text = "0001";
             // 
-            // textBox1
+            // tx_sn_prefix
             // 
-            this.textBox1.Location = new System.Drawing.Point(77, 50);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(137, 21);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "SN";
+            this.tx_sn_prefix.Location = new System.Drawing.Point(77, 50);
+            this.tx_sn_prefix.Name = "tx_sn_prefix";
+            this.tx_sn_prefix.Size = new System.Drawing.Size(137, 21);
+            this.tx_sn_prefix.TabIndex = 8;
+            this.tx_sn_prefix.Text = "SN";
             // 
             // label2
             // 
@@ -280,59 +283,62 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "流水号抬头";
             // 
-            // radioButton8
+            // radio_sn_auto
             // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Checked = true;
-            this.radioButton8.Location = new System.Drawing.Point(77, 20);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(47, 16);
-            this.radioButton8.TabIndex = 5;
-            this.radioButton8.TabStop = true;
-            this.radioButton8.Text = "自动";
-            this.radioButton8.UseVisualStyleBackColor = true;
+            this.radio_sn_auto.AutoSize = true;
+            this.radio_sn_auto.Checked = true;
+            this.radio_sn_auto.Location = new System.Drawing.Point(77, 20);
+            this.radio_sn_auto.Name = "radio_sn_auto";
+            this.radio_sn_auto.Size = new System.Drawing.Size(47, 16);
+            this.radio_sn_auto.TabIndex = 5;
+            this.radio_sn_auto.TabStop = true;
+            this.radio_sn_auto.Text = "自动";
+            this.radio_sn_auto.UseVisualStyleBackColor = true;
             // 
-            // radioButton7
+            // radio_sn_manual
             // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(6, 20);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(47, 16);
-            this.radioButton7.TabIndex = 4;
-            this.radioButton7.Text = "手动";
-            this.radioButton7.UseVisualStyleBackColor = true;
+            this.radio_sn_manual.AutoSize = true;
+            this.radio_sn_manual.Location = new System.Drawing.Point(6, 20);
+            this.radio_sn_manual.Name = "radio_sn_manual";
+            this.radio_sn_manual.Size = new System.Drawing.Size(47, 16);
+            this.radio_sn_manual.TabIndex = 4;
+            this.radio_sn_manual.Text = "手动";
+            this.radio_sn_manual.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btn_opt_ok
             // 
-            this.button1.Location = new System.Drawing.Point(348, 224);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "确定";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_opt_ok.Location = new System.Drawing.Point(348, 224);
+            this.btn_opt_ok.Name = "btn_opt_ok";
+            this.btn_opt_ok.Size = new System.Drawing.Size(75, 23);
+            this.btn_opt_ok.TabIndex = 3;
+            this.btn_opt_ok.Text = "确定";
+            this.btn_opt_ok.UseVisualStyleBackColor = true;
+            this.btn_opt_ok.Click += new System.EventHandler(this.btn_opt_ok_Click);
             // 
-            // button2
+            // btn_opt_cancel
             // 
-            this.button2.Location = new System.Drawing.Point(440, 224);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "取消";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn_opt_cancel.Location = new System.Drawing.Point(440, 224);
+            this.btn_opt_cancel.Name = "btn_opt_cancel";
+            this.btn_opt_cancel.Size = new System.Drawing.Size(75, 23);
+            this.btn_opt_cancel.TabIndex = 3;
+            this.btn_opt_cancel.Text = "取消";
+            this.btn_opt_cancel.UseVisualStyleBackColor = true;
+            this.btn_opt_cancel.Click += new System.EventHandler(this.btn_opt_cancel_Click);
             // 
             // DevOptSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(527, 257);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_opt_cancel);
+            this.Controls.Add(this.btn_opt_ok);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "DevOptSet";
             this.Text = "Operation Config Setup";
+            this.Load += new System.EventHandler(this.DevOptSet_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -350,27 +356,27 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.RadioButton radio_key_space;
+        private System.Windows.Forms.RadioButton radio_key_close;
+        private System.Windows.Forms.RadioButton radio_pro_only_pass;
+        private System.Windows.Forms.RadioButton radio_pro_next;
+        private System.Windows.Forms.RadioButton radio_pro_manual;
+        private System.Windows.Forms.RadioButton radio_pro_pass;
+        private System.Windows.Forms.ComboBox cmbo_format;
+        private System.Windows.Forms.TextBox tx_export_report;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tx_history_report;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tx_sn_begin;
+        private System.Windows.Forms.TextBox tx_sn_prefix;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioButton8;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton9;
-        private System.Windows.Forms.RadioButton radioButton10;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.RadioButton radio_sn_auto;
+        private System.Windows.Forms.RadioButton radio_sn_manual;
+        private System.Windows.Forms.RadioButton radio_save_param;
+        private System.Windows.Forms.RadioButton radio_save_date;
+        private System.Windows.Forms.Button btn_opt_ok;
+        private System.Windows.Forms.Button btn_opt_cancel;
     }
 }

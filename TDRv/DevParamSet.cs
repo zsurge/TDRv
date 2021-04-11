@@ -476,11 +476,14 @@ namespace TDRv
 
                 DataGridViewRow row = (DataGridViewRow)e.Data.GetData(typeof(DataGridViewRow));
                 dgv_param.Rows.Remove(row);
-                //selectionIdx = idx;
+                selectionIdx = idx;
                 //dgv_param.Rows.Insert(idx, row);
 
                 DataRow dataRow = (row.DataBoundItem as DataRowView).Row;
-                selectionIdx = idx;
+
+                //DataRow dataRow = (row.DataBoundItem as DataRowView).Row;
+                //selectionIdx = idx;
+
                 dt.Rows.InsertAt(dataRow, idx);
 
             }

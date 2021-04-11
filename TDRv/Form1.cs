@@ -25,12 +25,14 @@ namespace TDRv
         //设置参数设置窗体的表数据
         DataTable gdt;
 
+        //获取当前
         public string exPortFilePath = string.Empty;
         public const int SINGLE = 1;
         public const int DIFFERENCE = 2;
         public int gSerialInc = 0;
         E5080B analyzer = new E5080B();
 
+     
         List<TestResult> paramList = new List<TestResult>();
         public static int gCurrentIndex = 0;
 
@@ -206,7 +208,6 @@ namespace TDRv
             {
                 dgv_CurrentResult.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            
         }
 
         private void initChart()
@@ -633,6 +634,7 @@ namespace TDRv
             if (optStatus.isConnect && optStatus.isGetIndex)
             {
                 startMeasuration(paramList[measIndex.currentIndex].DevMode);
+                dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
                 upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
                 measIndex.incIndex();
             }
@@ -767,6 +769,13 @@ namespace TDRv
                     }
                 }
             }
+        }
+
+        //鼠标点击单元框选，更改测试次序
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //这里好像有BUG
+            measIndex.currentIndex =  dataGridView1.CurrentCell.RowIndex;
         }
     }//end form
 
