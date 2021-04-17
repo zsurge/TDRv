@@ -27,14 +27,21 @@ namespace TDRv
 
         //获取当前
         public string exPortFilePath = string.Empty;
+
+        //单端
         public const int SINGLE = 1;
+
+        //差分
         public const int DIFFERENCE = 2;
+
+        //流水
         public int gSerialInc = 0;
+
         E5080B analyzer = new E5080B();
 
      
+        //配方列表
         List<TestResult> paramList = new List<TestResult>();
-        public static int gCurrentIndex = 0;
 
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
@@ -197,6 +204,9 @@ namespace TDRv
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //获取序列号起始值
+            gSerialInc =  Convert.ToInt32(optParam.snBegin);
+
             initChart();
 
             //禁止列排序
@@ -320,6 +330,7 @@ namespace TDRv
                 if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
                 {            
                     MeasPosition.tdd22IndexValue = i - 1;
+                    //这里需要将开路定义后的索引写入到配方的XML文件中去
                     break;
                 }
             }
@@ -343,6 +354,7 @@ namespace TDRv
                 if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
                 {
                     MeasPosition.tdd11IndexValue = i - 1;
+                    //这里需要将开路定义后的索引写入到配方的XML文件中去
                     break;
                 }
             }
@@ -354,6 +366,14 @@ namespace TDRv
  
             CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="measBuff">量测的数据</param>
+        /// <param name="index">开路的位置</param>
+        /// <param name="mode">测试模式 单端or差分</param>
+        /// <returns></returns>
         private List<float> packetMaesData(string measBuff, int index, int mode)
         {
             List<float> result = new List<float>();
@@ -364,11 +384,6 @@ namespace TDRv
 
             if (mode == 1) //单端模式
             {
-                //for (i = index; i < tmpArray.Length; i++)
-                //{
-                //    //logger.Info(tmpArray[i]);
-                //}
-
                 for (i = index; i < tmpArray.Length; i++)
                 {
                     tmp = Convert.ToSingle(tmpArray[i]);
@@ -472,7 +487,8 @@ namespace TDRv
         /// <summary>
         /// 创建量测时的图表
         /// </summary>
-        /// <param name="measData"></param>
+        /// <param name="measData">量测试的数据</param>
+        /// <param name="channel">单端OR差分</param>
         private void CreateMeasChart(List<float> measData, int channel)
         {
             float xbegin = 0;
@@ -581,6 +597,7 @@ namespace TDRv
             }
             analyzer.ExecuteCmd(cmd1);
 
+            result = string.Empty;
             cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
             analyzer.QueryCommand(cmd2, out result, 256);
      
@@ -594,6 +611,7 @@ namespace TDRv
             analyzer.ExecuteCmd(cmd5);
             analyzer.viClear();
 
+            result = string.Empty;
             cmd6 = ":CALCulate1:DATA? FDATa";
             analyzer.QueryCommand(cmd6, out result, 200000);
 
@@ -604,9 +622,67 @@ namespace TDRv
             analyzer.QueryErrorStatus(out result);
         }
 
-        private void upgradeTestResult(int channel)
+        /// <summary>
+        /// 字符串转浮点型数据
+        /// </summary>
+        /// <param name="FloatString">浮点型字符串</param>
+        /// <returns>转换后的浮点数据</returns>
+        public float StrToFloat(object FloatString)
         {
+            float result;
+            if (FloatString != null)
+            {
+                if (float.TryParse(FloatString.ToString(), out result))
+                    return result;
+                else
+                {
+                    return (float)0.00;
+                }
+            }
+            else
+            {
+                return (float)0.00;
+            }
+        }
+
+        /// <summary>
+        /// 更新测试结果到datagridview中去
+        /// </summary>
+        /// <param name="channel">这个好像不需要？</param>
+        private bool upgradeTestResult(int channel)
+        {
+            bool ret = false;          
+
+            float avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //平均值
+            float max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //最大值
+            float min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //最小值
+
+            //这里需要添加对比
+            if (avg > max || avg < min)
+            {
+                //测试不通过
+                ret = false;
+
+                //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
+                if (optParam.testMode == 4)
+                {                   
+                    return ret;
+                }
+            }
+
             int index = this.dgv_CurrentResult.Rows.Add();
+            if (avg < max && avg > min)
+            {
+                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";
+                ret = true;
+            }
+            else
+            {
+                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
+                ret = false;
+            }
+
+            
             this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;
             this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;
             this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;
@@ -615,28 +691,55 @@ namespace TDRv
             this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
             this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
 
-            //这里需要添加对比
+            if (measIndex.currentIndex == 0)
+            {
+                gSerialInc ++;
+            }
+            this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0');
 
-
-            this.dgv_CurrentResult.Rows[index].Cells[7].Value = "这里等下再比较";
-            this.dgv_CurrentResult.Rows[index].Cells[8].Value = "SN" + (gSerialInc++).ToString().PadLeft(6, '0');
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");
             this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss"); 
             this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;
             this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data;
-            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image;       
+            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image;
+
+            return ret;
         }
 
         
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
+            bool ret = false;
+
             if (optStatus.isConnect && optStatus.isGetIndex)
             {
+                //量测并生成图表
                 startMeasuration(paramList[measIndex.currentIndex].DevMode);
+
+                //高亮显示相应测试配方的那一行
                 dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
-                upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
-                measIndex.incIndex();
+
+                //更新测试数据到主界面测试结果中
+                ret = upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
+
+                if (optParam.testMode == 3)
+                {
+                    //量测配方参数依次向后移
+                    measIndex.incIndex();
+                }
+                else if (optParam.testMode == 1 || optParam.testMode == 4)
+                {
+                    if (ret)
+                    {
+                        //量测配方参数依次向后移
+                        measIndex.incIndex();
+                    }
+                }
+                else if (optParam.testMode == 2)
+                {
+                    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+                }
             }
             else
             {
@@ -650,11 +753,13 @@ namespace TDRv
             dgv_CurrentResult.Rows.Clear();
         }
 
+        //删除选中的测试结果
         private void tsmi_delselect_Click(object sender, EventArgs e)
         {
             dgv_CurrentResult.Rows.Remove(dgv_CurrentResult.CurrentRow);
         }
 
+        //输出测试报告
         private void tsmi_export_Click(object sender, EventArgs e)
         {
             DataGridViewToExcel(dgv_CurrentResult);
@@ -739,15 +844,18 @@ namespace TDRv
         {
             if (e.KeyCode == Keys.Space)
             {
-                if (optStatus.isConnect && optStatus.isGetIndex)
+                if (optParam.keyMode == 1)
                 {
-                    startMeasuration(paramList[measIndex.currentIndex].DevMode);
-                    upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
-                    measIndex.incIndex();
-                }
-                else
-                {
-                    MessageBox.Show("设备未连接或者未开路");
+                    if (optStatus.isConnect && optStatus.isGetIndex)
+                    {
+                        startMeasuration(paramList[measIndex.currentIndex].DevMode);
+                        upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
+                        measIndex.incIndex();
+                    }
+                    else
+                    {
+                        MessageBox.Show("设备未连接或者未开路");
+                    }
                 }
             }
         }
@@ -771,12 +879,22 @@ namespace TDRv
             }
         }
 
-        //鼠标点击单元框选，更改测试次序
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //这里好像有BUG
-            measIndex.currentIndex =  dataGridView1.CurrentCell.RowIndex;
+        //鼠标点击单元框选，更改测试次序,同时对比LIMIT里，需要对比相应的LIMIT
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {  
+            if (e.RowIndex > -1)
+            {
+                //手动测试模式，只测试当前选中那一笔
+                if (optParam.testMode == 2)
+                {
+                    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+                }
+                //measIndex.currentIndex = dataGridView1.CurrentRow.Index; //获得包含当前单元格的行的索引 
+            }
         }
+
+        
+
     }//end form
 
     public class MeasIndex

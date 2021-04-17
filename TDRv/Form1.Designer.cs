@@ -640,37 +640,47 @@
             this.mDescription,
             this.mLayer});
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(237, 398);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // mFlag
             // 
             this.mFlag.HeaderText = "Flag";
             this.mFlag.Name = "mFlag";
+            this.mFlag.ReadOnly = true;
+            this.mFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.mFlag.Width = 54;
             // 
             // mStep
             // 
             this.mStep.HeaderText = "Step";
             this.mStep.Name = "mStep";
+            this.mStep.ReadOnly = true;
+            this.mStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.mStep.Width = 54;
             // 
             // mDescription
             // 
             this.mDescription.HeaderText = "Description";
             this.mDescription.Name = "mDescription";
+            this.mDescription.ReadOnly = true;
+            this.mDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.mDescription.Width = 96;
             // 
             // mLayer
             // 
             this.mLayer.HeaderText = "Layer";
             this.mLayer.Name = "mLayer";
+            this.mLayer.ReadOnly = true;
+            this.mLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.mLayer.Width = 60;
             // 
             // splitContainer1
@@ -790,10 +800,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn hRemark;
         private System.Windows.Forms.DataGridViewTextBoxColumn hSD;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mFlag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mStep;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mDescription;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mLayer;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.DataGridViewTextBoxColumn cLayer;
@@ -810,6 +816,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cSeDiff;
         private System.Windows.Forms.DataGridViewTextBoxColumn cCurveData;
         private System.Windows.Forms.DataGridViewTextBoxColumn cCurveImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mFlag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mStep;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mLayer;
     }
 }
 

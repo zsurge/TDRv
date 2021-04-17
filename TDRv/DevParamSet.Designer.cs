@@ -34,7 +34,6 @@
             this.tsb_measure_loadXml = new System.Windows.Forms.ToolStripButton();
             this.tsb_save_xml = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.tsb_add_param = new System.Windows.Forms.ToolStripButton();
             this.tsb_copy_param = new System.Windows.Forms.ToolStripButton();
             this.tsb_del_param = new System.Windows.Forms.ToolStripButton();
@@ -140,7 +139,6 @@
             this.tsb_measure_loadXml,
             this.tsb_save_xml,
             this.toolStripSeparator1,
-            this.toolStripButton4,
             this.tsb_add_param,
             this.tsb_copy_param,
             this.tsb_del_param});
@@ -187,16 +185,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(78, 36);
-            this.toolStripButton4.Text = "编辑";
             // 
             // tsb_add_param
             // 
@@ -688,9 +676,9 @@
             this.groupBox3.Controls.Add(this.radio_p_diff);
             this.groupBox3.Controls.Add(this.radio_p_single);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(6, 494);
+            this.groupBox3.Location = new System.Drawing.Point(596, 241);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(329, 66);
+            this.groupBox3.Size = new System.Drawing.Size(205, 66);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "量测通道";
@@ -706,6 +694,7 @@
             this.radio_p_diff.TabStop = true;
             this.radio_p_diff.Text = "差分";
             this.radio_p_diff.UseVisualStyleBackColor = true;
+            this.radio_p_diff.CheckedChanged += new System.EventHandler(this.radio_p_diff_CheckedChanged);
             // 
             // radio_p_single
             // 
@@ -716,6 +705,7 @@
             this.radio_p_single.TabIndex = 2;
             this.radio_p_single.Text = "单端";
             this.radio_p_single.UseVisualStyleBackColor = true;
+            this.radio_p_single.CheckedChanged += new System.EventHandler(this.radio_p_single_CheckedChanged);
             // 
             // label5
             // 
@@ -737,7 +727,7 @@
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.tx_p_Index);
             this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Location = new System.Drawing.Point(341, 291);
+            this.groupBox4.Location = new System.Drawing.Point(353, 241);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(231, 112);
             this.groupBox4.TabIndex = 4;
@@ -835,9 +825,9 @@
             this.groupBox5.Controls.Add(this.label18);
             this.groupBox5.Controls.Add(this.tx_p_highLimit);
             this.groupBox5.Controls.Add(this.label17);
-            this.groupBox5.Location = new System.Drawing.Point(341, 406);
+            this.groupBox5.Location = new System.Drawing.Point(353, 359);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(231, 154);
+            this.groupBox5.Size = new System.Drawing.Size(231, 129);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "边界设定";
@@ -959,9 +949,9 @@
             this.groupBox6.Controls.Add(this.label20);
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.tx_p_yOffset);
-            this.groupBox6.Location = new System.Drawing.Point(578, 245);
+            this.groupBox6.Location = new System.Drawing.Point(597, 384);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(231, 70);
+            this.groupBox6.Size = new System.Drawing.Size(205, 70);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Y轴 自定补偿";
@@ -1003,9 +993,9 @@
             // 
             this.groupBox7.Controls.Add(this.radio_p_tag_point);
             this.groupBox7.Controls.Add(this.radio_p_tag_avg);
-            this.groupBox7.Location = new System.Drawing.Point(341, 246);
+            this.groupBox7.Location = new System.Drawing.Point(597, 326);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(231, 39);
+            this.groupBox7.Size = new System.Drawing.Size(205, 39);
             this.groupBox7.TabIndex = 6;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "待测物判定";
@@ -1034,7 +1024,7 @@
             // 
             // btn_update
             // 
-            this.btn_update.Location = new System.Drawing.Point(732, 337);
+            this.btn_update.Location = new System.Drawing.Point(726, 461);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(75, 23);
             this.btn_update.TabIndex = 7;
@@ -1044,7 +1034,7 @@
             // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(638, 337);
+            this.btn_cancel.Location = new System.Drawing.Point(597, 461);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(75, 23);
             this.btn_cancel.TabIndex = 8;
@@ -1056,7 +1046,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 569);
+            this.ClientSize = new System.Drawing.Size(813, 503);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.groupBox7);
@@ -1106,7 +1096,6 @@
         private System.Windows.Forms.ToolStripButton tsb_measure_loadXml;
         private System.Windows.Forms.ToolStripButton tsb_save_xml;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton tsb_add_param;
         private System.Windows.Forms.ToolStripButton tsb_copy_param;
         private System.Windows.Forms.ToolStripButton tsb_del_param;

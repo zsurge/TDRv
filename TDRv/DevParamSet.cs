@@ -20,6 +20,8 @@ namespace TDRv
             this.tmpDt = tmp;
         }
 
+        public bool clickFlag = false;
+
         DataTable tmpDt;
 
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
@@ -136,86 +138,111 @@ namespace TDRv
         //新增或者是新添加一行
         private void CreateOrAddRow()
         {
-            if (dgv_param.DataSource == null)
+            if (dgv_param.Rows.Count == 0) 
             {
-                int index = this.dgv_param.Rows.Add();
-                this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
-                this.dgv_param.Rows[index].Cells[1].Value = dp.TestStep.ToString();
-                dp.TestStep += 1;
-                this.dgv_param.Rows[index].Cells[2].Value = dp.Description;
-                this.dgv_param.Rows[index].Cells[3].Value = dp.Layer;
-                this.dgv_param.Rows[index].Cells[4].Value = dp.Remark;
-                this.dgv_param.Rows[index].Cells[5].Value = dp.ImpedanceDefine;
-                this.dgv_param.Rows[index].Cells[6].Value = dp.ImpedanceLimitLower;
-                this.dgv_param.Rows[index].Cells[7].Value = dp.ImpedanceLimitUpper;
-                this.dgv_param.Rows[index].Cells[8].Value = dp.ImpedanceLimitUnit;
-                this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
-                this.dgv_param.Rows[index].Cells[10].Value = dp.InputMode;
-                this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
-                this.dgv_param.Rows[index].Cells[12].Value = dp.TestFromThreshold;
-                this.dgv_param.Rows[index].Cells[13].Value = dp.TestToThreshold;
-                this.dgv_param.Rows[index].Cells[14].Value = dp.OpenThreshold;
-                this.dgv_param.Rows[index].Cells[15].Value = dp.TraceStartPosition;
-                this.dgv_param.Rows[index].Cells[16].Value = dp.TraceEndPosition;
-                this.dgv_param.Rows[index].Cells[17].Value = dp.CalibratedTimeScale;
-                this.dgv_param.Rows[index].Cells[18].Value = dp.CalibrateOffset;
-                this.dgv_param.Rows[index].Cells[19].Value = dp.RecordPath;
-                this.dgv_param.Rows[index].Cells[20].Value = dp.SaveCurve;
-                this.dgv_param.Rows[index].Cells[21].Value = dp.SaveImage;
-                this.dgv_param.Rows[index].Cells[22].Value = dp.DielectricConstant;
-                this.dgv_param.Rows[index].Cells[23].Value = dp.DataPointCheck;
+                if (dgv_param.DataSource == null)
+                {
+                    int index = this.dgv_param.Rows.Add();
+                    this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
+                    this.dgv_param.Rows[index].Cells[1].Value = dp.TestStep.ToString();
+                    dp.TestStep += 1;
+                    this.dgv_param.Rows[index].Cells[2].Value = dp.Description;
+                    this.dgv_param.Rows[index].Cells[3].Value = dp.Layer;
+                    this.dgv_param.Rows[index].Cells[4].Value = dp.Remark;
+                    this.dgv_param.Rows[index].Cells[5].Value = dp.ImpedanceDefine;
+                    this.dgv_param.Rows[index].Cells[6].Value = dp.ImpedanceLimitLower;
+                    this.dgv_param.Rows[index].Cells[7].Value = dp.ImpedanceLimitUpper;
+                    this.dgv_param.Rows[index].Cells[8].Value = dp.ImpedanceLimitUnit;
+                    this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
+                    this.dgv_param.Rows[index].Cells[10].Value = dp.InputMode;
+                    this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
+                    this.dgv_param.Rows[index].Cells[12].Value = dp.TestFromThreshold;
+                    this.dgv_param.Rows[index].Cells[13].Value = dp.TestToThreshold;
+                    this.dgv_param.Rows[index].Cells[14].Value = dp.OpenThreshold;
+                    this.dgv_param.Rows[index].Cells[15].Value = dp.TraceStartPosition;
+                    this.dgv_param.Rows[index].Cells[16].Value = dp.TraceEndPosition;
+                    this.dgv_param.Rows[index].Cells[17].Value = dp.CalibratedTimeScale;
+                    this.dgv_param.Rows[index].Cells[18].Value = dp.CalibrateOffset;
+                    this.dgv_param.Rows[index].Cells[19].Value = dp.RecordPath;
+                    this.dgv_param.Rows[index].Cells[20].Value = dp.SaveCurve;
+                    this.dgv_param.Rows[index].Cells[21].Value = dp.SaveImage;
+                    this.dgv_param.Rows[index].Cells[22].Value = dp.DielectricConstant;
+                    this.dgv_param.Rows[index].Cells[23].Value = dp.DataPointCheck;
+                }
+                else
+                {
+                    string[] rowVals = new string[24];
+                    rowVals[0] = dp.Id;
+                    rowVals[1] = dp.TestStep.ToString();
+                    dp.TestStep += 1;
+                    rowVals[2] = dp.Description;
+                    rowVals[3] = dp.Layer;
+                    rowVals[4] = dp.Remark;
+                    rowVals[5] = dp.ImpedanceDefine;
+                    rowVals[6] = dp.ImpedanceLimitLower;
+                    rowVals[7] = dp.ImpedanceLimitUpper;
+                    rowVals[8] = dp.ImpedanceLimitUnit;
+                    rowVals[9] = dp.InputChannel;
+                    rowVals[10] = dp.InputMode;
+                    rowVals[11] = dp.TestMethod;
+                    rowVals[12] = dp.TestFromThreshold;
+                    rowVals[13] = dp.TestToThreshold;
+                    rowVals[14] = dp.OpenThreshold;
+                    rowVals[15] = dp.TraceStartPosition;
+                    rowVals[16] = dp.TraceEndPosition;
+                    rowVals[17] = dp.CalibratedTimeScale;
+                    rowVals[18] = dp.CalibrateOffset;
+                    rowVals[19] = dp.RecordPath;
+                    rowVals[20] = dp.SaveCurve;
+                    rowVals[21] = dp.SaveImage;
+                    rowVals[22] = dp.DielectricConstant;
+                    rowVals[23] = dp.DataPointCheck;
+                    ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
+                }
             }
             else
             {
-                string[] rowVals = new string[24];
-                rowVals[0] = dp.Id;
-                rowVals[1] = dp.TestStep.ToString();
-                dp.TestStep += 1;
-                rowVals[2] = dp.Description;
-                rowVals[3] = dp.Layer;
-                rowVals[4] = dp.Remark;
-                rowVals[5] = dp.ImpedanceDefine;
-                rowVals[6] = dp.ImpedanceLimitLower;
-                rowVals[7] = dp.ImpedanceLimitUpper;
-                rowVals[8] = dp.ImpedanceLimitUnit;
-                rowVals[9] = dp.InputChannel;
-                rowVals[10] = dp.InputMode;
-                rowVals[11] = dp.TestMethod;
-                rowVals[12] = dp.TestFromThreshold;
-                rowVals[13] = dp.TestToThreshold;
-                rowVals[14] = dp.OpenThreshold;
-                rowVals[15] = dp.TraceStartPosition;
-                rowVals[16] = dp.TraceEndPosition;
-                rowVals[17] = dp.CalibratedTimeScale;
-                rowVals[18] = dp.CalibrateOffset;
-                rowVals[19] = dp.RecordPath;
-                rowVals[20] = dp.SaveCurve;
-                rowVals[21] = dp.SaveImage;
-                rowVals[22] = dp.DielectricConstant;
-                rowVals[23] = dp.DataPointCheck;
-                ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
-            }
-        }
+                if (dgv_param.DataSource == null)
+                {
+                    int index = dgv_param.Rows.Add();//添加一行
+
+                    DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
+
+                    //添加一新行，并把数据赋值给新行
+                    for (int i = 0; i < row.Cells.Count; i++)
+                    {
+                        dgv_param.Rows[index].Cells[i].Value = row.Cells[i].Value;
+                    }
+                }
+                else
+                {
+                    DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
+                    string[] rowVals = new string[24];
+
+                    //添加一新行，并把数据赋值给新行
+                    for (int i = 0; i < row.Cells.Count; i++)
+                    {
+                        rowVals[i] = row.Cells[i].Value.ToString();
+                    }
+                    ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
+                }
+            }//end dgv_param.Rows.Count == 0
+        }//end CreateOrAddRow
+
         //增加一行
         private void tsb_add_param_Click(object sender, EventArgs e)
         {
-            // int index = dgv_param.Rows.Add();
-
-            //string[] defaultValue = { "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20" ,"20", "20", "20", "20", "20", "20", "20" };
-
-            //dgv_param.Rows.Add(defaultValue); 
-
             CreateOrAddRow();
         }
 
         //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
-            int index = dgv_param.Rows.Add();
-            DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index];    
-            //DataRow dr = ((DataTable)dgv_param.DataSource).NewRow();
-            //((DataTable)dgv_param.DataSource).Rows.Add(row);
+            int index = dgv_param.Rows.Add();//添加一行
 
+            DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
+
+            //添加一新行，并把数据赋值给新行
             for(int i=0;i<row.Cells.Count;i++)
             {
                 dgv_param.Rows[index].Cells[i].Value = row.Cells[i].Value;
@@ -241,6 +268,8 @@ namespace TDRv
                 tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
 
                 string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
+
+                clickFlag = true;
                 if (string.Compare(units, "ohms", true) == 0)
                 {
                     radio_units_ohm.Checked = true;
@@ -263,6 +292,7 @@ namespace TDRv
                 {
                     radio_p_single.Checked = true;
                 }
+                
 
                 tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
                 tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
@@ -334,8 +364,16 @@ namespace TDRv
                 lab_highlimit_unit.Text = "欧姆";
                 lab_lowlimit_unit.Text = "欧姆";
 
+                if (clickFlag)
+                {
+                    clickFlag = false;
+                    return;
+                }
+
                 tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+
+                tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+         
             }
         }
 
@@ -346,8 +384,16 @@ namespace TDRv
                 label15.Text = "%";
                 lab_highlimit_unit.Text = "%";
                 lab_lowlimit_unit.Text = "%";
+
+                if (clickFlag)
+                {
+                    clickFlag = false;
+                    return;
+                }
+
                 tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();               
+             
             }
         }
 
@@ -436,6 +482,8 @@ namespace TDRv
 
         private void DevParamSet_Load(object sender, EventArgs e)
         {
+            
+
             //禁止列排序
             for (int i = 0; i < dgv_param.Columns.Count; i++)
             {
@@ -519,5 +567,36 @@ namespace TDRv
         }
         #endregion
 
+        private void radio_p_single_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radio_p_single.Checked)
+            {
+                if (clickFlag)
+                {
+                    clickFlag = false;
+                    return;
+                }
+
+                tx_p_Description.Text = "50";
+                tx_p_Index.Text = "125";
+                tx_p_TargetValue.Text = "50";
+            }
+        }
+
+        private void radio_p_diff_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radio_p_diff.Checked)
+            {
+                if (clickFlag)
+                {
+                    clickFlag = false;
+                    return;
+                }
+
+                tx_p_Description.Text = "100";
+                tx_p_Index.Text = "200";
+                tx_p_TargetValue.Text = "100";
+            }
+        }
     }//end class
 }//end namespace
