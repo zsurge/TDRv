@@ -30,6 +30,9 @@ namespace TDRv
         //报告的存储方式 1按日期；2.按量测参数
         public static int exportMode { get; set; } = 1;
 
+        //补偿值
+        public static string offsetValue { get; set; } = "";
+
         //历史报告的默认文件名
         public static string historyExportFileName { get; set; } = "TDR_Project_History";
 

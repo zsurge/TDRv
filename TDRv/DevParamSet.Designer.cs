@@ -988,6 +988,7 @@
             this.tx_p_yOffset.Name = "tx_p_yOffset";
             this.tx_p_yOffset.Size = new System.Drawing.Size(70, 21);
             this.tx_p_yOffset.TabIndex = 5;
+            this.tx_p_yOffset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tx_p_yOffset_KeyPress);
             // 
             // groupBox7
             // 

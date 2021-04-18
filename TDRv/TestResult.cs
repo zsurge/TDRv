@@ -9,24 +9,24 @@ namespace TDRv
     class TestResult
     {
         private string layer = string.Empty; //这个是配方上显示的layer，跟current_index不是同一个概念
-        private string upper_limit = string.Empty;
-        private string low_limit = string.Empty;
-        private string spec = string.Empty;        
-        private string average = string.Empty;
-        private string max = string.Empty;
-        private string min = string.Empty;
-        private string serial = string.Empty;
-        private string result = string.Empty;
-        private string date = string.Empty;
-        private string time = string.Empty;
-        private string mode = string.Empty;
-        private string std = string.Empty;
-        private string curve_data = string.Empty;
-        private string curve_image = string.Empty;
+        private string upper_limit = string.Empty; //最大上限比例 
+        private string low_limit = string.Empty;  //最小下限比例
+        private string spec = string.Empty;        //标准值
+        private string average = string.Empty;   //设备计算出的平均值
+        private string max = string.Empty;      //设备计算出的最大值
+        private string min = string.Empty;      //设备计算出的最小值
+        private string serial = string.Empty;   //序列号
+        private string result = string.Empty;   //测试结果 
+        private string date = string.Empty;     //测试日期
+        private string time = string.Empty;     //测试时间
+        private string mode = string.Empty;    //为区分当前测试模式是单端还是差分
+        private string std = string.Empty;      //区分是测试模式是平均还是每个点
+        private string curve_data = string.Empty;   //报告存储位置
+        private string curve_image = string.Empty;  //截图存储位置
         private string valid_begin = string.Empty; //有效的起始量测位置
         private string valid_end = string.Empty;    //有效的结束量测位置
         private int devmode = 0;        //为区分当前测试模式是单端还是差分
-        private int current_index = 0;   //当前配方的索引,配方有几层，每块板子都要测试几条数据，由该参数来决定当前层的测试要求和测试结果
+        private int total_item = 0;   //当前配方的总的条数
 
         public string Layer
         {
@@ -123,10 +123,10 @@ namespace TDRv
             get { return curve_image; }
             set { curve_image = value; }
         }
-        public int Current_Index
+        public int Total_Item
         {
-            get { return current_index; }
-            set { current_index = value; }
+            get { return total_item; }
+            set { total_item = value; }
         }
     }
 }

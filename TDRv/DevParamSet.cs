@@ -143,9 +143,8 @@ namespace TDRv
                 if (dgv_param.DataSource == null)
                 {
                     int index = this.dgv_param.Rows.Add();
-                    this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
-                    this.dgv_param.Rows[index].Cells[1].Value = dp.TestStep.ToString();
-                    dp.TestStep += 1;
+                    this.dgv_param.Rows[index].Cells[0].Value = dp.Id;               
+                    this.dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();          
                     this.dgv_param.Rows[index].Cells[2].Value = dp.Description;
                     this.dgv_param.Rows[index].Cells[3].Value = dp.Layer;
                     this.dgv_param.Rows[index].Cells[4].Value = dp.Remark;
@@ -173,8 +172,7 @@ namespace TDRv
                 {
                     string[] rowVals = new string[24];
                     rowVals[0] = dp.Id;
-                    rowVals[1] = dp.TestStep.ToString();
-                    dp.TestStep += 1;
+                    rowVals[1] = (dp.TestStep++).ToString();
                     rowVals[2] = dp.Description;
                     rowVals[3] = dp.Layer;
                     rowVals[4] = dp.Remark;
@@ -213,6 +211,11 @@ namespace TDRv
                     {
                         dgv_param.Rows[index].Cells[i].Value = row.Cells[i].Value;
                     }
+
+
+                    //更新STEP
+                    dp.TestStep = dgv_param.Rows.Count+1;
+                    dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
                 }
                 else
                 {
@@ -224,9 +227,14 @@ namespace TDRv
                     {
                         rowVals[i] = row.Cells[i].Value.ToString();
                     }
+                    //更新STEP
+                    dp.TestStep = dgv_param.Rows.Count+1;
+                    rowVals[1] = (dp.TestStep++).ToString();
                     ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
                 }
             }//end dgv_param.Rows.Count == 0
+
+            dgv_param.CurrentCell = dgv_param.Rows[this.dgv_param.Rows.Count - 1].Cells[0];
         }//end CreateOrAddRow
 
         //增加一行
@@ -238,15 +246,39 @@ namespace TDRv
         //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
-            int index = dgv_param.Rows.Add();//添加一行
-
-            DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
-
-            //添加一新行，并把数据赋值给新行
-            for(int i=0;i<row.Cells.Count;i++)
+            if (dgv_param.DataSource == null)
             {
-                dgv_param.Rows[index].Cells[i].Value = row.Cells[i].Value;
+                int index = dgv_param.Rows.Add();//添加一行
+
+                DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
+
+                //添加一新行，并把数据赋值给新行
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    dgv_param.Rows[index].Cells[i].Value = row.Cells[i].Value;
+                }
+
+                //更新STEP
+                dp.TestStep = dgv_param.Rows.Count+1;
+                dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
             }
+            else
+            {
+                DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
+                string[] rowVals = new string[24];
+
+                //添加一新行，并把数据赋值给新行
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    rowVals[i] = row.Cells[i].Value.ToString();
+                }
+                //更新STEP
+                dp.TestStep = dgv_param.Rows.Count + 1;
+                rowVals[1] = (dp.TestStep++).ToString();
+                ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
+            }
+
+            dgv_param.CurrentCell = dgv_param.Rows[this.dgv_param.Rows.Count - 1].Cells[0];
         }
 
         //删除选中行
@@ -259,6 +291,7 @@ namespace TDRv
         {
             if (e.RowIndex > -1)
             {
+                initControl(true);
                 tx_p_testSn.Text = (e.RowIndex+1).ToString();
                 tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
                 tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
@@ -335,7 +368,7 @@ namespace TDRv
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
-            TranToParentForm();
+            //TranToParentForm();
         }
 
         //选择要保存文件的地址
@@ -412,8 +445,8 @@ namespace TDRv
             this.dgv_param.Rows[index].Cells[3].Value = tx_p_Layer.Text;
             this.dgv_param.Rows[index].Cells[4].Value = tx_p_Remark.Text;
             this.dgv_param.Rows[index].Cells[5].Value = tx_p_TargetValue.Text;
-            this.dgv_param.Rows[index].Cells[6].Value = tx_p_highLimit.Text;
-            this.dgv_param.Rows[index].Cells[7].Value = tx_p_lowLimit.Text;
+            this.dgv_param.Rows[index].Cells[6].Value = tx_p_lowLimit.Text;
+            this.dgv_param.Rows[index].Cells[7].Value = tx_p_highLimit.Text;
 
             if (radio_units_ohm.Checked)
             {
@@ -437,9 +470,9 @@ namespace TDRv
 
             this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
 
-            this.dgv_param.Rows[index].Cells[12].Value = tx_p_highLimit.Text;
+            this.dgv_param.Rows[index].Cells[12].Value = tx_p_begin.Text;
 
-            this.dgv_param.Rows[index].Cells[13].Value = tx_p_lowLimit.Text;
+            this.dgv_param.Rows[index].Cells[13].Value = tx_p_end.Text;
             this.dgv_param.Rows[index].Cells[14].Value = tx_p_Index.Text;
             this.dgv_param.Rows[index].Cells[15].Value = "0";
             this.dgv_param.Rows[index].Cells[16].Value = "0";
@@ -480,10 +513,17 @@ namespace TDRv
         
         }
 
+        private void initControl(bool en_disable)
+        {
+            btn_cancel.Enabled = en_disable;
+            btn_update.Enabled = en_disable;
+            radio_units_ohm.Enabled = en_disable;
+            radio_units_percent.Enabled = en_disable;
+        }
+
         private void DevParamSet_Load(object sender, EventArgs e)
         {
-            
-
+            initControl(false);
             //禁止列排序
             for (int i = 0; i < dgv_param.Columns.Count; i++)
             {
@@ -491,6 +531,8 @@ namespace TDRv
             }
 
             dgv_param.DataSource = tmpDt;
+
+            optParam.offsetValue = tx_p_yOffset.Text;
 
         }
         #region -支持鼠标拖拽
@@ -597,6 +639,62 @@ namespace TDRv
                 tx_p_Index.Text = "200";
                 tx_p_TargetValue.Text = "100";
             }
+        }
+
+        private void tx_p_yOffset_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //数字、小数点（最大到2位）、退格键、负号
+            if ((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != (char)('.') && e.KeyChar != (char)('-'))
+            {
+                e.Handled = true;
+            }
+            if (e.KeyChar == (char)('-'))
+            {
+                if ((sender as TextBox).Text != "")
+                {
+                    e.Handled = true;
+                }
+            }
+            //第1位是负号时候、第2位小数点不可
+            if (((TextBox)sender).Text == "-" && e.KeyChar == (char)('.'))
+            {
+                e.Handled = true;
+            }
+            //负号只能1次
+            if (e.KeyChar == 45 && (((TextBox)sender).SelectionStart != 0 || ((TextBox)sender).Text.IndexOf("-") >= 0))
+                e.Handled = true;
+            //第1位小数点不可
+            if (e.KeyChar == (char)('.') && ((TextBox)sender).Text == "")
+            {
+                e.Handled = true;
+            }
+            //小数点只能1次
+            if (e.KeyChar == (char)('.') && ((TextBox)sender).Text.IndexOf('.') != -1)
+            {
+                e.Handled = true;
+            }
+            //小数点（最大到2位）   
+            if (e.KeyChar != '\b' && (((TextBox)sender).SelectionStart) > (((TextBox)sender).Text.LastIndexOf('.')) + 2 && ((TextBox)sender).Text.IndexOf(".") >= 0)
+                e.Handled = true;
+            //光标在小数点右侧时候判断  
+            if (e.KeyChar != '\b' && ((TextBox)sender).SelectionStart >= (((TextBox)sender).Text.LastIndexOf('.')) && ((TextBox)sender).Text.IndexOf(".") >= 0)
+            {
+                if ((((TextBox)sender).SelectionStart) == (((TextBox)sender).Text.LastIndexOf('.')) + 1)
+                {
+                    if ((((TextBox)sender).Text.Length).ToString() == (((TextBox)sender).Text.IndexOf(".") + 3).ToString())
+                        e.Handled = true;
+                }
+                if ((((TextBox)sender).SelectionStart) == (((TextBox)sender).Text.LastIndexOf('.')) + 2)
+                {
+                    if ((((TextBox)sender).Text.Length - 3).ToString() == ((TextBox)sender).Text.IndexOf(".").ToString()) e.Handled = true;
+                }
+            }
+            //第1位是0，第2位必须是小数点
+            if (e.KeyChar != (char)('.') && e.KeyChar != 8 && ((TextBox)sender).Text == "0")
+            {
+                e.Handled = true;
+            }
+           
         }
     }//end class
 }//end namespace
