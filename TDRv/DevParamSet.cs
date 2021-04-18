@@ -79,8 +79,23 @@ namespace TDRv
         //新建一个新的配置文件
         private void tsb_create_xml_Click(object sender, EventArgs e)
         {
-            //清空参数表格
-            dgv_param.Rows.Clear();
+            if (dgv_param.DataSource == null)
+            {
+                //清空参数表格            
+                if (dgv_param.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dgv_param.Rows.Count; i++)
+                    {
+                        dgv_param.Rows.Clear();
+                    }
+                }
+            }
+            else
+            {
+                DataTable dt = (DataTable)dgv_param.DataSource;
+                dt.Rows.Clear();
+                dgv_param.DataSource = dt;
+            }
 
             //新建一默认行
             CreateOrAddRow();
@@ -214,7 +229,7 @@ namespace TDRv
 
 
                     //更新STEP
-                    dp.TestStep = dgv_param.Rows.Count+1;
+                    dp.TestStep = dgv_param.Rows.Count;
                     dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
                 }
                 else
@@ -228,7 +243,7 @@ namespace TDRv
                         rowVals[i] = row.Cells[i].Value.ToString();
                     }
                     //更新STEP
-                    dp.TestStep = dgv_param.Rows.Count+1;
+                    dp.TestStep = dgv_param.Rows.Count;
                     rowVals[1] = (dp.TestStep++).ToString();
                     ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
                 }
@@ -251,7 +266,6 @@ namespace TDRv
                 int index = dgv_param.Rows.Add();//添加一行
 
                 DataGridViewRow row = dgv_param.Rows[dgv_param.CurrentRow.Index]; //获取当前行数据
-
                 //添加一新行，并把数据赋值给新行
                 for (int i = 0; i < row.Cells.Count; i++)
                 {
@@ -259,7 +273,7 @@ namespace TDRv
                 }
 
                 //更新STEP
-                dp.TestStep = dgv_param.Rows.Count+1;
+                dp.TestStep = dgv_param.Rows.Count;
                 dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
             }
             else
@@ -272,8 +286,9 @@ namespace TDRv
                 {
                     rowVals[i] = row.Cells[i].Value.ToString();
                 }
+
                 //更新STEP
-                dp.TestStep = dgv_param.Rows.Count + 1;
+                dp.TestStep = dgv_param.Rows.Count ;
                 rowVals[1] = (dp.TestStep++).ToString();
                 ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
             }
@@ -284,7 +299,10 @@ namespace TDRv
         //删除选中行
         private void tsb_del_param_Click(object sender, EventArgs e)
         {
-            dgv_param.Rows.Remove(dgv_param.CurrentRow);
+            if (dgv_param.Rows.Count > 0)
+            {
+                dgv_param.Rows.Remove(dgv_param.CurrentRow);
+            }
         }
 
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -393,7 +411,7 @@ namespace TDRv
         {
             if (radio_units_ohm.Checked)
             {
-                label15.Text = "欧姆";
+       
                 lab_highlimit_unit.Text = "欧姆";
                 lab_lowlimit_unit.Text = "欧姆";
 
@@ -413,8 +431,7 @@ namespace TDRv
         private void radio_units_percent_CheckedChanged(object sender, EventArgs e)
         {
             if (radio_units_percent.Checked)
-            {
-                label15.Text = "%";
+            {     
                 lab_highlimit_unit.Text = "%";
                 lab_lowlimit_unit.Text = "%";
 

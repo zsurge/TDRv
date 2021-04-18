@@ -100,7 +100,6 @@
             this.radio_units_percent = new System.Windows.Forms.RadioButton();
             this.lab_highlimit_unit = new System.Windows.Forms.Label();
             this.radio_units_ohm = new System.Windows.Forms.RadioButton();
-            this.label15 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.tx_p_lowLimit = new System.Windows.Forms.TextBox();
             this.tx_p_TargetValue = new System.Windows.Forms.TextBox();
@@ -817,7 +816,6 @@
             this.groupBox5.Controls.Add(this.radio_units_percent);
             this.groupBox5.Controls.Add(this.lab_highlimit_unit);
             this.groupBox5.Controls.Add(this.radio_units_ohm);
-            this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Controls.Add(this.tx_p_lowLimit);
             this.groupBox5.Controls.Add(this.tx_p_TargetValue);
@@ -876,15 +874,6 @@
             this.radio_units_ohm.Text = "欧姆";
             this.radio_units_ohm.UseVisualStyleBackColor = true;
             this.radio_units_ohm.CheckedChanged += new System.EventHandler(this.radio_units_ohm_CheckedChanged);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(169, 50);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(29, 12);
-            this.label15.TabIndex = 22;
-            this.label15.Text = "欧姆";
             // 
             // label12
             // 
@@ -1142,7 +1131,6 @@
         private System.Windows.Forms.RadioButton radio_units_percent;
         private System.Windows.Forms.Label lab_highlimit_unit;
         private System.Windows.Forms.RadioButton radio_units_ohm;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tx_p_lowLimit;
         private System.Windows.Forms.TextBox tx_p_TargetValue;

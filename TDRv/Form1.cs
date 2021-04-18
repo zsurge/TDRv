@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -84,7 +85,7 @@ namespace TDRv
         }
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
-        {
+        {           
             DevParamSet devParamSet = new DevParamSet(gdt);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
             devParamSet.Show();
@@ -192,9 +193,11 @@ namespace TDRv
                 tr.Valid_End = dt.Rows[i].Cells["TestToThreshold"].Value.ToString();
                 tr.Mode = dt.Rows[i].Cells["InputMode"].Value.ToString();
                 tr.Std = dt.Rows[i].Cells["DataPointCheck"].Value.ToString();
-                tr.Curve_data = dt.Rows[i].Cells["SaveCurve"].Value.ToString();
-                tr.Curve_image = dt.Rows[i].Cells["SaveImage"].Value.ToString();
-
+                //tr.Curve_data = dt.Rows[i].Cells["SaveCurve"].Value.ToString();
+                //tr.Curve_image = dt.Rows[i].Cells["SaveImage"].Value.ToString();
+                tr.Curve_data = dt.Rows[i].Cells["RecordPath"].Value.ToString();
+                tr.Curve_image = dt.Rows[i].Cells["RecordPath"].Value.ToString();
+                
                 paramList.Add(tr);
             }
         }
@@ -697,18 +700,20 @@ namespace TDRv
             }
 
             int index = this.dgv_CurrentResult.Rows.Add();
+            int history_index = this.dgv_HistoryResult.Rows.Add();
             if (ret)
             {
                 this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
-                this.dgv_HistoryResult.Rows[index].Cells[7].Value = "PASS";
+                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
             }
             else
             {
                 this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
-                this.dgv_HistoryResult.Rows[index].Cells[7].Value = "FAIL";
+                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
             }
 
             
+            //目前量测
             this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
             this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
             this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
@@ -716,19 +721,34 @@ namespace TDRv
             this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
             this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
             this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
-
-            //只有最后一个走完，流水才++
-            if (measIndex.currentIndex == paramList.Count-1)
-            {
-                gSerialInc ++;
-            }
-
             this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
             this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
             this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
+
+
+            //历史量测
+            this.dgv_HistoryResult.Rows[history_index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
+            this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
+            this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
+            this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
+            this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+            this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+            this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
+            this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+            this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
+            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
+            this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
+            this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
+
+            //只有最后一个走完，流水才++
+            if (measIndex.currentIndex == paramList.Count - 1)
+            {
+                gSerialInc++;
+            }
 
             //光标在最后一行
             dgv_CurrentResult.CurrentCell = dgv_CurrentResult.Rows[this.dgv_CurrentResult.Rows.Count - 1].Cells[0];
@@ -740,42 +760,47 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-            bool ret = false;
 
-            if (optStatus.isConnect && optStatus.isGetIndex)
-            {
-                //量测并生成图表
-                startMeasuration(paramList[measIndex.currentIndex].DevMode);
+                bool ret = false;
 
-                //更新测试数据到主界面测试结果中
-                ret = upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
-
-                if (optParam.testMode == 3)
+                if (optStatus.isConnect && optStatus.isGetIndex)
                 {
-                    //量测配方参数依次向后移
-                    measIndex.incIndex();
-                }
-                else if (optParam.testMode == 1 || optParam.testMode == 4)
-                {
-                    if (ret)
+                    //量测并生成图表
+                    startMeasuration(paramList[measIndex.currentIndex].DevMode);
+
+                    //更新测试数据到主界面测试结果中
+                    ret = upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
+
+                    if (optParam.testMode == 3)
                     {
                         //量测配方参数依次向后移
                         measIndex.incIndex();
                     }
+                    else if (optParam.testMode == 1 || optParam.testMode == 4)
+                    {
+                        if (ret)
+                        {
+                            //量测配方参数依次向后移
+                            measIndex.incIndex();
+                        }
+                    }
+                    else if (optParam.testMode == 2)
+                    {
+                        measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+                    }
+
+                    //高亮显示相应测试配方的那一行            
+                    dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
+
+                    //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
                 }
-                else if (optParam.testMode == 2)
+                else
                 {
-                    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+                    MessageBox.Show("设备未连接或者未开路");
                 }
 
-                //高亮显示相应测试配方的那一行            
-                dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
-
-            }
-            else
-            {
-                MessageBox.Show("设备未连接或者未开路");
-            }
+                System.Threading.Thread.Sleep(500);
+          
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -793,7 +818,24 @@ namespace TDRv
         //输出测试报告
         private void tsmi_export_Click(object sender, EventArgs e)
         {
+            //输出报告 
             DataGridViewToExcel(dgv_CurrentResult);
+
+            //复制到已量测表格中
+            for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
+            {
+                int index = dgv_OutPutResult.Rows.Add();//在gridview2中添加一空行
+
+                //为空行添加列值
+                for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
+                {
+                    dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
+                }
+            }
+
+            //清空参数表格
+            dgv_CurrentResult.Rows.Clear();
+
         }
 
         /// <summary>
@@ -854,11 +896,11 @@ namespace TDRv
                     }
                     sw.Close();
                     myStream.Close();
-                    MessageBox.Show("导出表格成功！");
+                    MessageBox.Show("导出报告成功！");
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("导出表格失败！");
+                    MessageBox.Show("导出报告失败！");
                 }
                 finally
                 {
@@ -868,7 +910,7 @@ namespace TDRv
             }
             else
             {
-                MessageBox.Show("取消导出表格操作!");
+                MessageBox.Show("取消导出报告操作!");
             }
         }
 
@@ -923,16 +965,16 @@ namespace TDRv
         {
             if (tabControl1.SelectedTab.Name == "tabPage2")
             {
-                for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
-                {
-                    //int index = dataGridView2.Rows.Add();//在gridview2中添加一空行
+                //for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
+                //{
+                //    //int index = dataGridView2.Rows.Add();//在gridview2中添加一空行
 
-                    //为空行添加列值
-                    for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
-                    {
-                        dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
-                    }
-                }
+                //    //为空行添加列值
+                //    for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
+                //    {
+                //        dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
+                //    }
+                //}
             }
         }
 
@@ -946,7 +988,20 @@ namespace TDRv
             }
         }
 
-        
+        //截图
+        private void CaptureScreen(string path)  //导出数据（截图表格部分）
+        {
+            Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+            Graphics g = Graphics.FromImage(bit);
+            g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
+            //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+            g.CopyFromScreen(chart1.PointToScreen(Point.Empty), Point.Empty, chart1.Size);//只保存某个控件
+            //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
+            bit.Save(path + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好  
+        }
+
+
+
 
     }//end form
 
