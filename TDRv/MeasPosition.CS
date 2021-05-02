@@ -25,21 +25,29 @@ namespace TDRv
             get { return isopen; }
             set { isopen = value; }
         }
+
+        //差分
         public static int tdd11IndexValue
         {
             get { return tdd1indexvalue; }
             set { tdd1indexvalue = value; }
         }
+
+        //单端
         public static int tdd22IndexValue
         {
             get { return tdd2Indexvalue; }
             set { tdd2Indexvalue = value; }
         }
+
+        //差分
         public static int tdd11start
         {
             get { return tdd1startPosition; }
             set { tdd1startPosition = value; }
         }
+
+        //单端
         public static int tdd22start
         {
             get { return tdd2startPosition; }

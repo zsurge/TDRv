@@ -30,10 +30,10 @@ namespace TDRv
         public string exPortFilePath = string.Empty;
 
         //单端
-        public const int SINGLE = 1;
+        public const int SINGLE = 2;
 
         //差分
-        public const int DIFFERENCE = 2;
+        public const int DIFFERENCE = 1;
 
         //流水
         public int gSerialInc = 0;
@@ -50,31 +50,8 @@ namespace TDRv
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
             DevConnectSet devConnectSet = new DevConnectSet();
-            devConnectSet.ChangeValue += new DevConnectSet.ChangeTsbHandler(Change_Tsb_Index);
+            //devConnectSet.ChangeValue += new DevConnectSet.ChangeTsbHandler(Change_Tsb_Index);
             devConnectSet.Show();
-        }
-
-        //根据连接设置传过来的值，控制是否可以使用
-        public void Change_Tsb_Index(string addr)
-        {
-            if (addr.Length == 0)
-            {
-                MessageBox.Show("错误的设备地址");
-            }
-            int error = analyzer.Open(addr);
-            string idn = string.Empty;
-            error = analyzer.GetInstrumentIdentifier(out idn);
-
-            if (error == 0)
-            {
-                tsb_GetTestIndex.Enabled = true;
-                tsb_StartTest.Enabled = true;
-                optStatus.isConnect = true;
-            }
-            else
-            {
-                MessageBox.Show("错误的设备地址");
-            }
         }
 
 
@@ -221,6 +198,8 @@ namespace TDRv
                 
                 paramList.Add(tr);
             }
+
+            tsb_GetTestIndex.Enabled = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -288,7 +267,7 @@ namespace TDRv
             List<float> tmpDiffMeasData = new List<float>();
             List<float> tmpSingleMeasData = new List<float>();
             string result = string.Empty;
-
+            
             if (dataGridView1.Rows.Count == 0)
             {
                 MessageBox.Show("请先装载配方");
@@ -301,94 +280,23 @@ namespace TDRv
                 return;
             }
 
-            string str1 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
-            analyzer.ExecuteCmd(str1);
-
-            string str2 = ":CALCulate1:TRANsform:TIME:STOP 9.5E-9";
-            analyzer.ExecuteCmd(str2);
-            analyzer.viClear();
-
-            string str3 = "CALC1:X?";
-            analyzer.QueryCommand(str3, out result, 256);
-
-            string str4 = "CALC:PAR:CAT?";
-            analyzer.QueryCommand(str4, out result, 256);
-
-            string str5 = ":CALC:PAR:SEL \"win1_tr1\"";
-            analyzer.ExecuteCmd(str5);
-
-            string str6 = ":DISPlay:ENABle ON";
-            analyzer.ExecuteCmd(str6);
-
-            string str7 = ":CALC:PAR:SEL \"win1_tr1\"";
-            analyzer.ExecuteCmd(str7);
-
-            string str8 = ":DISPlay:ENABle ON";
-            analyzer.ExecuteCmd(str8);
-
-            string str9 = ":INITiate1:CONTinuous ON";
-            analyzer.ExecuteCmd(str9);
-            analyzer.viClear();
-
-            string str10 = ":CALCulate1:DATA? FDATa";
-            analyzer.QueryCommand(str10, out result, 400000);
+            //差分开路定义
+            E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle,DIFFERENCE,out result);
 
             //这里需要处理win1_tr1的数据
             tmpSingleMeasData = packetMaesData(result, 0, 0);
-            string[] tdd22_array = result.Split(new char[] { ',' });
+            string[] tdd11_array = result.Split(new char[] { ',' });
             result = string.Empty;
 
-            if (tdd22_array.Length < 200)
+            if (tdd11_array.Length < 200)
             {
                 MessageBox.Show("获取差分开路定义失败");
             }
 
-            //查找tdd22单端的索引值
-            for (int i = 0; i < tdd22_array.Length; i++)
-            {
-                //logger.Trace(tdd22_array[i]);
-                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
-                {
-                    MeasPosition.tdd22IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
-                }
-            }
-
-
-            analyzer.ExecuteCmd(str1);
-            analyzer.ExecuteCmd(str2);
-            analyzer.viClear();
-
-
-            analyzer.QueryCommand(str3, out result, 256);
-            analyzer.QueryCommand(str4, out result, 256);
-
-            string str11 = ":CALC:PAR:SEL \"win1_tr2\"";
-            analyzer.ExecuteCmd(str11);
-
-            string str12 = ":DISPlay:ENABle ON";
-            analyzer.ExecuteCmd(str12);
-
-            analyzer.ExecuteCmd(str11);
-
-            analyzer.ExecuteCmd(str12);
-
-            string str13 = ":INITiate1:CONTinuous ON";
-            analyzer.ExecuteCmd(str13);
-            analyzer.viClear();
-
-            string str14 = ":CALCulate1:DATA? FDATa";
-            analyzer.QueryCommand(str14, out result, 400000);
-
-
-            tmpDiffMeasData = packetMaesData(result, 0, 0);
-            string[] tdd11_array = result.Split(new char[] { ',' });
-
-            //查找tdd11差分的索引值
+            //查找tdd11单端的索引值
             for (int i = 0; i < tdd11_array.Length; i++)
             {
-                //logger.Info(tdd11_array[i]);
+                //logger.Trace(tdd22_array[i]);
                 if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
                 {
                     MeasPosition.tdd11IndexValue = i - 1;
@@ -397,7 +305,26 @@ namespace TDRv
                 }
             }
 
+
+
+
+            //单端开路定义
             result = string.Empty;
+            E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, SINGLE, out result);
+
+            tmpDiffMeasData = packetMaesData(result, 0, 0);
+            string[] tdd22_array = result.Split(new char[] { ',' });
+
+            //查找tdd22单端的索引值
+            for (int i = 0; i < tdd22_array.Length; i++)
+            {                
+                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                {
+                    MeasPosition.tdd22IndexValue = i - 1;
+                    //这里需要将开路定义后的索引写入到配方的XML文件中去
+                    break;
+                }
+            }
 
             MeasPosition.isOpen = true;
             optStatus.isGetIndex = true;
@@ -734,43 +661,23 @@ namespace TDRv
         {
             string result = string.Empty;
             int index = 0;
-            string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
+
 
             if (channel == SINGLE)
             {
                 index = MeasPosition.tdd22IndexValue;
-                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
             }
             else
             {
-                index = MeasPosition.tdd11IndexValue;
-                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";
+                index = MeasPosition.tdd11IndexValue;  
             }
-            analyzer.ExecuteCmd(cmd1);
 
-            result = string.Empty;
-            cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
-            analyzer.QueryCommand(cmd2, out result, 256);
-     
 
-            cmd3 = "DISPlay:ENABle ON";
-            analyzer.ExecuteCmd(cmd3);
-
-            analyzer.ExecuteCmd(cmd1);
-
-            cmd5 = ":INITiate1:CONTinuous ON";
-            analyzer.ExecuteCmd(cmd5);
-            analyzer.viClear();
-
-            result = string.Empty;
-            cmd6 = ":CALCulate1:DATA? FDATa";
-            analyzer.QueryCommand(cmd6, out result, 200000);
+            E5080B.measuration(CGloabal.g_InstrE5080BModule.nHandle, channel, out result);
 
             //获取要生成报表的数据
             CreateMeasChart(packetMaesData(result, index, channel), channel);
 
-            result = string.Empty;
-            analyzer.QueryErrorStatus(out result);
         }
 
         /// <summary>

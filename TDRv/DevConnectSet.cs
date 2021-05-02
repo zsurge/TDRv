@@ -33,30 +33,26 @@ namespace TDRv
         private void btn_ConnectDev_Click(object sender, EventArgs e)
         {
             INI ni = new INI();
+
+            CGloabal.g_InstrE5080BModule.adress = combDevString.Text;
+
             ni.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
             ni.WriteValueToIniFile("Instrument", "NA", combDevType.Text);
 
-            SetParentFormTsbControl();
-            this.Close();
-            //E5080B dev = new E5080B();
-            //INI ni = new INI();
-            //ni.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
-            //ni.WriteValueToIniFile("Instrument", "NA", combDevType.Text);
-            //combDevString.BackColor = SystemColors.Control;
+            CGloabal.g_curInstrument = CGloabal.g_InstrE5080BModule;
 
-            //int ret = dev.Open(combDevString.Text);
+            int ret = E5080B.Open(CGloabal.g_InstrE5080BModule.adress, ref CGloabal.g_InstrE5080BModule.nHandle);
 
-            //if (ret != 0)
-            //{
-            //    combDevString.BackColor = Color.Red;
-            //    MessageBox.Show("error!");
-            //}
-            //else
-            //{
-            //    combDevString.BackColor = Color.Green;
-            //    //SetParentFormTsbControl();
-            //    //this.Close();
-            //}
+            if (ret != 0)
+            {
+                combDevString.BackColor = Color.Red;
+                MessageBox.Show("error!");
+            }
+            else
+            {
+                optStatus.isConnect = true;
+                combDevString.BackColor = Color.Green;
+            }
         }
 
         private void DevConnectSet_Load(object sender, EventArgs e)
@@ -64,6 +60,7 @@ namespace TDRv
             INI ni = new INI();
             combDevString.BackColor = SystemColors.Window;
             combDevString.Text = ni.GetValueFromIniFile("Instrument", "AddressNA");
+            CGloabal.g_InstrE5080BModule.adress = ni.GetValueFromIniFile("Instrument", "AddressNA");
         }
     }
 }

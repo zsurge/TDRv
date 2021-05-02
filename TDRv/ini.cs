@@ -30,7 +30,7 @@ namespace TDRv
         //读取配置文件
 
 
-    public INI()
+        public INI()
         {
             this.sPath = Directory.GetCurrentDirectory()+ "\\Config.ini";
         }

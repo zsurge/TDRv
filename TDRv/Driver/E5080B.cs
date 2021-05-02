@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace TDRv.Driver
 {
-    public partial class E5080B
+    public class E5080B
     {
-        private int resourceMgr;
-        private int analyzerSession;
-
+        private static int resourceMgr;
         public E5080B()
         {
             resourceMgr = 0;
-            analyzerSession = 0;
         }
 
-        public int Open(string visaAddress)
+        public static int Open(string resourceName, ref int nHandle)
         {
             int viError;
 
@@ -26,73 +23,75 @@ namespace TDRv.Driver
             {
                 return viError;
             }
-            viError = visa32.viOpen(resourceMgr, visaAddress, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out analyzerSession);
+
+            viError = visa32.viOpen(resourceMgr, resourceName, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out nHandle);
             if (viError != visa32.VI_SUCCESS)
             {
                 return viError;
             }
+
             StringBuilder attr = new StringBuilder();
-            viError = visa32.viGetAttribute(analyzerSession, visa32.VI_ATTR_RSRC_CLASS, attr);
-            viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
-            viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TERMCHAR, 0x0A);
-            viError = visa32.viSetAttribute(analyzerSession, visa32.VI_ATTR_TMO_VALUE, 2000);
+            viError = visa32.viGetAttribute(nHandle, visa32.VI_ATTR_RSRC_CLASS, attr);
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR, 0x0A);
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TMO_VALUE, 2000);
 
             return viError;
         }
-        public int ExecuteCommand(string command)
+        public static int ExecuteCommand(int nInstrumentHandle,string command)
         {
             int errorno, count;
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
             string response;
-            return QueryErrorStatus(out response);
+            return QueryErrorStatus(nInstrumentHandle,out response);
         }
 
-        public int ExecuteCmd(string command)
+        public static int ExecuteCmd(int nInstrumentHandle, string command)
         {
             int count;
-            visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
             return count;
         }
 
-        public int QueryCommand(string command, out string response)
+        public static int QueryCommand(int nInstrumentHandle, string command, out string response)
         {
             int errorno, count;
             byte[] result = new byte[256];
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, result, 256, out count);
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
+            errorno = visa32.viRead(nInstrumentHandle, result, 256, out count);
             response = Encoding.ASCII.GetString(result, 0, count);
             return errorno;
         }
 
-        public int QueryCommand(string command, out string response, int len)
+        public static int QueryCommand(int nInstrumentHandle, string command, out string response, int len)
         {
             int count;
             byte[] result = new byte[len];
 
-            visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
-            visa32.viRead(analyzerSession, result, len, out count);
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command + "\n"), command.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, len, out count);
 
             response = Encoding.ASCII.GetString(result, 0, count);
 
             return count;
         }
 
-        #region IEEE488.2 Standard Common Commands
+
         /* *IDN? */
-        public int GetInstrumentIdentifier(out string idn)
+        public static int GetInstrumentIdentifier(int nInstrumentHandle, out string idn)
         {
             int viError;
             int count = 0;
             string command = "*IDN?\n";
             byte[] response = new byte[256];
 
-            viError = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
             if (viError != visa32.VI_SUCCESS)
             {
                 idn = string.Empty;
                 return viError;
             }
-            viError = visa32.viRead(analyzerSession, response, 256, out count);
+            viError = visa32.viRead(nInstrumentHandle, response, 256, out count);
             if (viError != visa32.VI_SUCCESS)
             {
                 idn = string.Empty;
@@ -104,25 +103,25 @@ namespace TDRv.Driver
         }
 
         /* :SYST:PRES */
-        public int Preset()
+        public static int Preset(int nInstrumentHandle)
         {
             int errorno;
             string command = ":SYSTem:PRESet\n";
             byte[] response = new byte[128];
             int count = 0;
 
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 return errorno;
             }
 
             command = "*CLS\n";
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
 
             command = "SYSTem:ERRor?\n";
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, response, 128, out count);
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(nInstrumentHandle, response, 128, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 return errorno;
@@ -135,43 +134,43 @@ namespace TDRv.Driver
         }
 
         /* *CLS */
-        public int ClearAllErrorQueue()
+        public static int ClearAllErrorQueue(int nInstrumentHandle)
         {
             int error = 0, count = 0;
             string command = "*CLS\n", response;
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QueryErrorStatus(out response);
+            error = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(nInstrumentHandle, out response);
         }
 
         /* *CLS */
-        public int ClearInstrument()
+        public static int ClearInstrument(int nInstrumentHandle)
         {
             int errorno, count;
             string command = "*CLS\n",     /* Clean up all of the instrument, including the entire error queue */
                    response;
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            return QueryErrorStatus(out response);      /* Make sure all errors had been cleaned up. */
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return QueryErrorStatus(nInstrumentHandle,out response);      /* Make sure all errors had been cleaned up. */
         }
 
-        public void viClear()
+        public static void viClear(int nInstrumentHandle)
         {
-            visa32.viClear(analyzerSession);
+            visa32.viClear(nInstrumentHandle);
         }
 
-        public void viClose()
+        public static void viClose(int nInstrumentHandle)
         {
-            visa32.viClose(analyzerSession);
+            visa32.viClose(nInstrumentHandle);
         }
 
         /* SYST:ERR? */
-        public int QueryErrorStatus(out string errorMesg)
+        public static int QueryErrorStatus(int nInstrumentHandle,out string errorMesg)
         {
             int errorno, count;
             string command = "SYSTem:ERRor?\n";
             byte[] response = new byte[256];
 
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, response, 256, out count);
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(nInstrumentHandle, response, 256, out count);
             if (errorno != visa32.VI_SUCCESS)
             {
                 errorMesg = "VISA library error : " + errorno;
@@ -185,101 +184,108 @@ namespace TDRv.Driver
             return errorno;
         }
 
-        /* *OPC? */
-        public int QueryEventsCompletionStatus(out int status)
+        public static int measuration(int nInstrumentHandle,int channel, out string msg)
         {
-            int errorno, count;
-            string command = "*OPC?\n";
-            byte[] response = new byte[256];
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            errorno = visa32.viRead(analyzerSession, response, 256, out count);
-            status = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
-            return errorno;
-        }
-        #endregion
+            int viError;
+            int count;
 
-        /* :DISP:WIND2:ACT */
-        public int ActivateChannelAt(int channelNum)
-        {
-            int errorno, count;
-            string command = ":DISPlay:WINDow" + channelNum + ":ACTivate\n";
+            byte[] result = new byte[256];
+            string response = string.Empty;
+            string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
 
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            if (errorno != visa32.VI_SUCCESS)
-            {
-                return errorno;
-            }
-            string response;
-            return QueryErrorStatus(out response);
-        }
-
-        /* :CALC1:PAR3:SEL */
-        public int ActivateTraceAt(int channelNum, int traceNum)
-        {
-            int errorno, count;
-            string command = ":CALCulate" + channelNum + ":PARameter" + traceNum + ":SELect\n";
-
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            if (errorno != visa32.VI_SUCCESS)
-            {
-                return errorno;
-            }
-            string response;
-            return QueryErrorStatus(out response);
-        }
-
-        /* OUTP:STAT ON */
-        public int TurnOnOffStimulusSignalOutput(int status /* 1: ON,  0: OFF*/)
-        {
-            int errorno, count;
-            string command;
-            if (status == 1)
-            {
-                command = ":OUTPut:STATe ON\n";
-            }
-            else if (status == 0)
-            {
-                command = ":OUTPut:STATe OFF\n";
+            if (channel == 1)
+            {    
+                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
             }
             else
             {
-                command = "";
+                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";
             }
+            
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
 
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            if (errorno != visa32.VI_SUCCESS)
-            {
-                return errorno;
-            }
-            string response;
-            return QueryErrorStatus(out response);
+
+            cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd2 + "\n"), cmd2.Length, out count);
+            viError = visa32.viRead(nInstrumentHandle, result, 256, out count);
+            response = Encoding.ASCII.GetString(result, 0, count); 
+
+            cmd3 = "DISPlay:ENABle ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd3 + "\n"), cmd3.Length, out count);
+
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
+
+
+            cmd5 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd5 + "\n"), cmd5.Length, out count);
+
+            visa32.viClear(nInstrumentHandle);
+
+
+            byte[] ret = new byte[200000];
+            cmd6 = ":CALCulate1:DATA? FDATa";
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd6 + "\n"), cmd6.Length, out count);
+            viError = visa32.viRead(nInstrumentHandle, ret, 200000, out count);
+            msg = Encoding.ASCII.GetString(ret, 0, count);
+
+            return viError;
         }
 
-        /* :SENS1:SWE:POIN 201 */
-        public int SetSweepMeasurementPoints(int channelNum = 1, int pointNum = 201)
+
+
+        public static int getStartIndex(int nInstrumentHandle, int channel, out string msg)
         {
-            int errorno, count;
-            if ((pointNum < 2) || (pointNum > 1601))
+            int viError,count;
+            byte[] result = new byte[256];
+
+            string str1 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
+            
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
+
+            string str2 = ":CALCulate1:TRANsform:TIME:STOP 9.5E-9";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str2 + "\n"), str2.Length, out count);
+            visa32.viClear(nInstrumentHandle);
+
+            string str3 = "CALC1:X?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str3 + "\n"), str3.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+            //msg = Encoding.ASCII.GetString(result, 0, count);
+
+            string str4 = "CALC:PAR:CAT?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str4 + "\n"), str4.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str5 = string.Empty;
+            if (channel == 1)
             {
-                return (-1);
+                str5 = ":CALC:PAR:SEL \"win1_tr1\"";
             }
-            string command = ":SENSe" + channelNum + ":SWEep:POINts " + pointNum + "\n";
-            errorno = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            string response;
-            return QueryErrorStatus(out response);
-        }
+            else
+            {
+                str5 = ":CALC:PAR:SEL \"win1_tr2\"";
+            }
 
-        /* :SENS1:SWE:POIN? */
-        public int QueryNumberOfMeasurementPointsForChannel(int channelNum, out int pointNum)
-        {
-            int error, count;
-            string command = ":SENSe" + channelNum + ":SWEep:POINts?\n";
-            byte[] response = new byte[256];
-            error = visa32.viWrite(analyzerSession, Encoding.ASCII.GetBytes(command), command.Length, out count);
-            error = visa32.viRead(analyzerSession, response, 256, out count);
-            pointNum = Convert.ToInt32(Encoding.ASCII.GetString(response, 0, count));
-            return error;
-        }
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str5 + "\n"), str5.Length, out count);
 
+            string str6 = ":DISPlay:ENABle ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str6 + "\n"), str6.Length, out count);
+
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str5 + "\n"), str5.Length, out count);
+
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str6 + "\n"), str6.Length, out count);
+
+            string str9 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str9 + "\n"), str9.Length, out count);
+            visa32.viClear(nInstrumentHandle);
+
+            string str10 = ":CALCulate1:DATA? FDATa";
+
+            byte[] ret = new byte[200000];
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
+            viError = visa32.viRead(nInstrumentHandle, ret, 200000, out count);
+            msg = Encoding.ASCII.GetString(ret, 0, count);
+
+            return viError;
+        }
     }//end class E5808B
 }
