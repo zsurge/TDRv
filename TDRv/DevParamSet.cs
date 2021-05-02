@@ -31,6 +31,7 @@ namespace TDRv
         public int selectionIdx = 0;
 
         devParam dp = new devParam();
+        INI devIni = new INI();
 
         /// <summary>
         /// 获取XML文件数据到datagrid
@@ -43,6 +44,7 @@ namespace TDRv
             {
                 myds.ReadXml(filePath);
                 dgv_param.DataSource = myds.Tables[0];
+                dgv_param.Tag = Path.GetFileNameWithoutExtension(filePath);
             }
             else
             {
@@ -71,7 +73,7 @@ namespace TDRv
             pOpenFileDialog.CheckFileExists = true;
             if (pOpenFileDialog.ShowDialog() == DialogResult.OK)  //如果点击的是打开文件
             {
-                xmlFilePath = pOpenFileDialog.FileName;  //获取全路径文件名        
+                xmlFilePath = pOpenFileDialog.FileName;  //获取全路径文件名     
                 getXmlInfo(xmlFilePath);               
             }
         }
@@ -135,6 +137,12 @@ namespace TDRv
         //保存新的配置文件
         private void tsb_save_xml_Click(object sender, EventArgs e)
         {
+            if (dgv_param.Rows.Count == 0)
+            {
+                MessageBox.Show("请新建配方");
+                return;
+            }
+
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "保存XML文件";
             sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -146,6 +154,8 @@ namespace TDRv
                 DataSet dS = new DataSet();
                 dS.Tables.Add(dT);
                 dS.WriteXml(File.OpenWrite(sfd.FileName));
+                dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
+                xmlFilePath = sfd.FileName;
             }
 
         }
@@ -158,8 +168,9 @@ namespace TDRv
                 if (dgv_param.DataSource == null)
                 {
                     int index = this.dgv_param.Rows.Add();
-                    this.dgv_param.Rows[index].Cells[0].Value = dp.Id;               
-                    this.dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();          
+                    this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
+                    //this.dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();          
+                    this.dgv_param.Rows[index].Cells[1].Value = dgv_param.Rows.Count;
                     this.dgv_param.Rows[index].Cells[2].Value = dp.Description;
                     this.dgv_param.Rows[index].Cells[3].Value = dp.Layer;
                     this.dgv_param.Rows[index].Cells[4].Value = dp.Remark;
@@ -187,7 +198,7 @@ namespace TDRv
                 {
                     string[] rowVals = new string[24];
                     rowVals[0] = dp.Id;
-                    rowVals[1] = (dp.TestStep++).ToString();
+                    rowVals[1] = (dgv_param.Rows.Count+1).ToString(); //(dp.TestStep++).ToString();
                     rowVals[2] = dp.Description;
                     rowVals[3] = dp.Layer;
                     rowVals[4] = dp.Remark;
@@ -229,8 +240,10 @@ namespace TDRv
 
 
                     //更新STEP
-                    dp.TestStep = dgv_param.Rows.Count;
-                    dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
+                    //dp.TestStep = dgv_param.Rows.Count;
+                    //dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();      
+                    
+                    dgv_param.Rows[index].Cells[1].Value = dgv_param.Rows.Count.ToString();
                 }
                 else
                 {
@@ -243,8 +256,11 @@ namespace TDRv
                         rowVals[i] = row.Cells[i].Value.ToString();
                     }
                     //更新STEP
-                    dp.TestStep = dgv_param.Rows.Count;
-                    rowVals[1] = (dp.TestStep++).ToString();
+                    //dp.TestStep = dgv_param.Rows.Count+1;
+                    //rowVals[1] = (dp.TestStep++).ToString();
+
+                    rowVals[1] = (dgv_param.Rows.Count + 1).ToString();
+
                     ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
                 }
             }//end dgv_param.Rows.Count == 0
@@ -261,6 +277,12 @@ namespace TDRv
         //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
+            if(dgv_param.Rows.Count == 0)
+            {
+                MessageBox.Show("请先新建一条配方");
+                return;
+            }
+
             if (dgv_param.DataSource == null)
             {
                 int index = dgv_param.Rows.Add();//添加一行
@@ -273,8 +295,10 @@ namespace TDRv
                 }
 
                 //更新STEP
-                dp.TestStep = dgv_param.Rows.Count;
-                dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
+                //dp.TestStep = dgv_param.Rows.Count;
+                //dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();
+
+                dgv_param.Rows[index].Cells[1].Value = (dgv_param.Rows.Count).ToString();
             }
             else
             {
@@ -288,8 +312,10 @@ namespace TDRv
                 }
 
                 //更新STEP
-                dp.TestStep = dgv_param.Rows.Count ;
-                rowVals[1] = (dp.TestStep++).ToString();
+                //dp.TestStep = dgv_param.Rows.Count+1 ;
+                //rowVals[1] = (dp.TestStep++).ToString();
+                
+                rowVals[1] = (dgv_param.Rows.Count + 1).ToString();
                 ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
             }
 
@@ -301,7 +327,12 @@ namespace TDRv
         {
             if (dgv_param.Rows.Count > 0)
             {
-                dgv_param.Rows.Remove(dgv_param.CurrentRow);
+                dgv_param.Rows.Remove(dgv_param.CurrentRow);                
+
+                for (int i = 0; i < dgv_param.RowCount; i++)
+                {                    
+                    dgv_param.Rows[i].Cells["TestStep"].Value = i + 1;
+                }
             }
         }
 
@@ -450,6 +481,7 @@ namespace TDRv
         private void DevParamSet_FormClosed(object sender, FormClosedEventArgs e)
         {
             TranToParentForm();
+            save_xmlfilename_config();
         }
 
         private void btn_update_Click(object sender, EventArgs e)
@@ -713,5 +745,31 @@ namespace TDRv
             }
            
         }
+
+
+        private void save_xmlfilename_config()
+        {
+            string filename = Path.GetFileNameWithoutExtension(xmlFilePath);
+
+            string historyFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
+            string exportFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
+
+
+            if (string.Compare(devIni.GetValueFromIniFile("TDR", "Naming Method"), "ByDate") == 0)
+            {
+                devIni.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
+                devIni.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
+                devIni.WriteValueToIniFile("TDR", "ExportFile", exportFile);
+
+            }
+            else
+            {
+                devIni.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
+                devIni.WriteValueToIniFile("TDR", "HistoryFile", filename + ".csv");
+                devIni.WriteValueToIniFile("TDR", "ExportFile", filename + ".csv");
+            }
+        }
+
+
     }//end class
 }//end namespace

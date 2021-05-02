@@ -46,6 +46,7 @@
             this.tsb_DevParamSet = new System.Windows.Forms.ToolStripButton();
             this.tsb_GetTestIndex = new System.Windows.Forms.ToolStripButton();
             this.tsb_StartTest = new System.Windows.Forms.ToolStripButton();
+            this.tsb_XmlFileName = new System.Windows.Forms.ToolStripLabel();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -103,6 +104,7 @@
             this.mLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -161,7 +163,9 @@
             this.tsb_DevPOptSet,
             this.tsb_DevParamSet,
             this.tsb_GetTestIndex,
-            this.tsb_StartTest});
+            this.tsb_StartTest,
+            this.toolStripSeparator1,
+            this.tsb_XmlFileName});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(984, 39);
@@ -170,60 +174,65 @@
             // 
             // tsb_DevConnect
             // 
-            this.tsb_DevConnect.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_DevConnect.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_DevConnect.Image = ((System.Drawing.Image)(resources.GetObject("tsb_DevConnect.Image")));
             this.tsb_DevConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevConnect.Name = "tsb_DevConnect";
-            this.tsb_DevConnect.Size = new System.Drawing.Size(110, 36);
+            this.tsb_DevConnect.Size = new System.Drawing.Size(108, 36);
             this.tsb_DevConnect.Text = "仪器设置";
             this.tsb_DevConnect.Click += new System.EventHandler(this.tsb_DevConnect_Click);
             // 
             // tsb_DevPOptSet
             // 
-            this.tsb_DevPOptSet.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_DevPOptSet.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_DevPOptSet.Image = ((System.Drawing.Image)(resources.GetObject("tsb_DevPOptSet.Image")));
             this.tsb_DevPOptSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevPOptSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevPOptSet.Name = "tsb_DevPOptSet";
-            this.tsb_DevPOptSet.Size = new System.Drawing.Size(110, 36);
+            this.tsb_DevPOptSet.Size = new System.Drawing.Size(108, 36);
             this.tsb_DevPOptSet.Text = "操作设置";
             this.tsb_DevPOptSet.Click += new System.EventHandler(this.tsb_DevOptSet_Click);
             // 
             // tsb_DevParamSet
             // 
-            this.tsb_DevParamSet.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_DevParamSet.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_DevParamSet.Image = ((System.Drawing.Image)(resources.GetObject("tsb_DevParamSet.Image")));
             this.tsb_DevParamSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevParamSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevParamSet.Name = "tsb_DevParamSet";
-            this.tsb_DevParamSet.Size = new System.Drawing.Size(111, 36);
+            this.tsb_DevParamSet.Size = new System.Drawing.Size(109, 36);
             this.tsb_DevParamSet.Text = "量测参数";
             this.tsb_DevParamSet.Click += new System.EventHandler(this.tsb_DevParamSet_Click);
             // 
             // tsb_GetTestIndex
             // 
             this.tsb_GetTestIndex.Enabled = false;
-            this.tsb_GetTestIndex.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_GetTestIndex.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_GetTestIndex.Image = ((System.Drawing.Image)(resources.GetObject("tsb_GetTestIndex.Image")));
             this.tsb_GetTestIndex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_GetTestIndex.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_GetTestIndex.Name = "tsb_GetTestIndex";
-            this.tsb_GetTestIndex.Size = new System.Drawing.Size(110, 36);
+            this.tsb_GetTestIndex.Size = new System.Drawing.Size(108, 36);
             this.tsb_GetTestIndex.Text = "开路定义";
             this.tsb_GetTestIndex.Click += new System.EventHandler(this.tsb_GetTestIndex_Click);
             // 
             // tsb_StartTest
             // 
             this.tsb_StartTest.Enabled = false;
-            this.tsb_StartTest.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_StartTest.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_StartTest.Image = ((System.Drawing.Image)(resources.GetObject("tsb_StartTest.Image")));
             this.tsb_StartTest.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_StartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_StartTest.Name = "tsb_StartTest";
-            this.tsb_StartTest.Size = new System.Drawing.Size(78, 36);
+            this.tsb_StartTest.Size = new System.Drawing.Size(76, 36);
             this.tsb_StartTest.Text = "量测";
             this.tsb_StartTest.Click += new System.EventHandler(this.tsb_StartTest_Click);
+            // 
+            // tsb_XmlFileName
+            // 
+            this.tsb_XmlFileName.Name = "tsb_XmlFileName";
+            this.tsb_XmlFileName.Size = new System.Drawing.Size(0, 36);
             // 
             // chart1
             // 
@@ -743,6 +752,11 @@
             this.splitContainer2.SplitterDistance = 240;
             this.splitContainer2.TabIndex = 0;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -848,6 +862,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
+        private System.Windows.Forms.ToolStripLabel tsb_XmlFileName;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

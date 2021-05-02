@@ -117,6 +117,10 @@
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
+            this.tx_p_offset = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).BeginInit();
@@ -149,34 +153,34 @@
             // 
             // tsb_create_xml
             // 
-            this.tsb_create_xml.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_create_xml.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_create_xml.Image = ((System.Drawing.Image)(resources.GetObject("tsb_create_xml.Image")));
             this.tsb_create_xml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_create_xml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_create_xml.Name = "tsb_create_xml";
-            this.tsb_create_xml.Size = new System.Drawing.Size(110, 36);
+            this.tsb_create_xml.Size = new System.Drawing.Size(108, 36);
             this.tsb_create_xml.Text = "新建档案";
             this.tsb_create_xml.Click += new System.EventHandler(this.tsb_create_xml_Click);
             // 
             // tsb_measure_loadXml
             // 
-            this.tsb_measure_loadXml.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_measure_loadXml.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_measure_loadXml.Image = ((System.Drawing.Image)(resources.GetObject("tsb_measure_loadXml.Image")));
             this.tsb_measure_loadXml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_measure_loadXml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_measure_loadXml.Name = "tsb_measure_loadXml";
-            this.tsb_measure_loadXml.Size = new System.Drawing.Size(78, 36);
+            this.tsb_measure_loadXml.Size = new System.Drawing.Size(76, 36);
             this.tsb_measure_loadXml.Text = "载入";
             this.tsb_measure_loadXml.Click += new System.EventHandler(this.tsb_measure_loadXml_Click);
             // 
             // tsb_save_xml
             // 
-            this.tsb_save_xml.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_save_xml.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_save_xml.Image = ((System.Drawing.Image)(resources.GetObject("tsb_save_xml.Image")));
             this.tsb_save_xml.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_save_xml.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_save_xml.Name = "tsb_save_xml";
-            this.tsb_save_xml.Size = new System.Drawing.Size(78, 36);
+            this.tsb_save_xml.Size = new System.Drawing.Size(76, 36);
             this.tsb_save_xml.Text = "保存";
             this.tsb_save_xml.Click += new System.EventHandler(this.tsb_save_xml_Click);
             // 
@@ -187,34 +191,34 @@
             // 
             // tsb_add_param
             // 
-            this.tsb_add_param.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_add_param.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_add_param.Image = ((System.Drawing.Image)(resources.GetObject("tsb_add_param.Image")));
             this.tsb_add_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_add_param.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_add_param.Name = "tsb_add_param";
-            this.tsb_add_param.Size = new System.Drawing.Size(78, 36);
+            this.tsb_add_param.Size = new System.Drawing.Size(76, 36);
             this.tsb_add_param.Text = "新增";
             this.tsb_add_param.Click += new System.EventHandler(this.tsb_add_param_Click);
             // 
             // tsb_copy_param
             // 
-            this.tsb_copy_param.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_copy_param.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_copy_param.Image = ((System.Drawing.Image)(resources.GetObject("tsb_copy_param.Image")));
             this.tsb_copy_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_copy_param.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_copy_param.Name = "tsb_copy_param";
-            this.tsb_copy_param.Size = new System.Drawing.Size(78, 36);
+            this.tsb_copy_param.Size = new System.Drawing.Size(76, 36);
             this.tsb_copy_param.Text = "复制";
             this.tsb_copy_param.Click += new System.EventHandler(this.tsb_copy_param_Click);
             // 
             // tsb_del_param
             // 
-            this.tsb_del_param.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tsb_del_param.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tsb_del_param.Image = ((System.Drawing.Image)(resources.GetObject("tsb_del_param.Image")));
             this.tsb_del_param.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_del_param.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_del_param.Name = "tsb_del_param";
-            this.tsb_del_param.Size = new System.Drawing.Size(78, 36);
+            this.tsb_del_param.Size = new System.Drawing.Size(76, 36);
             this.tsb_del_param.Text = "删除";
             this.tsb_del_param.Click += new System.EventHandler(this.tsb_del_param_Click);
             // 
@@ -812,6 +816,10 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Controls.Add(this.tx_p_offset);
+            this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.Controls.Add(this.lab_lowlimit_unit);
             this.groupBox5.Controls.Add(this.radio_units_percent);
             this.groupBox5.Controls.Add(this.lab_highlimit_unit);
@@ -823,9 +831,9 @@
             this.groupBox5.Controls.Add(this.label18);
             this.groupBox5.Controls.Add(this.tx_p_highLimit);
             this.groupBox5.Controls.Add(this.label17);
-            this.groupBox5.Location = new System.Drawing.Point(353, 359);
+            this.groupBox5.Location = new System.Drawing.Point(353, 355);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(231, 129);
+            this.groupBox5.Size = new System.Drawing.Size(231, 133);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "边界设定";
@@ -834,7 +842,7 @@
             // 
             this.lab_lowlimit_unit.AutoSize = true;
             this.lab_lowlimit_unit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_lowlimit_unit.Location = new System.Drawing.Point(168, 102);
+            this.lab_lowlimit_unit.Location = new System.Drawing.Point(173, 104);
             this.lab_lowlimit_unit.Name = "lab_lowlimit_unit";
             this.lab_lowlimit_unit.Size = new System.Drawing.Size(16, 16);
             this.lab_lowlimit_unit.TabIndex = 24;
@@ -844,7 +852,7 @@
             // 
             this.radio_units_percent.AutoSize = true;
             this.radio_units_percent.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.radio_units_percent.Location = new System.Drawing.Point(148, 24);
+            this.radio_units_percent.Location = new System.Drawing.Point(131, 15);
             this.radio_units_percent.Name = "radio_units_percent";
             this.radio_units_percent.Size = new System.Drawing.Size(34, 20);
             this.radio_units_percent.TabIndex = 3;
@@ -856,7 +864,7 @@
             // 
             this.lab_highlimit_unit.AutoSize = true;
             this.lab_highlimit_unit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_highlimit_unit.Location = new System.Drawing.Point(169, 77);
+            this.lab_highlimit_unit.Location = new System.Drawing.Point(173, 82);
             this.lab_highlimit_unit.Name = "lab_highlimit_unit";
             this.lab_highlimit_unit.Size = new System.Drawing.Size(16, 16);
             this.lab_highlimit_unit.TabIndex = 23;
@@ -866,7 +874,7 @@
             // 
             this.radio_units_ohm.AutoSize = true;
             this.radio_units_ohm.Checked = true;
-            this.radio_units_ohm.Location = new System.Drawing.Point(77, 24);
+            this.radio_units_ohm.Location = new System.Drawing.Point(77, 17);
             this.radio_units_ohm.Name = "radio_units_ohm";
             this.radio_units_ohm.Size = new System.Drawing.Size(47, 16);
             this.radio_units_ohm.TabIndex = 2;
@@ -878,7 +886,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(15, 26);
+            this.label12.Location = new System.Drawing.Point(15, 17);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(29, 12);
             this.label12.TabIndex = 7;
@@ -886,14 +894,14 @@
             // 
             // tx_p_lowLimit
             // 
-            this.tx_p_lowLimit.Location = new System.Drawing.Point(77, 99);
+            this.tx_p_lowLimit.Location = new System.Drawing.Point(77, 102);
             this.tx_p_lowLimit.Name = "tx_p_lowLimit";
             this.tx_p_lowLimit.Size = new System.Drawing.Size(86, 21);
             this.tx_p_lowLimit.TabIndex = 21;
             // 
             // tx_p_TargetValue
             // 
-            this.tx_p_TargetValue.Location = new System.Drawing.Point(77, 46);
+            this.tx_p_TargetValue.Location = new System.Drawing.Point(77, 36);
             this.tx_p_TargetValue.Name = "tx_p_TargetValue";
             this.tx_p_TargetValue.Size = new System.Drawing.Size(86, 21);
             this.tx_p_TargetValue.TabIndex = 17;
@@ -901,7 +909,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(18, 103);
+            this.label16.Location = new System.Drawing.Point(15, 106);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(29, 12);
             this.label16.TabIndex = 20;
@@ -910,7 +918,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(18, 50);
+            this.label18.Location = new System.Drawing.Point(15, 39);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(29, 12);
             this.label18.TabIndex = 16;
@@ -918,7 +926,7 @@
             // 
             // tx_p_highLimit
             // 
-            this.tx_p_highLimit.Location = new System.Drawing.Point(77, 73);
+            this.tx_p_highLimit.Location = new System.Drawing.Point(77, 80);
             this.tx_p_highLimit.Name = "tx_p_highLimit";
             this.tx_p_highLimit.Size = new System.Drawing.Size(86, 21);
             this.tx_p_highLimit.TabIndex = 19;
@@ -926,7 +934,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(18, 77);
+            this.label17.Location = new System.Drawing.Point(15, 84);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(29, 12);
             this.label17.TabIndex = 18;
@@ -1032,11 +1040,45 @@
             this.btn_cancel.UseVisualStyleBackColor = true;
             this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
+            // tx_p_offset
+            // 
+            this.tx_p_offset.Location = new System.Drawing.Point(77, 58);
+            this.tx_p_offset.Name = "tx_p_offset";
+            this.tx_p_offset.Size = new System.Drawing.Size(86, 21);
+            this.tx_p_offset.TabIndex = 26;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 62);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 12);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "偏移量";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(170, 40);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(23, 12);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "ohm";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(170, 62);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 12);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "ohm";
+            // 
             // DevParamSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(813, 503);
+            this.ClientSize = new System.Drawing.Size(813, 496);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.btn_update);
             this.Controls.Add(this.groupBox7);
@@ -1169,5 +1211,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SaveImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn DielectricConstant;
         private System.Windows.Forms.DataGridViewTextBoxColumn DataPointCheck;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tx_p_offset;
+        private System.Windows.Forms.Label label13;
     }
 }

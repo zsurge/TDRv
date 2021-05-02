@@ -166,10 +166,12 @@
             // radio_save_param
             // 
             this.radio_save_param.AutoSize = true;
+            this.radio_save_param.Checked = true;
             this.radio_save_param.Location = new System.Drawing.Point(82, 20);
             this.radio_save_param.Name = "radio_save_param";
             this.radio_save_param.Size = new System.Drawing.Size(83, 16);
             this.radio_save_param.TabIndex = 7;
+            this.radio_save_param.TabStop = true;
             this.radio_save_param.Text = "按量测参数";
             this.radio_save_param.UseVisualStyleBackColor = true;
             this.radio_save_param.CheckedChanged += new System.EventHandler(this.radio_save_param_CheckedChanged);
@@ -190,12 +192,10 @@
             // radio_save_date
             // 
             this.radio_save_date.AutoSize = true;
-            this.radio_save_date.Checked = true;
             this.radio_save_date.Location = new System.Drawing.Point(17, 20);
             this.radio_save_date.Name = "radio_save_date";
             this.radio_save_date.Size = new System.Drawing.Size(59, 16);
             this.radio_save_date.TabIndex = 6;
-            this.radio_save_date.TabStop = true;
             this.radio_save_date.Text = "按日期";
             this.radio_save_date.UseVisualStyleBackColor = true;
             this.radio_save_date.CheckedChanged += new System.EventHandler(this.radio_save_date_CheckedChanged);

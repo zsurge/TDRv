@@ -94,11 +94,32 @@ namespace TDRv
         //子窗体传回配方参数
         public void Change_DataGridView(DataGridView dt)
         {
+            //指令步骤显示栏清空
             dataGridView1.Visible = true;
             dataGridView1.Rows.Clear();
 
-            //获取开路定义起始位置
-            GetIndexStart(dt);
+            //子窗体返回参数缓冲区清空
+            paramList.Clear();
+
+            //结果显示框清空
+            dgv_CurrentResult.Rows.Clear();
+
+            //清空流水号
+            gSerialInc = Convert.ToInt32(optParam.snBegin);
+
+            //判定传回的数据是否为空
+            if (dt.RowCount == 0)
+            {
+                return;
+            }
+
+            if (dt.Tag != null)
+            {
+                tsb_XmlFileName.Text = dt.Tag.ToString();
+            }
+
+            //读取配方中的数据
+            GetIndexStart(dt);            
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -139,7 +160,7 @@ namespace TDRv
             return dataTable;
         }
 
-        //获取配方中开路位置信息
+        //获取配方中的数据，包括开路位置信息
         //并且记录所有的待测参数
         public void GetIndexStart(DataGridView dt)
         {
@@ -218,6 +239,8 @@ namespace TDRv
             {
                 dgv_CurrentResult.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
+
+            
         }
 
         private void initChart()
@@ -260,6 +283,131 @@ namespace TDRv
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.White;
         }
 
+        private void tsb_GetTestIndex_Click(object sender, EventArgs e)
+        {
+            List<float> tmpDiffMeasData = new List<float>();
+            List<float> tmpSingleMeasData = new List<float>();
+            string result = string.Empty;
+
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("请先装载配方");
+                return;
+            }
+
+            if (!optStatus.isConnect)
+            {
+                MessageBox.Show("请先连接设备");
+                return;
+            }
+
+            string str1 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
+            analyzer.ExecuteCmd(str1);
+
+            string str2 = ":CALCulate1:TRANsform:TIME:STOP 9.5E-9";
+            analyzer.ExecuteCmd(str2);
+            analyzer.viClear();
+
+            string str3 = "CALC1:X?";
+            analyzer.QueryCommand(str3, out result, 256);
+
+            string str4 = "CALC:PAR:CAT?";
+            analyzer.QueryCommand(str4, out result, 256);
+
+            string str5 = ":CALC:PAR:SEL \"win1_tr1\"";
+            analyzer.ExecuteCmd(str5);
+
+            string str6 = ":DISPlay:ENABle ON";
+            analyzer.ExecuteCmd(str6);
+
+            string str7 = ":CALC:PAR:SEL \"win1_tr1\"";
+            analyzer.ExecuteCmd(str7);
+
+            string str8 = ":DISPlay:ENABle ON";
+            analyzer.ExecuteCmd(str8);
+
+            string str9 = ":INITiate1:CONTinuous ON";
+            analyzer.ExecuteCmd(str9);
+            analyzer.viClear();
+
+            string str10 = ":CALCulate1:DATA? FDATa";
+            analyzer.QueryCommand(str10, out result, 400000);
+
+            //这里需要处理win1_tr1的数据
+            tmpSingleMeasData = packetMaesData(result, 0, 0);
+            string[] tdd22_array = result.Split(new char[] { ',' });
+            result = string.Empty;
+
+            if (tdd22_array.Length < 200)
+            {
+                MessageBox.Show("获取差分开路定义失败");
+            }
+
+            //查找tdd22单端的索引值
+            for (int i = 0; i < tdd22_array.Length; i++)
+            {
+                //logger.Trace(tdd22_array[i]);
+                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                {
+                    MeasPosition.tdd22IndexValue = i - 1;
+                    //这里需要将开路定义后的索引写入到配方的XML文件中去
+                    break;
+                }
+            }
+
+
+            analyzer.ExecuteCmd(str1);
+            analyzer.ExecuteCmd(str2);
+            analyzer.viClear();
+
+
+            analyzer.QueryCommand(str3, out result, 256);
+            analyzer.QueryCommand(str4, out result, 256);
+
+            string str11 = ":CALC:PAR:SEL \"win1_tr2\"";
+            analyzer.ExecuteCmd(str11);
+
+            string str12 = ":DISPlay:ENABle ON";
+            analyzer.ExecuteCmd(str12);
+
+            analyzer.ExecuteCmd(str11);
+
+            analyzer.ExecuteCmd(str12);
+
+            string str13 = ":INITiate1:CONTinuous ON";
+            analyzer.ExecuteCmd(str13);
+            analyzer.viClear();
+
+            string str14 = ":CALCulate1:DATA? FDATa";
+            analyzer.QueryCommand(str14, out result, 400000);
+
+
+            tmpDiffMeasData = packetMaesData(result, 0, 0);
+            string[] tdd11_array = result.Split(new char[] { ',' });
+
+            //查找tdd11差分的索引值
+            for (int i = 0; i < tdd11_array.Length; i++)
+            {
+                //logger.Info(tdd11_array[i]);
+                if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                {
+                    MeasPosition.tdd11IndexValue = i - 1;
+                    //这里需要将开路定义后的索引写入到配方的XML文件中去
+                    break;
+                }
+            }
+
+            result = string.Empty;
+
+            MeasPosition.isOpen = true;
+            optStatus.isGetIndex = true;
+
+            CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
+        }
+
+
+
+/*
         //开路定义
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
@@ -335,7 +483,7 @@ namespace TDRv
                 }
             }
 
-
+            System.Threading.Thread.Sleep(200);
 
             string cmd13 = ":CALC:PAR:SEL \"win1_tr1\"";
             analyzer.ExecuteCmd(cmd13);
@@ -366,6 +514,9 @@ namespace TDRv
  
             CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
         }
+*/
+
+
 
         /// <summary>
         /// 
@@ -651,7 +802,7 @@ namespace TDRv
         /// <param name="channel">这个好像不需要？</param>
         private bool upgradeTestResult(int channel)
         {
-            bool ret = false;               
+             bool ret = false;               
 
             float avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
             float max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
@@ -760,7 +911,6 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-
                 bool ret = false;
 
                 if (optStatus.isConnect && optStatus.isGetIndex)
@@ -916,8 +1066,8 @@ namespace TDRv
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space)
-            {
+            if (e.KeyCode == Keys.Enter)
+            {          
                 if (optParam.keyMode == 1)
                 {
                     bool ret = false;
@@ -957,6 +1107,7 @@ namespace TDRv
                     }
                 }
             }
+
         }
 
 
