@@ -45,6 +45,7 @@ namespace TDRv
 
             if (ret != 0)
             {
+                optStatus.isConnect = false;
                 combDevString.BackColor = Color.Red;
                 MessageBox.Show("error!");
             }

@@ -87,8 +87,11 @@ namespace TDRv
             //判定传回的数据是否为空
             if (dt.RowCount == 0)
             {
+                optStatus.isLoadXml = false;
                 return;
             }
+
+            optStatus.isLoadXml = true;
 
             if (dt.Tag != null)
             {
@@ -105,6 +108,11 @@ namespace TDRv
                 dataGridView1.Rows[index].Cells[1].Value = dt.Rows[i].Cells[1].Value;
                 dataGridView1.Rows[index].Cells[2].Value = dt.Rows[i].Cells[2].Value;
                 dataGridView1.Rows[index].Cells[3].Value = dt.Rows[i].Cells[3].Value;
+            }
+
+            if (optStatus.isConnect && optStatus.isLoadXml)
+            {
+                tsb_GetTestIndex.Enabled = true;
             }
         }
 
@@ -198,8 +206,6 @@ namespace TDRv
                 
                 paramList.Add(tr);
             }
-
-            tsb_GetTestIndex.Enabled = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -235,9 +241,9 @@ namespace TDRv
             chart1.Series[2].BorderWidth = 2;
             chart1.Series[3].BorderWidth = 2;
 
-            //背景黑色
-            chart1.BackColor = Color.Black;
-            chart1.ChartAreas[0].BackColor = Color.Black;
+            //背景灰色
+            chart1.BackColor = Color.Gray;
+            chart1.ChartAreas[0].BackColor = Color.Gray;
 
             //XY标签改为白色
             chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.White;
@@ -328,6 +334,7 @@ namespace TDRv
 
             MeasPosition.isOpen = true;
             optStatus.isGetIndex = true;
+            tsb_StartTest.Enabled = true;
 
             CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
         }
@@ -875,9 +882,12 @@ namespace TDRv
         //输出测试报告
         private void tsmi_export_Click(object sender, EventArgs e)
         {
+            bool ret = false;
             //输出报告 
-            DataGridViewToExcel(dgv_CurrentResult);
+            ret = DataGridViewToExcel(dgv_CurrentResult);
 
+            if(ret)
+            { 
             //复制到已量测表格中
             for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
             {
@@ -892,6 +902,7 @@ namespace TDRv
 
             //清空参数表格
             dgv_CurrentResult.Rows.Clear();
+                }
 
         }
 
@@ -899,7 +910,7 @@ namespace TDRv
         /// DataGridView输出到CSV文件
         /// </summary>
         /// <param name="dgv">数据源文件</param>
-        public void DataGridViewToExcel(DataGridView dgv)
+        public bool DataGridViewToExcel(DataGridView dgv)
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Execl files (*.csv)|*.csv";
@@ -954,10 +965,12 @@ namespace TDRv
                     sw.Close();
                     myStream.Close();
                     MessageBox.Show("导出报告成功！");
+                    return true;
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("导出报告失败！");
+                    return false;
                 }
                 finally
                 {
@@ -968,6 +981,7 @@ namespace TDRv
             else
             {
                 MessageBox.Show("取消导出报告操作!");
+                return false;
             }
         }
 
