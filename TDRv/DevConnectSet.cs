@@ -22,6 +22,7 @@ namespace TDRv
         public delegate void ChangeTsbHandler(string addr);  //定义委托
         public event ChangeTsbHandler ChangeValue;  //定义事件
 
+     
         private void SetParentFormTsbControl()
         {
             if (ChangeValue != null)
@@ -32,12 +33,10 @@ namespace TDRv
 
         private void btn_ConnectDev_Click(object sender, EventArgs e)
         {
-            INI ni = new INI();
-
             CGloabal.g_InstrE5080BModule.adress = combDevString.Text;
 
-            ni.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
-            ni.WriteValueToIniFile("Instrument", "NA", combDevType.Text);
+            INI.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
+            INI.WriteValueToIniFile("Instrument", "NA", combDevType.Text);
 
             CGloabal.g_curInstrument = CGloabal.g_InstrE5080BModule;
 
@@ -57,11 +56,10 @@ namespace TDRv
         }
 
         private void DevConnectSet_Load(object sender, EventArgs e)
-        {
-            INI ni = new INI();
+        {            
             combDevString.BackColor = SystemColors.Window;
-            combDevString.Text = ni.GetValueFromIniFile("Instrument", "AddressNA");
-            CGloabal.g_InstrE5080BModule.adress = ni.GetValueFromIniFile("Instrument", "AddressNA");
+            combDevString.Text = INI.GetValueFromIniFile("Instrument", "AddressNA");
+            CGloabal.g_InstrE5080BModule.adress = INI.GetValueFromIniFile("Instrument", "AddressNA");
         }
     }
 }

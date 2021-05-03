@@ -76,6 +76,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="ini.cs" />
+    <Compile Include="IniFile.cs" />
     <Compile Include="MeasPosition.CS" />
     <Compile Include="optStatus.cs" />
     <Compile Include="Program.cs" />

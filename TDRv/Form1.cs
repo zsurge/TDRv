@@ -29,11 +29,11 @@ namespace TDRv
         //获取当前
         public string exPortFilePath = string.Empty;
 
-        //单端
-        public const int SINGLE = 2;
-
         //差分
         public const int DIFFERENCE = 1;
+
+        //单端
+        public const int SINGLE = 2;
 
         //流水
         public int gSerialInc = 0;
@@ -710,6 +710,23 @@ namespace TDRv
             }
         }
 
+        delegate void SetLableCB(string text,string color);
+        public void SetLableText(string text, string color)
+        {
+            if (this.lable_test_result.InvokeRequired)
+            {
+                SetLableCB d = new SetLableCB(SetLableText);
+                this.Invoke(d, new object[] { text, color });
+            }
+            else
+            {
+                Color myColor = ColorTranslator.FromHtml(color);
+                this.lable_test_result.Text = text;
+                this.lable_test_result.BackColor = myColor;
+            }
+        }
+
+
         /// <summary>
         /// 更新测试结果到datagridview中去
         /// </summary>
@@ -762,17 +779,20 @@ namespace TDRv
                 {                   
                     return ret;
                 }
+                
             }
 
             int index = this.dgv_CurrentResult.Rows.Add();
             int history_index = this.dgv_HistoryResult.Rows.Add();
             if (ret)
             {
+                SetLableText("PASS", "Green");
                 this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
                 this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
             }
             else
             {
+                SetLableText("FAIL", "Red");
                 this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
                 this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
             }

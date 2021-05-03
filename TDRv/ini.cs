@@ -26,22 +26,15 @@ namespace TDRv
         //filePath: INI文件的完整路径和文件名
         private static extern int GetPrivateProfileString(string section, string key, string def, System.Text.StringBuilder retVal, int size, string filePath);
 
-        private string sPath = null;
-        //读取配置文件
+        private static string sPath = Directory.GetCurrentDirectory() + "\\Config.ini";
 
-
-        public INI()
-        {
-            this.sPath = Directory.GetCurrentDirectory()+ "\\Config.ini";
-        }
-
-        public void WriteValueToIniFile(string section, string key, string value)
+        public static void WriteValueToIniFile(string section, string key, string value)
         {        
             // section=配置节，key=键名，value=键值，path=路径
             WritePrivateProfileString(section, key, value, sPath);
         }
 
-        public string GetValueFromIniFile(string section, string key)
+        public static string GetValueFromIniFile(string section, string key)
         {
             // 每次从ini中读取多少字节
             System.Text.StringBuilder temp = new System.Text.StringBuilder(1024);

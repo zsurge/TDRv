@@ -12,7 +12,6 @@ namespace TDRv
 {
     public partial class DevOptSet : Form
     {
-        INI optIni = new INI();
         public DevOptSet()
         {
             InitializeComponent();
@@ -24,38 +23,38 @@ namespace TDRv
 
         private void DevOptSet_Load(object sender, EventArgs e)
         {
-            tx_sn_prefix.Text = optIni.GetValueFromIniFile("TDR", "SN_Head");
-            tx_sn_begin.Text = optIni.GetValueFromIniFile("TDR", "SerialNumber");
-            tx_history_report.Text = optIni.GetValueFromIniFile("TDR", "HistoryFile");
-            tx_export_report.Text = optIni.GetValueFromIniFile("TDR", "ExportFile");
+            tx_sn_prefix.Text = INI.GetValueFromIniFile("TDR", "SN_Head");
+            tx_sn_begin.Text = INI.GetValueFromIniFile("TDR", "SerialNumber");
+            tx_history_report.Text = INI.GetValueFromIniFile("TDR", "HistoryFile");
+            tx_export_report.Text = INI.GetValueFromIniFile("TDR", "ExportFile");
 
             optParam.snPrefix = tx_sn_prefix.Text;
             optParam.snBegin = tx_sn_begin.Text;
             optParam.historyExportFileName = tx_history_report.Text;
             optParam.outputExportFileName = tx_export_report.Text;
 
-            if (string.Compare(optIni.GetValueFromIniFile("TDR", "TestStep"), "Pass") == 0)
+            if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Pass") == 0)
             {
                 radio_pro_pass.Checked = true;
                 optParam.testMode = 1;
             }
-            else if (string.Compare(optIni.GetValueFromIniFile("TDR", "TestStep"), "Manual") == 0)
+            else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Manual") == 0)
             {
                 radio_pro_manual.Checked = true;
                 optParam.testMode = 2;
             }
-            else if (string.Compare(optIni.GetValueFromIniFile("TDR", "TestStep"), "Next") == 0)
+            else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Next") == 0)
             {
                 radio_pro_next.Checked = true;
                 optParam.testMode = 3;
             }
-            else if (string.Compare(optIni.GetValueFromIniFile("TDR", "TestStep"), "PassRecord") == 0)
+            else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "PassRecord") == 0)
             {
                 radio_pro_only_pass.Checked = true;
                 optParam.testMode = 4;
             }
 
-            if (string.Compare(optIni.GetValueFromIniFile("TDR", "Keyboard"), "Disable") == 0)
+            if (string.Compare(INI.GetValueFromIniFile("TDR", "Keyboard"), "Disable") == 0)
             {
                 radio_key_close.Checked = true;
                 optParam.keyMode = 0;
@@ -67,7 +66,7 @@ namespace TDRv
             }
 
             
-            if (string.Compare(optIni.GetValueFromIniFile("TDR", "Naming Method"), "ByDate") == 0)
+            if (string.Compare(INI.GetValueFromIniFile("TDR", "Naming Method"), "ByDate") == 0)
             {
                 optParam.exportMode = 1;
                 radio_sn_manual.Checked = true;
@@ -86,79 +85,79 @@ namespace TDRv
             //测试流程
             if (radio_pro_pass.Checked)
             {
-                optIni.WriteValueToIniFile("TDR", "TestStep", "Pass");
+                INI.WriteValueToIniFile("TDR", "TestStep", "Pass");
                 optParam.testMode = 1;
             }
             else if (radio_pro_manual.Checked)
             {
-                optIni.WriteValueToIniFile("TDR", "TestStep", "Manual");
+                INI.WriteValueToIniFile("TDR", "TestStep", "Manual");
                 optParam.testMode = 2;
             }
             else if (radio_pro_next.Checked)
             {
-                optIni.WriteValueToIniFile("TDR", "TestStep", "Next");
+                INI.WriteValueToIniFile("TDR", "TestStep", "Next");
                 optParam.testMode = 3;
             }
             else if (radio_pro_only_pass.Checked)
             {
-                optIni.WriteValueToIniFile("TDR", "TestStep", "PassRecord");
+                INI.WriteValueToIniFile("TDR", "TestStep", "PassRecord");
                 optParam.testMode = 4;
             }
             else
             {
-                optIni.WriteValueToIniFile("TDR", "TestStep","Next");
+                INI.WriteValueToIniFile("TDR", "TestStep","Next");
                 optParam.testMode = 3;
             }
 
             //键盘 
             if (radio_key_close.Checked)
             {
-                optIni.WriteValueToIniFile("TDR", "Keyboard", "Disable");
+                INI.WriteValueToIniFile("TDR", "Keyboard", "Disable");
                 optParam.keyMode = 0;
             }
             else
             {
-                optIni.WriteValueToIniFile("TDR", "Keyboard", "Spec");
+                INI.WriteValueToIniFile("TDR", "Keyboard", "Spec");
                 optParam.keyMode = 1;
             }
 
             //流水号
             if (radio_sn_manual.Checked)
             {
-                optIni.WriteValueToIniFile("TDR", "SN Method", "Manual");                
+                INI.WriteValueToIniFile("TDR", "SN Method", "Manual");                
             }
             else
             {
-                optIni.WriteValueToIniFile("TDR", "SN Method", "Auto");                
+                INI.WriteValueToIniFile("TDR", "SN Method", "Auto");                
             }
 
-            optIni.WriteValueToIniFile("TDR", "SN_Head", tx_sn_prefix.Text);
+            INI.WriteValueToIniFile("TDR", "SN_Head", tx_sn_prefix.Text);
             optParam.snPrefix = tx_sn_prefix.Text;
 
-            optIni.WriteValueToIniFile("TDR", "SerialNumber", tx_sn_begin.Text);
+            INI.WriteValueToIniFile("TDR", "SerialNumber", tx_sn_begin.Text);
             optParam.snBegin = tx_sn_begin.Text;
 
             //sava mode
             if (radio_save_date.Checked)
             {
                 optParam.exportMode = 1;
-                optIni.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
+                INI.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
 
-                optIni.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
+                INI.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
                 optParam.historyExportFileName = historyFile;
 
-                optIni.WriteValueToIniFile("TDR", "ExportFile", exportFile);
+                INI.WriteValueToIniFile("TDR", "ExportFile", exportFile);
                 optParam.outputExportFileName = exportFile;
 
             }            
             else
             {
                 optParam.exportMode = 2;
-                optIni.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
+                INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
 
-                optIni.WriteValueToIniFile("TDR", "HistoryFile", "TDR_Project_History.csv");
+                INI.WriteValueToIniFile("TDR", "HistoryFile", "TDR_Project_History.csv");
 
-                optIni.WriteValueToIniFile("TDR", "ExportFile", "TDR_Project_Export.csv");
+                INI.WriteValueToIniFile("TDR", "ExportFile", "TDR_Project_Export.csv");
             }
 
             this.Close();

@@ -30,8 +30,10 @@ namespace TDRv
         public string xmlFilePath = string.Empty;
         public int selectionIdx = 0;
 
+        private static string sPath = Directory.GetCurrentDirectory() + "\\Impedance_Config.ini";
+        IniFile optIni = new IniFile(sPath);
+
         devParam dp = new devParam();
-        INI devIni = new INI();
 
         /// <summary>
         /// 获取XML文件数据到datagrid
@@ -482,6 +484,7 @@ namespace TDRv
         {
             TranToParentForm();
             save_xmlfilename_config();
+            optIni.IniWriteValue("value", "key", "123");
         }
 
         private void btn_update_Click(object sender, EventArgs e)
@@ -755,18 +758,18 @@ namespace TDRv
             string exportFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
 
 
-            if (string.Compare(devIni.GetValueFromIniFile("TDR", "Naming Method"), "ByDate") == 0)
+            if (string.Compare(INI.GetValueFromIniFile("TDR", "Naming Method"), "ByDate") == 0)
             {
-                devIni.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
-                devIni.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
-                devIni.WriteValueToIniFile("TDR", "ExportFile", exportFile);
+                INI.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
+                INI.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
+                INI.WriteValueToIniFile("TDR", "ExportFile", exportFile);
 
             }
             else
             {
-                devIni.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
-                devIni.WriteValueToIniFile("TDR", "HistoryFile", filename + ".csv");
-                devIni.WriteValueToIniFile("TDR", "ExportFile", filename + ".csv");
+                INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
+                INI.WriteValueToIniFile("TDR", "HistoryFile", filename + ".csv");
+                INI.WriteValueToIniFile("TDR", "ExportFile", filename + ".csv");
             }
         }
 

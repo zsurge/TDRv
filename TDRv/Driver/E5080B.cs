@@ -194,12 +194,12 @@ namespace TDRv.Driver
             string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
 
             if (channel == 1)
-            {    
-                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
+            {
+                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";                
             }
             else
             {
-                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";
+                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
             }
             
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
