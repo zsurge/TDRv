@@ -40,12 +40,14 @@ namespace TDRv
 
         E5080B analyzer = new E5080B();
 
+        private bool gEmptyFlag = true; //标志是否有空的待测物
      
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
+
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -230,7 +232,11 @@ namespace TDRv
 
         private void initChart()
         {
-            //chart1.Series.Clear();
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+
             chart1.Series[0].LegendText = "TDR Curve";
             chart1.Series[1].LegendText = "limit";
             chart1.Series[2].LegendText = "limit";
@@ -467,12 +473,12 @@ namespace TDRv
             int i = 0;
 
 
-            if (mode == 1) //单端模式
+            if (mode == DIFFERENCE) //差分模式
             {
                 for (i = index; i < tmpArray.Length; i++)
                 {
                     tmp = Convert.ToSingle(tmpArray[i]);
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
+                    if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
                     {
                         //logger.Error(tmpArray[i]);
                         result.Add(tmp);
@@ -483,12 +489,12 @@ namespace TDRv
                     }
                 }
             }
-            else if (mode == 2)//差分模式
+            else if (mode == SINGLE)//单端模式
             {
                 for (i = index; i < tmpArray.Length; i++)
                 {
                     tmp = Convert.ToSingle(tmpArray[i]);
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
+                    if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
                     {
                         result.Add(tmp);
                     }
@@ -569,6 +575,8 @@ namespace TDRv
         }
 
 
+
+
         /// <summary>
         /// 创建量测时的图表
         /// </summary>
@@ -577,7 +585,7 @@ namespace TDRv
         private void CreateMeasChart(List<float> measData, int channel)
         {
             float xbegin = 0;
-            float xend = 0;           
+            float xend = 0;
 
             foreach (var series in chart1.Series)
             {
@@ -590,6 +598,17 @@ namespace TDRv
                 xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
                 xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
 
+                if (xend - xbegin < 10)
+                {      
+                    initChart();
+                    gEmptyFlag = true;
+                    return;
+                }
+                else
+                {
+                    gEmptyFlag = false;
+                }
+                
                 chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = 125;//设置Y坐标最大值
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
@@ -612,6 +631,17 @@ namespace TDRv
                 xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
                 xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
 
+                if (xend - xbegin < 10)
+                {    
+                    initChart();
+                    gEmptyFlag = true;
+                    return;
+                }
+                else
+                {
+                    gEmptyFlag = false;
+                }
+
                 chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
@@ -630,10 +660,21 @@ namespace TDRv
 
             }
             //获取有效区域的LIST
-            List<float> tmpResult = measData.Skip((int)xbegin).Take((int)(measData.Count - xend)).ToList();
+            List<float> tmpResult = measData.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
+
+            //if (tmpResult.Count < 10)
+            //{
+            //    MessageBox.Show("请放入待测试物");
+            //    gEmptyFlag = true;
+            //    return;
+            //}
+            //else
+            //{
+            //    gEmptyFlag = false;
+            //}
 
             //求最大值及最小值
-            if (tmpResult.Count != 0)
+            if (tmpResult.Count != 0)            
             {
                 //设置网格间距
                 chart1.ChartAreas[0].AxisX.Interval = (float)measData.Count / 10;//X轴间距
@@ -733,11 +774,24 @@ namespace TDRv
         /// <param name="channel">这个好像不需要？</param>
         private bool upgradeTestResult(int channel)
         {
-             bool ret = false;               
+            bool ret = false;
+            float avg = 0;
+            float max = 0;
+            float min = 0;
 
-            float avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-            float max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-            float min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值
+            if (gEmptyFlag)
+            {
+                avg = 9999;
+                max = 9999;
+                min = 9999;
+            }
+            else
+            {
+                avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+                max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
+                min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
+            }
+
 
             float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
             float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
@@ -803,9 +857,18 @@ namespace TDRv
             this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
             this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
             this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-            this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-            this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-            this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
+            if (gEmptyFlag)
+            {
+                this.dgv_CurrentResult.Rows[index].Cells[4].Value = "∞"; //平均值
+                this.dgv_CurrentResult.Rows[index].Cells[5].Value = "∞"; //最大值
+                this.dgv_CurrentResult.Rows[index].Cells[6].Value = "∞"; //最小值
+            }
+            else
+            {
+                this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+                this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+                this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+            }
             this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
             this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
@@ -819,9 +882,21 @@ namespace TDRv
             this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
             this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
             this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-            this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-            this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-            this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
+
+            if (gEmptyFlag)
+            {
+                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "∞"; //平均值
+                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "∞"; //最大值
+                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "∞"; //最小值
+            }
+            else
+            {
+                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
+            }
+
+
             this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
             this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
@@ -845,46 +920,45 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-                bool ret = false;
+            bool ret = false;
 
-                if (optStatus.isConnect && optStatus.isGetIndex)
+            SetLableText("", "Control");
+
+            if (optStatus.isConnect && optStatus.isGetIndex)
+            {
+                //量测并生成图表
+                startMeasuration(paramList[measIndex.currentIndex].DevMode);
+
+                //更新测试数据到主界面测试结果中
+                ret = upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
+
+            if (optParam.testMode == 3)
                 {
-                    //量测并生成图表
-                    startMeasuration(paramList[measIndex.currentIndex].DevMode);
-
-                    //更新测试数据到主界面测试结果中
-                    ret = upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
-
-                    if (optParam.testMode == 3)
+                    //量测配方参数依次向后移
+                    measIndex.incIndex();
+                }
+                else if (optParam.testMode == 1 || optParam.testMode == 4)
+                {
+                    if (ret)
                     {
                         //量测配方参数依次向后移
                         measIndex.incIndex();
                     }
-                    else if (optParam.testMode == 1 || optParam.testMode == 4)
-                    {
-                        if (ret)
-                        {
-                            //量测配方参数依次向后移
-                            measIndex.incIndex();
-                        }
-                    }
-                    else if (optParam.testMode == 2)
-                    {
-                        measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
-                    }
-
-                    //高亮显示相应测试配方的那一行            
-                    dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
-
-                    //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
                 }
-                else
+                else if (optParam.testMode == 2)
                 {
-                    MessageBox.Show("设备未连接或者未开路");
+                    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
                 }
 
-                System.Threading.Thread.Sleep(500);
-          
+                //高亮显示相应测试配方的那一行            
+                dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
+
+                //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
+            }
+            else
+            {
+                MessageBox.Show("设备未连接或者未开路");
+            }          
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -932,13 +1006,14 @@ namespace TDRv
         /// <param name="dgv">数据源文件</param>
         public bool DataGridViewToExcel(DataGridView dgv)
         {
+            string defName = INI.GetValueFromIniFile("TDR", "ExportFile"); ;
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Execl files (*.csv)|*.csv";
             dlg.FilterIndex = 0;
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
-            dlg.Title = "保存为csv文件";
-            dlg.FileName = optParam.outputExportFileName;
+            dlg.Title = "保存为csv文件";    
+            dlg.FileName = Path.GetFileNameWithoutExtension(defName);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Stream myStream;
