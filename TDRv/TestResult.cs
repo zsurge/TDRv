@@ -27,6 +27,7 @@ namespace TDRv
         private string valid_end = string.Empty;    //有效的结束量测位置
         private int devmode = 0;        //为区分当前测试模式是单端还是差分
         private int total_item = 0;   //当前配方的总的条数
+        private int open_threshold = 0;  //开路位置
 
         public string Layer
         {
@@ -127,6 +128,11 @@ namespace TDRv
         {
             get { return total_item; }
             set { total_item = value; }
+        }
+        public int Open_hreshold
+        {
+            get { return open_threshold; }
+            set { open_threshold = value; }
         }
     }
 }

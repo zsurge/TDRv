@@ -205,7 +205,8 @@ namespace TDRv
                 //tr.Curve_image = dt.Rows[i].Cells["SaveImage"].Value.ToString();
                 tr.Curve_data = dt.Rows[i].Cells["RecordPath"].Value.ToString();
                 tr.Curve_image = dt.Rows[i].Cells["RecordPath"].Value.ToString();
-                
+                tr.Open_hreshold = int.Parse(dt.Rows[i].Cells["OpenThreshold"].Value.ToString());
+
                 paramList.Add(tr);
             }
         }
@@ -586,92 +587,51 @@ namespace TDRv
         {
             float xbegin = 0;
             float xend = 0;
+            float yhigh = 0;
+            float ylow = 0;
+
 
             foreach (var series in chart1.Series)
             {
                 series.Points.Clear();
             }
-            
-            //计算有效区域起始结束位置 
-            if (channel == SINGLE)
+
+            xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
+            xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
+            yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100));
+            ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));
+
+            if (xend - xbegin < 10)
             {
-                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
-                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
-
-                if (xend - xbegin < 10)
-                {      
-                    initChart();
-                    gEmptyFlag = true;
-                    return;
-                }
-                else
-                {
-                    gEmptyFlag = false;
-                }
-                
-                chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
-                chart1.ChartAreas[0].AxisY.Maximum = 125;//设置Y坐标最大值
-                chart1.ChartAreas[0].AxisY.Minimum = 0;
-                //生成上半位有效区域
-                chart1.Series[1].Points.AddXY(xbegin, 100);
-                chart1.Series[1].Points.AddXY(xbegin, 56);
-                chart1.Series[1].Points.AddXY(xend, 56);
-                chart1.Series[1].Points.AddXY(xend, 100);
-
-                //生成下半部有效区域
-                chart1.Series[2].Points.AddXY(xbegin, 0);
-                chart1.Series[2].Points.AddXY(xbegin, 44);
-                chart1.Series[2].Points.AddXY(xend, 44);
-                chart1.Series[2].Points.AddXY(xend, 0);
-
-
+                //initChart();
+                gEmptyFlag = true;
+                return;
             }
             else
             {
-                xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
-                xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
-
-                if (xend - xbegin < 10)
-                {    
-                    initChart();
-                    gEmptyFlag = true;
-                    return;
-                }
-                else
-                {
-                    gEmptyFlag = false;
-                }
-
-                chart1.ChartAreas[0].AxisY.Interval = 50;//Y轴间距
-                chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
-                chart1.ChartAreas[0].AxisY.Minimum = 0;
-
-                //生成上半位有效区域
-                chart1.Series[1].Points.AddXY(xbegin, 200);
-                chart1.Series[1].Points.AddXY(xbegin, 115);
-                chart1.Series[1].Points.AddXY(xend, 115);
-                chart1.Series[1].Points.AddXY(xend, 200);
-
-                //生成下半部有效区域
-                chart1.Series[2].Points.AddXY(xbegin, 0);
-                chart1.Series[2].Points.AddXY(xbegin, 85);
-                chart1.Series[2].Points.AddXY(xend, 85);
-                chart1.Series[2].Points.AddXY(xend, 0);
-
+                gEmptyFlag = false;
             }
+
+            //计算有效区域起始结束位置 
+            chart1.ChartAreas[0].AxisY.Interval = paramList[measIndex.currentIndex].Open_hreshold / 5; //Y轴间距
+            chart1.ChartAreas[0].AxisY.Maximum = paramList[measIndex.currentIndex].Open_hreshold;//设置Y坐标最大值
+            chart1.ChartAreas[0].AxisY.Minimum = 0;
+
+            //生成上半位有效区域
+            chart1.Series[1].Points.AddXY(xbegin, paramList[measIndex.currentIndex].Open_hreshold);
+            chart1.Series[1].Points.AddXY(xbegin, yhigh);
+            chart1.Series[1].Points.AddXY(xend, yhigh);
+            chart1.Series[1].Points.AddXY(xend, paramList[measIndex.currentIndex].Open_hreshold);
+
+            //生成下半部有效区域
+            chart1.Series[2].Points.AddXY(xbegin, 0);
+            chart1.Series[2].Points.AddXY(xbegin, ylow);
+            chart1.Series[2].Points.AddXY(xend, ylow);
+            chart1.Series[2].Points.AddXY(xend, 0);
+
             //获取有效区域的LIST
             List<float> tmpResult = measData.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
 
-            //if (tmpResult.Count < 10)
-            //{
-            //    MessageBox.Show("请放入待测试物");
-            //    gEmptyFlag = true;
-            //    return;
-            //}
-            //else
-            //{
-            //    gEmptyFlag = false;
-            //}
 
             //求最大值及最小值
             if (tmpResult.Count != 0)            
