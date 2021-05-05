@@ -484,7 +484,6 @@ namespace TDRv
         {
             TranToParentForm();
             save_xmlfilename_config();
-            optIni.IniWriteValue("value", "key", "123");
         }
 
         private void btn_update_Click(object sender, EventArgs e)

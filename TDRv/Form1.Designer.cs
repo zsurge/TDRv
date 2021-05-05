@@ -288,7 +288,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(978, 179);
             this.tabControl1.TabIndex = 0;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -327,6 +326,7 @@
             this.dgv_CurrentResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_CurrentResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
+            this.dgv_CurrentResult.ReadOnly = true;
             this.dgv_CurrentResult.RowHeadersVisible = false;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -337,71 +337,85 @@
             // 
             this.cLayer.HeaderText = "Layer";
             this.cLayer.Name = "cLayer";
+            this.cLayer.ReadOnly = true;
             // 
             // cSPEC
             // 
             this.cSPEC.HeaderText = "SPEC";
             this.cSPEC.Name = "cSPEC";
+            this.cSPEC.ReadOnly = true;
             // 
             // cMaxOffset
             // 
             this.cMaxOffset.HeaderText = "Up";
             this.cMaxOffset.Name = "cMaxOffset";
+            this.cMaxOffset.ReadOnly = true;
             // 
             // cMinOffset
             // 
             this.cMinOffset.HeaderText = "Down";
             this.cMinOffset.Name = "cMinOffset";
+            this.cMinOffset.ReadOnly = true;
             // 
             // cAverage
             // 
             this.cAverage.HeaderText = "Average";
             this.cAverage.Name = "cAverage";
+            this.cAverage.ReadOnly = true;
             // 
             // cMax
             // 
             this.cMax.HeaderText = "Max";
             this.cMax.Name = "cMax";
+            this.cMax.ReadOnly = true;
             // 
             // cMin
             // 
             this.cMin.HeaderText = "Min";
             this.cMin.Name = "cMin";
+            this.cMin.ReadOnly = true;
             // 
             // cResult
             // 
             this.cResult.HeaderText = "Result";
             this.cResult.Name = "cResult";
+            this.cResult.ReadOnly = true;
             // 
             // cSerial
             // 
             this.cSerial.HeaderText = "Serial";
             this.cSerial.Name = "cSerial";
+            this.cSerial.ReadOnly = true;
             // 
             // cData
             // 
             this.cData.HeaderText = "Data";
             this.cData.Name = "cData";
+            this.cData.ReadOnly = true;
             // 
             // cTime
             // 
             this.cTime.HeaderText = "Time";
             this.cTime.Name = "cTime";
+            this.cTime.ReadOnly = true;
             // 
             // cSeDiff
             // 
             this.cSeDiff.HeaderText = "SE/DIFF";
             this.cSeDiff.Name = "cSeDiff";
+            this.cSeDiff.ReadOnly = true;
             // 
             // cCurveData
             // 
             this.cCurveData.HeaderText = "CurveData";
             this.cCurveData.Name = "cCurveData";
+            this.cCurveData.ReadOnly = true;
             // 
             // cCurveImage
             // 
             this.cCurveImage.HeaderText = "CurveImage";
             this.cCurveImage.Name = "cCurveImage";
+            this.cCurveImage.ReadOnly = true;
             // 
             // tabPage2
             // 

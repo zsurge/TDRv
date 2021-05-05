@@ -11,6 +11,7 @@ namespace TDRv
         private string layer = string.Empty; //这个是配方上显示的layer，跟current_index不是同一个概念
         private string upper_limit = string.Empty; //最大上限比例 
         private string low_limit = string.Empty;  //最小下限比例
+        private string impedanceLimit_Unit = string.Empty; //阻抗单位
         private string spec = string.Empty;        //标准值
         private string average = string.Empty;   //设备计算出的平均值
         private string max = string.Empty;      //设备计算出的最大值
@@ -43,6 +44,12 @@ namespace TDRv
         {
             get { return low_limit; }
             set { low_limit = value; }
+        }
+        
+        public string ImpedanceLimit_Unit
+        {
+            get { return impedanceLimit_Unit; }
+            set { impedanceLimit_Unit = value; }
         }
 
         public string Spec
