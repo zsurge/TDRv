@@ -960,10 +960,10 @@ namespace TDRv
 
             task1.Start();
 
-            //task1.ContinueWith((Task) =>
-            //{
-            //    CaptureScreen(@"C:\Users\Surge\Desktop\121");
-            //});     
+            task1.ContinueWith((Task) =>
+            {
+                CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image); 
+            });
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1331,7 +1331,8 @@ namespace TDRv
                 _dgv.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
+                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
+
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1346,6 +1347,44 @@ namespace TDRv
 
                     gTestResultValue = 1;
                 }
+                else
+                {
+                    List<string> historyRecord = new List<string>();
+                    //这里要写历史记录       
+                    for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
+                    {
+                        historyRecord.Add(dgv_CurrentResult.Rows[index].Cells[j].Value.ToString());
+                    }
+                    string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
+                    writeHistoryRecord(historyRecord, defName);
+                }
+
+            }
+        }
+
+        private void writeHistoryRecord(List<string>data, string spath)
+        {
+            if (!File.Exists(spath))
+            {
+                //不存在 
+                StreamWriter fileWriter = new StreamWriter(spath, true, Encoding.Default);
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage";
+                fileWriter.WriteLine(str);
+                fileWriter.Flush();
+                fileWriter.Close();
+            }
+            else
+            {
+                //存在
+                StreamWriter fileWriter = new StreamWriter(spath, true, Encoding.Default);
+                string strline = string.Empty;
+                for (int i = 0; i < data.Count; i++)
+                {
+                    strline += (data[i]+",");
+                }
+                fileWriter.WriteLine(strline);
+                fileWriter.Flush();
+                fileWriter.Close();
             }
         }
 
@@ -1360,6 +1399,26 @@ namespace TDRv
             else
             {
                 _dgv.CurrentCell = _dgv.Rows[measIndex.currentIndex].Cells[0];
+            }
+        }
+
+        delegate void CaptureScreenChartDelegate(Chart _chart,string path);
+        public void CaptureScreenChart(Chart _chart, string path)
+        {
+            if (_chart.InvokeRequired)
+            {
+                CaptureScreenChartDelegate d = new CaptureScreenChartDelegate(CaptureScreenChart);
+                this.Invoke(d, new object[] { _chart , path });
+            }
+            else
+            {
+                Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+                Graphics g = Graphics.FromImage(bit);
+                g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
+                                                                      //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+                g.CopyFromScreen(chart1.PointToScreen(Point.Empty), Point.Empty, chart1.Size);//只保存某个控件
+                                                                                              //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
+                bit.Save(path + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好  
             }
         }
 

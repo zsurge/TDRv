@@ -436,7 +436,7 @@ namespace TDRv
             DirectoryInfo theFolder = new DirectoryInfo(folderPath);
             if (theFolder.Exists)
             {
-                tx_p_savePath.Text = folderPath;
+                tx_p_savePath.Text = folderPath+"\\";
             }
         }
 

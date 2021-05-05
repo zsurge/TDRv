@@ -18,8 +18,8 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public string historyFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
-        public string exportFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
+        public string historyFile = Environment.CurrentDirectory + "\\record\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
+        public string exportFile = Environment.CurrentDirectory + "\\record\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
 
         private void DevOptSet_Load(object sender, EventArgs e)
         {
@@ -155,9 +155,9 @@ namespace TDRv
                 optParam.exportMode = 2;
                 INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
 
-                INI.WriteValueToIniFile("TDR", "HistoryFile", "TDR_Project_History.csv");
+                INI.WriteValueToIniFile("TDR", "HistoryFile", Environment.CurrentDirectory + "\\record\\" + "TDR_Project_History.csv");
 
-                INI.WriteValueToIniFile("TDR", "ExportFile", "TDR_Project_Export.csv");
+                INI.WriteValueToIniFile("TDR", "ExportFile", Environment.CurrentDirectory + "\\record\\" + "TDR_Project_Export.csv");
             }
 
             this.Close();
@@ -176,8 +176,8 @@ namespace TDRv
 
         private void radio_save_param_CheckedChanged(object sender, EventArgs e)
         {
-            tx_history_report.Text = "TDR_Project_History.csv";
-            tx_export_report.Text = "TDR_Project_Export.csv";
+            tx_history_report.Text = Environment.CurrentDirectory + "\\record\\" + "TDR_Project_History.csv";
+            tx_export_report.Text = Environment.CurrentDirectory + "\\record\\" + "TDR_Project_Export.csv";
         }
     }
 }
