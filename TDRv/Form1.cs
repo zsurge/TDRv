@@ -87,6 +87,22 @@ namespace TDRv
             //结果显示框清空
             dgv_CurrentResult.Rows.Clear();
 
+            //输出栏清空
+            dgv_OutPutResult.Rows.Clear();
+
+            //历史显示框清空
+            dgv_HistoryResult.Rows.Clear();
+
+            //开路位置清空
+            MeasPosition.tdd11IndexValue = 0;
+            MeasPosition.tdd11start = 0;
+            MeasPosition.tdd22IndexValue = 0;
+            MeasPosition.tdd22start = 0;
+
+            //记录索引清零
+            measIndex.total = 0;
+            measIndex.currentIndex = 0;
+
             //清空流水号
             gSerialInc = Convert.ToInt32(optParam.snBegin);
 
@@ -851,9 +867,9 @@ namespace TDRv
 
             if (gEmptyFlag)
             {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "∞"; //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "∞"; //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "∞"; //最小值
+                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "9999"; //平均值
+                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "9999"; //最大值
+                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "9999"; //最小值
             }
             else
             {
@@ -1140,8 +1156,19 @@ namespace TDRv
 
                 xbegin = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100; //有效区起始位置
                 xend = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;     //有效区结束位置
-                yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100)); //量测值上限
-                ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));//量测值下限
+
+                if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
+                {
+                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100)); //量测值上限
+                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));//量测值下限
+                }
+                else
+                {
+                    float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
+                    float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
+                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                }
 
                 if (xend - xbegin < 10)
                 {
@@ -1300,7 +1327,7 @@ namespace TDRv
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
                 if (string.Compare(strUnit, "ohms") == 0)
                 {
-                    strUnit = " Ω";
+                    strUnit = " Ohm";
                 }
                 else
                 {
@@ -1315,9 +1342,9 @@ namespace TDRv
 
                 if (gEmptyFlag)
                 {
-                    _dgv.Rows[index].Cells[4].Value = "∞"; //平均值
-                    _dgv.Rows[index].Cells[5].Value = "∞"; //最大值
-                    _dgv.Rows[index].Cells[6].Value = "∞"; //最小值
+                    _dgv.Rows[index].Cells[4].Value = "9999"; //平均值
+                    _dgv.Rows[index].Cells[5].Value = "9999"; //最大值
+                    _dgv.Rows[index].Cells[6].Value = "9999"; //最小值
                 }
                 else
                 {
@@ -1362,14 +1389,30 @@ namespace TDRv
             }
         }
 
-        private void writeHistoryRecord(List<string>data, string spath)
+        private void writeHistoryRecord(List<string>data, string fileName)
         {
+            string fileDir = Environment.CurrentDirectory + "\\record\\";
+
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            string spath = fileDir + fileName;
+
             if (!File.Exists(spath))
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(spath, true, Encoding.Default);
                 string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage";
                 fileWriter.WriteLine(str);
+
+                string strline = string.Empty;
+                for (int i = 0; i < data.Count; i++)
+                {
+                    strline += (data[i] + ",");
+                }
+                fileWriter.WriteLine(strline);
                 fileWriter.Flush();
                 fileWriter.Close();
             }
@@ -1411,14 +1454,15 @@ namespace TDRv
                 this.Invoke(d, new object[] { _chart , path });
             }
             else
-            {
-                Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+            {               
+                //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+                Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
                 Graphics g = Graphics.FromImage(bit);
-                g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
-                                                                      //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
-                g.CopyFromScreen(chart1.PointToScreen(Point.Empty), Point.Empty, chart1.Size);//只保存某个控件
-                                                                                              //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
-                bit.Save(path + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好  
+                g.CompositingQuality = CompositingQuality.HighSpeed;//质量设为最高
+                //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+                g.CopyFromScreen(_chart.PointToScreen(Point.Empty), Point.Empty, _chart.Size);//只保存某个控件
+                //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
+                bit.Save(path + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
             }
         }
 

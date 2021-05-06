@@ -240,8 +240,6 @@
             this.groupBox5.Controls.Add(this.tx_sn_prefix);
             this.groupBox5.Controls.Add(this.label2);
             this.groupBox5.Controls.Add(this.label1);
-            this.groupBox5.Controls.Add(this.radio_sn_auto);
-            this.groupBox5.Controls.Add(this.radio_sn_manual);
             this.groupBox5.Location = new System.Drawing.Point(171, 2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(220, 101);
@@ -251,7 +249,7 @@
             // 
             // tx_sn_begin
             // 
-            this.tx_sn_begin.Location = new System.Drawing.Point(77, 76);
+            this.tx_sn_begin.Location = new System.Drawing.Point(77, 62);
             this.tx_sn_begin.Name = "tx_sn_begin";
             this.tx_sn_begin.Size = new System.Drawing.Size(137, 21);
             this.tx_sn_begin.TabIndex = 9;
@@ -259,7 +257,7 @@
             // 
             // tx_sn_prefix
             // 
-            this.tx_sn_prefix.Location = new System.Drawing.Point(77, 50);
+            this.tx_sn_prefix.Location = new System.Drawing.Point(77, 28);
             this.tx_sn_prefix.Name = "tx_sn_prefix";
             this.tx_sn_prefix.Size = new System.Drawing.Size(137, 21);
             this.tx_sn_prefix.TabIndex = 8;
@@ -268,7 +266,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 79);
+            this.label2.Location = new System.Drawing.Point(6, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 7;
@@ -277,7 +275,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 53);
+            this.label1.Location = new System.Drawing.Point(6, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 6;
@@ -287,23 +285,25 @@
             // 
             this.radio_sn_auto.AutoSize = true;
             this.radio_sn_auto.Checked = true;
-            this.radio_sn_auto.Location = new System.Drawing.Point(77, 20);
+            this.radio_sn_auto.Location = new System.Drawing.Point(468, 12);
             this.radio_sn_auto.Name = "radio_sn_auto";
             this.radio_sn_auto.Size = new System.Drawing.Size(47, 16);
             this.radio_sn_auto.TabIndex = 5;
             this.radio_sn_auto.TabStop = true;
             this.radio_sn_auto.Text = "自动";
             this.radio_sn_auto.UseVisualStyleBackColor = true;
+            this.radio_sn_auto.Visible = false;
             // 
             // radio_sn_manual
             // 
             this.radio_sn_manual.AutoSize = true;
-            this.radio_sn_manual.Location = new System.Drawing.Point(6, 20);
+            this.radio_sn_manual.Location = new System.Drawing.Point(415, 12);
             this.radio_sn_manual.Name = "radio_sn_manual";
             this.radio_sn_manual.Size = new System.Drawing.Size(47, 16);
             this.radio_sn_manual.TabIndex = 4;
             this.radio_sn_manual.Text = "手动";
             this.radio_sn_manual.UseVisualStyleBackColor = true;
+            this.radio_sn_manual.Visible = false;
             // 
             // btn_opt_ok
             // 
@@ -334,7 +334,9 @@
             this.Controls.Add(this.btn_opt_ok);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.radio_sn_auto);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.radio_sn_manual);
             this.Controls.Add(this.groupBox1);
             this.Name = "DevOptSet";
             this.Text = "Operation Config Setup";
@@ -348,6 +350,7 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

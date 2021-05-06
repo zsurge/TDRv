@@ -751,7 +751,15 @@ namespace TDRv
 
         private void save_xmlfilename_config()
         {
-            string filename = Path.GetFileNameWithoutExtension(xmlFilePath);
+            string filename = string.Empty;
+            if (dgv_param.Tag == null)
+            {
+                filename = "";
+            }
+            else
+            {
+                filename = dgv_param.Tag.ToString();
+            }
 
             string historyFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
             string exportFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
@@ -767,8 +775,8 @@ namespace TDRv
             else
             {
                 INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
-                INI.WriteValueToIniFile("TDR", "HistoryFile", filename + ".csv");
-                INI.WriteValueToIniFile("TDR", "ExportFile", filename + ".csv");
+                INI.WriteValueToIniFile("TDR", "HistoryFile", filename+"_history.csv");
+                INI.WriteValueToIniFile("TDR", "ExportFile", filename + "_Export.csv");
             }
         }
 
