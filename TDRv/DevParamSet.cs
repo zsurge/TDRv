@@ -71,6 +71,7 @@ namespace TDRv
             //设置对话框标题
             pOpenFileDialog.Title = "载入XML文件";
             pOpenFileDialog.Filter = "XML文件|*.xml";
+            pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory;
             //监测文件是否存在
             pOpenFileDialog.CheckFileExists = true;
             if (pOpenFileDialog.ShowDialog() == DialogResult.OK)  //如果点击的是打开文件
@@ -427,6 +428,7 @@ namespace TDRv
         {
             FolderBrowserDialog sOpt = new FolderBrowserDialog();
             sOpt.Description = "请选择文件路径";
+            
             DialogResult result = sOpt.ShowDialog();
             if (result == DialogResult.Cancel)
             {
@@ -436,7 +438,7 @@ namespace TDRv
             DirectoryInfo theFolder = new DirectoryInfo(folderPath);
             if (theFolder.Exists)
             {
-                tx_p_savePath.Text = folderPath+"\\";
+                tx_p_savePath.Text = folderPath;
             }
         }
 
@@ -751,33 +753,25 @@ namespace TDRv
 
         private void save_xmlfilename_config()
         {
-            string filename = string.Empty;
+            string historyFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
+            string exportFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
+
             if (dgv_param.Tag == null)
             {
-                filename = "";
-            }
-            else
-            {
-                filename = dgv_param.Tag.ToString();
-            }
-
-            string historyFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
-            string exportFile = "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
-
-
-            if (string.Compare(INI.GetValueFromIniFile("TDR", "Naming Method"), "ByDate") == 0)
-            {
-                INI.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
-                INI.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
-                INI.WriteValueToIniFile("TDR", "ExportFile", exportFile);
+                historyFile_bypro += "TDR_Project_History.csv";
+                exportFile_bypro += "TDR_Project_Export.csv";
 
             }
             else
             {
-                INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
-                INI.WriteValueToIniFile("TDR", "HistoryFile", filename+"_history.csv");
-                INI.WriteValueToIniFile("TDR", "ExportFile", filename + "_Export.csv");
+                historyFile_bypro += (dgv_param.Tag.ToString() + "_history.csv");
+                exportFile_bypro += (dgv_param.Tag.ToString() + "_Export.csv");
             }
+
+            INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
+            INI.WriteValueToIniFile("TDR", "HistoryFile", historyFile_bypro);
+            INI.WriteValueToIniFile("TDR", "ExportFile", exportFile_bypro);
+          
         }
 
 

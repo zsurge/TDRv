@@ -13,7 +13,6 @@ E:\CsharpPro\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe.config
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.pdb
-H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
@@ -23,3 +22,4 @@ H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
+H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache

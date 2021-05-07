@@ -77,6 +77,19 @@ namespace TDRv
         //子窗体传回配方参数
         public void Change_DataGridView(DataGridView dt)
         {
+            if (dgv_CurrentResult.Rows.Count > 0)
+            {
+                DialogResult dr = MessageBox.Show("将要清除测试数据，是否保存","提示",MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes)
+                {
+                    DataGridViewToExcel(dgv_CurrentResult);
+                }
+            }
+
+            //清除开路定义，需重新开路
+            optStatus.isGetIndex = false;
+            tsb_StartTest.Enabled = false;
+
             //指令步骤显示栏清空
             dataGridView1.Visible = true;
             dataGridView1.Rows.Clear();
@@ -337,9 +350,6 @@ namespace TDRv
                     break;
                 }
             }
-
-
-
 
             //单端开路定义
             result = string.Empty;
@@ -939,8 +949,6 @@ namespace TDRv
                     DisplayChartValue(chart1, disResult);
 
                     //更新测试数据到主界面测试结果中
-                    //ret = upgradeTestResult(paramList[measIndex.currentIndex].DevMode);
-                    //
                     CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
                     CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
 
@@ -976,10 +984,14 @@ namespace TDRv
 
             task1.Start();
 
-            task1.ContinueWith((Task) =>
+            if(paramList[measIndex.currentIndex].Curve_image.Length != 0)
             {
-                CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image); 
-            });
+
+                task1.ContinueWith((Task) =>
+                {
+                    CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
+                });
+            }
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1245,12 +1257,14 @@ namespace TDRv
                 this.Invoke(d, new object[] { _dgv, channel ,flag});
             }
             else
-            {
-
+            {         
                 bool ret = false;
                 float avg = 0;
                 float max = 0;
                 float min = 0;
+
+                float lowLimit = 0;
+                float hiLimit = 0;
 
                 if (gEmptyFlag)
                 {
@@ -1260,24 +1274,32 @@ namespace TDRv
                 }
                 else
                 {
-                    avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                    max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                    min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
+                    avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+                    max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
+                    min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
                 }
 
 
-                float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
-                float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
-                float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
+                float stdValue = Convert.ToSingle(paramList[measIndex.currentIndex].Spec); //标准值
 
-                float stdLowValue = stdValue * ((100 + loLimite) / 100);
-                float stdHiValue = stdValue * ((100 + hiLimite) / 100);
+                if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
+                {
+                    lowLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Low_limit) / 100); //下限
+                    hiLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Upper_limit) / 100); //上限
+                }
+                else
+                {
+                    float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
+                    float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
+                    hiLimit = stdValue * (1 + hi_offset);
+                    lowLimit = stdValue * (1 - low_offset);
+                }
 
 
                 //这里判定是以点的方式还是以平均值的方式来判定结果
                 if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
                 {
-                    if (avg > stdLowValue && avg < stdHiValue)
+                    if (avg > lowLimit && avg < hiLimit)
                     {
                         ret = true;
                     }
@@ -1288,7 +1310,7 @@ namespace TDRv
                 }
                 else //以点的形式去判定
                 {
-                    if (((max < stdHiValue) && (max > stdLowValue)) && ((min < stdHiValue) && (min > stdLowValue)))
+                    if (((max < hiLimit) && (max > lowLimit)) && ((min < hiLimit) && (min > lowLimit)))
                     {
                         ret = true;
                     }
@@ -1298,18 +1320,23 @@ namespace TDRv
                     }
                 }
 
-                if (flag == CURRENT_RECORD) //当前记录
+                if (flag == CURRENT_RECORD) //当前量测
                 {
                     //这里需要添加对比
                     if (ret == false)
                     {
-                        //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
-                        if (optParam.testMode == 4)
-                        {
-                            gTestResultValue = -1;
-                        }
-
+                        gTestResultValue = -1;
                     }
+                    else 
+                    {
+                        gTestResultValue = 1;
+                    }
+                } 
+
+
+                if (optParam.testMode == 4 && gTestResultValue == -1)
+                {
+                    return;
                 }
 
                 int index = _dgv.Rows.Add();                
@@ -1370,9 +1397,7 @@ namespace TDRv
                     }
 
                     //光标在最后一行
-                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];
-
-                    gTestResultValue = 1;
+                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
                 }
                 else
                 {
@@ -1380,7 +1405,7 @@ namespace TDRv
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
                     {
-                        historyRecord.Add(dgv_CurrentResult.Rows[index].Cells[j].Value.ToString());
+                        historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
                     }
                     string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
                     writeHistoryRecord(historyRecord, defName);
@@ -1389,21 +1414,19 @@ namespace TDRv
             }
         }
 
-        private void writeHistoryRecord(List<string>data, string fileName)
+        private void writeHistoryRecord(List<string>data, string filePath)
         {
-            string fileDir = Environment.CurrentDirectory + "\\record\\";
+            string fileDir = Path.GetDirectoryName(filePath);
 
             if (!Directory.Exists(fileDir))
             {
                 Directory.CreateDirectory(fileDir);
             }
 
-            string spath = fileDir + fileName;
-
-            if (!File.Exists(spath))
+            if (!File.Exists(filePath))
             {
                 //不存在 
-                StreamWriter fileWriter = new StreamWriter(spath, true, Encoding.Default);
+                StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
                 string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage";
                 fileWriter.WriteLine(str);
 
@@ -1419,7 +1442,7 @@ namespace TDRv
             else
             {
                 //存在
-                StreamWriter fileWriter = new StreamWriter(spath, true, Encoding.Default);
+                StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
                 string strline = string.Empty;
                 for (int i = 0; i < data.Count; i++)
                 {
@@ -1454,7 +1477,14 @@ namespace TDRv
                 this.Invoke(d, new object[] { _chart , path });
             }
             else
-            {               
+            {
+                string fileDir = path + "\\Image";
+
+                if (!Directory.Exists(fileDir))
+                {
+                    Directory.CreateDirectory(fileDir);
+                }
+
                 //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
                 Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
                 Graphics g = Graphics.FromImage(bit);
@@ -1462,7 +1492,7 @@ namespace TDRv
                 //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
                 g.CopyFromScreen(_chart.PointToScreen(Point.Empty), Point.Empty, _chart.Size);//只保存某个控件
                 //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
-                bit.Save(path + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                bit.Save(fileDir + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
             }
         }
 

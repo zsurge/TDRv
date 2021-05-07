@@ -140,14 +140,15 @@ namespace TDRv
             //sava mode
             if (radio_save_date.Checked)
             {
+
                 optParam.exportMode = 1;
                 INI.WriteValueToIniFile("TDR", "Naming Method", "ByDate");
 
-                INI.WriteValueToIniFile("TDR", "HistoryFile", historyFile);
-                optParam.historyExportFileName = historyFile;
+                INI.WriteValueToIniFile("TDR", "HistoryFile", tx_history_report.Text);
+                optParam.historyExportFileName = tx_history_report.Text;
 
-                INI.WriteValueToIniFile("TDR", "ExportFile", exportFile);
-                optParam.outputExportFileName = exportFile;
+                INI.WriteValueToIniFile("TDR", "ExportFile", tx_export_report.Text);
+                optParam.outputExportFileName = tx_export_report.Text;
 
             }            
             else
@@ -155,9 +156,9 @@ namespace TDRv
                 optParam.exportMode = 2;
                 INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
 
-                INI.WriteValueToIniFile("TDR", "HistoryFile", Environment.CurrentDirectory + "\\record\\" + "TDR_Project_History.csv");
+                INI.WriteValueToIniFile("TDR", "HistoryFile", tx_history_report.Text);
 
-                INI.WriteValueToIniFile("TDR", "ExportFile", Environment.CurrentDirectory + "\\record\\" + "TDR_Project_Export.csv");
+                INI.WriteValueToIniFile("TDR", "ExportFile", tx_export_report.Text);
             }
 
             this.Close();
@@ -176,8 +177,8 @@ namespace TDRv
 
         private void radio_save_param_CheckedChanged(object sender, EventArgs e)
         {
-            tx_history_report.Text = Environment.CurrentDirectory + "\\record\\" + "TDR_Project_History.csv";
-            tx_export_report.Text = Environment.CurrentDirectory + "\\record\\" + "TDR_Project_Export.csv";
+            tx_history_report.Text = INI.GetValueFromIniFile("TDR", "HistoryFile");
+            tx_export_report.Text = INI.GetValueFromIniFile("TDR", "ExportFile");
         }
     }
 }

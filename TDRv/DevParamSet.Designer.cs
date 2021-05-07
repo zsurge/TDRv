@@ -96,6 +96,10 @@
             this.tx_p_Index = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tx_p_offset = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.lab_lowlimit_unit = new System.Windows.Forms.Label();
             this.radio_units_percent = new System.Windows.Forms.RadioButton();
             this.lab_highlimit_unit = new System.Windows.Forms.Label();
@@ -117,10 +121,6 @@
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
-            this.tx_p_offset = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).BeginInit();
@@ -239,6 +239,7 @@
             this.dgv_param.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_param.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgv_param.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_param.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -838,6 +839,40 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "边界设定";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(170, 62);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 12);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "ohm";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(170, 40);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(23, 12);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "ohm";
+            // 
+            // tx_p_offset
+            // 
+            this.tx_p_offset.Location = new System.Drawing.Point(77, 58);
+            this.tx_p_offset.Name = "tx_p_offset";
+            this.tx_p_offset.Size = new System.Drawing.Size(86, 21);
+            this.tx_p_offset.TabIndex = 26;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 62);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 12);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "偏移量";
+            // 
             // lab_lowlimit_unit
             // 
             this.lab_lowlimit_unit.AutoSize = true;
@@ -1039,40 +1074,6 @@
             this.btn_cancel.Text = "取消";
             this.btn_cancel.UseVisualStyleBackColor = true;
             this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
-            // 
-            // tx_p_offset
-            // 
-            this.tx_p_offset.Location = new System.Drawing.Point(77, 58);
-            this.tx_p_offset.Name = "tx_p_offset";
-            this.tx_p_offset.Size = new System.Drawing.Size(86, 21);
-            this.tx_p_offset.TabIndex = 26;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(3, 62);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 12);
-            this.label13.TabIndex = 25;
-            this.label13.Text = "偏移量";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(170, 40);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(23, 12);
-            this.label14.TabIndex = 27;
-            this.label14.Text = "ohm";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(170, 62);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(23, 12);
-            this.label15.TabIndex = 27;
-            this.label15.Text = "ohm";
             // 
             // DevParamSet
             // 
