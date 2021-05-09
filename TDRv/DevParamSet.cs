@@ -530,7 +530,7 @@ namespace TDRv
             this.dgv_param.Rows[index].Cells[15].Value = "0";
             this.dgv_param.Rows[index].Cells[16].Value = "0";
             this.dgv_param.Rows[index].Cells[17].Value = "0";
-            this.dgv_param.Rows[index].Cells[18].Value = "0";
+            this.dgv_param.Rows[index].Cells[18].Value = tx_p_yOffset.Text;
             this.dgv_param.Rows[index].Cells[19].Value = tx_p_savePath.Text;
 
             if (radio_p_data_open.Checked)
@@ -675,6 +675,18 @@ namespace TDRv
                 tx_p_Description.Text = "50";
                 tx_p_Index.Text = "125";
                 tx_p_TargetValue.Text = "50";
+
+                if (radio_units_ohm.Checked)
+                {
+                    tx_p_highLimit.Text = "55";
+                    tx_p_lowLimit.Text = "45";
+                }
+                else
+                {
+                    tx_p_highLimit.Text = "10";
+                    tx_p_lowLimit.Text = "-10";
+                }
+
             }
         }
 
@@ -691,11 +703,22 @@ namespace TDRv
                 tx_p_Description.Text = "100";
                 tx_p_Index.Text = "200";
                 tx_p_TargetValue.Text = "100";
+                if (radio_units_ohm.Checked)
+                {
+                    tx_p_highLimit.Text = "110";
+                    tx_p_lowLimit.Text = "90";
+                }
+                else
+                {
+                    tx_p_highLimit.Text = "10";
+                    tx_p_lowLimit.Text = "-10";
+                }
             }
         }
 
         private void tx_p_yOffset_KeyPress(object sender, KeyPressEventArgs e)
         {
+            /*
             //数字、小数点（最大到2位）、退格键、负号
             if ((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != (char)('.') && e.KeyChar != (char)('-'))
             {
@@ -743,11 +766,11 @@ namespace TDRv
                 }
             }
             //第1位是0，第2位必须是小数点
-            if (e.KeyChar != (char)('.') && e.KeyChar != 8 && ((TextBox)sender).Text == "0")
+            if (e.KeyChar != (char)('.') && ((TextBox)sender).Text == "0")
             {
                 e.Handled = true;
             }
-           
+          */ 
         }
 
 

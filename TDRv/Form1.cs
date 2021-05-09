@@ -148,6 +148,7 @@ namespace TDRv
             if (optStatus.isConnect && optStatus.isLoadXml)
             {
                 tsb_GetTestIndex.Enabled = true;
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "请执行开路定义");
             }
         }
 
@@ -240,6 +241,7 @@ namespace TDRv
                 tr.Curve_image = dt.Rows[i].Cells["RecordPath"].Value.ToString();
                 tr.Open_hreshold = int.Parse(dt.Rows[i].Cells["OpenThreshold"].Value.ToString()); //开路位置
                 tr.ImpedanceLimit_Unit = dt.Rows[i].Cells["ImpedanceLimitUnit"].Value.ToString(); //单位
+                tr.Offset = Convert.ToSingle(dt.Rows[i].Cells["CalibrateOffset"].Value.ToString());
                 paramList.Add(tr);
             }
         }
@@ -787,8 +789,8 @@ namespace TDRv
             float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
             float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
 
-            float stdLowValue = stdValue * ((100 + loLimite) / 100);
-            float stdHiValue = stdValue * ((100 + hiLimite) / 100);
+            float stdLowValue = stdValue * ((100 + loLimite) / 100) - paramList[measIndex.currentIndex].Offset;
+            float stdHiValue = stdValue * ((100 + hiLimite) / 100) + paramList[measIndex.currentIndex].Offset;
 
 
             //这里判定是以点的方式还是以平均值的方式来判定结果
@@ -977,16 +979,20 @@ namespace TDRv
                     //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
                 }
                 else
-                {
-                    MessageBox.Show("设备未连接或者未开路");
+                {                    
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
                 }
             });
 
             task1.Start();
 
+            if (paramList.Count <= 0)
+            {
+                return;
+            }
+
             if(paramList[measIndex.currentIndex].Curve_image.Length != 0)
             {
-
                 task1.ContinueWith((Task) =>
                 {
                     CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);

@@ -26,6 +26,7 @@ namespace TDRv
         private string curve_image = string.Empty;  //截图存储位置
         private string valid_begin = string.Empty; //有效的起始量测位置
         private string valid_end = string.Empty;    //有效的结束量测位置
+        private float offset = 0;                     //测试结果偏移量
         private int devmode = 0;        //为区分当前测试模式是单端还是差分
         private int total_item = 0;   //当前配方的总的条数
         private int open_threshold = 0;  //开路位置
@@ -131,6 +132,13 @@ namespace TDRv
             get { return curve_image; }
             set { curve_image = value; }
         }
+
+        public float Offset
+        {
+            get { return offset; }
+            set { offset = value; }
+        }
+
         public int Total_Item
         {
             get { return total_item; }
