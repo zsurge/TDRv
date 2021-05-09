@@ -817,10 +817,7 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.label14);
-            this.groupBox5.Controls.Add(this.tx_p_offset);
-            this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.Controls.Add(this.lab_lowlimit_unit);
             this.groupBox5.Controls.Add(this.radio_units_percent);
             this.groupBox5.Controls.Add(this.lab_highlimit_unit);
@@ -842,11 +839,12 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(170, 62);
+            this.label15.Location = new System.Drawing.Point(440, 481);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(23, 12);
             this.label15.TabIndex = 27;
             this.label15.Text = "ohm";
+            this.label15.Visible = false;
             // 
             // label14
             // 
@@ -859,19 +857,21 @@
             // 
             // tx_p_offset
             // 
-            this.tx_p_offset.Location = new System.Drawing.Point(77, 58);
+            this.tx_p_offset.Location = new System.Drawing.Point(484, 478);
             this.tx_p_offset.Name = "tx_p_offset";
             this.tx_p_offset.Size = new System.Drawing.Size(86, 21);
             this.tx_p_offset.TabIndex = 26;
+            this.tx_p_offset.Visible = false;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(3, 62);
+            this.label13.Location = new System.Drawing.Point(366, 481);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 12);
+            this.label13.Size = new System.Drawing.Size(65, 12);
             this.label13.TabIndex = 25;
-            this.label13.Text = "偏移量";
+            this.label13.Text = "偏移量(PE)";
+            this.label13.Visible = false;
             // 
             // lab_lowlimit_unit
             // 
@@ -899,7 +899,7 @@
             // 
             this.lab_highlimit_unit.AutoSize = true;
             this.lab_highlimit_unit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_highlimit_unit.Location = new System.Drawing.Point(173, 82);
+            this.lab_highlimit_unit.Location = new System.Drawing.Point(173, 70);
             this.lab_highlimit_unit.Name = "lab_highlimit_unit";
             this.lab_highlimit_unit.Size = new System.Drawing.Size(16, 16);
             this.lab_highlimit_unit.TabIndex = 23;
@@ -944,7 +944,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 106);
+            this.label16.Location = new System.Drawing.Point(15, 105);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(29, 12);
             this.label16.TabIndex = 20;
@@ -961,7 +961,7 @@
             // 
             // tx_p_highLimit
             // 
-            this.tx_p_highLimit.Location = new System.Drawing.Point(77, 80);
+            this.tx_p_highLimit.Location = new System.Drawing.Point(77, 69);
             this.tx_p_highLimit.Name = "tx_p_highLimit";
             this.tx_p_highLimit.Size = new System.Drawing.Size(86, 21);
             this.tx_p_highLimit.TabIndex = 19;
@@ -969,7 +969,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 84);
+            this.label17.Location = new System.Drawing.Point(15, 72);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(29, 12);
             this.label17.TabIndex = 18;
@@ -1080,8 +1080,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 496);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.btn_cancel);
             this.Controls.Add(this.btn_update);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.tx_p_offset);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);

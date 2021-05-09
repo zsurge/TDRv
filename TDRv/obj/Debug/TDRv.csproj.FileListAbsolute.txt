@@ -22,4 +22,3 @@ H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
-H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache

@@ -45,6 +45,8 @@ namespace TDRv
 
         private bool gEmptyFlag = true; //标志是否有空的待测物
         public static int gTestResultValue = 0;
+
+        public static string logFileName = string.Empty;
      
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
@@ -246,11 +248,37 @@ namespace TDRv
             }
         }
 
+
+        private void ReadTestMode()
+        {
+            if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Pass") == 0)
+            {
+        
+                optParam.testMode = 1;
+            }
+            else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Manual") == 0)
+            {
+    
+                optParam.testMode = 2;
+            }
+            else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Next") == 0)
+            {
+            
+                optParam.testMode = 3;
+            }
+            else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "PassRecord") == 0)
+            {
+        
+                optParam.testMode = 4;
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            ReadTestMode();
             //获取序列号起始值
             gSerialInc =  Convert.ToInt32(optParam.snBegin);
-
+          
             initChart();
 
             //禁止列排序
@@ -510,7 +538,7 @@ namespace TDRv
             {
                 for (i = index; i < tmpArray.Length; i++)
                 {
-                    tmp = Convert.ToSingle(tmpArray[i]);
+                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
                     if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
                     {
                         //logger.Error(tmpArray[i]);
@@ -526,7 +554,7 @@ namespace TDRv
             {
                 for (i = index; i < tmpArray.Length; i++)
                 {
-                    tmp = Convert.ToSingle(tmpArray[i]);
+                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
                     if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
                     {
                         result.Add(tmp);
@@ -789,8 +817,8 @@ namespace TDRv
             float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
             float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
 
-            float stdLowValue = stdValue * ((100 + loLimite) / 100) - paramList[measIndex.currentIndex].Offset;
-            float stdHiValue = stdValue * ((100 + hiLimite) / 100) + paramList[measIndex.currentIndex].Offset;
+            float stdLowValue = stdValue * ((100 + loLimite) / 100);
+            float stdHiValue = stdValue * ((100 + hiLimite) / 100);
 
 
             //这里判定是以点的方式还是以平均值的方式来判定结果
@@ -1300,7 +1328,7 @@ namespace TDRv
                     hiLimit = stdValue * (1 + hi_offset);
                     lowLimit = stdValue * (1 - low_offset);
                 }
-
+                
 
                 //这里判定是以点的方式还是以平均值的方式来判定结果
                 if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
@@ -1388,7 +1416,8 @@ namespace TDRv
 
                 _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
                 _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-                _dgv.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+                logFileName = DateTime.Now.ToString("hh:mm:ss.ff");
+                _dgv.Rows[index].Cells[10].Value = logFileName;     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
@@ -1491,14 +1520,21 @@ namespace TDRv
                     Directory.CreateDirectory(fileDir);
                 }
 
+                Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
+                Point ScreenP = this.PointToScreen(FrmP);
+                int x = splitContainer2.SplitterDistance + ScreenP.X;
+                int y = ScreenP.Y;
+
                 //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
                 Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
                 Graphics g = Graphics.FromImage(bit);
                 g.CompositingQuality = CompositingQuality.HighSpeed;//质量设为最高
                 //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
-                g.CopyFromScreen(_chart.PointToScreen(Point.Empty), Point.Empty, _chart.Size);//只保存某个控件
+                g.CopyFromScreen(x,y,0,0, _chart.Size);//只保存某个控件
                 //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
-                bit.Save(fileDir + "\\" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                
+                bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+               //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
             }
         }
 
