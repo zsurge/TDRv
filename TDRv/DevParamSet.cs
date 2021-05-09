@@ -27,7 +27,7 @@ namespace TDRv
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
         public event ChangeDgvHandler ChangeDgv;  //定义事件
 
-        public string xmlFilePath = string.Empty;
+        public static string xmlFilePath = string.Empty;
         public int selectionIdx = 0;
 
         private static string sPath = Directory.GetCurrentDirectory() + "\\Impedance_Config.ini";
@@ -779,7 +779,7 @@ namespace TDRv
             string historyFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
             string exportFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
 
-            if (dgv_param.Tag == null)
+            if (xmlFilePath == null)
             {
                 historyFile_bypro += "TDR_Project_History.csv";
                 exportFile_bypro += "TDR_Project_Export.csv";
@@ -787,8 +787,8 @@ namespace TDRv
             }
             else
             {
-                historyFile_bypro += (dgv_param.Tag.ToString() + "_history.csv");
-                exportFile_bypro += (dgv_param.Tag.ToString() + "_Export.csv");
+                historyFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_history.csv");
+                exportFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_Export.csv");
             }
 
             INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppTime.cs" />
     <Compile Include="CGloabal.cs" />
     <Compile Include="DevConnectSet.cs">
       <SubType>Form</SubType>

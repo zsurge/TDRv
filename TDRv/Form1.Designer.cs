@@ -147,7 +147,7 @@
             // 
             this.tsmi_delselect.Name = "tsmi_delselect";
             this.tsmi_delselect.Size = new System.Drawing.Size(148, 22);
-            this.tsmi_delselect.Text = "删除所选数据";
+            this.tsmi_delselect.Text = "删除单笔数据";
             this.tsmi_delselect.Click += new System.EventHandler(this.tsmi_delselect_Click);
             // 
             // tsmi_export
@@ -756,7 +756,7 @@
             this.Controls.Add(this.toolStrip1);
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.1.20210508";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.1.20210509";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.contextMenuStrip1.ResumeLayout(false);

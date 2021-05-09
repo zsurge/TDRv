@@ -66,12 +66,30 @@ namespace TDRv
 
         private void tsb_DevOptSet_Click(object sender, EventArgs e)
         {
+            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            {
+                optStatus.isConnect = false;
+                optStatus.isGetIndex = false;
+                optStatus.isLoadXml = false;
+                tsb_DevPOptSet.Enabled = false;
+                return;
+            }
+
             DevOptSet devOptSet = new DevOptSet();
             devOptSet.Show();
         }
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
-        {           
+        {
+            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            {
+                optStatus.isConnect = false;
+                optStatus.isGetIndex = false;
+                optStatus.isLoadXml = false;
+                tsb_DevPOptSet.Enabled = false;
+                return;
+            }
+
             DevParamSet devParamSet = new DevParamSet(gdt);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
             devParamSet.Show();
@@ -341,6 +359,15 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
+            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            {
+                optStatus.isConnect = false;
+                optStatus.isGetIndex = false;
+                optStatus.isLoadXml = false;
+                tsb_GetTestIndex.Enabled = false;
+                return;
+            }
+
             List<float> tmpDiffMeasData = new List<float>();
             List<float> tmpSingleMeasData = new List<float>();
             string result = string.Empty;
@@ -1020,6 +1047,15 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
+            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            {
+                optStatus.isConnect = false;
+                optStatus.isGetIndex = false;
+                optStatus.isLoadXml = false;
+                tsb_StartTest.Enabled = false;
+                return;
+            }
+
             toDoWork();
         }
 
@@ -1157,7 +1193,8 @@ namespace TDRv
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
             dlg.Title = "保存为csv文件";    
-            dlg.FileName = Path.GetFileNameWithoutExtension(defName);
+            dlg.FileName = Path.GetFileNameWithoutExtension(defName);            
+
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Stream myStream;
@@ -1230,6 +1267,13 @@ namespace TDRv
             {          
                 if (optParam.keyMode == 1)
                 {
+                    if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        optStatus.isGetIndex = false;
+                        optStatus.isLoadXml = false;
+                        return;
+                    }
                     toDoWork();
                 }
             }

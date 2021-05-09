@@ -33,6 +33,17 @@ namespace TDRv
 
         private void btn_ConnectDev_Click(object sender, EventArgs e)
         {
+            string sn = string.Empty;
+
+            string NowDate = DateTime.Now.ToString("yyyyMMdd");
+
+            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            {
+                optStatus.isConnect = false;
+                combDevString.BackColor = Color.Red;
+                return;
+            }
+
             CGloabal.g_InstrE5080BModule.adress = combDevString.Text;
 
             INI.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
@@ -42,16 +53,27 @@ namespace TDRv
 
             int ret = E5080B.Open(CGloabal.g_InstrE5080BModule.adress, ref CGloabal.g_InstrE5080BModule.nHandle);
 
-            if (ret != 0)
+            E5080B.GetInstrumentIdentifier(CGloabal.g_InstrE5080BModule.nHandle, out sn);
+
+            if (sn.Contains("MY59101265"))
             {
-                optStatus.isConnect = false;
-                combDevString.BackColor = Color.Red;
-                MessageBox.Show("error!");
+
+                if (ret != 0)
+                {
+                    optStatus.isConnect = false;
+                    combDevString.BackColor = Color.Red;
+                    MessageBox.Show("error!");
+                }
+                else
+                {
+                    optStatus.isConnect = true;
+                    combDevString.BackColor = Color.Green;
+                }
             }
             else
             {
-                optStatus.isConnect = true;
-                combDevString.BackColor = Color.Green;
+                optStatus.isConnect = false;
+                combDevString.BackColor = Color.Red;      
             }
         }
 
