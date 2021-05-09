@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -576,6 +577,9 @@ namespace TDRv
                 }
             }
 
+            logFileName = DateTime.Now.ToString("hh:mm:ss.ff");
+            SaveDataToCSVFile(result, logFileName);
+
             return result;
         }
 
@@ -634,6 +638,80 @@ namespace TDRv
                 chart1.Series[3].Points.AddXY(i, measSingleData[i]);
             }
         }
+
+
+        //获取类的属性集合（以便生成CSV文件的所有Column标题）：
+        //private PropertyInfo[] GetPropertyInfoArray()
+        //{
+        //    PropertyInfo[] props = null;
+        //    try
+        //    {
+        //        Type type = typeof(float);
+        //        object obj = Activator.CreateInstance(type);
+        //        props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        //    }
+        //    catch (Exception ex)
+        //    { }
+        //    return props;
+        //}
+
+        /// <summary>
+        /// Save the List data to CSV file
+        /// </summary>
+        /// <param name="studentList">data source</param>
+        /// <param name="filePath">file path</param>
+        /// <returns>success flag</returns>
+        private bool SaveDataToCSVFile(List<float> measData, string fileName)
+        {
+            bool successFlag = true;
+
+            //StringBuilder strColumn = new StringBuilder();
+            StringBuilder strValue = new StringBuilder();
+            StreamWriter sw = null;
+            //PropertyInfo[] props = GetPropertyInfoArray();
+
+            string fileDir = Environment.CurrentDirectory + "\\MeasureData";
+
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            string spath = fileDir +"\\"+ fileName.Replace(":","").Replace(".","")+".csv";
+
+            try
+            {
+                sw = new StreamWriter(spath);
+                //for (int i = 0; i < props.Length; i++)
+                //{
+                //    strColumn.Append(props[i].Name);
+                //    strColumn.Append(",");
+                //}
+                //strColumn.Remove(strColumn.Length - 1, 1);
+                //sw.WriteLine(strColumn);    //write the column name
+
+                for (int i = 0; i < measData.Count; i++)
+                {
+                    strValue.Remove(0, strValue.Length); //clear the temp row value
+                    strValue.Append(measData[i]);
+                    sw.WriteLine(strValue); //write the row value
+                }
+            }
+            catch (Exception ex)
+            {
+                successFlag = false;
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Dispose();
+                }
+            }
+
+            return successFlag;
+        }
+
 
 
 
@@ -1415,8 +1493,7 @@ namespace TDRv
                 }
 
                 _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-                _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-                logFileName = DateTime.Now.ToString("hh:mm:ss.ff");
+                _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
                 _dgv.Rows[index].Cells[10].Value = logFileName;     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
