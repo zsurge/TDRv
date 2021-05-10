@@ -1139,7 +1139,7 @@ namespace TDRv
                 {
                     CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
                 });
-            }
+            }           
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
