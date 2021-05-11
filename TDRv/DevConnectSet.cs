@@ -55,8 +55,8 @@ namespace TDRv
 
             E5080B.GetInstrumentIdentifier(CGloabal.g_InstrE5080BModule.nHandle, out sn);
 
-            if (sn.Contains("MY59101265"))
-            {
+            if (sn.Contains("MY59101265") || sn.Contains("MY59101017"))
+            {               
 
                 if (ret != 0)
                 {

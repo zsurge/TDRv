@@ -9,9 +9,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml.Linq;
 using TDRv.Driver;
 
 namespace TDRv
@@ -23,6 +25,8 @@ namespace TDRv
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
+
+        IDevToHost dev = new IDevToHost();
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -268,6 +272,7 @@ namespace TDRv
         }
 
 
+
         private void ReadTestMode()
         {
             if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Pass") == 0)
@@ -292,8 +297,219 @@ namespace TDRv
             }
         }
 
+        /// <summary>
+        /// 处理推送过来的消息
+        /// </summary>
+        /// <param name="rec"></param>
+        private void Rec(SocketHelper.Sockets sks)
+        {
+            this.Invoke(new ThreadStart(delegate
+            {
+                if (sks.ex != null)
+                {
+                    //在这里判断ErrorCode  可以自由扩展
+                    switch (sks.ErrorCode)
+                    {
+                        case SocketHelper.Sockets.ErrorCodes.objectNull:
+                            break;
+                        case SocketHelper.Sockets.ErrorCodes.ConnectError:
+                            break;
+                        case SocketHelper.Sockets.ErrorCodes.ConnectSuccess:
+                            LoggerHelper._.Trace("连接成功.!");
+                            break;
+                        case SocketHelper.Sockets.ErrorCodes.TrySendData:
+                            break;
+                        default:
+                            break;
+                    }
+                    LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
+
+                }
+                else
+                {
+
+                    //release
+                    //byte[] buffer = new byte[sks.Offset - 2];  
+                    //Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
+
+                    //DEBUG 20210510
+                    byte[] buffer = new byte[sks.Offset];
+                    Array.Copy(sks.RecBuffer, 0, buffer, 0, sks.Offset);
+
+                    string stohbuff = string.Empty;
+                    string ret = string.Empty;
+
+                    //string str = Encoding.Unicode.GetString(buffer);
+                    string str = Encoding.UTF8.GetString(buffer);
+                    if (str == "ServerOff")
+                    {
+                        LoggerHelper._.Trace("服务端主动关闭");
+                    }
+                    else
+                    {
+                        LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");                     
+
+
+                        switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                        {
+                            //响应初始数据访问
+                            case "INITIALDATAREQUEST":
+                                //1.这里记录日志
+                                LoggerHelper._.Info("开始处理初始化请求");
+                                //2.获取要发送到服务器的数据
+                                ISendToHost _devInitResp = new DevInitResp();
+                                _devInitResp.eventSend += new DelegateSend(dev._DevInitResp);
+                                stohbuff = _devInitResp.packetXmlData();
+                                //3.发送到服务器                                
+                                SocketHelper.TcpClients.Instance.SendData(stohbuff);         
+                                
+                                LoggerHelper._.Info("初始化返回数据为：" + stohbuff);
+                                break;
+                            //响应校验时间
+                            case "DATETIMESYNCCOMMAND":
+                                //1.这里记录日志
+                                LoggerHelper._.Info("开始处理校时请求");
+                                //2.获取要发送到服务器的数据
+                                ISendToHost _syncTimeResp = new SyncTimeResp();
+                                _syncTimeResp.eventSend += new DelegateSend(dev._SyncTimeResp);
+                                stohbuff = _syncTimeResp.packetXmlData();
+                                //3.发送到服务器
+                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                LoggerHelper._.Info("校时返回数据为：" + stohbuff);
+                                break;
+                            //响应任务信息下载
+                            case "JOBDATADOWNLOAD":
+                                //1.这里记录日志
+                                LoggerHelper._.Info("开始处理JOB下载任务");
+                                //2.获取要发送到服务器的数据
+                                ISendToHost _jobDownResp = new JobDownResp();
+                                _jobDownResp.eventSend += new DelegateSend(dev._JobDownResp);
+                                stohbuff = _jobDownResp.packetXmlData();
+                                //3.发送到服务器
+                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
+                                break;
+
+                            //响应人员上机确认
+                            case "OPERATORLOGINCONFIRM":
+                                //1.这里记录日志
+                                LoggerHelper._.Info("开始处理人员上机确认任务");
+                                //2.获取要发送到服务器的数据
+                                ISendToHost _loginConfrim = new LoginConfrim();
+                                _loginConfrim.eventSend += new DelegateSend(dev._LoginConfrim);
+                                stohbuff = _loginConfrim.packetXmlData();
+                                //3.发送到服务器
+                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                LoggerHelper._.Info("人员上机确认：" + stohbuff);
+                                break;
+                            //-----------------------------------------------------------------------------------------------
+                            //处理查询服务状态后的返回信息4.1
+                            case "AREYOUTHEREREQUESTREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "eqp_id");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 响应对方是否存在. result = " + ret);
+                                break;
+                            //机台当前控制模式4.14
+                            case "EQUIPMENTCONTROLMODEREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "return_code");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 响应机台工作模式 result = " + ret);
+                                break;
+                            //设备上报当前时间4.16
+                            case "EQUIPMENTCURRENTDATETIMEREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "return_code");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 设备上报当前时间 result = " + ret);
+                                break;
+                            //人员上下岗报告4.20
+                            case "OPERATORLOGINLOGOUTREPORTREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "return_code");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
+                                break;
+                            //4.23
+                            case "PANELREADREPORTREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "return_code");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 读板报告 result = " + ret);
+                                break;
+                            //4.26
+                            case "EQUIPMENTRECIPESETUPREPORTREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "return_code");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 机台配方参数调用报告 result = " + ret);
+                                break;
+                            //4.34
+                            case "PROCESSDATAREPORTREPLY":
+                                //1.处理返回数据
+                                ret = QueryElementByName(str, "body", "return_code");
+                                //2.记录日志
+                                LoggerHelper._.Info("HOST 制程/量测数据报告 result = " + ret);
+                                break;
+
+                        }
+
+                    }
+                }
+            }));
+        }
+
+        /// <summary>
+        /// 查询指定元素的子元素
+        /// </summary>
+        /// <param name="xmlData">xml字符串数据</param>
+        /// <param name="strSubElement">指定的元素</param>
+        /// <param name="lastSubElement">指定的远素</param>
+        public string QueryElementByName(string xmlData, string strSubElement = "header", string lastSubElement = "messagename")
+        {
+            string cmd = string.Empty;
+
+            if (xmlData.Length == 0)
+            {
+                return cmd;
+            }
+
+
+            //为了测试才打开 注释于20210511 为了方便测试 码制不同
+            //if (xmlData.Substring(0, 2).CompareTo("02") != 0 && xmlData.Substring(xmlData.Length - 2, 2).CompareTo("03") != 0)
+            //{
+            //    LoggerHelper._.Error("错误的包头包尾:" + xmlData);
+            //    return cmd;
+            //}
+
+
+            //-4 去除包头包尾
+            //XElement xe = XElement.Parse(xmlData.Substring(2, xmlData.Length - 4));
+
+            //注释于20210511 为了方便测试 码制不同
+            XElement xe = XElement.Parse(xmlData); 
+
+            ///查询元素
+            var elements = xe.Elements(strSubElement).Descendants(lastSubElement).ToList();
+
+            if (elements.Count < 1)
+            {
+                return cmd;
+            }
+
+            cmd = elements[0].Value;
+
+            LoggerHelper._.Info("当前接收到的指令是：" + cmd);
+            return cmd;
+
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);//注册推送器
+
             ReadTestMode();
             //获取序列号起始值
             gSerialInc =  Convert.ToInt32(optParam.snBegin);
@@ -604,7 +820,7 @@ namespace TDRv
                 }
             }
 
-            logFileName = DateTime.Now.ToString("hh:mm:ss.ff");
+            logFileName = DateTime.Now.ToString("yyyyMMddhh:mm:ss.ff");
             SaveDataToCSVFile(result, logFileName);
 
             return result;
@@ -1139,7 +1355,7 @@ namespace TDRv
                 {
                     CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
                 });
-            }           
+            }  
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1538,7 +1754,7 @@ namespace TDRv
 
                 _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
                 _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
-                _dgv.Rows[index].Cells[10].Value = logFileName;     //时间
+                _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
