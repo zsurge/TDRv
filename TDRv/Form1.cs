@@ -26,6 +26,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
+        //SOCKET通信接口
         IDevToHost dev = new IDevToHost();
 
         //设置参数设置窗体的表数据
@@ -40,17 +41,21 @@ namespace TDRv
         //单端
         public const int SINGLE = 2;
 
+        //用于区分测试结果的模式（这里并不合理，可以进行datagridview复制，然后再自动保存）
         public const int CURRENT_RECORD = 100;
         public const int HISTORY_RECORD = 999;
 
         //流水
         public int gSerialInc = 0;
 
-        E5080B analyzer = new E5080B();
+        //E5080B analyzer = new E5080B();
 
         private bool gEmptyFlag = true; //标志是否有空的待测物
+
+        //标志位，用于标志是否进行下一步
         public static int gTestResultValue = 0;
 
+        //以当前时间为名字的文件名
         public static string logFileName = string.Empty;
      
         //配方列表
@@ -59,6 +64,14 @@ namespace TDRv
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
 
+        //测试数据目录，该目录下有子目录
+        public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
+        public string configDir = Environment.CurrentDirectory + "\\Config";
+        public string autoSaveDir = Environment.CurrentDirectory + "\\AutoSave";
+        public string historyDir = Environment.CurrentDirectory + "\\MeasureData\\History";
+        public string imageDir = Environment.CurrentDirectory + "\\AutoSave\\Image";
+        public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
+        public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -297,6 +310,45 @@ namespace TDRv
             }
         }
 
+        //建立默认文件夹
+        public void CreateDefaultDir()
+        {
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            if (!Directory.Exists(historyDir))
+            {
+                Directory.CreateDirectory(historyDir);
+            }
+
+            if (!Directory.Exists(reportDir))
+            {
+                Directory.CreateDirectory(reportDir);
+            }
+
+            if (!Directory.Exists(configDir))
+            {
+                Directory.CreateDirectory(configDir);
+            }
+
+            if (!Directory.Exists(autoSaveDir))
+            {
+                Directory.CreateDirectory(autoSaveDir);
+            }
+
+            if (!Directory.Exists(imageDir))
+            {
+                Directory.CreateDirectory(imageDir);
+            }
+
+            if (!Directory.Exists(CurveDir))
+            {
+                Directory.CreateDirectory(CurveDir);
+            }
+        }
+
         /// <summary>
         /// 处理推送过来的消息
         /// </summary>
@@ -507,13 +559,19 @@ namespace TDRv
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //注册推送器 接收SOCKET数据
+            SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);
 
-            SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);//注册推送器
+            //创建默认文件夹
+            CreateDefaultDir();
 
+            //获取当前测试模式
             ReadTestMode();
+
             //获取序列号起始值
             gSerialInc =  Convert.ToInt32(optParam.snBegin);
           
+            //初始化折线图
             initChart();
 
             //禁止列排序
@@ -883,21 +941,6 @@ namespace TDRv
         }
 
 
-        //获取类的属性集合（以便生成CSV文件的所有Column标题）：
-        //private PropertyInfo[] GetPropertyInfoArray()
-        //{
-        //    PropertyInfo[] props = null;
-        //    try
-        //    {
-        //        Type type = typeof(float);
-        //        object obj = Activator.CreateInstance(type);
-        //        props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        //    }
-        //    catch (Exception ex)
-        //    { }
-        //    return props;
-        //}
-
         /// <summary>
         /// Save the List data to CSV file
         /// </summary>
@@ -925,13 +968,6 @@ namespace TDRv
             try
             {
                 sw = new StreamWriter(spath);
-                //for (int i = 0; i < props.Length; i++)
-                //{
-                //    strColumn.Append(props[i].Name);
-                //    strColumn.Append(",");
-                //}
-                //strColumn.Remove(strColumn.Length - 1, 1);
-                //sw.WriteLine(strColumn);    //write the column name
 
                 for (int i = 0; i < measData.Count; i++)
                 {
@@ -1404,12 +1440,13 @@ namespace TDRv
         {
             string defName = INI.GetValueFromIniFile("TDR", "ExportFile"); ;
             SaveFileDialog dlg = new SaveFileDialog();
+            dlg.InitialDirectory = reportDir;
             dlg.Filter = "Execl files (*.csv)|*.csv";
             dlg.FilterIndex = 0;
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
             dlg.Title = "保存为csv文件";    
-            dlg.FileName = Path.GetFileNameWithoutExtension(defName);            
+            dlg.FileName = reportDir + "//" + Path.GetFileNameWithoutExtension(defName);            
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -1850,12 +1887,12 @@ namespace TDRv
             }
             else
             {
-                string fileDir = path + "\\Image";
+                //string fileDir = path + "\\Image";
 
-                if (!Directory.Exists(fileDir))
-                {
-                    Directory.CreateDirectory(fileDir);
-                }
+                //if (!Directory.Exists(fileDir))
+                //{
+                //    Directory.CreateDirectory(fileDir);
+                //}
 
                 Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
                 Point ScreenP = this.PointToScreen(FrmP);
@@ -1870,7 +1907,7 @@ namespace TDRv
                 g.CopyFromScreen(x,y,0,0, _chart.Size);//只保存某个控件
                 //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
                 
-                bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                bit.Save(imageDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
                //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
             }
         }
