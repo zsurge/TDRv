@@ -604,7 +604,7 @@ namespace TDRv
                 }
             }
 
-            logFileName = DateTime.Now.ToString("hh:mm:ss.ff");
+            logFileName = DateTime.Now.ToString("yyyyMMddhh:mm:ss.ff");
             SaveDataToCSVFile(result, logFileName);
 
             return result;
@@ -1538,7 +1538,7 @@ namespace TDRv
 
                 _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
                 _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
-                _dgv.Rows[index].Cells[10].Value = logFileName;     //时间
+                _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
