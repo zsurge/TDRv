@@ -71,7 +71,7 @@ namespace TDRv
             //设置对话框标题
             pOpenFileDialog.Title = "载入XML文件";
             pOpenFileDialog.Filter = "XML文件|*.xml";
-            pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory + "\\Config"; 
             //监测文件是否存在
             pOpenFileDialog.CheckFileExists = true;
             if (pOpenFileDialog.ShowDialog() == DialogResult.OK)  //如果点击的是打开文件
@@ -144,11 +144,11 @@ namespace TDRv
             {
                 MessageBox.Show("请新建配方");
                 return;
-            }
+            }           
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "保存XML文件";
-            sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
             sfd.Filter = "XML文件|*.xml";
 
             if (sfd.ShowDialog() == DialogResult.OK)
@@ -773,11 +773,10 @@ namespace TDRv
           */ 
         }
 
-
         private void save_xmlfilename_config()
         {
-            string historyFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
-            string exportFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
+            string historyFile_bypro = Environment.CurrentDirectory + "\\MeasureData\\History\\"; 
+            string exportFile_bypro = Environment.CurrentDirectory + "\\MeasureData\\Report\\"; 
 
             if (xmlFilePath == null)
             {

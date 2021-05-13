@@ -956,14 +956,13 @@ namespace TDRv
             StreamWriter sw = null;
             //PropertyInfo[] props = GetPropertyInfoArray();
 
-            string fileDir = Environment.CurrentDirectory + "\\MeasureData";
 
-            if (!Directory.Exists(fileDir))
+            if (!Directory.Exists(CurveDir))
             {
-                Directory.CreateDirectory(fileDir);
+                Directory.CreateDirectory(CurveDir);
             }
 
-            string spath = fileDir +"\\"+ fileName.Replace(":","").Replace(".","")+".csv";
+            string spath = CurveDir + "\\"+ fileName.Replace(":","").Replace(".","")+".csv";
 
             try
             {
@@ -990,8 +989,6 @@ namespace TDRv
 
             return successFlag;
         }
-
-
 
 
 
