@@ -96,10 +96,7 @@
             this.tx_p_Index = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.tx_p_offset = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.lab_lowlimit_unit = new System.Windows.Forms.Label();
             this.radio_units_percent = new System.Windows.Forms.RadioButton();
             this.lab_highlimit_unit = new System.Windows.Forms.Label();
@@ -111,6 +108,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.tx_p_highLimit = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tx_p_offset = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -836,16 +836,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "边界设定";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(440, 481);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(23, 12);
-            this.label15.TabIndex = 27;
-            this.label15.Text = "ohm";
-            this.label15.Visible = false;
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -854,24 +844,6 @@
             this.label14.Size = new System.Drawing.Size(23, 12);
             this.label14.TabIndex = 27;
             this.label14.Text = "ohm";
-            // 
-            // tx_p_offset
-            // 
-            this.tx_p_offset.Location = new System.Drawing.Point(484, 478);
-            this.tx_p_offset.Name = "tx_p_offset";
-            this.tx_p_offset.Size = new System.Drawing.Size(86, 21);
-            this.tx_p_offset.TabIndex = 26;
-            this.tx_p_offset.Visible = false;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(366, 481);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(65, 12);
-            this.label13.TabIndex = 25;
-            this.label13.Text = "偏移量(PE)";
-            this.label13.Visible = false;
             // 
             // lab_lowlimit_unit
             // 
@@ -974,6 +946,34 @@
             this.label17.Size = new System.Drawing.Size(29, 12);
             this.label17.TabIndex = 18;
             this.label17.Text = "上限";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(440, 481);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 12);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "ohm";
+            this.label15.Visible = false;
+            // 
+            // tx_p_offset
+            // 
+            this.tx_p_offset.Location = new System.Drawing.Point(484, 478);
+            this.tx_p_offset.Name = "tx_p_offset";
+            this.tx_p_offset.Size = new System.Drawing.Size(86, 21);
+            this.tx_p_offset.TabIndex = 26;
+            this.tx_p_offset.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(366, 481);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 12);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "偏移量(PE)";
+            this.label13.Visible = false;
             // 
             // groupBox6
             // 
@@ -1094,6 +1094,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DevParamSet";
             this.Text = "TDR 量测试参数";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DevParamSet_FormClosed);

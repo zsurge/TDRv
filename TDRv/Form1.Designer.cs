@@ -754,6 +754,7 @@
             this.ClientSize = new System.Drawing.Size(984, 629);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.1.20210509";

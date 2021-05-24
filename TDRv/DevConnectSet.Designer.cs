@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DevConnectSet));
             this.combDevType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_ConnectDev = new System.Windows.Forms.Button();
@@ -115,6 +116,7 @@
             this.Controls.Add(this.btn_ConnectDev);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.combDevType);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DevConnectSet";
             this.Text = "仪器设定";
             this.Load += new System.EventHandler(this.DevConnectSet_Load);
