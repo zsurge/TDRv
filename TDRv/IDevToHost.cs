@@ -23,6 +23,12 @@ namespace TDRv
             return Convert.ToInt64(ts.TotalMilliseconds).ToString();
         }
 
+
+        public static string GetCuerrtTime()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssxxx");
+        }
+
         /// <summary>
         /// 响应主机查询初始化数据打包 4.2
         /// </summary>
@@ -36,7 +42,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "InitialDataReply"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("control_mode", "2")),
@@ -68,7 +74,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "DateTimeSyncReply"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("return_code", "1")),
@@ -94,7 +100,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "JobDataDownloadReply"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("return_code", "1")),
@@ -119,7 +125,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "OperatorLoginConfirmReply"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("return_code", "1")),
@@ -142,7 +148,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "AreYouThereRequest"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("server_ip", "192.168.10.102")),
@@ -164,7 +170,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "EquipmentControlMode"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("control_mode", "2")),
@@ -186,7 +192,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "EquipmentCurrentDateTime"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("date_time", DateTime.Now.ToString("yyyyMMddhhmmss"))),
@@ -209,7 +215,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "OperatorLoginLogoutReport"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("identify_type", "1"),
@@ -232,7 +238,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "OperatorLoginLogoutReport"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("identify_type", "2"),
@@ -255,7 +261,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "PanelReadReport"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("panel_id", "10055")),
@@ -277,7 +283,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "EquipmentRecipeSetupReport"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("process_id", "test001"),
@@ -303,7 +309,7 @@ namespace TDRv
             new XElement("message",
                 new XElement("header",
                     new XElement("messagename", "ProcessDataReport"),
-                    new XElement("transactionid", GetTimeStamp())),
+                    new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
                     new XElement("sub_eqp_id", "test001"),

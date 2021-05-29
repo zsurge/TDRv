@@ -36,6 +36,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tx_server_ip = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tx_server_port = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // combDevType
@@ -104,11 +108,47 @@
             this.textBox1.Size = new System.Drawing.Size(388, 21);
             this.textBox1.TabIndex = 7;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 84);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(77, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "服务器地址：";
+            // 
+            // tx_server_ip
+            // 
+            this.tx_server_ip.Location = new System.Drawing.Point(95, 81);
+            this.tx_server_ip.Name = "tx_server_ip";
+            this.tx_server_ip.Size = new System.Drawing.Size(254, 21);
+            this.tx_server_ip.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(355, 84);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "端口：";
+            // 
+            // tx_server_port
+            // 
+            this.tx_server_port.Location = new System.Drawing.Point(402, 81);
+            this.tx_server_port.Name = "tx_server_port";
+            this.tx_server_port.Size = new System.Drawing.Size(57, 21);
+            this.tx_server_port.TabIndex = 11;
+            // 
             // DevConnectSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 304);
+            this.Controls.Add(this.tx_server_port);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tx_server_ip);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -134,5 +174,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tx_server_ip;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tx_server_port;
     }
 }
