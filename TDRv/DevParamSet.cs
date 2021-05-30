@@ -148,7 +148,7 @@ namespace TDRv
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "保存XML文件";
-            sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
             sfd.Filter = "XML文件|*.xml";
 
             if (sfd.ShowDialog() == DialogResult.OK)

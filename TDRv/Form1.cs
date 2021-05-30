@@ -56,6 +56,14 @@ namespace TDRv
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
 
+        //测试数据目录，该目录下有子目录
+        public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
+        public string configDir = Environment.CurrentDirectory + "\\Config";
+        public string autoSaveDir = Environment.CurrentDirectory + "\\AutoSave";
+        public string historyDir = Environment.CurrentDirectory + "\\MeasureData\\History";
+        public string imageDir = Environment.CurrentDirectory + "\\AutoSave\\Image";
+        public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
+        public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -294,12 +302,54 @@ namespace TDRv
             }
         }
 
+        //建立默认文件夹
+        public void CreateDefaultDir()
+        {
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            if (!Directory.Exists(historyDir))
+            {
+                Directory.CreateDirectory(historyDir);
+            }
+
+            if (!Directory.Exists(reportDir))
+            {
+                Directory.CreateDirectory(reportDir);
+            }
+
+            if (!Directory.Exists(configDir))
+            {
+                Directory.CreateDirectory(configDir);
+            }
+
+            if (!Directory.Exists(autoSaveDir))
+            {
+                Directory.CreateDirectory(autoSaveDir);
+            }
+
+            if (!Directory.Exists(imageDir))
+            {
+                Directory.CreateDirectory(imageDir);
+            }
+
+            if (!Directory.Exists(CurveDir))
+            {
+                Directory.CreateDirectory(CurveDir);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
+            //创建默认文件夹
+            CreateDefaultDir();
+            //获取当前测试模式
             ReadTestMode();
             //获取序列号起始值
             gSerialInc =  Convert.ToInt32(optParam.snBegin);
           
+            //初始化折线图
             initChart();
 
         
@@ -366,11 +416,6 @@ namespace TDRv
             if (isExecuteIndex)
             {
                 isExecuteIndex = false;
-
-                foreach (var series in chart1.Series)
-                {
-                    series.Points.Clear();
-                }
 
                 if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                 {
@@ -596,14 +641,13 @@ namespace TDRv
             StreamWriter sw = null;
             //PropertyInfo[] props = GetPropertyInfoArray();
 
-            string fileDir = Environment.CurrentDirectory + "\\MeasureData";
 
-            if (!Directory.Exists(fileDir))
+            if (!Directory.Exists(CurveDir))
             {
-                Directory.CreateDirectory(fileDir);
+                Directory.CreateDirectory(CurveDir);
             }
 
-            string spath = fileDir +"\\"+ fileName.Replace(":","").Replace(".","")+".csv";
+            string spath = CurveDir + "\\"+ fileName.Replace(":","").Replace(".","")+".csv";
 
             try
             {
@@ -942,8 +986,7 @@ namespace TDRv
             if (isExecuteComplete)
             {
                 isExecuteComplete = false;
-
-                LoggerHelper.mlog.Debug("meas start!");
+                
                 if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                 {
                     optStatus.isConnect = false;
@@ -1022,7 +1065,6 @@ namespace TDRv
                     //dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
                     reFreshDatagridview(dataGridView1);
                     isExecuteComplete = true;
-                    LoggerHelper.mlog.Debug("task1 end!");
 
                 }
                 else
@@ -1044,9 +1086,8 @@ namespace TDRv
                 {
                     CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
                 });
-            }
-            
-            LoggerHelper.mlog.Debug("meas end!");
+            }            
+         
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1095,12 +1136,13 @@ namespace TDRv
         {
             string defName = INI.GetValueFromIniFile("TDR", "ExportFile"); ;
             SaveFileDialog dlg = new SaveFileDialog();
+            dlg.InitialDirectory = reportDir;
             dlg.Filter = "Execl files (*.csv)|*.csv";
             dlg.FilterIndex = 0;
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
             dlg.Title = "保存为csv文件";    
-            dlg.FileName = Path.GetFileNameWithoutExtension(defName);            
+            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName);            
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -1175,7 +1217,7 @@ namespace TDRv
                 if (isExecuteComplete)
                 {
                     isExecuteComplete = false;
-                    LoggerHelper.mlog.Debug("key meas start!");
+                  
 
                     if (optParam.keyMode == 1)
                     {
@@ -1547,12 +1589,12 @@ namespace TDRv
             }
             else
             {
-                string fileDir = path + "\\Image";
+                //string fileDir = path + "\\Image";
 
-                if (!Directory.Exists(fileDir))
-                {
-                    Directory.CreateDirectory(fileDir);
-                }
+                //if (!Directory.Exists(fileDir))
+                //{
+                //    Directory.CreateDirectory(fileDir);
+                //}
 
                 Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
                 Point ScreenP = this.PointToScreen(FrmP);
@@ -1567,7 +1609,7 @@ namespace TDRv
                 g.CopyFromScreen(x,y,0,0, _chart.Size);//只保存某个控件
                 //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
                 
-                bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                bit.Save(imageDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
                //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
             }
         }

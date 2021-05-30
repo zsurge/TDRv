@@ -19,7 +19,7 @@ namespace TDRv
         }
 
         public string historyFile = Environment.CurrentDirectory + "\\MeasureData\\History\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
-        public string exportFile = Environment.CurrentDirectory + "\\MeasureData\\History\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
+        public string exportFile = Environment.CurrentDirectory + "\\MeasureData\\Report\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
 
         private void DevOptSet_Load(object sender, EventArgs e)
         {
