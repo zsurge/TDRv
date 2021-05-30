@@ -23,13 +23,13 @@ namespace TDRv.Driver
             {
                 return viError;
             }
-
+            
             viError = visa32.viOpen(resourceMgr, resourceName, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out nHandle);
             if (viError != visa32.VI_SUCCESS)
             {
                 return viError;
             }
-
+            
             StringBuilder attr = new StringBuilder();
             viError = visa32.viGetAttribute(nHandle, visa32.VI_ATTR_RSRC_CLASS, attr);
             viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);

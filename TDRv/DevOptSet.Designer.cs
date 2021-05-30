@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DevOptSet));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radio_key_space = new System.Windows.Forms.RadioButton();
             this.radio_key_close = new System.Windows.Forms.RadioButton();
@@ -338,6 +339,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.radio_sn_manual);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DevOptSet";
             this.Text = "Operation Config Setup";
             this.Load += new System.EventHandler(this.DevOptSet_Load);

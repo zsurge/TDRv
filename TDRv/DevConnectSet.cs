@@ -82,6 +82,13 @@ namespace TDRv
             }
             else if(combDevType.Text.Contains("E5063A"))
             {
+                if (20210830 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                {
+                    optStatus.isConnect = false;
+                    combDevString.BackColor = Color.Red;
+                    return;
+                }
+
                 CGloabal.g_InstrE5063AModule.adress = combDevString.Text;
 
                 INI.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
@@ -93,18 +100,26 @@ namespace TDRv
 
                 E5063A.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
 
-                E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);                
+                E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
 
-                if (ret != 0)
+                if (sn.Contains("MY54605417"))
                 {
-                    optStatus.isConnect = false;
-                    combDevString.BackColor = Color.Red;
-                    MessageBox.Show("error!");
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
                 }
                 else
                 {
-                    optStatus.isConnect = true;
-                    combDevString.BackColor = Color.Green;
+                    optStatus.isConnect = false;
+                    combDevString.BackColor = Color.Red;
                 }
             }
         }

@@ -40,15 +40,16 @@ namespace TDRv
         public const int HISTORY_RECORD = 999;
 
         //流水
-        public int gSerialInc = 0;
-
-        E5080B analyzer = new E5080B();
+        public int gSerialInc = 0;        
 
         private bool gEmptyFlag = true; //标志是否有空的待测物
         public static int gTestResultValue = 0;
 
         public static string logFileName = string.Empty;
-     
+
+        public static bool isExecuteComplete = true;
+        public static bool isExecuteIndex = true;
+
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
@@ -171,6 +172,7 @@ namespace TDRv
                 tsb_GetTestIndex.Enabled = true;
                 CommonFuncs.ShowMsg(eHintInfoType.hint, "请执行开路定义");
             }
+            isExecuteIndex = true;
         }
 
 
@@ -300,7 +302,7 @@ namespace TDRv
           
             initChart();
 
-            LoggerHelper.mlog.Debug("app start");
+        
 
             //禁止列排序
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
@@ -361,94 +363,104 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (isExecuteIndex)
             {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_GetTestIndex.Enabled = false;
-                return;
-            }
+                isExecuteIndex = false;
 
-            List<float> tmpDiffMeasData = new List<float>();
-            List<float> tmpSingleMeasData = new List<float>();
-            string result = string.Empty;
-            string result2 = string.Empty;
-
-            if (dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("请先装载配方");
-                return;
-            }
-
-            if (!optStatus.isConnect)
-            {
-                MessageBox.Show("请先连接设备");
-                return;
-            }
-
-            if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-            {
-                //差分开路定义
-                E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, out result);
-            }
-            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-            {
-                E5063A.getStartIndex(CGloabal.g_curInstrument.nHandle, out result, out result2);
-            }
-         
-            //这里需要处理win1_tr1的数据
-            tmpDiffMeasData = packetMaesData(result, 0, 0);
-            string[] tdd11_array = result.Split(new char[] { ',' });
-            result = string.Empty;
-
-            if (tdd11_array.Length < 200)
-            {
-                MessageBox.Show("获取差分开路定义失败");
-            }
-
-            //查找tdd11差分的索引值
-            for (int i = 0; i < tdd11_array.Length; i++)
-            {
-                //logger.Trace(tdd22_array[i]);
-                if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                foreach (var series in chart1.Series)
                 {
-                    MeasPosition.tdd11IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
+                    series.Points.Clear();
                 }
-            }
 
-            if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-            {        
-                //单端开路定义
+                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                {
+                    optStatus.isConnect = false;
+                    optStatus.isGetIndex = false;
+                    optStatus.isLoadXml = false;
+                    tsb_GetTestIndex.Enabled = false;
+                    return;
+                }
+
+                List<float> tmpDiffMeasData = new List<float>();
+                List<float> tmpSingleMeasData = new List<float>();
+                string result = string.Empty;
+                string result2 = string.Empty;
+
+                if (dataGridView1.Rows.Count == 0)
+                {
+                    MessageBox.Show("请先装载配方");
+                    return;
+                }
+
+                if (!optStatus.isConnect)
+                {
+                    MessageBox.Show("请先连接设备");
+                    return;
+                }
+
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    //差分开路定义
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, out result);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    E5063A.getStartIndex(CGloabal.g_curInstrument.nHandle, out result, out result2);
+                }
+
+                //这里需要处理win1_tr1的数据
+                tmpDiffMeasData = packetMaesData(result, 0, 0);
+                string[] tdd11_array = result.Split(new char[] { ',' });
                 result = string.Empty;
-                E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, out result);
-                tmpSingleMeasData = packetMaesData(result, 0, 0);
-            }
-            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-            {
-                tmpSingleMeasData = packetMaesData(result2, 0, 0);
-            }
-            
-            string[] tdd22_array = result2.Split(new char[] { ',' });
 
-            //查找tdd22单端的索引值
-            for (int i = 0; i < tdd22_array.Length; i++)
-            {                
-                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                if (tdd11_array.Length < 200)
                 {
-                    MeasPosition.tdd22IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
+                    MessageBox.Show("获取差分开路定义失败");
                 }
-            }
 
-            MeasPosition.isOpen = true;
-            optStatus.isGetIndex = true;
-            tsb_StartTest.Enabled = true;
+                //查找tdd11差分的索引值
+                for (int i = 0; i < tdd11_array.Length; i++)
+                {
+                    //logger.Trace(tdd22_array[i]);
+                    if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                    {
+                        MeasPosition.tdd11IndexValue = i - 1;
+                        //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        break;
+                    }
+                }
 
-            CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    //单端开路定义
+                    result = string.Empty;
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, out result);
+                    tmpSingleMeasData = packetMaesData(result, 0, 0);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    tmpSingleMeasData = packetMaesData(result2, 0, 0);
+                }
+
+                string[] tdd22_array = result2.Split(new char[] { ',' });
+
+                //查找tdd22单端的索引值
+                for (int i = 0; i < tdd22_array.Length; i++)
+                {
+                    if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                    {
+                        MeasPosition.tdd22IndexValue = i - 1;
+                        //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        break;
+                    }
+                }
+
+                MeasPosition.isOpen = true;
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+
+                CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
+            }            
         }
 
 
@@ -505,7 +517,7 @@ namespace TDRv
                 for (i = 0; i < tmpArray.Length; i++)
                 {
                     //logger.Trace(tmpArray[i]);
-                    LoggerHelper.mlog.Debug(tmpArray[i]);
+                    //LoggerHelper.mlog.Debug(tmpArray[i]);
                     tmp = Convert.ToSingle(tmpArray[i]);
                     result.Add(tmp);
                 }
@@ -571,6 +583,9 @@ namespace TDRv
             {
                 chart1.Series[3].Points.AddXY(i, measSingleData[i]);
             }
+
+            isExecuteIndex = true;
+            isExecuteComplete = true;
         }
 
         private bool SaveDataToCSVFile(List<float> measData, string fileName)
@@ -925,16 +940,22 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (isExecuteComplete)
             {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_StartTest.Enabled = false;
-                return;
-            }
+                isExecuteComplete = false;
 
-            toDoWork();
+                LoggerHelper.mlog.Debug("meas start!");
+                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                {
+                    optStatus.isConnect = false;
+                    optStatus.isGetIndex = false;
+                    optStatus.isLoadXml = false;
+                    tsb_StartTest.Enabled = false;
+                    return;
+                }
+
+                toDoWork();
+            }
         }
 
         public void toDoWork()
@@ -1001,6 +1022,9 @@ namespace TDRv
                     //高亮显示相应测试配方的那一行            
                     //dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
                     reFreshDatagridview(dataGridView1);
+                    isExecuteComplete = true;
+                    LoggerHelper.mlog.Debug("task1 end!");
+
                 }
                 else
                 {                    
@@ -1022,6 +1046,8 @@ namespace TDRv
                     CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
                 });
             }
+            
+            LoggerHelper.mlog.Debug("meas end!");
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1146,17 +1172,23 @@ namespace TDRv
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
-            {          
-                if (optParam.keyMode == 1)
+            {
+                if (isExecuteComplete)
                 {
-                    if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    isExecuteComplete = false;
+                    LoggerHelper.mlog.Debug("key meas start!");
+
+                    if (optParam.keyMode == 1)
                     {
-                        optStatus.isConnect = false;
-                        optStatus.isGetIndex = false;
-                        optStatus.isLoadXml = false;
-                        return;
+                        if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                        {
+                            optStatus.isConnect = false;
+                            optStatus.isGetIndex = false;
+                            optStatus.isLoadXml = false;
+                            return;
+                        }
+                        toDoWork();
                     }
-                    toDoWork();
                 }
             }
 
@@ -1541,7 +1573,23 @@ namespace TDRv
             }
         }
 
-
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (CGloabal.g_curInstrument != null)
+            {
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    //差分开路定义
+                    E5080B.viClear(CGloabal.g_curInstrument.nHandle);
+                    E5080B.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    E5063A.viClear(CGloabal.g_curInstrument.nHandle);
+                    E5063A.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+            }
+        }
     }//end form
 
     public class MeasIndex
