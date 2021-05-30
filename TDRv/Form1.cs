@@ -57,7 +57,10 @@ namespace TDRv
 
         //以当前时间为名字的文件名
         public static string logFileName = string.Empty;
-     
+
+        public static bool isExecuteComplete = true;
+        public static bool isExecuteIndex = true;
+
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
@@ -188,6 +191,7 @@ namespace TDRv
                 tsb_GetTestIndex.Enabled = true;
                 CommonFuncs.ShowMsg(eHintInfoType.hint, "请执行开路定义");
             }
+            isExecuteIndex = true;
         }
 
 
@@ -633,79 +637,84 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (isExecuteIndex)
             {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_GetTestIndex.Enabled = false;
-                return;
-            }
+                isExecuteIndex = false;
 
-            List<float> tmpDiffMeasData = new List<float>();
-            List<float> tmpSingleMeasData = new List<float>();
-            string result = string.Empty;
-            
-            if (dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("请先装载配方");
-                return;
-            }
-
-            if (!optStatus.isConnect)
-            {
-                MessageBox.Show("请先连接设备");
-                return;
-            }
-
-            //差分开路定义
-            E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle,DIFFERENCE,out result);
-
-            //这里需要处理win1_tr1的数据
-            tmpSingleMeasData = packetMaesData(result, 0, 0);
-            string[] tdd11_array = result.Split(new char[] { ',' });
-            result = string.Empty;
-
-            if (tdd11_array.Length < 200)
-            {
-                MessageBox.Show("获取差分开路定义失败");
-            }
-
-            //查找tdd11单端的索引值
-            for (int i = 0; i < tdd11_array.Length; i++)
-            {
-                //logger.Trace(tdd22_array[i]);
-                if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                 {
-                    MeasPosition.tdd11IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
+                    optStatus.isConnect = false;
+                    optStatus.isGetIndex = false;
+                    optStatus.isLoadXml = false;
+                    tsb_GetTestIndex.Enabled = false;
+                    return;
                 }
-            }
 
-            //单端开路定义
-            result = string.Empty;
-            E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, SINGLE, out result);
+                List<float> tmpDiffMeasData = new List<float>();
+                List<float> tmpSingleMeasData = new List<float>();
+                string result = string.Empty;
 
-            tmpDiffMeasData = packetMaesData(result, 0, 0);
-            string[] tdd22_array = result.Split(new char[] { ',' });
-
-            //查找tdd22单端的索引值
-            for (int i = 0; i < tdd22_array.Length; i++)
-            {                
-                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                if (dataGridView1.Rows.Count == 0)
                 {
-                    MeasPosition.tdd22IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
+                    MessageBox.Show("请先装载配方");
+                    return;
                 }
+
+                if (!optStatus.isConnect)
+                {
+                    MessageBox.Show("请先连接设备");
+                    return;
+                }
+
+                //差分开路定义
+                E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, DIFFERENCE, out result);
+
+                //这里需要处理win1_tr1的数据
+                tmpSingleMeasData = packetMaesData(result, 0, 0);
+                string[] tdd11_array = result.Split(new char[] { ',' });
+                result = string.Empty;
+
+                if (tdd11_array.Length < 200)
+                {
+                    MessageBox.Show("获取差分开路定义失败");
+                }
+
+                //查找tdd11单端的索引值
+                for (int i = 0; i < tdd11_array.Length; i++)
+                {
+                    //logger.Trace(tdd22_array[i]);
+                    if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                    {
+                        MeasPosition.tdd11IndexValue = i - 1;
+                        //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        break;
+                    }
+                }
+
+                //单端开路定义
+                result = string.Empty;
+                E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, SINGLE, out result);
+
+                tmpDiffMeasData = packetMaesData(result, 0, 0);
+                string[] tdd22_array = result.Split(new char[] { ',' });
+
+                //查找tdd22单端的索引值
+                for (int i = 0; i < tdd22_array.Length; i++)
+                {
+                    if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                    {
+                        MeasPosition.tdd22IndexValue = i - 1;
+                        //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        break;
+                    }
+                }
+
+                MeasPosition.isOpen = true;
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+
+                CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
             }
-
-            MeasPosition.isOpen = true;
-            optStatus.isGetIndex = true;
-            tsb_StartTest.Enabled = true;
-
-            CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
         }
 
 
@@ -938,6 +947,9 @@ namespace TDRv
             {
                 chart1.Series[3].Points.AddXY(i, measSingleData[i]);
             }
+
+            isExecuteIndex = true;
+            isExecuteComplete = true;
         }
 
 
@@ -1296,16 +1308,21 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (isExecuteComplete)
             {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_StartTest.Enabled = false;
-                return;
-            }
+                isExecuteComplete = false;
+                
+                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                {
+                    optStatus.isConnect = false;
+                    optStatus.isGetIndex = false;
+                    optStatus.isLoadXml = false;
+                    tsb_StartTest.Enabled = false;
+                    return;
+                }
 
-            toDoWork();
+                toDoWork();
+            }
         }
 
         public void toDoWork()
@@ -1366,7 +1383,7 @@ namespace TDRv
                     //高亮显示相应测试配方的那一行            
                     //dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
                     reFreshDatagridview(dataGridView1);
-
+                    isExecuteComplete = true;
                     //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
                 }
                 else
@@ -1514,17 +1531,22 @@ namespace TDRv
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
-            {          
-                if (optParam.keyMode == 1)
+            {
+                if (isExecuteComplete)
                 {
-                    if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    isExecuteComplete = false;                    
+
+                    if (optParam.keyMode == 1)
                     {
-                        optStatus.isConnect = false;
-                        optStatus.isGetIndex = false;
-                        optStatus.isLoadXml = false;
-                        return;
+                        if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                        {
+                            optStatus.isConnect = false;
+                            optStatus.isGetIndex = false;
+                            optStatus.isLoadXml = false;
+                            return;
+                        }
+                        toDoWork();
                     }
-                    toDoWork();
                 }
             }
 
