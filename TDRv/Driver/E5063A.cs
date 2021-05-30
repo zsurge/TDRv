@@ -1,0 +1,320 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TDRv.Driver
+{
+    public class E5063A
+    {
+        private static int resourceMgr;
+        public E5063A()
+        {
+            resourceMgr = 0;
+        }
+
+        public static int Open(string resourceName, ref int nHandle)
+        {
+            int viError;
+
+            viError = visa32.viOpenDefaultRM(out resourceMgr);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                return viError;
+            }
+
+            viError = visa32.viOpen(resourceMgr, resourceName, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out nHandle);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                return viError;
+            }
+
+            StringBuilder attr = new StringBuilder();
+            viError = visa32.viGetAttribute(nHandle, visa32.VI_ATTR_RSRC_CLASS, attr);
+
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);//终止符使能
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_SEND_END_EN, visa32.VI_TRUE);//终止符使能
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR, 0x0A);//终止符设置0xA
+
+            viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TMO_VALUE, 2000);//超时2000ms
+
+            return viError;
+        }
+
+        /* *IDN? */
+        public static int GetInstrumentIdentifier(int nInstrumentHandle, out string idn)
+        {
+            int viError;
+            int count = 0;
+            string command = "*IDN?\n";
+            byte[] response = new byte[256];
+
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                idn = string.Empty;
+                return viError;
+            }
+            viError = visa32.viRead(nInstrumentHandle, response, 256, out count);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                idn = string.Empty;
+                return viError;
+            }
+
+            idn = Encoding.ASCII.GetString(response, 0, count);
+            return viError;
+        }
+
+        public static int ClearAllErrorQueue(int nInstrumentHandle)
+        {
+            int error = 0, count = 0;
+            string command = "*CLS\n";
+            error = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            return error;
+        }
+
+        public static void viClear(int nInstrumentHandle)
+        {
+            visa32.viClear(nInstrumentHandle);
+        }
+
+        public static void viClose(int nInstrumentHandle)
+        {
+            visa32.viClose(nInstrumentHandle);
+        }
+
+        /* SYST:ERR? */
+        public static int QueryErrorStatus(int nInstrumentHandle, out string errorMesg)
+        {
+            int errorno, count;
+            string command = "SYSTem:ERRor?\n";
+            byte[] response = new byte[256];
+
+            errorno = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            errorno = visa32.viRead(nInstrumentHandle, response, 256, out count);
+            if (errorno != visa32.VI_SUCCESS)
+            {
+                errorMesg = "VISA library error : " + errorno;
+                return errorno;
+            }
+
+            string[] messages = new string[2];
+            messages = Encoding.ASCII.GetString(response, 0, count).Split(',');
+            errorno = Convert.ToInt32(messages[0]);
+            errorMesg = messages[1];
+            return errorno;
+        }
+
+        public static int getStartIndex(int nInstrumentHandle, out string msg1, out string msg2)
+        {
+            int viError, count;
+            byte[] result = new byte[256];
+
+            string str1 = ":SYST:COMM:SWIT1:DEFine?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str2 = ":SYST:COMM:SWIT2:DEFine?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str2 + "\n"), str2.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str3 = ":CALCulate1:FSIMulator:BALun:PARameter1:STATe OFF";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str3 + "\n"), str3.Length, out count);
+
+
+            string str4 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str4 + "\n"), str4.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str5 = "CALCulate1:PARameter1:SELect";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str5 + "\n"), str5.Length, out count);
+
+            string str6 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str6 + "\n"), str6.Length, out count);
+
+            string str7 = ":TRIGger:SINGle";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str7 + "\n"), str7.Length, out count);
+
+            string str8 = "*OPC?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str8 + "\n"), str8.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str9 = ":INITiate1:CONTinuous OFF";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str9 + "\n"), str9.Length, out count);
+
+
+            string str10 = ":DISPlay:UPDate";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
+
+
+            string str11 = ":CALCulate1:SELected:DATA:FDATa?";
+            byte[] ret = new byte[800000];
+
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str11 + "\n"), str11.Length, out count);
+
+            viError = visa32.viRead(nInstrumentHandle, ret, 800000, out count);       
+
+            msg2 = Encoding.ASCII.GetString(ret, 0, count).Replace("+0.00000000000E+000,",""); //单端           
+
+            string str12 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str12 + "\n"), str12.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str13 = ":CALCulate1:SELected:TRANsform:TIME:STOP?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str13 + "\n"), str13.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str14 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str14 + "\n"), str14.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str15 = ":CALCulate1:FSIMulator:BALun:PARameter1:STATe ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str15 + "\n"), str15.Length, out count);
+
+            string str16 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str16 + "\n"), str16.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str17 = "CALCulate1:PARameter1:SELect";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str17 + "\n"), str17.Length, out count);
+
+            string str18 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str18 + "\n"), str18.Length, out count);
+
+            string str19 = ":TRIGger:SINGle";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str19 + "\n"), str19.Length, out count);
+
+            string str20 = "*OPC?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str20 + "\n"), str20.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str21 = ":INITiate1:CONTinuous OFF";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str21 + "\n"), str21.Length, out count);
+
+
+            string str22 = ":DISPlay:UPDate";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str22 + "\n"), str22.Length, out count);
+
+            string str23 = ":CALCulate1:SELected:DATA:FDATa?";
+
+            Array.Clear(ret, 0, ret.Length);
+
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str23 + "\n"), str23.Length, out count);
+            viError = visa32.viRead(nInstrumentHandle, ret, 800000, out count); 
+
+            msg1 = Encoding.ASCII.GetString(ret, 0, count).Replace("+0.00000000000E+000,", ""); //差分
+
+            string str24 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str24 + "\n"), str24.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str25 = ":CALCulate1:SELected:TRANsform:TIME:STOP?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str25 + "\n"), str25.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str26 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str26 + "\n"), str26.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+
+            string str27 = ":DISPlay:ENABle ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str27 + "\n"), str27.Length, out count);
+
+            string str28 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str28 + "\n"), str28.Length, out count);
+
+            string str29 = ":TRIG:SOUR INTernal";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str29 + "\n"), str29.Length, out count);
+            
+
+            return viError;
+        }
+
+        public static int measuration(int nInstrumentHandle, int channel, out string msg)
+        {
+            int viError, count;
+            byte[] result = new byte[256];
+            string cmd = string.Empty;
+
+            string str1 = ":SYST:COMM:SWIT1:DEFine?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str2 = ":SYST:COMM:SWIT2:DEFine?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str2 + "\n"), str2.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            if (channel == 1)
+            {
+                cmd = ":CALCulate1:FSIMulator:BALun:PARameter1:STATe ON";//差分
+            }
+            else
+            {
+                cmd = ":CALCulate1:FSIMulator:BALun:PARameter1:STATe OFF";//单端
+            }   
+            
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd + "\n"), cmd.Length, out count);
+
+
+            string str4 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str4 + "\n"), str4.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str5 = "CALCulate1:PARameter1:SELect";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str5 + "\n"), str5.Length, out count);
+
+            string str6 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str6 + "\n"), str6.Length, out count);
+
+            string str7 = ":TRIGger:SINGle";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str7 + "\n"), str7.Length, out count);
+
+            string str8 = "*OPC?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str8 + "\n"), str8.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str9 = ":INITiate1:CONTinuous OFF";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str9 + "\n"), str9.Length, out count);
+
+
+            string str10 = ":DISPlay:UPDate";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
+
+
+            string str11 = ":CALCulate1:SELected:DATA:FDATa?";
+            byte[] ret = new byte[800000];
+
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str11 + "\n"), str11.Length, out count);
+
+            viError = visa32.viRead(nInstrumentHandle, ret, 800000, out count);
+
+            msg = Encoding.ASCII.GetString(ret, 0, count).Replace("+0.00000000000E+000,", "");
+
+            string str12 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str12 + "\n"), str12.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str13 = ":CALCulate1:SELected:TRANsform:TIME:STOP?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str13 + "\n"), str13.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+            string str14 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str14 + "\n"), str14.Length, out count);
+            visa32.viRead(nInstrumentHandle, result, 256, out count);
+
+
+            string str15 = ":DISPlay:ENABle ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str15 + "\n"), str15.Length, out count);
+
+            string str16 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str16 + "\n"), str16.Length, out count);
+
+            return viError;
+        }
+
+
+
+        }//end class
+}//end namespace

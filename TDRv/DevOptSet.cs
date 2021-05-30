@@ -18,8 +18,8 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public string historyFile = Environment.CurrentDirectory + "\\record\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
-        public string exportFile = Environment.CurrentDirectory + "\\record\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
+        public string historyFile = Environment.CurrentDirectory + "\\MeasureData\\History\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
+        public string exportFile = Environment.CurrentDirectory + "\\MeasureData\\History\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
 
         private void DevOptSet_Load(object sender, EventArgs e)
         {

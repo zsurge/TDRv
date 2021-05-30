@@ -43,13 +43,14 @@
             this.combDevType.Items.AddRange(new object[] {
             "E5080B",
             "E5071C",
+            "E5063A",
             "PNA",
             "USB-ENA"});
             this.combDevType.Location = new System.Drawing.Point(71, 16);
             this.combDevType.Name = "combDevType";
             this.combDevType.Size = new System.Drawing.Size(72, 20);
             this.combDevType.TabIndex = 0;
-            this.combDevType.Text = "E5080B";
+            this.combDevType.Text = "E5063A";
             // 
             // label1
             // 
