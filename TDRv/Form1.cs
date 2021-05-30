@@ -485,9 +485,8 @@ namespace TDRv
                 {
                     tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
                     if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
-                    {
-                        //logger.Error(tmpArray[i]);
-                        //LoggerHelper.mlog.Debug(tmpArray[i]);
+                    {                  
+                        //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
                         result.Add(tmp);
                     }
                     else

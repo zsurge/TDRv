@@ -252,6 +252,7 @@ namespace TDRv.Driver
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
             string str29 = ":TRIG:SOUR INTernal";
+            //string str29 = ":TRIG:SOUR BUS";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str29 + "\n"), str29.Length, out count);
             
 
@@ -264,6 +265,10 @@ namespace TDRv.Driver
             byte[] result = new byte[256];
             string cmd = string.Empty;
             int attr;
+
+            string str29 = ":TRIG:SOUR BUS";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str29 + "\n"), str29.Length, out count);
+            viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
             string str1 = ":SYST:COMM:SWIT1:DEFine?";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
@@ -317,7 +322,7 @@ namespace TDRv.Driver
 
             string str10 = ":DISPlay:UPDate";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
-            viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
+            viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);     
 
 
             string str11 = ":CALCulate1:SELected:DATA:FDATa?";
@@ -329,6 +334,10 @@ namespace TDRv.Driver
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
             msg = Encoding.ASCII.GetString(ret, 0, count).Replace("+0.00000000000E+000,", "");
+
+            string str30 = ":TRIG:SOUR INTernal";            
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str30 + "\n"), str30.Length, out count);
+            viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
             string str12 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str12 + "\n"), str12.Length, out count);
