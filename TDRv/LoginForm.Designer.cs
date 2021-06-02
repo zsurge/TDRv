@@ -36,6 +36,9 @@
             this.label_UserName = new System.Windows.Forms.Label();
             this.btn_Login_Close = new System.Windows.Forms.Button();
             this.btn_Login = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tx_server_ip = new System.Windows.Forms.TextBox();
+            this.tx_server_port = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +54,7 @@
             // 
             // tx_PassWord
             // 
-            this.tx_PassWord.Location = new System.Drawing.Point(239, 175);
+            this.tx_PassWord.Location = new System.Drawing.Point(237, 205);
             this.tx_PassWord.Name = "tx_PassWord";
             this.tx_PassWord.PasswordChar = '*';
             this.tx_PassWord.Size = new System.Drawing.Size(173, 21);
@@ -60,7 +63,7 @@
             // 
             // tx_UserName
             // 
-            this.tx_UserName.Location = new System.Drawing.Point(239, 148);
+            this.tx_UserName.Location = new System.Drawing.Point(237, 178);
             this.tx_UserName.Name = "tx_UserName";
             this.tx_UserName.Size = new System.Drawing.Size(173, 21);
             this.tx_UserName.TabIndex = 7;
@@ -69,7 +72,7 @@
             // label_PassWord
             // 
             this.label_PassWord.AutoSize = true;
-            this.label_PassWord.Location = new System.Drawing.Point(180, 183);
+            this.label_PassWord.Location = new System.Drawing.Point(178, 213);
             this.label_PassWord.Name = "label_PassWord";
             this.label_PassWord.Size = new System.Drawing.Size(29, 12);
             this.label_PassWord.TabIndex = 13;
@@ -78,7 +81,7 @@
             // label_UserName
             // 
             this.label_UserName.AutoSize = true;
-            this.label_UserName.Location = new System.Drawing.Point(180, 151);
+            this.label_UserName.Location = new System.Drawing.Point(178, 181);
             this.label_UserName.Name = "label_UserName";
             this.label_UserName.Size = new System.Drawing.Size(53, 12);
             this.label_UserName.TabIndex = 12;
@@ -104,11 +107,39 @@
             this.btn_Login.UseVisualStyleBackColor = true;
             this.btn_Login.Click += new System.EventHandler(this.btn_Login_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(178, 150);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "服务器：";
+            // 
+            // tx_server_ip
+            // 
+            this.tx_server_ip.Location = new System.Drawing.Point(237, 147);
+            this.tx_server_ip.Name = "tx_server_ip";
+            this.tx_server_ip.Size = new System.Drawing.Size(120, 21);
+            this.tx_server_ip.TabIndex = 15;
+            this.tx_server_ip.Text = "192.168.100.101";
+            // 
+            // tx_server_port
+            // 
+            this.tx_server_port.Location = new System.Drawing.Point(363, 147);
+            this.tx_server_port.Name = "tx_server_port";
+            this.tx_server_port.Size = new System.Drawing.Size(47, 21);
+            this.tx_server_port.TabIndex = 16;
+            this.tx_server_port.Text = "5200";
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(631, 411);
+            this.Controls.Add(this.tx_server_port);
+            this.Controls.Add(this.tx_server_ip);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tx_PassWord);
             this.Controls.Add(this.tx_UserName);
@@ -134,5 +165,8 @@
         private System.Windows.Forms.Label label_UserName;
         private System.Windows.Forms.Button btn_Login_Close;
         private System.Windows.Forms.Button btn_Login;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tx_server_ip;
+        private System.Windows.Forms.TextBox tx_server_port;
     }
 }

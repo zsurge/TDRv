@@ -385,18 +385,14 @@ namespace TDRv
                 {
 
                     //release
-                    //byte[] buffer = new byte[sks.Offset - 2];  
-                    //Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
-
-                    //DEBUG 20210510
-                    byte[] buffer = new byte[sks.Offset];
-                    Array.Copy(sks.RecBuffer, 0, buffer, 0, sks.Offset);
+                    byte[] buffer = new byte[sks.Offset - 2];
+                    Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
 
                     string stohbuff = string.Empty;
                     string ret = string.Empty;
 
-                    //string str = Encoding.Unicode.GetString(buffer);
-                    string str = Encoding.UTF8.GetString(buffer);
+                    string str = Encoding.Unicode.GetString(buffer);
+                    
                     if (str == "ServerOff")
                     {
                         LoggerHelper._.Trace("服务端主动关闭");
@@ -425,11 +421,19 @@ namespace TDRv
                             case "DATETIMESYNCCOMMAND":
                                 //1.这里记录日志
                                 LoggerHelper._.Info("开始处理校时请求");
-                                //2.获取要发送到服务器的数据
+
+                                //2.处理返回数据
+                                ret = QueryElementByName(str, "body", "date_time");
+
+                                //3.转换时间
+
+                                //4.设置当前时间
+
+                                //5.获取要发送到服务器的数据
                                 ISendToHost _syncTimeResp = new SyncTimeResp();
                                 _syncTimeResp.eventSend += new DelegateSend(dev._SyncTimeResp);
                                 stohbuff = _syncTimeResp.packetXmlData();
-                                //3.发送到服务器
+                                //6.发送到服务器
                                 SocketHelper.TcpClients.Instance.SendData(stohbuff);
                                 LoggerHelper._.Info("校时返回数据为：" + stohbuff);
                                 break;
@@ -437,6 +441,9 @@ namespace TDRv
                             case "JOBDATADOWNLOAD":
                                 //1.这里记录日志
                                 LoggerHelper._.Info("开始处理JOB下载任务");
+
+                                job_down_process(str);
+
                                 //2.获取要发送到服务器的数据
                                 ISendToHost _jobDownResp = new JobDownResp();
                                 _jobDownResp.eventSend += new DelegateSend(dev._JobDownResp);
@@ -514,6 +521,49 @@ namespace TDRv
                     }
                 }
             }));
+        }
+
+        public void job_down_process(string xmlBuff)
+        {
+            string tmpbuf = string.Empty;
+            tmpbuf = QueryElementByName(xmlBuff, "body", "eqp_id");
+            INI.WriteValueToIniFile("JOB", "eqp_id", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "port_id");
+            INI.WriteValueToIniFile("JOB", "port_id", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "job_id");
+            INI.WriteValueToIniFile("JOB", "job_id", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "total_panel_count");
+            INI.WriteValueToIniFile("JOB", "total_panel_count", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "panel_size");
+            INI.WriteValueToIniFile("JOB", "panel_size", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "recipe_id");
+            INI.WriteValueToIniFile("JOB", "recipe_id", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "recipe_path");
+            INI.WriteValueToIniFile("JOB", "recipe_path", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "cam_path");
+            INI.WriteValueToIniFile("JOB", "cam_path", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "part_no");
+            INI.WriteValueToIniFile("JOB", "part_no", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "layer_count");
+            INI.WriteValueToIniFile("JOB", "layer_count", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "panel_id");
+            INI.WriteValueToIniFile("JOB", "panel_id", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "item_name");
+            INI.WriteValueToIniFile("JOB", "item_name", tmpbuf);
+
+            tmpbuf = QueryElementByName(xmlBuff, "body", "item_value");
+            INI.WriteValueToIniFile("JOB", "item_value", tmpbuf);
         }
 
         /// <summary>
@@ -1460,7 +1510,7 @@ namespace TDRv
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
             dlg.Title = "保存为csv文件";    
-            dlg.FileName = reportDir + "//" + Path.GetFileNameWithoutExtension(defName);            
+            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName);            
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {

@@ -13,6 +13,7 @@ namespace TDRv
         public static bool isGetIndex { get; set; } = false;        
     }
 
+    
     public static class optParam
     {
         //键盘默认模式，0是关闭，1是启用
@@ -38,5 +39,8 @@ namespace TDRv
 
         //输出报告的默认文件名
         public static string outputExportFileName { get; set; } = "TDR_Project_Export.csv";
+
+        //设备SN
+        public static string devSn { get; set; } = "";
     }
 }
