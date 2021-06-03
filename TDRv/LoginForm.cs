@@ -41,13 +41,6 @@ namespace TDRv
                     SocketHelper.TcpClients.Instance.InitSocket(tx_server_ip.Text,Convert.ToInt32(tx_server_port.Text));
                     SocketHelper.TcpClients.Instance.Start();
 
-                    if (SocketHelper.TcpClients.Instance.client.Connected)
-                    {
-                        // 开启心跳线程
-                        Thread t = new Thread(new ThreadStart(Heartbeat));
-                        t.IsBackground = true;
-                        t.Start();
-                    }
 
                     if (SocketHelper.TcpClients.Instance.client.Connected)
                     {
@@ -57,10 +50,20 @@ namespace TDRv
                         SocketHelper.TcpClients.Instance.SendData(stohbuff);
                     }
 
-                    // 跳转主界面
-                    this.DialogResult = DialogResult.OK;
-                    this.Dispose();
-                    this.Close();
+                    //if (SocketHelper.TcpClients.Instance.client.Connected)
+                    //{
+                    //    // 开启心跳线程
+                    //    Thread t = new Thread(new ThreadStart(Heartbeat));
+                    //    t.IsBackground = true;
+                    //    t.Start();
+                    //}
+
+
+
+                    //// 跳转主界面
+                    //this.DialogResult = DialogResult.OK;
+                    //this.Dispose();
+                    //this.Close();
                 }
                 else
                 {
@@ -70,16 +73,16 @@ namespace TDRv
             }
         }
 
-        private void Heartbeat()
-        {
-            while (SocketHelper.TcpClients.Instance.client.Connected)
-            { 
-                // 向服务端发送心跳包
-                SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
+        //private void Heartbeat()
+        //{
+        //    while (SocketHelper.TcpClients.Instance.client.Connected)
+        //    { 
+        //        // 向服务端发送心跳包
+        //        SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
 
-                Thread.Sleep(60000);
-            }
-        }
+        //        Thread.Sleep(60000);
+        //    }
+        //}
 
         private void btn_Login_Close_Click(object sender, EventArgs e)
         {
@@ -151,12 +154,28 @@ namespace TDRv
                                 //2.记录日志
                                 LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
 
-                                //3.打包数据
-                                stohbuff = string.Empty;
-                                stohbuff = LoginConfrimPacket("1");
+                                if(ret.Equals("1"))
+                                {
+                                    //3.打包数据
+                                    stohbuff = string.Empty;
+                                    stohbuff = LoginConfrimPacket("1");
 
-                                //4.发送到服务器
-                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                    //4.发送到服务器
+                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                    // 跳转主界面
+                                    this.DialogResult = DialogResult.OK;
+                                    this.Dispose();
+                                    this.Close();
+                                }
+                                else
+                                {
+                                    //3.打包数据
+                                    stohbuff = string.Empty;
+                                    stohbuff = LoginConfrimPacket("0");
+
+                                    //4.发送到服务器
+                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                }
                                 break;
                         }
                     }
@@ -190,7 +209,7 @@ namespace TDRv
 
 
         //上机报告确认
-        public string LoginConfrimPacket(string identify_type)
+        public string LoginConfrimPacket(string ret)
         {
             string xmlbuf = string.Empty;
 
@@ -198,11 +217,11 @@ namespace TDRv
             new XDeclaration("1.0", "UTF-8", null),
             new XElement("message",
                 new XElement("header",
-                    new XElement("messagename", "OperatorLoginConfirm"),
+                    new XElement("messagename", "OperatorLoginConfirmReply"),
                     new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", optParam.devSn),                   
-                    new XElement("return_code", "1")),
+                    new XElement("return_code", ret)),
                 new XElement("return",
                     new XElement("returncode", ""),
                     new XElement("returnmessage", ""))));
