@@ -141,7 +141,7 @@ namespace TDRv
                         switch (QueryElementByName(str).Replace(" ", "").ToUpper())
                         {
                             //响应上机报告
-                            case "OperatorLoginLogoutReportReply":
+                            case "OPERATORLOGINLOGOUTREPORTREPLY":
                                 //1.处理返回数据
                                 ret = QueryElementByName(str, "body", "return_code");
                                 //2.记录日志

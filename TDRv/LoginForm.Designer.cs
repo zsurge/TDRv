@@ -56,7 +56,7 @@
             // tx_PassWord
             // 
             this.tx_PassWord.Location = new System.Drawing.Point(474, 410);
-            this.tx_PassWord.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tx_PassWord.Margin = new System.Windows.Forms.Padding(6);
             this.tx_PassWord.Name = "tx_PassWord";
             this.tx_PassWord.PasswordChar = '*';
             this.tx_PassWord.Size = new System.Drawing.Size(342, 35);
@@ -66,7 +66,7 @@
             // tx_UserName
             // 
             this.tx_UserName.Location = new System.Drawing.Point(474, 356);
-            this.tx_UserName.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tx_UserName.Margin = new System.Windows.Forms.Padding(6);
             this.tx_UserName.Name = "tx_UserName";
             this.tx_UserName.Size = new System.Drawing.Size(342, 35);
             this.tx_UserName.TabIndex = 7;
@@ -95,7 +95,7 @@
             // btn_Login_Close
             // 
             this.btn_Login_Close.Location = new System.Drawing.Point(402, 506);
-            this.btn_Login_Close.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btn_Login_Close.Margin = new System.Windows.Forms.Padding(6);
             this.btn_Login_Close.Name = "btn_Login_Close";
             this.btn_Login_Close.Size = new System.Drawing.Size(150, 46);
             this.btn_Login_Close.TabIndex = 10;
@@ -106,7 +106,7 @@
             // btn_Login
             // 
             this.btn_Login.Location = new System.Drawing.Point(646, 506);
-            this.btn_Login.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btn_Login.Margin = new System.Windows.Forms.Padding(6);
             this.btn_Login.Name = "btn_Login";
             this.btn_Login.Size = new System.Drawing.Size(150, 46);
             this.btn_Login.TabIndex = 9;
@@ -127,20 +127,20 @@
             // tx_server_ip
             // 
             this.tx_server_ip.Location = new System.Drawing.Point(474, 294);
-            this.tx_server_ip.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tx_server_ip.Margin = new System.Windows.Forms.Padding(6);
             this.tx_server_ip.Name = "tx_server_ip";
             this.tx_server_ip.Size = new System.Drawing.Size(236, 35);
             this.tx_server_ip.TabIndex = 15;
-            this.tx_server_ip.Text = "192.168.1.1";
+            this.tx_server_ip.Text = "192.168.3.55";
             // 
             // tx_server_port
             // 
             this.tx_server_port.Location = new System.Drawing.Point(726, 294);
-            this.tx_server_port.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tx_server_port.Margin = new System.Windows.Forms.Padding(6);
             this.tx_server_port.Name = "tx_server_port";
             this.tx_server_port.Size = new System.Drawing.Size(90, 35);
             this.tx_server_port.TabIndex = 16;
-            this.tx_server_port.Text = "6200";
+            this.tx_server_port.Text = "5200";
             // 
             // LoginForm
             // 
@@ -158,9 +158,9 @@
             this.Controls.Add(this.btn_Login_Close);
             this.Controls.Add(this.btn_Login);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.Text = "用户登录";
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

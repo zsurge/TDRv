@@ -61,7 +61,7 @@ namespace TDRv
 
             E5080B.GetInstrumentIdentifier(CGloabal.g_InstrE5080BModule.nHandle, out sn);
 
-            INI.WriteValueToIniFile("Instrument", "SN", sn);
+            //INI.WriteValueToIniFile("Instrument", "SN", sn);
 
             if (sn.Contains("MY59101265") || sn.Contains("MY59101017"))
             {               
@@ -102,6 +102,11 @@ namespace TDRv
             if (INI.GetValueFromIniFile("NetWork", "ServerPORT").Length > 0)
             {
                 tx_server_port.Text = INI.GetValueFromIniFile("NetWork", "ServerPORT");
+            }
+
+            if (INI.GetValueFromIniFile("Instrument", "SN").Length > 0)
+            {
+                tx_sn.Text = INI.GetValueFromIniFile("Instrument", "SN");
             }
 
         }
@@ -250,6 +255,18 @@ namespace TDRv
 
             //2.发送到服务器
             SocketHelper.TcpClients.Instance.SendData(sendBuff);
+        }
+
+        private void btn_SetSn_Click(object sender, EventArgs e)
+        {
+            if (tx_sn.Text.Length != 0)
+            {
+                INI.WriteValueToIniFile("Instrument", "SN", tx_sn.Text);         
+            }
+            else
+            {
+                MessageBox.Show("EQP_ID不能为空");
+            }
         }
     }//end class
 }//end namespace

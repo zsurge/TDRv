@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -24,6 +22,7 @@ namespace TDRv
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
+            this.Text = version;
         }
 
         //SOCKET通信接口
@@ -75,6 +74,8 @@ namespace TDRv
         public string imageDir = Environment.CurrentDirectory + "\\AutoSave\\Image";
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
+
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.1.20210603";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -171,7 +172,9 @@ namespace TDRv
 
             if (dt.Tag != null)
             {
-                tsb_XmlFileName.Text = dt.Tag.ToString();
+                //tsb_XmlFileName.Text = dt.Tag.ToString();
+                this.Text = version + ("  ("+dt.Tag.ToString()+")");
+
             }
 
             //读取配方中的数据
@@ -425,9 +428,13 @@ namespace TDRv
                                 //2.处理返回数据
                                 ret = QueryElementByName(str, "body", "date_time");
 
+                                string tmpTime = ret.Substring(0, 4) + "-" + ret.Substring(4, 2) + "-" + ret.Substring(6, 2) + " " + ret.Substring(8, 2) + ":" + ret.Substring(10, 2) + ":" + ret.Substring(12, 2);
+                                
                                 //3.转换时间
+                                DateTime dt = Convert.ToDateTime(tmpTime);
 
                                 //4.设置当前时间
+                                SyncServerTime.SetDate(dt);
 
                                 //5.获取要发送到服务器的数据
                                 ISendToHost _syncTimeResp = new SyncTimeResp();
@@ -451,73 +458,26 @@ namespace TDRv
                                 //3.发送到服务器
                                 SocketHelper.TcpClients.Instance.SendData(stohbuff);
                                 LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
+
+                                //4.上送调用通知
+                                stohbuff = string.Empty;
+                                stohbuff = EquipmentRecipeSetupReport("1");
+                                //5.发送到服务器
+                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
                                 break;
 
-                            //响应人员上机确认
-                            case "OPERATORLOGINCONFIRM":
+                            //响应读板报告
+                            case "PanelReadReportReply":
                                 //1.这里记录日志
-                                LoggerHelper._.Info("开始处理人员上机确认任务");
-                                //2.获取要发送到服务器的数据
-                                ISendToHost _loginConfrim = new LoginConfrim();
-                                _loginConfrim.eventSend += new DelegateSend(dev._LoginConfrim);
-                                stohbuff = _loginConfrim.packetXmlData();
-                                //3.发送到服务器
-                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                                LoggerHelper._.Info("人员上机确认：" + stohbuff);
-                                break;
-                            //-----------------------------------------------------------------------------------------------
-                            //处理查询服务状态后的返回信息4.1
-                            case "AREYOUTHEREREQUESTREPLY":
-                                //1.处理返回数据
+                                LoggerHelper._.Info("响应读板报告");
+                          
                                 ret = QueryElementByName(str, "body", "eqp_id");
                                 //2.记录日志
                                 LoggerHelper._.Info("HOST 响应对方是否存在. result = " + ret);
                                 break;
-                            //机台当前控制模式4.14
-                            case "EQUIPMENTCONTROLMODEREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 响应机台工作模式 result = " + ret);
-                                break;
-                            //设备上报当前时间4.16
-                            case "EQUIPMENTCURRENTDATETIMEREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 设备上报当前时间 result = " + ret);
-                                break;
-                            //人员上下岗报告4.20
-                            case "OPERATORLOGINLOGOUTREPORTREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
-                                break;
-                            //4.23
-                            case "PANELREADREPORTREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 读板报告 result = " + ret);
-                                break;
-                            //4.26
-                            case "EQUIPMENTRECIPESETUPREPORTREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 机台配方参数调用报告 result = " + ret);
-                                break;
-                            //4.34
-                            case "PROCESSDATAREPORTREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 制程/量测数据报告 result = " + ret);
-                                break;
-
+                               
                         }
-
                     }
                 }
             }));
@@ -581,19 +541,6 @@ namespace TDRv
                 return cmd;
             }
 
-
-            //为了测试才打开 注释于20210511 为了方便测试 码制不同
-            //if (xmlData.Substring(0, 2).CompareTo("02") != 0 && xmlData.Substring(xmlData.Length - 2, 2).CompareTo("03") != 0)
-            //{
-            //    LoggerHelper._.Error("错误的包头包尾:" + xmlData);
-            //    return cmd;
-            //}
-
-
-            //-4 去除包头包尾
-            //XElement xe = XElement.Parse(xmlData.Substring(2, xmlData.Length - 4));
-
-            //注释于20210511 为了方便测试 码制不同
             XElement xe = XElement.Parse(xmlData); 
 
             ///查询元素
@@ -606,10 +553,11 @@ namespace TDRv
 
             cmd = elements[0].Value;
 
-            LoggerHelper._.Info("当前接收到的指令是：" + cmd);
+            LoggerHelper._.Info("当前查找到的内容是：" + cmd);
             return cmd;
-
         }
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -638,8 +586,13 @@ namespace TDRv
                 dgv_CurrentResult.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
-            
+            //// 开启校时线程
+            //Thread t = new Thread(new ThreadStart(checkTime));
+            //t.IsBackground = true;
+            //t.Start();
+
         }
+
 
         private void initChart()
         {
@@ -937,7 +890,7 @@ namespace TDRv
                 }
             }
 
-            logFileName = DateTime.Now.ToString("yyyyMMddhh:mm:ss.ff");
+            logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
             SaveDataToCSVFile(result, logFileName);
 
             return result;
@@ -1309,7 +1262,7 @@ namespace TDRv
 
             this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
             this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
@@ -1337,7 +1290,7 @@ namespace TDRv
 
             this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
             this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
@@ -1433,6 +1386,8 @@ namespace TDRv
                     //高亮显示相应测试配方的那一行            
                     //dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
                     reFreshDatagridview(dataGridView1);
+
+
                     isExecuteComplete = true;
                     //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
                 }
@@ -1841,9 +1796,13 @@ namespace TDRv
 
                 //目前量测
                 _dgv.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
+                SendData.layer = _dgv.Rows[index].Cells[0].Value.ToString();
                 _dgv.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
+                SendData.spec = _dgv.Rows[index].Cells[1].Value.ToString();
                 _dgv.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit + strUnit;  //最大上限比例 
+                SendData.upper_limit = _dgv.Rows[index].Cells[2].Value.ToString();
                 _dgv.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit + strUnit;    //最小下限比例
+                SendData.low_limit = _dgv.Rows[index].Cells[3].Value.ToString();
 
                 if (gEmptyFlag)
                 {
@@ -1858,6 +1817,12 @@ namespace TDRv
                     _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
                 }
 
+                SendData.max = _dgv.Rows[index].Cells[5].Value.ToString();
+                SendData.min = _dgv.Rows[index].Cells[6].Value.ToString();
+                SendData.average = _dgv.Rows[index].Cells[4].Value.ToString();
+                SendData.result = _dgv.Rows[index].Cells[7].Value.ToString();
+
+
                 _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
                 _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
                 _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
@@ -1865,6 +1830,7 @@ namespace TDRv
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
 
+                SendData.mode = _dgv.Rows[index].Cells[11].Value.ToString();
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1879,6 +1845,13 @@ namespace TDRv
                 }
                 else
                 {
+                    //4.上送调用通知
+                    string stohbuff = string.Empty;
+                    stohbuff = TestResultReport();
+                    //5.发送到服务器
+                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+
+
                     List<string> historyRecord = new List<string>();
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
@@ -1981,7 +1954,130 @@ namespace TDRv
             }
         }
 
+        public string GetCuerrtTime()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssxxx");
+        }
 
+        //上机请求打包
+        public string PanelReadReport(string panel_id)
+        {
+            string xmlbuf = string.Empty;
+
+            XDocument xmldata = new XDocument(
+            new XDeclaration("1.0", "UTF-8", null),
+            new XElement("message",
+                new XElement("header",
+                    new XElement("messagename", "PanelReadReport"),
+                    new XElement("transactionid", GetCuerrtTime())),
+                new XElement("body",
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("panel_id", panel_id)),
+                new XElement("return",
+                    new XElement("returncode", " "),
+                    new XElement("returnmessage", " "))));
+            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            return xmlbuf;
+        }
+
+        //机台配方参数调用报告4.26
+        public string EquipmentRecipeSetupReport(string status)
+        {
+            string xmlbuf = string.Empty;
+            string process_id = INI.GetValueFromIniFile("JOB", "process_id");
+            string recipe_path = INI.GetValueFromIniFile("JOB", "recipe_path");
+            string cam_path = INI.GetValueFromIniFile("JOB", "cam_path");
+
+
+            XDocument xmldata = new XDocument(
+            new XDeclaration("1.0", "UTF-8", null),
+            new XElement("message",
+                new XElement("header",
+                    new XElement("messagename", "EquipmentRecipeSetupReport"),
+                    new XElement("transactionid", GetCuerrtTime())),
+                new XElement("body",
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("process_id", process_id),
+                    new XElement("recipe_path", recipe_path),
+                    new XElement("cam_path", cam_path),
+                    new XElement("setup_result", status)),
+                new XElement("return",
+                    new XElement("returncode", " "),
+                    new XElement("returnmessage", " "))));
+
+            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            return xmlbuf;
+        }
+
+        public string TestResultReport()
+        {
+            string xmlbuf = string.Empty;
+            string job_id = INI.GetValueFromIniFile("JOB", "job_id");
+            XDocument xmldata = new XDocument(
+            new XDeclaration("1.0", "UTF-8", null),
+            new XElement("message",
+                new XElement("header",
+                    new XElement("messagename", "ProcessDataReport"),
+                    new XElement("transactionid", GetCuerrtTime())),
+                new XElement("body",
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("sub_eqp_id", ""),
+                    new XElement("job_id", job_id),
+                        new XElement("proc_data_list", 
+                            new XElement("proc_data",
+                                new XElement("data_item", "layer"),
+                                new XElement("data_value", SendData.layer)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "upper_limit"),
+                                new XElement("data_value", SendData.upper_limit)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "low_limit"),
+                                new XElement("data_value", SendData.low_limit)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "spec"),
+                                new XElement("data_value", SendData.spec)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "average"),
+                                new XElement("data_value", SendData.average)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "max"),
+                                new XElement("data_value", SendData.max)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "min"),
+                                new XElement("data_value", SendData.min)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "mode"),
+                                new XElement("data_value", SendData.mode)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "result"),
+                                new XElement("data_value", SendData.result)))),
+                new XElement("return",
+                    new XElement("returncode", " "),
+                    new XElement("returnmessage", " "))));
+
+            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            return xmlbuf;
+        }
+
+        private void tsb_Pnl_ID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(13))
+            {
+                string stohbuff = string.Empty;
+                //1.这里记录日志
+                LoggerHelper._.Info("读板报告");
+
+                //2.获取要发送到服务器的数据
+                stohbuff = PanelReadReport(tsb_Pnl_ID.Text);
+
+                //3.发送数据到服务器
+                SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                LoggerHelper._.Info("读板报告：" + stohbuff);
+            }
+        }
     }//end form
 
     public class MeasIndex

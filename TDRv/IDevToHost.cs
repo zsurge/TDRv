@@ -36,6 +36,24 @@ namespace TDRv
         public string _DevInitResp()
         {
             string xmlbuf = string.Empty;
+            string cMode = string.Empty;
+
+            string ControlMode = INI.GetValueFromIniFile("ControlMode", "Mode");
+            if (ControlMode.Equals("OnLine"))
+            {
+                cMode = "2";
+            }
+            else
+            {
+                cMode = "1";
+            }
+            string recipe_path = INI.GetValueFromIniFile("JOB", "recipe_path");
+            string cam_path = INI.GetValueFromIniFile("JOB", "cam_path");
+            string recipe_name = INI.GetValueFromIniFile("JOB", "recipe_name");
+            string job_id = INI.GetValueFromIniFile("JOB", "job_id");
+            string total_panel_count = INI.GetValueFromIniFile("JOB", "total_panel_count");
+            string process_panel_count = INI.GetValueFromIniFile("JOB", "process_panel_count");
+
 
             XDocument xmldata = new XDocument(
             new XDeclaration("1.0", "UTF-8", null),
@@ -45,14 +63,15 @@ namespace TDRv
                     new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", optParam.devSn),
-                    new XElement("control_mode", "2")),
+                    new XElement("control_mode", cMode)),
                     new XElement("operation_mode", "1"),
-                    new XElement("recipe_path", @"D:\test"),
-                    new XElement("recipe_name", "test001"),
-                    new XElement("cam_path", @"http://wwww.baidu.com"),
-                    new XElement("job_id", "test001"),
-                    new XElement("total_panel_count", "1000"),
-                    new XElement("process_panel_count", "888"),
+                    new XElement("eqp_status", "1"),
+                    new XElement("recipe_path", recipe_path),
+                    new XElement("recipe_name", recipe_name),
+                    new XElement("cam_path", cam_path),
+                    new XElement("job_id", job_id),
+                    new XElement("total_panel_count", total_panel_count),
+                    new XElement("process_panel_count", process_panel_count),
                 new XElement("return",
                     new XElement("returncode", ""),
                     new XElement("returnmessage", ""))));
@@ -195,7 +214,7 @@ namespace TDRv
                     new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", "20210126"),
-                    new XElement("date_time", DateTime.Now.ToString("yyyyMMddhhmmss"))),
+                    new XElement("date_time", DateTime.Now.ToString("yyyyMMddHHmmss"))),
                 new XElement("return",
                     new XElement("returncode", " "),
                     new XElement("returnmessage", " "))));
@@ -252,7 +271,7 @@ namespace TDRv
         }
 
         //读板报告4.23
-        public string _PanelReadReport()
+        public string _PanelReadReport(string pnl_id)
         {
             string xmlbuf = string.Empty;
 
@@ -263,8 +282,8 @@ namespace TDRv
                     new XElement("messagename", "PanelReadReport"),
                     new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
-                    new XElement("eqp_id", "20210126"),
-                    new XElement("panel_id", "10055")),
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("panel_id", pnl_id)),
                 new XElement("return",
                     new XElement("returncode", " "),
                     new XElement("returnmessage", " "))));
