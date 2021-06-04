@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,7 +19,10 @@ namespace TDRv
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
+            ComDevice.DataReceived += new SerialDataReceivedEventHandler(Com_DataReceived);//绑定事件
         }
+
+        private SerialPort ComDevice = new SerialPort();
 
         public string GetCuerrtTime()
         {
@@ -27,49 +31,44 @@ namespace TDRv
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
+            login();
+        }
+
+        public void login()
+        {
             string stohbuff = string.Empty;
 
-            if (tx_UserName.Text.Equals("") || tx_PassWord.Text.Equals("")|| tx_server_ip.Text.Equals("")||tx_server_port.Equals(""))//用户名或密码为空
+            if (tx_UserName.Text.Equals("") || tx_PassWord.Text.Equals("") || tx_server_ip.Text.Equals("") || tx_server_port.Equals(""))//用户名或密码为空
             {
                 MessageBox.Show("服务器地址或用户名密码不能为空");
             }
             else//用户名或密码不为空
             {
-                if (String.Compare(tx_UserName.Text, "tsj") == 0 && String.Compare(tx_PassWord.Text, "123456") == 0)
+                //写日志，用户名及登录时间
+                SocketHelper.TcpClients.Instance.InitSocket(tx_server_ip.Text, Convert.ToInt32(tx_server_port.Text));
+                SocketHelper.TcpClients.Instance.Start();
+
+
+                if (SocketHelper.TcpClients.Instance.client.Connected)
                 {
-                    //写日志，用户名及登录时间
-                    SocketHelper.TcpClients.Instance.InitSocket(tx_server_ip.Text,Convert.ToInt32(tx_server_port.Text));
-                    SocketHelper.TcpClients.Instance.Start();
-
-
-                    if (SocketHelper.TcpClients.Instance.client.Connected)
-                    {
-                        //2.打包要发送到服务器的数据
-                        stohbuff = LoginReportPacket(tx_UserName.Text, "1");
-                        //3.发送到服务器                                
-                        SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                    }
-
-                    //if (SocketHelper.TcpClients.Instance.client.Connected)
-                    //{
-                    //    // 开启心跳线程
-                    //    Thread t = new Thread(new ThreadStart(Heartbeat));
-                    //    t.IsBackground = true;
-                    //    t.Start();
-                    //}
-
-
-
-                    //// 跳转主界面
-                    //this.DialogResult = DialogResult.OK;
-                    //this.Dispose();
-                    //this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("用户名或密码错误");
+                    //2.打包要发送到服务器的数据
+                    stohbuff = LoginReportPacket(tx_UserName.Text, "1");
+                    //3.发送到服务器                                
+                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
                 }
 
+                //if (SocketHelper.TcpClients.Instance.client.Connected)
+                //{
+                //    // 开启心跳线程
+                //    Thread t = new Thread(new ThreadStart(Heartbeat));
+                //    t.IsBackground = true;
+                //    t.Start();
+                //}
+
+                //// 跳转主界面
+                //this.DialogResult = DialogResult.OK;
+                //this.Dispose();
+                //this.Close();
             }
         }
 
@@ -83,6 +82,63 @@ namespace TDRv
         //        Thread.Sleep(60000);
         //    }
         //}
+
+        private delegate void UpdateUiTextDelegate(byte[] text);
+        private void Com_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+
+            byte[] ReDatas = new byte[ComDevice.BytesToRead];
+            ComDevice.Read(ReDatas, 0, ReDatas.Length);//读取数据
+
+            if (ReDatas.Length != 0)
+                this.Invoke(new UpdateUiTextDelegate(AddData), ReDatas);
+
+        }
+
+        public void AddData(byte[] data)
+        {
+            byte[] tmp = new byte[1024];
+            string str = string.Empty;
+
+            //StringBuilder sb = new StringBuilder();
+            //for (int i = 1; i < data.Length-4; i++)
+            //{
+            //    sb.AppendFormat("{0:x2}" + " ", data[i]);
+            //}
+            //str = sb.ToString().ToUpper().Replace(" ", "");
+
+            if (data[0] == 0x02 && data[data.Length - 1] == 0x03)
+            {
+                byte[] tmpID = new byte[10];
+                Array.Copy(data, 1, tmpID, 0, data.Length - 4);
+                tx_UserName.Text = new ASCIIEncoding().GetString(tmpID);
+                login();
+            }
+        }
+
+
+        public void OpenSerialPort()
+        {
+            ComDevice.PortName = INI.GetValueFromIniFile("COM", "PORT");
+            ComDevice.BaudRate = Convert.ToInt32(INI.GetValueFromIniFile("COM", "BaudRate"));
+            ComDevice.Parity = (Parity)(0);
+            ComDevice.DataBits = Convert.ToInt32(INI.GetValueFromIniFile("COM", "DataBits"));
+            ComDevice.StopBits = (StopBits)(1);
+
+
+            try
+            {
+                ComDevice.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            ComDevice.DataReceived += new SerialDataReceivedEventHandler(Com_DataReceived);//绑定事件
+        }
+
+
 
         private void btn_Login_Close_Click(object sender, EventArgs e)
         {
@@ -314,6 +370,10 @@ namespace TDRv
             }
 
             optParam.devSn = INI.GetValueFromIniFile("Instrument", "SN");
+
+            tx_UserName.Focus();
+
+            OpenSerialPort();
 
         }
     }

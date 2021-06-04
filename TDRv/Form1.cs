@@ -587,10 +587,26 @@ namespace TDRv
             }
 
             //// 开启校时线程
-            //Thread t = new Thread(new ThreadStart(checkTime));
-            //t.IsBackground = true;
-            //t.Start();
+            Thread t = new Thread(new ThreadStart(checkTime));
+            t.IsBackground = true;
+            t.Start();
 
+        }
+
+        public void checkTime()
+        {
+            string time = string.Empty ;
+            while (true)
+            {
+                time = DateTime.Now.ToString("yyyyMMddHHmmss");
+                if (time.Substring(10,4) == "0000")
+                {
+                    string str = CurrentDateTime(time);
+                    SocketHelper.TcpClients.Instance.SendData(str);
+                }
+
+                System.Threading.Thread.Sleep(1000);
+            }
         }
 
 
@@ -2062,6 +2078,27 @@ namespace TDRv
             return xmlbuf;
         }
 
+        public string CurrentDateTime(String time)
+        {
+            string xmlbuf = string.Empty;
+
+            XDocument xmldata = new XDocument(
+            new XDeclaration("1.0", "UTF-8", null),
+            new XElement("message",
+                new XElement("header",
+                    new XElement("messagename", "EquipmentCurrentDateTime"),
+                    new XElement("transactionid", GetCuerrtTime())),
+                new XElement("body",
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("date_time", time)),
+                new XElement("return",
+                    new XElement("returncode", " "),
+                    new XElement("returnmessage", " "))));
+            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            return xmlbuf;
+        }
+
         private void tsb_Pnl_ID_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(13))
@@ -2076,6 +2113,16 @@ namespace TDRv
                 //3.发送数据到服务器
                 SocketHelper.TcpClients.Instance.SendData(stohbuff);
                 LoggerHelper._.Info("读板报告：" + stohbuff);
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DateTime dt = DateTime.Now;
+            if (dt.ToString("mm:ss") == "00:30")
+            {
+                string str = CurrentDateTime(dt.ToString("yyyyMMddHHmmss"));
+                SocketHelper.TcpClients.Instance.SendData(str);
             }
         }
     }//end form
