@@ -1046,7 +1046,7 @@ namespace TDRv
             yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100));
             ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));
 
-            if (xend - xbegin < 10)
+            if (xend - xbegin < 3)
             {
                 //initChart();
                 gEmptyFlag = true;
@@ -1322,9 +1322,6 @@ namespace TDRv
 
             return ret;
         }
-
-        
-
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
             if (isExecuteComplete)
@@ -1625,13 +1622,17 @@ namespace TDRv
                 }
                 else
                 {
-                    float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
-                    float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
-                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
+                    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
+
                 }
 
-                if (xend - xbegin < 10)
+                if (xend - xbegin < 3)
                 {
                     //initChart();
                     gEmptyFlag = true;
@@ -1738,10 +1739,12 @@ namespace TDRv
                 }
                 else
                 {
-                    float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
-                    float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
-                    hiLimit = stdValue * (1 + hi_offset);
-                    lowLimit = stdValue * (1 - low_offset);
+                    //float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
+                    //float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
+                    //hiLimit = stdValue * (1 + hi_offset);
+                    //lowLimit = stdValue * (1 - low_offset);
+                    hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                    lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
                 }
                 
 
