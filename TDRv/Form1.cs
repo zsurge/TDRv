@@ -1324,6 +1324,12 @@ namespace TDRv
         }
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
+            if(tsb_Pnl_ID.Text.Length == 0)
+            {
+                MessageBox.Show("panel id 不能为空");
+                return;
+            }
+
             if (isExecuteComplete)
             {
                 isExecuteComplete = false;
@@ -1550,6 +1556,12 @@ namespace TDRv
         {
             if (e.KeyCode == Keys.Space)
             {
+                if (tsb_Pnl_ID.Text.Length == 0)
+                {
+                    MessageBox.Show("panel id 不能为空");
+                    return;
+                }
+
                 if (isExecuteComplete)
                 {
                     isExecuteComplete = false;                    
@@ -1847,7 +1859,10 @@ namespace TDRv
                 _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
+                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
+                                                                                                  //
+                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
+                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID      
 
                 SendData.mode = _dgv.Rows[index].Cells[11].Value.ToString();
 
@@ -1865,10 +1880,10 @@ namespace TDRv
                 else
                 {
                     //4.上送调用通知
-                    string stohbuff = string.Empty;
-                    stohbuff = TestResultReport();
-                    //5.发送到服务器
-                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                    //string stohbuff = string.Empty;
+                    //stohbuff = TestResultReport();
+                    ////5.发送到服务器
+                    //SocketHelper.TcpClients.Instance.SendData(stohbuff);
 
 
                     List<string> historyRecord = new List<string>();
@@ -1897,7 +1912,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage" + "PanelID" + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
@@ -2081,6 +2096,66 @@ namespace TDRv
             return xmlbuf;
         }
 
+        public string TestResultReportPacket(SendToHost data)
+        {
+            string xmlbuf = string.Empty;
+            string job_id = INI.GetValueFromIniFile("JOB", "job_id");
+            XDocument xmldata = new XDocument(
+            new XDeclaration("1.0", "UTF-8", null),
+            new XElement("message",
+                new XElement("header",
+                    new XElement("messagename", "ProcessDataReport"),
+                    new XElement("transactionid", GetCuerrtTime())),
+                new XElement("body",
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("sub_eqp_id", ""),
+                    new XElement("job_id", job_id),
+                        new XElement("proc_data_list",
+                            new XElement("proc_data",
+                                new XElement("data_item", "panel_id"),
+                                new XElement("data_value", data.pannelid)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "set_id"),
+                                new XElement("data_value", data.setid)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "serial_number"),
+                                new XElement("data_value", data.serialNumber)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "layer"),
+                                new XElement("data_value", data.layer)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "upper_limit"),
+                                new XElement("data_value", data.upper_limit)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "low_limit"),
+                                new XElement("data_value", data.low_limit)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "spec"),
+                                new XElement("data_value", data.spec)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "average"),
+                                new XElement("data_value", data.average)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "max"),
+                                new XElement("data_value", data.max)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "min"),
+                                new XElement("data_value", data.min)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "mode"),
+                                new XElement("data_value", data.mode)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "result"),
+                                new XElement("data_value", data.result)))),
+                new XElement("return",
+                    new XElement("returncode", " "),
+                    new XElement("returnmessage", " "))));
+
+            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            return xmlbuf;
+        }
+
         public string CurrentDateTime(String time)
         {
             string xmlbuf = string.Empty;
@@ -2128,6 +2203,77 @@ namespace TDRv
                 SocketHelper.TcpClients.Instance.SendData(str);
             }
         }
+
+        private void tsb_Tran_result_Click(object sender, EventArgs e)
+        {
+            string reportFilePath = string.Empty;
+
+            OpenFileDialog pOpenFileDialog = new OpenFileDialog();
+
+            //设置对话框标题
+            pOpenFileDialog.Title = "上传测试结果";
+            pOpenFileDialog.Filter = "CSV文件|*.csv";
+            pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory + "\\MeasureData\\Report";
+            //监测文件是否存在
+            pOpenFileDialog.CheckFileExists = true;
+            if (pOpenFileDialog.ShowDialog() == DialogResult.OK)  //如果点击的是打开文件
+            {
+                reportFilePath = pOpenFileDialog.FileName;  //获取全路径文件名     
+                SendTestResultToHost(reportFilePath);
+            }
+        }
+
+        //public SendToHost[] Cities;
+        public void SendTestResultToHost(string filePath)
+        {
+            var task1 = new Task(() =>
+            {
+                var reader = new StreamReader(File.OpenRead(filePath));
+
+                var read = new List<SendToHost>();
+
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (line != null)
+                    {
+                        var values = line.Split(',');
+
+                        read.Add(new SendToHost
+                        {
+                            layer = values[0],
+                            spec = values[1],
+                            upper_limit = values[2],
+                            low_limit = values[3],
+                            average = values[4],
+                            max = values[5],
+                            min = values[6],
+                            result = values[7],
+                            serialNumber = values[8],
+                            mode = values[11],
+                            pannelid = values[14],
+                            setid = values[15]
+                        });
+                    }
+                }
+
+                //Cities = read.ToArray();
+                
+                for (int i = 1; i < read.Count; i++)
+                {
+                    string strXml = TestResultReportPacket(read[i]);
+                    SocketHelper.TcpClients.Instance.SendData(strXml);
+                    Thread.Sleep(500);
+                }
+
+                
+            });
+
+            task1.Start();
+        }
+
+
+
     }//end form
 
     public class MeasIndex

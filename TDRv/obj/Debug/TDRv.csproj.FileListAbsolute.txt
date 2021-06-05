@@ -34,6 +34,7 @@ C:\TSJ\TDRv\TDRv\bin\Debug\TDRv.exe
 C:\TSJ\TDRv\TDRv\bin\Debug\TDRv.pdb
 C:\TSJ\TDRv\TDRv\bin\Debug\NLog.dll
 C:\TSJ\TDRv\TDRv\bin\Debug\NLog.xml
+C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
 C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
 C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
 C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
@@ -45,4 +46,3 @@ C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.exe
 C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.pdb
-C:\TSJ\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
