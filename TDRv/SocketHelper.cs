@@ -71,7 +71,19 @@ namespace TDRv
                 Ipaddress = IPAddress.Parse(ipaddress);
                 Port = port;
                 ip = new IPEndPoint(Ipaddress, Port);
-                client = new TcpClient();
+
+                if(client!=null)
+                {
+                    client.Close();
+                }
+
+                //TcpClient tcpClient = new System.Net.Sockets.TcpClient(new IPEndPoint(IPAddress.Any, 6501));
+                //设置本地端口9001 tcpClient.Connect(new IPEndPoint(IPAddress.Parse("192.168.1.107"), 5555));//服务器
+
+                //IPEndPoint iep = new IPEndPoint(IPAddress.Parse("10.8.26.54"), 6501);
+                IPEndPoint iep = new IPEndPoint(IPAddress.Any, 6501);
+                client = new TcpClient(iep);
+                //client = new TcpClient(new IPEndPoint(IPAddress.Any, 6501));
             }
             public override void InitSocket(int port)
             {
@@ -87,7 +99,11 @@ namespace TDRv
                 Ipaddress = ipaddress;
                 Port = port;
                 ip = new IPEndPoint(Ipaddress, Port);
-                client = new TcpClient();
+
+                //IPEndPoint iep = new IPEndPoint(IPAddress.Parse("10.8.26.54"), 6501);
+                IPEndPoint iep = new IPEndPoint(IPAddress.Any, 6501);
+                client = new TcpClient(iep);
+                //client = new TcpClient(new IPEndPoint(IPAddress.Any, 6501));
             }
             /// <summary>
             /// 重连上端.
@@ -98,6 +114,9 @@ namespace TDRv
 
             public void RestartInit()
             {
+                if(client != null)
+                    client.Close();
+
                 InitSocket(Ipaddress, Port);
                 Connect();
             }
@@ -216,7 +235,11 @@ namespace TDRv
                 try
                 {
                     client.Connect(ip);
+                    //client.Connect(new IPEndPoint(IPAddress.Parse("10.8.26.54"), 6501));
+                    //client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.0"), 6501));
+
                     nStream = new NetworkStream(client.Client, true);
+
                     sk = new Sockets(ip, client, nStream);
                     sk.nStream.BeginRead(sk.RecBuffer, 0, sk.RecBuffer.Length, new AsyncCallback(EndReader), sk);
                     //推送连接成功.
