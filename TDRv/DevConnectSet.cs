@@ -59,7 +59,7 @@ namespace TDRv
 
                 E5080B.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
 
-                if (sn.Contains("MY59101265") || sn.Contains("MY59101017"))
+                if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY60213234"))
                 {
 
                     if (ret != 0)
@@ -122,6 +122,8 @@ namespace TDRv
                     combDevString.BackColor = Color.Red;
                 }
             }
+
+
         }
 
         private void DevConnectSet_Load(object sender, EventArgs e)
@@ -129,6 +131,11 @@ namespace TDRv
             combDevString.BackColor = SystemColors.Window;
             combDevString.Text = INI.GetValueFromIniFile("Instrument", "AddressNA");
             CGloabal.g_InstrE5080BModule.adress = INI.GetValueFromIniFile("Instrument", "AddressNA");
+
+            if (INI.GetValueFromIniFile("Instrument", "NA").Length > 0)
+            {
+                combDevType.Text = INI.GetValueFromIniFile("Instrument", "NA");
+            }
         }
     }
 }

@@ -28,6 +28,30 @@ namespace TDRv
             tx_history_report.Text = INI.GetValueFromIniFile("TDR", "HistoryFile");
             tx_export_report.Text = INI.GetValueFromIniFile("TDR", "ExportFile");
 
+            if(tx_sn_prefix.Text.Length == 0)
+            {
+                tx_sn_prefix.Text = "SN";
+                INI.WriteValueToIniFile("TDR", "SN_Head", "SN");
+            }
+
+            if (tx_sn_begin.Text.Length == 0)
+            {
+                tx_sn_begin.Text = "0001";
+                INI.WriteValueToIniFile("TDR", "SerialNumber", "0001");
+            }
+
+            if (tx_history_report.Text.Length == 0)
+            {
+                tx_history_report.Text = "TDR_HistoryFile.CSV";
+                INI.WriteValueToIniFile("TDR", "HistoryFile", "TDR_HistoryFile.CSV");
+            }
+
+            if (tx_export_report.Text.Length == 0)
+            {
+                tx_export_report.Text = "SN";
+                INI.WriteValueToIniFile("TDR", "ExportFile", "TDR_Export_report.CSV");
+            }
+
             optParam.snPrefix = tx_sn_prefix.Text;
             optParam.snBegin = tx_sn_begin.Text;
             optParam.historyExportFileName = tx_history_report.Text;

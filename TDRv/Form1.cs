@@ -471,6 +471,7 @@ namespace TDRv
                     {
                         MeasPosition.tdd11IndexValue = i - 1;
                         //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        LoggerHelper.mlog.Debug("差分开路位置：" + MeasPosition.tdd11IndexValue.ToString());
                         break;
                     }
                 }
@@ -479,8 +480,8 @@ namespace TDRv
                 {
                     //单端开路定义
                     result = string.Empty;
-                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, out result);
-                    tmpSingleMeasData = packetMaesData(result, 0, 0);
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, out result2);
+                    tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                 {
@@ -496,6 +497,7 @@ namespace TDRv
                     {
                         MeasPosition.tdd22IndexValue = i - 1;
                         //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        LoggerHelper.mlog.Debug("单端开路位置：" + MeasPosition.tdd22IndexValue.ToString());
                         break;
                     }
                 }
@@ -567,7 +569,7 @@ namespace TDRv
                 }
             }
 
-            logFileName = DateTime.Now.ToString("yyyyMMddhh:mm:ss.ff");
+            logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
             SaveDataToCSVFile(result, logFileName);
 
             return result;
@@ -618,12 +620,12 @@ namespace TDRv
             }
 
             //生成测试数据曲线
-            for (int i = 0; i < measDiffData.Count; i++)
+            for (int i = 0; i < measDiffData.Count-1; i++)
             {
                 chart1.Series[0].Points.AddXY(i, measDiffData[i]);
             }
 
-            for (int i = 0; i < measSingleData.Count; i++)
+            for (int i = 0; i < measSingleData.Count-1; i++)
             {
                 chart1.Series[3].Points.AddXY(i, measSingleData[i]);
             }
@@ -702,7 +704,7 @@ namespace TDRv
             yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100));
             ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));
 
-            if (xend - xbegin < 10)
+            if (xend - xbegin < 3)
             {
                 //initChart();
                 gEmptyFlag = true;
@@ -934,7 +936,7 @@ namespace TDRv
 
             this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
             this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
@@ -962,7 +964,7 @@ namespace TDRv
 
             this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
             this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
@@ -1287,13 +1289,17 @@ namespace TDRv
                 }
                 else
                 {
-                    float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
-                    float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
-                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
+                    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
+
                 }
 
-                if (xend - xbegin < 10)
+                if (xend - xbegin < 3)
                 {
                     //initChart();
                     gEmptyFlag = true;
@@ -1400,12 +1406,14 @@ namespace TDRv
                 }
                 else
                 {
-                    float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
-                    float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
-                    hiLimit = stdValue * (1 + hi_offset);
-                    lowLimit = stdValue * (1 - low_offset);
+                    //float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
+                    //float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
+                    //hiLimit = stdValue * (1 + hi_offset);
+                    //lowLimit = stdValue * (1 - low_offset);
+                    hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                    lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
                 }
-                
+
 
                 //这里判定是以点的方式还是以平均值的方式来判定结果
                 if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
@@ -1589,12 +1597,12 @@ namespace TDRv
             }
             else
             {
-                //string fileDir = path + "\\Image";
+                string fileDir = path + "\\Image";
 
-                //if (!Directory.Exists(fileDir))
-                //{
-                //    Directory.CreateDirectory(fileDir);
-                //}
+                if (!Directory.Exists(fileDir))
+                {
+                    Directory.CreateDirectory(fileDir);
+                }
 
                 Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
                 Point ScreenP = this.PointToScreen(FrmP);
@@ -1609,7 +1617,7 @@ namespace TDRv
                 g.CopyFromScreen(x,y,0,0, _chart.Size);//只保存某个控件
                 //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
                 
-                bit.Save(imageDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
                //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
             }
         }

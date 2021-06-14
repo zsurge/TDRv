@@ -129,6 +129,7 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmi_delAll,
             this.tsmi_delselect,
@@ -159,6 +160,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsb_DevConnect,
             this.tsb_DevPOptSet,
@@ -169,7 +171,8 @@
             this.tsb_XmlFileName});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(984, 39);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(826, 39);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -271,7 +274,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(734, 398);
+            this.chart1.Size = new System.Drawing.Size(614, 296);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -286,7 +289,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(978, 179);
+            this.tabControl1.Size = new System.Drawing.Size(820, 130);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -295,7 +298,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(970, 153);
+            this.tabPage1.Size = new System.Drawing.Size(812, 104);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "目前量测";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -329,92 +332,107 @@
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
             this.dgv_CurrentResult.ReadOnly = true;
             this.dgv_CurrentResult.RowHeadersVisible = false;
+            this.dgv_CurrentResult.RowHeadersWidth = 82;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CurrentResult.Size = new System.Drawing.Size(970, 150);
+            this.dgv_CurrentResult.Size = new System.Drawing.Size(812, 103);
             this.dgv_CurrentResult.TabIndex = 0;
             // 
             // cLayer
             // 
             this.cLayer.HeaderText = "Layer";
+            this.cLayer.MinimumWidth = 10;
             this.cLayer.Name = "cLayer";
             this.cLayer.ReadOnly = true;
             // 
             // cSPEC
             // 
             this.cSPEC.HeaderText = "SPEC";
+            this.cSPEC.MinimumWidth = 10;
             this.cSPEC.Name = "cSPEC";
             this.cSPEC.ReadOnly = true;
             // 
             // cMaxOffset
             // 
             this.cMaxOffset.HeaderText = "Up";
+            this.cMaxOffset.MinimumWidth = 10;
             this.cMaxOffset.Name = "cMaxOffset";
             this.cMaxOffset.ReadOnly = true;
             // 
             // cMinOffset
             // 
             this.cMinOffset.HeaderText = "Down";
+            this.cMinOffset.MinimumWidth = 10;
             this.cMinOffset.Name = "cMinOffset";
             this.cMinOffset.ReadOnly = true;
             // 
             // cAverage
             // 
             this.cAverage.HeaderText = "Average";
+            this.cAverage.MinimumWidth = 10;
             this.cAverage.Name = "cAverage";
             this.cAverage.ReadOnly = true;
             // 
             // cMax
             // 
             this.cMax.HeaderText = "Max";
+            this.cMax.MinimumWidth = 10;
             this.cMax.Name = "cMax";
             this.cMax.ReadOnly = true;
             // 
             // cMin
             // 
             this.cMin.HeaderText = "Min";
+            this.cMin.MinimumWidth = 10;
             this.cMin.Name = "cMin";
             this.cMin.ReadOnly = true;
             // 
             // cResult
             // 
             this.cResult.HeaderText = "Result";
+            this.cResult.MinimumWidth = 10;
             this.cResult.Name = "cResult";
             this.cResult.ReadOnly = true;
             // 
             // cSerial
             // 
             this.cSerial.HeaderText = "Serial";
+            this.cSerial.MinimumWidth = 10;
             this.cSerial.Name = "cSerial";
             this.cSerial.ReadOnly = true;
             // 
             // cData
             // 
             this.cData.HeaderText = "Data";
+            this.cData.MinimumWidth = 10;
             this.cData.Name = "cData";
             this.cData.ReadOnly = true;
             // 
             // cTime
             // 
             this.cTime.HeaderText = "Time";
+            this.cTime.MinimumWidth = 10;
             this.cTime.Name = "cTime";
             this.cTime.ReadOnly = true;
             // 
             // cSeDiff
             // 
             this.cSeDiff.HeaderText = "SE/DIFF";
+            this.cSeDiff.MinimumWidth = 10;
             this.cSeDiff.Name = "cSeDiff";
             this.cSeDiff.ReadOnly = true;
             // 
             // cCurveData
             // 
             this.cCurveData.HeaderText = "CurveData";
+            this.cCurveData.MinimumWidth = 10;
             this.cCurveData.Name = "cCurveData";
             this.cCurveData.ReadOnly = true;
             // 
             // cCurveImage
             // 
             this.cCurveImage.HeaderText = "CurveImage";
+            this.cCurveImage.MinimumWidth = 10;
             this.cCurveImage.Name = "cCurveImage";
             this.cCurveImage.ReadOnly = true;
             // 
@@ -424,7 +442,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(970, 153);
+            this.tabPage2.Size = new System.Drawing.Size(628, 75);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "已输出量测";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -456,78 +474,93 @@
             this.dgv_OutPutResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_OutPutResult.Name = "dgv_OutPutResult";
             this.dgv_OutPutResult.RowHeadersVisible = false;
+            this.dgv_OutPutResult.RowHeadersWidth = 82;
             this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(970, 150);
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(628, 68);
             this.dgv_OutPutResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Layer";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "SPEC";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.HeaderText = "Up";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.HeaderText = "Down";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.HeaderText = "Average";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             // 
             // dataGridViewTextBoxColumn6
             // 
             this.dataGridViewTextBoxColumn6.HeaderText = "Max";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
             // dataGridViewTextBoxColumn7
             // 
             this.dataGridViewTextBoxColumn7.HeaderText = "Min";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             // 
             // dataGridViewTextBoxColumn8
             // 
             this.dataGridViewTextBoxColumn8.HeaderText = "Result";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
             // dataGridViewTextBoxColumn9
             // 
             this.dataGridViewTextBoxColumn9.HeaderText = "Serial";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
             // dataGridViewTextBoxColumn10
             // 
             this.dataGridViewTextBoxColumn10.HeaderText = "Data";
+            this.dataGridViewTextBoxColumn10.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             // 
             // dataGridViewTextBoxColumn11
             // 
             this.dataGridViewTextBoxColumn11.HeaderText = "Time";
+            this.dataGridViewTextBoxColumn11.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             // 
             // dataGridViewTextBoxColumn12
             // 
             this.dataGridViewTextBoxColumn12.HeaderText = "SE/DIFF";
+            this.dataGridViewTextBoxColumn12.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             // 
             // dataGridViewTextBoxColumn13
             // 
             this.dataGridViewTextBoxColumn13.HeaderText = "CurveData";
+            this.dataGridViewTextBoxColumn13.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             // 
             // dataGridViewTextBoxColumn14
             // 
             this.dataGridViewTextBoxColumn14.HeaderText = "CurveImage";
+            this.dataGridViewTextBoxColumn14.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             // 
             // tabPage3
@@ -535,7 +568,7 @@
             this.tabPage3.Controls.Add(this.dgv_HistoryResult);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(970, 153);
+            this.tabPage3.Size = new System.Drawing.Size(628, 75);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "历史量测";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -568,79 +601,94 @@
             this.dgv_HistoryResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_HistoryResult.Name = "dgv_HistoryResult";
             this.dgv_HistoryResult.RowHeadersVisible = false;
+            this.dgv_HistoryResult.RowHeadersWidth = 82;
             this.dgv_HistoryResult.RowTemplate.Height = 23;
             this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(970, 150);
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(628, 68);
             this.dgv_HistoryResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn15
             // 
             this.dataGridViewTextBoxColumn15.HeaderText = "Layer";
+            this.dataGridViewTextBoxColumn15.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
             // dataGridViewTextBoxColumn16
             // 
             this.dataGridViewTextBoxColumn16.HeaderText = "SPEC";
+            this.dataGridViewTextBoxColumn16.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             // 
             // dataGridViewTextBoxColumn17
             // 
             this.dataGridViewTextBoxColumn17.HeaderText = "Up";
+            this.dataGridViewTextBoxColumn17.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
             // 
             // dataGridViewTextBoxColumn18
             // 
             this.dataGridViewTextBoxColumn18.HeaderText = "Down";
+            this.dataGridViewTextBoxColumn18.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
             // 
             // dataGridViewTextBoxColumn19
             // 
             this.dataGridViewTextBoxColumn19.HeaderText = "Average";
+            this.dataGridViewTextBoxColumn19.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             // 
             // dataGridViewTextBoxColumn20
             // 
             this.dataGridViewTextBoxColumn20.HeaderText = "Max";
+            this.dataGridViewTextBoxColumn20.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
             // 
             // dataGridViewTextBoxColumn21
             // 
             this.dataGridViewTextBoxColumn21.HeaderText = "Min";
+            this.dataGridViewTextBoxColumn21.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             // 
             // dataGridViewTextBoxColumn22
             // 
             this.dataGridViewTextBoxColumn22.HeaderText = "Result";
+            this.dataGridViewTextBoxColumn22.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
             // 
             // dataGridViewTextBoxColumn23
             // 
             this.dataGridViewTextBoxColumn23.HeaderText = "Serial";
+            this.dataGridViewTextBoxColumn23.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
             // 
             // dataGridViewTextBoxColumn24
             // 
             this.dataGridViewTextBoxColumn24.HeaderText = "Data";
+            this.dataGridViewTextBoxColumn24.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
             // 
             // dataGridViewTextBoxColumn25
             // 
             this.dataGridViewTextBoxColumn25.HeaderText = "Time";
+            this.dataGridViewTextBoxColumn25.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
             // 
             // dataGridViewTextBoxColumn26
             // 
             this.dataGridViewTextBoxColumn26.HeaderText = "SE/DIFF";
+            this.dataGridViewTextBoxColumn26.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
             // 
             // dataGridViewTextBoxColumn27
             // 
             this.dataGridViewTextBoxColumn27.HeaderText = "CurveData";
+            this.dataGridViewTextBoxColumn27.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
             // 
             // dataGridViewTextBoxColumn28
             // 
             this.dataGridViewTextBoxColumn28.HeaderText = "CurveImage";
+            this.dataGridViewTextBoxColumn28.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
             // 
             // dataGridView1
@@ -661,9 +709,10 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 82;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(237, 346);
+            this.dataGridView1.Size = new System.Drawing.Size(197, 244);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -671,6 +720,7 @@
             // mFlag
             // 
             this.mFlag.HeaderText = "Flag";
+            this.mFlag.MinimumWidth = 10;
             this.mFlag.Name = "mFlag";
             this.mFlag.ReadOnly = true;
             this.mFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -679,6 +729,7 @@
             // mStep
             // 
             this.mStep.HeaderText = "Step";
+            this.mStep.MinimumWidth = 10;
             this.mStep.Name = "mStep";
             this.mStep.ReadOnly = true;
             this.mStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -687,6 +738,7 @@
             // mDescription
             // 
             this.mDescription.HeaderText = "Description";
+            this.mDescription.MinimumWidth = 10;
             this.mDescription.Name = "mDescription";
             this.mDescription.ReadOnly = true;
             this.mDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -695,6 +747,7 @@
             // mLayer
             // 
             this.mLayer.HeaderText = "Layer";
+            this.mLayer.MinimumWidth = 10;
             this.mLayer.Name = "mLayer";
             this.mLayer.ReadOnly = true;
             this.mLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -714,8 +767,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(984, 590);
-            this.splitContainer1.SplitterDistance = 401;
+            this.splitContainer1.Size = new System.Drawing.Size(826, 440);
+            this.splitContainer1.SplitterDistance = 298;
             this.splitContainer1.TabIndex = 5;
             // 
             // splitContainer2
@@ -732,8 +785,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.chart1);
-            this.splitContainer2.Size = new System.Drawing.Size(984, 401);
-            this.splitContainer2.SplitterDistance = 240;
+            this.splitContainer2.Size = new System.Drawing.Size(826, 298);
+            this.splitContainer2.SplitterDistance = 200;
             this.splitContainer2.TabIndex = 0;
             // 
             // lable_test_result
@@ -741,23 +794,22 @@
             this.lable_test_result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lable_test_result.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lable_test_result.Location = new System.Drawing.Point(3, 349);
+            this.lable_test_result.Location = new System.Drawing.Point(3, 246);
             this.lable_test_result.Name = "lable_test_result";
-            this.lable_test_result.Size = new System.Drawing.Size(234, 49);
+            this.lable_test_result.Size = new System.Drawing.Size(194, 49);
             this.lable_test_result.TabIndex = 1;
             this.lable_test_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 629);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(826, 479);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.1.20210509";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.1.20210604";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
