@@ -40,14 +40,6 @@ namespace TDRv
 
             if (combDevType.Text.Contains("E5080B"))
             {
-
-                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                {
-                    optStatus.isConnect = false;
-                    combDevString.BackColor = Color.Red;
-                    return;
-                }
-
                 CGloabal.g_InstrE5080BModule.adress = combDevString.Text;
 
                 INI.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
@@ -61,6 +53,14 @@ namespace TDRv
 
                 if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY60213234"))
                 {
+
+                    if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
 
                     if (ret != 0)
                     {
@@ -82,13 +82,6 @@ namespace TDRv
             }
             else if(combDevType.Text.Contains("E5063A"))
             {
-                if (20210830 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                {
-                    optStatus.isConnect = false;
-                    combDevString.BackColor = Color.Red;
-                    return;
-                }
-
                 CGloabal.g_InstrE5063AModule.adress = combDevString.Text;
 
                 INI.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
@@ -102,8 +95,15 @@ namespace TDRv
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
 
-                if (sn.Contains("MY54605417"))
+                if (sn.Contains("MY54605417") || sn.Contains("MY54504547"))
                 {
+                    if (20210830 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
                     if (ret != 0)
                     {
                         optStatus.isConnect = false;
@@ -115,6 +115,18 @@ namespace TDRv
                         optStatus.isConnect = true;
                         combDevString.BackColor = Color.Green;
                     }
+                }
+                else if (sn.Contains("MY54504813"))
+                {
+                    if (20210729 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    optStatus.isConnect = false;
+                    combDevString.BackColor = Color.Red;
                 }
                 else
                 {

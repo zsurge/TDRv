@@ -75,14 +75,14 @@ namespace TDRv
 
         private void tsb_DevOptSet_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-            {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_DevPOptSet.Enabled = false;
-                return;
-            }
+            //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            //{
+            //    optStatus.isConnect = false;
+            //    optStatus.isGetIndex = false;
+            //    optStatus.isLoadXml = false;
+            //    tsb_DevPOptSet.Enabled = false;
+            //    return;
+            //}
 
             DevOptSet devOptSet = new DevOptSet();
             devOptSet.Show();
@@ -90,14 +90,14 @@ namespace TDRv
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-            {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_DevPOptSet.Enabled = false;
-                return;
-            }
+            //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            //{
+            //    optStatus.isConnect = false;
+            //    optStatus.isGetIndex = false;
+            //    optStatus.isLoadXml = false;
+            //    tsb_DevPOptSet.Enabled = false;
+            //    return;
+            //}
 
             DevParamSet devParamSet = new DevParamSet(gdt);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
@@ -180,6 +180,12 @@ namespace TDRv
                 tsb_GetTestIndex.Enabled = true;
                 CommonFuncs.ShowMsg(eHintInfoType.hint, "请执行开路定义");
             }
+
+            //禁止删除行
+            dataGridView1.AllowUserToDeleteRows = false;
+
+            //设置为可读
+            dataGridView1.ReadOnly = true;
             isExecuteIndex = true;
         }
 
@@ -417,14 +423,14 @@ namespace TDRv
             {
                 isExecuteIndex = false;
 
-                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                {
-                    optStatus.isConnect = false;
-                    optStatus.isGetIndex = false;
-                    optStatus.isLoadXml = false;
-                    tsb_GetTestIndex.Enabled = false;
-                    return;
-                }
+                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                //{
+                //    optStatus.isConnect = false;
+                //    optStatus.isGetIndex = false;
+                //    optStatus.isLoadXml = false;
+                //    tsb_GetTestIndex.Enabled = false;
+                //    return;
+                //}
 
                 List<float> tmpDiffMeasData = new List<float>();
                 List<float> tmpSingleMeasData = new List<float>();
@@ -989,14 +995,14 @@ namespace TDRv
             {
                 isExecuteComplete = false;
                 
-                if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                {
-                    optStatus.isConnect = false;
-                    optStatus.isGetIndex = false;
-                    optStatus.isLoadXml = false;
-                    tsb_StartTest.Enabled = false;
-                    return;
-                }
+                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                //{
+                //    optStatus.isConnect = false;
+                //    optStatus.isGetIndex = false;
+                //    optStatus.isLoadXml = false;
+                //    tsb_StartTest.Enabled = false;
+                //    return;
+                //}
 
                 toDoWork();
             }
@@ -1219,22 +1225,21 @@ namespace TDRv
                 if (isExecuteComplete)
                 {
                     isExecuteComplete = false;
-                  
+
 
                     if (optParam.keyMode == 1)
                     {
-                        if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                        {
-                            optStatus.isConnect = false;
-                            optStatus.isGetIndex = false;
-                            optStatus.isLoadXml = false;
-                            return;
-                        }
+                        //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                        //{
+                        //    optStatus.isConnect = false;
+                        //    optStatus.isGetIndex = false;
+                        //    optStatus.isLoadXml = false;
+                        //    return;
+                        //}
                         toDoWork();
                     }
                 }
             }
-
         }
 
         //鼠标点击单元框选，更改测试次序,同时对比LIMIT里，需要对比相应的LIMIT
