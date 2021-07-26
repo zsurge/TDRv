@@ -74,6 +74,7 @@ namespace TDRv.Driver
             int viError;
             int count = 0;
             string command = ":SYSTem:COMMunicate:SWITch1:DEFine?\n";
+            string cmd1 = ":SYSTem:COMMunicate:SWITch1:LOCK 0";
             byte[] response = new byte[256];
 
             viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
@@ -93,6 +94,13 @@ namespace TDRv.Driver
 
             if (idn.Contains("U1810"))
             {
+                viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1), cmd1.Length, out count);
+                if (viError != visa32.VI_SUCCESS)
+                {
+                    isThreePort = false;
+                    return false;
+                }
+
                 isThreePort = true;
                 return true;
             }

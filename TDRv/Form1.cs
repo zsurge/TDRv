@@ -456,7 +456,10 @@ namespace TDRv
                 }
                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                 {
-                    E5063A.getStartIndex(CGloabal.g_curInstrument.nHandle, out result, out result2);
+                    //E5063A.getStartIndex(CGloabal.g_curInstrument.nHandle, out result, out result2);
+
+                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, DIFFERENCE, out result);
+
                 }
 
                 //这里需要处理win1_tr1的数据
@@ -485,12 +488,15 @@ namespace TDRv
                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                 {
                     //单端开路定义
-                    result = string.Empty;
+                    result2 = string.Empty;
                     E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, out result2);
                     tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                 {
+                    //单端开路定义
+                    result2 = string.Empty;
+                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, SINGLE, out result2);
                     tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
 
