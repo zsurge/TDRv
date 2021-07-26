@@ -34,6 +34,7 @@ namespace TDRv
         private void btn_ConnectDev_Click(object sender, EventArgs e)
         {
             string sn = string.Empty;
+  
 
             string NowDate = DateTime.Now.ToString("yyyyMMdd");
 
@@ -119,6 +120,8 @@ namespace TDRv
                 LoggerHelper.mlog.Debug("nInstrumentHandle = " + CGloabal.g_curInstrument.nHandle.ToString());
 
                 E5063A.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
+
+                E5063A.GetThreePortIdentifier(CGloabal.g_curInstrument.nHandle);
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
 

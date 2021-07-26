@@ -14,6 +14,8 @@ namespace TDRv.Driver
             resourceMgr = 0;
         }
 
+        public static bool isThreePort = false;
+
         public static int Open(string resourceName, ref int nHandle)
         {
             int viError;
@@ -36,6 +38,8 @@ namespace TDRv.Driver
             viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR, 0x0A);//终止符设置0xA
             viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TMO_VALUE, 3000);//超时2000ms
             viError = visa32.viGetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR_EN,out attr);
+
+
 
             return viError;
         }
@@ -63,6 +67,38 @@ namespace TDRv.Driver
 
             idn = Encoding.ASCII.GetString(response, 0, count);
             return viError;
+        }
+
+        public static bool GetThreePortIdentifier(int nInstrumentHandle)
+        {
+            int viError;
+            int count = 0;
+            string command = ":SYSTem:COMMunicate:SWITch1:DEFine?\n";
+            byte[] response = new byte[256];
+
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(command), command.Length, out count);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                isThreePort = false;
+                return false;
+            }
+            viError = visa32.viRead(nInstrumentHandle, response, 256, out count);
+            if (viError != visa32.VI_SUCCESS)
+            {
+                isThreePort = false;
+                return false;
+            }
+
+            string idn = Encoding.ASCII.GetString(response, 0, count);
+
+            if (idn.Contains("U1810"))
+            {
+                isThreePort = true;
+                return true;
+            }
+
+            isThreePort = false;
+            return false;
         }
 
         public static int ClearAllErrorQueue(int nInstrumentHandle)
@@ -111,6 +147,10 @@ namespace TDRv.Driver
             int attr;
             byte[] result = new byte[256];
 
+
+            string strSwitchCmdDiff = ":SYSTem:COMMunicate:SWITch1:PATH1 1";
+            string strSwitchCmdSingle = ":SYSTem:COMMunicate:SWITch1:PATH1 2";
+
             string str1 = ":SYST:COMM:SWIT1:DEFine?";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
             visa32.viRead(nInstrumentHandle, result, 256, out count);            
@@ -155,6 +195,11 @@ namespace TDRv.Driver
             string str10 = ":DISPlay:UPDate";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
+
+            if (isThreePort)
+            {
+                visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(strSwitchCmdSingle + "\n"), strSwitchCmdSingle.Length, out count);
+            }
 
 
             string str11 = ":CALCulate1:SELected:DATA:FDATa?";
@@ -217,6 +262,11 @@ namespace TDRv.Driver
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str22 + "\n"), str22.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
+            if (isThreePort)
+            {
+                visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(strSwitchCmdDiff + "\n"), strSwitchCmdDiff.Length, out count);
+            }
+
             string str23 = ":CALCulate1:SELected:DATA:FDATa?";
 
             Array.Clear(ret, 0, ret.Length);
@@ -266,6 +316,10 @@ namespace TDRv.Driver
             string cmd = string.Empty;
             int attr;
 
+
+            string strSwitchCmdDiff = ":SYSTem:COMMunicate:SWITch1:PATH1 1";
+            string strSwitchCmdSingle = ":SYSTem:COMMunicate:SWITch1:PATH1 2";
+
             string str29 = ":TRIG:SOUR BUS";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str29 + "\n"), str29.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
@@ -282,10 +336,20 @@ namespace TDRv.Driver
 
             if (channel == 1)
             {
+                if (isThreePort)
+                {
+                    visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(strSwitchCmdDiff + "\n"), strSwitchCmdDiff.Length, out count);
+                }
+
                 cmd = ":CALCulate1:FSIMulator:BALun:PARameter1:STATe ON";//差分
             }
             else
             {
+                if (isThreePort)
+                {
+                    visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(strSwitchCmdSingle + "\n"), strSwitchCmdSingle.Length, out count);
+                }
+
                 cmd = ":CALCulate1:FSIMulator:BALun:PARameter1:STATe OFF";//单端
             }   
             
