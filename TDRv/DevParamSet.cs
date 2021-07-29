@@ -90,6 +90,8 @@ namespace TDRv
         {
             isSaveXml = false;
 
+            ctrIsEnable(true);
+
             if (dgv_param.DataSource == null)
             {
                 //清空参数表格            
@@ -282,6 +284,7 @@ namespace TDRv
         //增加一行
         private void tsb_add_param_Click(object sender, EventArgs e)
         {
+            ctrIsEnable(true);
             CreateOrAddRow();
         }
 
@@ -295,6 +298,8 @@ namespace TDRv
                 MessageBox.Show("请先新建一条配方");
                 return;
             }
+
+            ctrIsEnable(true);
 
             if (dgv_param.DataSource == null)
             {
@@ -339,6 +344,7 @@ namespace TDRv
         private void tsb_del_param_Click(object sender, EventArgs e)
         {
             isSaveXml = false;
+            ctrIsEnable(true);
 
             if (dgv_param.Rows.Count > 0)
             {
@@ -356,6 +362,7 @@ namespace TDRv
             if (e.RowIndex > -1)
             {
                 initControl(true);
+                ctrIsEnable(true);
                 tx_p_testSn.Text = (e.RowIndex+1).ToString();
                 tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
                 tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
@@ -530,9 +537,23 @@ namespace TDRv
             save_xmlfilename_config();
         }
 
+        public void ctrIsEnable(bool isEnable)
+        {
+            groupBox1.Enabled = isEnable;
+            groupBox2.Enabled = isEnable;
+            groupBox3.Enabled = isEnable;
+            groupBox4.Enabled = isEnable;
+            groupBox5.Enabled = isEnable;
+            groupBox6.Enabled = isEnable;
+            groupBox7.Enabled = isEnable;
+        }
+
         private void btn_update_Click(object sender, EventArgs e)
         {
             int index = dgv_param.CurrentRow.Index;
+
+
+            ctrIsEnable(false);
 
             this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
             this.dgv_param.Rows[index].Cells[1].Value = index+1;            

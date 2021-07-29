@@ -478,7 +478,14 @@ namespace TDRv
                     //logger.Trace(tdd22_array[i]);
                     if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
                     {
-                        MeasPosition.tdd11IndexValue = i - 1;
+                        if (i == 0)
+                        {
+                            MeasPosition.tdd11IndexValue = 0;
+                        }
+                        else
+                        {
+                            MeasPosition.tdd11IndexValue = i - 1;
+                        }
                         //这里需要将开路定义后的索引写入到配方的XML文件中去
                         LoggerHelper.mlog.Debug("差分开路位置：" + MeasPosition.tdd11IndexValue.ToString());
                         break;
@@ -1098,6 +1105,7 @@ namespace TDRv
             {
                 task1.ContinueWith((Task) =>
                 {
+                    if(paramList[0].Curve_image.Length >3)
                     CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
                 });
             }            
