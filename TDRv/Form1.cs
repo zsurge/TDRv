@@ -138,9 +138,9 @@ namespace TDRv
 
             //开路位置清空
             MeasPosition.tdd11IndexValue = 0;
-            MeasPosition.tdd11start = 0;
+            MeasPosition.tdd11start = 0.0f;
             MeasPosition.tdd22IndexValue = 0;
-            MeasPosition.tdd22start = 0;
+            MeasPosition.tdd22start = 0.0f;
 
             //记录索引清零
             measIndex.total = 0;
@@ -236,14 +236,14 @@ namespace TDRv
 
                 if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "Differential") == 0 && diff) //差分
                 {
-                    MeasPosition.tdd11start = Convert.ToInt32(dt.Rows[i].Cells[14].Value);
+                    MeasPosition.tdd11start = Convert.ToSingle(dt.Rows[i].Cells[14].Value);
                     diff = false;
                     tr.DevMode = DIFFERENCE;
                 }
 
                 if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "SingleEnded") == 0 && single) //单端
                 {
-                    MeasPosition.tdd22start = Convert.ToInt32(dt.Rows[i].Cells[14].Value);
+                    MeasPosition.tdd22start = Convert.ToSingle(dt.Rows[i].Cells[14].Value);
                     single = false;
                     tr.DevMode = SINGLE;
                 }
@@ -513,8 +513,16 @@ namespace TDRv
                 for (int i = 0; i < tdd22_array.Length; i++)
                 {
                     if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
-                    {
-                        MeasPosition.tdd22IndexValue = i - 1;
+                    {   
+                        if (i == 0)
+                        {
+                            MeasPosition.tdd22IndexValue = 0;
+                        }
+                        else
+                        {
+                            MeasPosition.tdd22IndexValue = i - 1;
+                        }
+
                         //这里需要将开路定义后的索引写入到配方的XML文件中去
                         LoggerHelper.mlog.Debug("单端开路位置：" + MeasPosition.tdd22IndexValue.ToString());
                         break;
@@ -1287,10 +1295,10 @@ namespace TDRv
             }
             else
             {
-                float xbegin = 0;
-                float xend = 0;
-                float yhigh = 0;
-                float ylow = 0;
+                float xbegin = 0.0f;
+                float xend = 0.0f;
+                float yhigh = 0.0f;
+                float ylow = 0.0f;
 
 
                 foreach (var series in chart1.Series)
@@ -1395,12 +1403,12 @@ namespace TDRv
             else
             {         
                 bool ret = false;
-                float avg = 0;
-                float max = 0;
-                float min = 0;
+                float avg = 0.0f;
+                float max = 0.0f;
+                float min = 0.0f;
 
-                float lowLimit = 0;
-                float hiLimit = 0;
+                float lowLimit = 0.0f;
+                float hiLimit = 0.0f;
 
                 if (gEmptyFlag)
                 {
