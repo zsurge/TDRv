@@ -30,6 +30,9 @@ namespace TDRv
         public static string xmlFilePath = string.Empty;
         public int selectionIdx = 0;
 
+        //添加是否存储XML标志位，TRUE= 已保存；FALSE = 未保存；
+        public bool isSaveXml  = true;
+
         private static string sPath = Directory.GetCurrentDirectory() + "\\Impedance_Config.ini";
         IniFile optIni = new IniFile(sPath);
 
@@ -84,6 +87,10 @@ namespace TDRv
         //新建一个新的配置文件
         private void tsb_create_xml_Click(object sender, EventArgs e)
         {
+            isSaveXml = false;
+
+            ctrIsEnable(true);
+
             if (dgv_param.DataSource == null)
             {
                 //清空参数表格            
@@ -159,6 +166,7 @@ namespace TDRv
                 dS.WriteXml(File.OpenWrite(sfd.FileName));
                 dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
                 xmlFilePath = sfd.FileName;
+                isSaveXml = true;
             }
 
         }
@@ -166,6 +174,7 @@ namespace TDRv
         //新增或者是新添加一行
         private void CreateOrAddRow()
         {
+            isSaveXml = false;
             if (dgv_param.Rows.Count == 0) 
             {
                 if (dgv_param.DataSource == null)
@@ -274,17 +283,22 @@ namespace TDRv
         //增加一行
         private void tsb_add_param_Click(object sender, EventArgs e)
         {
+            ctrIsEnable(true);
             CreateOrAddRow();
         }
 
         //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
-            if(dgv_param.Rows.Count == 0)
+            isSaveXml = false;
+
+            if (dgv_param.Rows.Count == 0)
             {
                 MessageBox.Show("请先新建一条配方");
                 return;
             }
+
+            ctrIsEnable(true);
 
             if (dgv_param.DataSource == null)
             {
@@ -328,6 +342,9 @@ namespace TDRv
         //删除选中行
         private void tsb_del_param_Click(object sender, EventArgs e)
         {
+            isSaveXml = false;
+            ctrIsEnable(true);
+
             if (dgv_param.Rows.Count > 0)
             {
                 dgv_param.Rows.Remove(dgv_param.CurrentRow);                
@@ -344,6 +361,7 @@ namespace TDRv
             if (e.RowIndex > -1)
             {
                 initControl(true);
+                ctrIsEnable(true);
                 tx_p_testSn.Text = (e.RowIndex+1).ToString();
                 tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
                 tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
@@ -484,13 +502,57 @@ namespace TDRv
 
         private void DevParamSet_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (isSaveXml == false)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Title = "保存XML文件";
+                sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
+                sfd.Filter = "XML文件|*.xml";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    DataTable dT = GetDataTableFromDGV(dgv_param);
+                    DataSet dS = new DataSet();
+                    dS.Tables.Add(dT);
+                    dS.WriteXml(File.OpenWrite(sfd.FileName));
+                    dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
+                    xmlFilePath = sfd.FileName;
+                    isSaveXml = true;
+                }
+                else
+                {
+                    DataTable dT = GetDataTableFromDGV(dgv_param);
+                    DataSet dS = new DataSet();
+                    dS.Tables.Add(dT);
+                    sfd.FileName = Environment.CurrentDirectory + "\\Config\\_temp.xml";
+                    dS.WriteXml(File.OpenWrite(sfd.FileName));
+                    dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
+                    xmlFilePath = sfd.FileName;
+                    return;
+                }
+            }
+
             TranToParentForm();
             save_xmlfilename_config();
+        }
+
+        public void ctrIsEnable(bool isEnable)
+        {
+            groupBox1.Enabled = isEnable;
+            groupBox2.Enabled = isEnable;
+            groupBox3.Enabled = isEnable;
+            groupBox4.Enabled = isEnable;
+            groupBox5.Enabled = isEnable;
+            groupBox6.Enabled = isEnable;
+            groupBox7.Enabled = isEnable;
         }
 
         private void btn_update_Click(object sender, EventArgs e)
         {
             int index = dgv_param.CurrentRow.Index;
+
+
+            ctrIsEnable(false);
 
             this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
             this.dgv_param.Rows[index].Cells[1].Value = index+1;            

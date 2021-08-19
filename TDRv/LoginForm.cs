@@ -119,15 +119,14 @@ namespace TDRv
 
         public void OpenSerialPort()
         {
-            ComDevice.PortName = INI.GetValueFromIniFile("COM", "PORT");
-            ComDevice.BaudRate = Convert.ToInt32(INI.GetValueFromIniFile("COM", "BaudRate"));
-            ComDevice.Parity = (Parity)(0);
-            ComDevice.DataBits = Convert.ToInt32(INI.GetValueFromIniFile("COM", "DataBits"));
-            ComDevice.StopBits = (StopBits)(1);
-
-
             try
             {
+                ComDevice.PortName = INI.GetValueFromIniFile("COM", "PORT");
+                ComDevice.BaudRate = Convert.ToInt32(INI.GetValueFromIniFile("COM", "BaudRate"));
+                ComDevice.Parity = (Parity)(0);
+                ComDevice.DataBits = Convert.ToInt32(INI.GetValueFromIniFile("COM", "DataBits"));
+                ComDevice.StopBits = (StopBits)(1);
+
                 ComDevice.Open();
             }
             catch (Exception ex)
