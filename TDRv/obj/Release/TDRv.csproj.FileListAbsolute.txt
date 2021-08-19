@@ -20,6 +20,7 @@ E:\CsharpPro\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.exe
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.pdb
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\bin\Release\NLog.dll
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\bin\Release\NLog.xml
+E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csprojAssemblyReference.cache
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevConnectSet.resources
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevOptSet.resources
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevParamSet.resources

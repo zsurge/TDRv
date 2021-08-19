@@ -561,7 +561,7 @@ namespace TDRv
                     if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
                     {                  
                         //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
-                        result.Add(tmp);
+                        result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                     }
                     else
                     {
@@ -576,7 +576,7 @@ namespace TDRv
                     tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
                     if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
                     {
-                        result.Add(tmp);
+                        result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                     }
                     else
                     {
@@ -592,7 +592,7 @@ namespace TDRv
                     //logger.Trace(tmpArray[i]);
                     //LoggerHelper.mlog.Debug(tmpArray[i]);
                     tmp = Convert.ToSingle(tmpArray[i]);
-                    result.Add(tmp);
+                    result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                 }
             }
 
@@ -1212,7 +1212,16 @@ namespace TDRv
                             }
                             else
                             {
-                                columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                                //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                                //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                                if (k == 10)
+                                {
+                                    columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                                }
+                                else
+                                {
+                                    columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                                }
                             }
                         }
                         sw.WriteLine(columnValue);
@@ -1366,9 +1375,9 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString();
-                    chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
-                    chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
+                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
+                    chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
+                    chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
                 }
                 else
                 {
