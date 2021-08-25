@@ -662,97 +662,105 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
-            if (isExecuteIndex)
+            try
             {
-                isExecuteIndex = false;
-
-                if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                if (isExecuteIndex)
                 {
-                    optStatus.isConnect = false;
-                    optStatus.isGetIndex = false;
-                    optStatus.isLoadXml = false;
-                    tsb_GetTestIndex.Enabled = false;
-                    return;
-                }
+                    isExecuteIndex = false;
 
-                List<float> tmpDiffMeasData = new List<float>();
-                List<float> tmpSingleMeasData = new List<float>();
-                string result = string.Empty;
-
-                if (dataGridView1.Rows.Count == 0)
-                {
-                    MessageBox.Show("请先装载配方");
-                    return;
-                }
-
-                if (!optStatus.isConnect)
-                {
-                    MessageBox.Show("请先连接设备");
-                    return;
-                }
-
-                //差分开路定义
-                E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, DIFFERENCE, out result);
-
-                //这里需要处理win1_tr1的数据
-                tmpDiffMeasData = packetMaesData(result, 0, 0);
-                string[] tdd11_array = result.Split(new char[] { ',' });
-                result = string.Empty;
-
-                if (tdd11_array.Length < 200)
-                {
-                    MessageBox.Show("获取差分开路定义失败");
-                }
-
-                //查找tdd11差分的索引值
-                for (int i = 0; i < tdd11_array.Length; i++)
-                {
-                    //logger.Trace(tdd22_array[i]);
-                    if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                    if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
-                        if (i == 0)
-                        {
-                            MeasPosition.tdd11IndexValue = 0;
-                        }
-                        else
-                        {
-                            MeasPosition.tdd11IndexValue = i - 1;
-                        }
-                        //这里需要将开路定义后的索引写入到配方的XML文件中去
-                        break;
+                        optStatus.isConnect = false;
+                        optStatus.isGetIndex = false;
+                        optStatus.isLoadXml = false;
+                        tsb_GetTestIndex.Enabled = false;
+                        return;
                     }
-                }
 
-                //单端开路定义
-                result = string.Empty;
-                E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, SINGLE, out result);
+                    List<float> tmpDiffMeasData = new List<float>();
+                    List<float> tmpSingleMeasData = new List<float>();
+                    string result = string.Empty;
 
-                tmpSingleMeasData = packetMaesData(result, 0, 0);
-                string[] tdd22_array = result.Split(new char[] { ',' });
-
-                //查找tdd22单端的索引值
-                for (int i = 0; i < tdd22_array.Length; i++)
-                {
-                    if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
-                    {   
-                        if (i == 0)
-                        {
-                            MeasPosition.tdd22IndexValue = 0;
-                        }
-                        else
-                        {
-                            MeasPosition.tdd22IndexValue = i - 1;
-                        }
-                        //这里需要将开路定义后的索引写入到配方的XML文件中去
-                        break;
+                    if (dataGridView1.Rows.Count == 0)
+                    {
+                        MessageBox.Show("请先装载配方");
+                        return;
                     }
+
+                    if (!optStatus.isConnect)
+                    {
+                        MessageBox.Show("请先连接设备");
+                        return;
+                    }
+
+                    //差分开路定义
+                    E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, DIFFERENCE, out result);
+
+                    //这里需要处理win1_tr1的数据
+                    tmpDiffMeasData = packetMaesData(result, 0, 0);
+                    string[] tdd11_array = result.Split(new char[] { ',' });
+                    result = string.Empty;
+
+                    if (tdd11_array.Length < 200)
+                    {
+                        MessageBox.Show("获取差分开路定义失败");
+                    }
+
+                    //查找tdd11差分的索引值
+                    for (int i = 0; i < tdd11_array.Length; i++)
+                    {
+                        //logger.Trace(tdd22_array[i]);
+                        if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                        {
+                            if (i == 0)
+                            {
+                                MeasPosition.tdd11IndexValue = 0;
+                            }
+                            else
+                            {
+                                MeasPosition.tdd11IndexValue = i - 1;
+                            }
+                            //这里需要将开路定义后的索引写入到配方的XML文件中去
+                            break;
+                        }
+                    }
+
+                    //单端开路定义
+                    result = string.Empty;
+                    E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, SINGLE, out result);
+
+                    tmpSingleMeasData = packetMaesData(result, 0, 0);
+                    string[] tdd22_array = result.Split(new char[] { ',' });
+
+                    //查找tdd22单端的索引值
+                    for (int i = 0; i < tdd22_array.Length; i++)
+                    {
+                        if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                        {
+                            if (i == 0)
+                            {
+                                MeasPosition.tdd22IndexValue = 0;
+                            }
+                            else
+                            {
+                                MeasPosition.tdd22IndexValue = i - 1;
+                            }
+                            //这里需要将开路定义后的索引写入到配方的XML文件中去
+                            break;
+                        }
+                    }
+
+                    MeasPosition.isOpen = true;
+                    optStatus.isGetIndex = true;
+                    tsb_StartTest.Enabled = true;
+
+                    CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
                 }
-
-                MeasPosition.isOpen = true;
-                optStatus.isGetIndex = true;
-                tsb_StartTest.Enabled = true;
-
-                CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 
@@ -883,52 +891,58 @@ namespace TDRv
             float tmp = 0;
             int i = 0;
 
-
-            if (mode == DIFFERENCE) //差分模式
+            try
             {
-                for (i = index; i < tmpArray.Length; i++)
+                if (mode == DIFFERENCE) //差分模式
                 {
-                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
-                    {                  
-                        //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
+                    for (i = index; i < tmpArray.Length; i++)
+                    {
+                        tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
+                        if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
+                        {
+                            //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
+                            result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if (mode == SINGLE)//单端模式
+                {
+                    for (i = index; i < tmpArray.Length; i++)
+                    {
+                        tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
+                        if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
+                        {
+                            result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    //开路定义模式，返回所有数据
+                    for (i = 0; i < tmpArray.Length; i++)
+                    {
+                        //logger.Trace(tmpArray[i]);
+                        //LoggerHelper.mlog.Debug(tmpArray[i]);
+                        tmp = Convert.ToSingle(tmpArray[i]);
                         result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                     }
-                    else
-                    {
-                        break;
-                    }
                 }
-            }
-            else if (mode == SINGLE)//单端模式
-            {
-                for (i = index; i < tmpArray.Length; i++)
-                {
-                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
-                    {
-                        result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                //开路定义模式，返回所有数据
-                for (i = 0; i < tmpArray.Length; i++)
-                {
-                    //logger.Trace(tmpArray[i]);
-                    //LoggerHelper.mlog.Debug(tmpArray[i]);
-                    tmp = Convert.ToSingle(tmpArray[i]);
-                    result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
-                }
-            }
 
-            logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
-            SaveDataToCSVFile(result, logFileName);
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                SaveDataToCSVFile(result, logFileName);                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+            }
 
             return result;
         }

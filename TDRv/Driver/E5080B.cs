@@ -238,6 +238,9 @@ namespace TDRv.Driver
             int viError,count;
             byte[] result = new byte[256];
 
+            string str0 = "DISP:TDR:MIN:STATe ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str0 + "\n"), str0.Length, out count);
+
             string str1 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
             
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);

@@ -63,7 +63,7 @@ namespace TDRv
 
             //INI.WriteValueToIniFile("Instrument", "SN", sn);
 
-            if (sn.Contains("MY59101265") || sn.Contains("MY59101017"))
+            if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY59201572"))
             {               
 
                 if (ret != 0)
