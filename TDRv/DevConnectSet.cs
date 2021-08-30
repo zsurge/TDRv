@@ -148,7 +148,7 @@ namespace TDRv
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
 
-                if (sn.Contains("MY54605417") || sn.Contains("MY54504547"))
+                if (sn.Contains("MY54504547"))
                 {
                     if (20210830 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
@@ -169,9 +169,9 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY54504813"))
+                else if (sn.Contains("MY54605417"))
                 {
-                    if (20210729 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20211103 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
