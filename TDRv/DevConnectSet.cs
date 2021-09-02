@@ -148,9 +148,10 @@ namespace TDRv
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
 
+                //深圳超能 改为20211030
                 if (sn.Contains("MY54504547"))
                 {
-                    if (20210830 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20211030 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
