@@ -31,10 +31,10 @@ namespace TDRv
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            login();
+            login(true);
         }
 
-        public void login()
+        public void login(bool isOnLine)
         {
             string stohbuff = string.Empty;
 
@@ -44,17 +44,58 @@ namespace TDRv
             }
             else//用户名或密码不为空
             {
-                //写日志，用户名及登录时间
-                SocketHelper.TcpClients.Instance.InitSocket(tx_server_ip.Text, Convert.ToInt32(tx_server_port.Text));
-                SocketHelper.TcpClients.Instance.Start();
-
-
-                if (SocketHelper.TcpClients.Instance.client.Connected)
+                if (isOnLine)
                 {
-                    //2.打包要发送到服务器的数据
-                    stohbuff = LoginReportPacket(tx_UserName.Text, "1");
-                    //3.发送到服务器                                
-                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                    //写日志，用户名及登录时间
+                    SocketHelper.TcpClients.Instance.InitSocket(tx_server_ip.Text, Convert.ToInt32(tx_server_port.Text));
+                    SocketHelper.TcpClients.Instance.Start();
+
+
+                    if (SocketHelper.TcpClients.Instance.client.Connected)
+                    {
+                        //2.打包要发送到服务器的数据
+                        stohbuff = LoginReportPacket(tx_UserName.Text, "1");
+                        //3.发送到服务器                                
+                        SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                    }
+                }
+                else
+                {
+                    if (tx_UserName.Text.Contains("tsj") && tx_PassWord.Text.Contains("123456"))
+                    {
+                        //写日志，用户名及登录时间
+                        SocketHelper.TcpClients.Instance.InitSocket(tx_server_ip.Text, Convert.ToInt32(tx_server_port.Text));
+                        SocketHelper.TcpClients.Instance.Start();
+
+
+                        if (SocketHelper.TcpClients.Instance.client.Connected)
+                        {
+                            //2.打包要发送到服务器的数据
+                            stohbuff = LoginReportPacket(tx_UserName.Text, "1");
+                            //3.发送到服务器                                
+                            SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                        }
+
+
+                        //if (SocketHelper.TcpClients.Instance.client.Connected)
+                        //{
+                        //    // 开启心跳线程
+                        //    Thread t = new Thread(new ThreadStart(Heartbeat));
+                        //    t.IsBackground = true;
+                        //    t.Start();
+                        //}
+
+                        // 跳转主界面
+                        this.DialogResult = DialogResult.OK;
+                        this.Dispose();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("用户名或密码错误，请重新输入");
+                        tx_PassWord.Text = string.Empty;
+                        tx_PassWord.Focus();
+                    }
                 }
 
                 //if (SocketHelper.TcpClients.Instance.client.Connected)
@@ -75,7 +116,7 @@ namespace TDRv
         //private void Heartbeat()
         //{
         //    while (SocketHelper.TcpClients.Instance.client.Connected)
-        //    { 
+        //    {
         //        // 向服务端发送心跳包
         //        SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
 
@@ -112,7 +153,7 @@ namespace TDRv
                 byte[] tmpID = new byte[10];
                 Array.Copy(data, 1, tmpID, 0, data.Length - 4);
                 tx_UserName.Text = new ASCIIEncoding().GetString(tmpID);
-                login();
+                login(false);
             }
         }
 
@@ -240,27 +281,7 @@ namespace TDRv
             }));
         }
 
-        //查询主机是否存在,心跳包
-        public string HeartbeatPacket()
-        {
-            string xmlbuf = string.Empty;
 
-            XDocument xmldata = new XDocument(
-            new XDeclaration("1.0", "UTF-8", null),
-            new XElement("message",
-                new XElement("header",
-                    new XElement("messagename", "AreYouThereRequest"),
-                    new XElement("transactionid", GetCuerrtTime())),
-                new XElement("body",
-                    new XElement("eqp_id", optParam.devSn),
-                    new XElement("server_ip", tx_server_ip.Text)),
-                new XElement("return",
-                    new XElement("returncode", " "),
-                    new XElement("returnmessage", " "))));
-            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
-
-            return xmlbuf;
-        }
 
 
         //上机报告确认
@@ -374,6 +395,11 @@ namespace TDRv
 
             OpenSerialPort();
 
+        }
+
+        private void btn_Local_login_Click(object sender, EventArgs e)
+        {
+            login(false);
         }
     }
 }

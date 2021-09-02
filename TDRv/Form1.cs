@@ -60,6 +60,9 @@ namespace TDRv
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
 
+        public string gServerIp = string.Empty;
+        public static bool isOnline = false;
+
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
@@ -321,6 +324,17 @@ namespace TDRv
         
                 optParam.testMode = 4;
             }
+
+            if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") == 0)
+            {
+                isOnline = true;
+            }
+            else
+            {
+                isOnline = false;
+            }
+
+            
         }
 
         //建立默认文件夹
@@ -564,8 +578,16 @@ namespace TDRv
         }
 
 
+        public void tHeartbeat()        
+        {
+            // 开启心跳线程
+            Thread theartbeat = new Thread(new ThreadStart(Heartbeat));
+            theartbeat.IsBackground = true;
+            theartbeat.Start();
+        }
 
-        private void Form1_Load(object sender, EventArgs e)
+
+    private void Form1_Load(object sender, EventArgs e)
         {
             //注册推送器 接收SOCKET数据
             SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);
@@ -582,6 +604,8 @@ namespace TDRv
             //初始化折线图
             initChart();
 
+            gServerIp = INI.GetValueFromIniFile("NetWork", "ServerIP");
+
             //禁止列排序
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
@@ -597,6 +621,10 @@ namespace TDRv
             t.IsBackground = true;
             t.Start();
 
+            if (isOnline)
+            {
+                tHeartbeat();
+            }
         }
 
         public void checkTime()
@@ -2036,6 +2064,40 @@ namespace TDRv
         public string GetCuerrtTime()
         {
             return DateTime.Now.ToString("yyyyMMddHHmmssxxx");
+        }
+
+        private void Heartbeat()
+        {
+            while (SocketHelper.TcpClients.Instance.client.Connected)
+            {
+                // 向服务端发送心跳包
+                SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
+
+                Thread.Sleep(60000);
+            }
+        }
+
+
+        //查询主机是否存在,心跳包
+        public string HeartbeatPacket()
+        {
+            string xmlbuf = string.Empty;
+
+            XDocument xmldata = new XDocument(
+            new XDeclaration("1.0", "UTF-8", null),
+            new XElement("message",
+                new XElement("header",
+                    new XElement("messagename", "AreYouThereRequest"),
+                    new XElement("transactionid", GetCuerrtTime())),
+                new XElement("body",
+                    new XElement("eqp_id", optParam.devSn),
+                    new XElement("server_ip", gServerIp)),
+                new XElement("return",
+                    new XElement("returncode", " "),
+                    new XElement("returnmessage", " "))));
+            xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            return xmlbuf;
         }
 
         //上机请求打包

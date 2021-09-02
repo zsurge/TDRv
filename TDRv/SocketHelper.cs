@@ -72,18 +72,17 @@ namespace TDRv
                 Port = port;
                 ip = new IPEndPoint(Ipaddress, Port);
 
-                if(client!=null)
+                if(client!=null && client.Connected)
                 {
                     client.Close();
                 }
 
-                //TcpClient tcpClient = new System.Net.Sockets.TcpClient(new IPEndPoint(IPAddress.Any, 6501));
-                //设置本地端口9001 tcpClient.Connect(new IPEndPoint(IPAddress.Parse("192.168.1.107"), 5555));//服务器
 
-                //IPEndPoint iep = new IPEndPoint(IPAddress.Parse("10.8.26.54"), 6501);
-                IPEndPoint iep = new IPEndPoint(IPAddress.Any, 6501);
+                IPEndPoint iep = new IPEndPoint(IPAddress.Any, Port);
                 client = new TcpClient(iep);
-                //client = new TcpClient(new IPEndPoint(IPAddress.Any, 6501));
+
+                //client = new TcpClient();
+
             }
             public override void InitSocket(int port)
             {
@@ -100,10 +99,16 @@ namespace TDRv
                 Port = port;
                 ip = new IPEndPoint(Ipaddress, Port);
 
-                //IPEndPoint iep = new IPEndPoint(IPAddress.Parse("10.8.26.54"), 6501);
-                IPEndPoint iep = new IPEndPoint(IPAddress.Any, 6501);
+                if (client != null && client.Connected)
+                {
+                    client.Close();
+                }
+
+                IPEndPoint iep = new IPEndPoint(IPAddress.Any, Port);
                 client = new TcpClient(iep);
-                //client = new TcpClient(new IPEndPoint(IPAddress.Any, 6501));
+
+                //client = new TcpClient();
+
             }
             /// <summary>
             /// 重连上端.
@@ -114,7 +119,7 @@ namespace TDRv
 
             public void RestartInit()
             {
-                if(client != null)
+                if(client != null&& client.Connected)
                     client.Close();
 
                 InitSocket(Ipaddress, Port);
@@ -123,7 +128,12 @@ namespace TDRv
             public void SendData(string SendData)
             {
                 try
-                {
+                {                    
+                    if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") != 0)
+                    {
+                        return;
+                    }
+
                     //如果连接则发送
                     if (client != null)
                     {

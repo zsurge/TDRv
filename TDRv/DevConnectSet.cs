@@ -88,7 +88,8 @@ namespace TDRv
         private void DevConnectSet_Load(object sender, EventArgs e)
         {
             //注册推送器 接收SOCKET数据
-            SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);
+            //SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);
+            SocketHelper.pushSockets += Rec;
 
             combDevString.BackColor = SystemColors.Window;
             combDevString.Text = INI.GetValueFromIniFile("Instrument", "AddressNA");
@@ -107,6 +108,15 @@ namespace TDRv
             if (INI.GetValueFromIniFile("Instrument", "SN").Length > 0)
             {
                 tx_sn.Text = INI.GetValueFromIniFile("Instrument", "SN");
+            }
+
+            if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") == 0)
+            {
+                comb_control_mode.SelectedIndex = 0;
+            }
+            else
+            {
+                comb_control_mode.SelectedIndex = 1;
             }
 
         }
