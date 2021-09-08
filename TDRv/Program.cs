@@ -14,6 +14,8 @@ namespace TDRv
         [STAThread]
         static void Main()
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
@@ -31,6 +33,11 @@ namespace TDRv
                 loginForm.Dispose();
                 return;
             }
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {    
+            MessageBox.Show(e.ExceptionObject.ToString());
         }
     }
 }

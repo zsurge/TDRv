@@ -292,8 +292,7 @@ namespace TDRv
                     Sockets sks = s;
                     sks.ex = skex;
                     sks.ClientDispose = true;
-                    pushSockets.Invoke(sks);//推送至UI
-
+                    //pushSockets.Invoke(sks);//推送至UI
                 }
 
             }

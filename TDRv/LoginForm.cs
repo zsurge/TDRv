@@ -85,6 +85,9 @@ namespace TDRv
                         //    t.Start();
                         //}
 
+                        //SocketHelper.pushSockets = (SocketHelper.PushSockets)Delegate.Remove(SocketHelper.pushSockets, SocketHelper.pushSockets);
+                        
+
                         // 跳转主界面
                         this.DialogResult = DialogResult.OK;
                         this.Dispose();
@@ -377,7 +380,7 @@ namespace TDRv
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);//注册推送器
+            SocketHelper.pushSockets += Rec;//注册推送器
 
             if(INI.GetValueFromIniFile("NetWork", "ServerIP").Length >8)
             {
