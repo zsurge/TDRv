@@ -323,18 +323,7 @@ namespace TDRv
             {
         
                 optParam.testMode = 4;
-            }
-
-            if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") == 0)
-            {
-                isOnline = true;
-            }
-            else
-            {
-                isOnline = false;
-            }
-
-            
+            }            
         }
 
         //建立默认文件夹
@@ -621,10 +610,9 @@ namespace TDRv
             t.IsBackground = true;
             t.Start();
 
-            if (isOnline)
-            {
-                tHeartbeat();
-            }
+
+            tHeartbeat();
+           
         }
 
         public void checkTime()
@@ -2070,8 +2058,19 @@ namespace TDRv
         {
             while (SocketHelper.TcpClients.Instance.client.Connected)
             {
-                // 向服务端发送心跳包
-                SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
+                if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") == 0)
+                {
+                    isOnline = true;
+
+                    // 向服务端发送心跳包
+                    SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
+
+                    
+                }
+                else
+                {
+                    isOnline = false;
+                }
 
                 Thread.Sleep(60000);
             }

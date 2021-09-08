@@ -14,7 +14,7 @@ namespace TDRv
         [STAThread]
         static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -35,9 +35,9 @@ namespace TDRv
             }
         }
 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {    
-            MessageBox.Show(e.ExceptionObject.ToString());
-        }
+        //private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        //{    
+        //    MessageBox.Show(e.ExceptionObject.ToString());
+        //}
     }
 }
