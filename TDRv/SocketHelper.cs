@@ -77,8 +77,8 @@ namespace TDRv
                     client.Close();
                 }
 
-
-                IPEndPoint iep = new IPEndPoint(IPAddress.Any, Port);
+                //设置本地端口
+                IPEndPoint iep = new IPEndPoint(IPAddress.Any, 6501);
                 client = new TcpClient(iep);
 
                 //client = new TcpClient();
@@ -104,7 +104,8 @@ namespace TDRv
                     client.Close();
                 }
 
-                IPEndPoint iep = new IPEndPoint(IPAddress.Any, Port);
+                //设置本地端口
+                IPEndPoint iep = new IPEndPoint(IPAddress.Any, 6501);
                 client = new TcpClient(iep);
 
                 //client = new TcpClient();
@@ -245,6 +246,7 @@ namespace TDRv
             {
                 try
                 {
+                    //连接远程服务器
                     client.Connect(ip);
                     //client.Connect(new IPEndPoint(IPAddress.Parse("10.8.26.54"), 6501));
                     //client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.0"), 6501));

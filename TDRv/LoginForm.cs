@@ -380,7 +380,7 @@ namespace TDRv
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            SocketHelper.pushSockets += Rec;//注册推送器
+            SocketHelper.pushSockets = new SocketHelper.PushSockets(Rec);//注册推送器
 
             if(INI.GetValueFromIniFile("NetWork", "ServerIP").Length >8)
             {

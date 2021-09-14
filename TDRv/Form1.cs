@@ -78,7 +78,7 @@ namespace TDRv
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
-        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.2.20210810";
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.3.20210914";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -550,20 +550,26 @@ namespace TDRv
                 return cmd;
             }
 
-            XElement xe = XElement.Parse(xmlData); 
-
-            ///查询元素
-            var elements = xe.Elements(strSubElement).Descendants(lastSubElement).ToList();
-
-            if (elements.Count < 1)
+            try
             {
-                return cmd;
-            }
+                XElement xe = XElement.Parse(xmlData);
+                ///查询元素
+                var elements = xe.Elements(strSubElement).Descendants(lastSubElement).ToList();
 
-            cmd = elements[0].Value;
+                if (elements.Count < 1)
+                {
+                    return cmd;
+                }
+                cmd = elements[0].Value;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("服务器返回数据格式错误，无法解析!");
+            }
 
             LoggerHelper._.Info("当前查找到的内容是：" + cmd);
             return cmd;
+
         }
 
 
