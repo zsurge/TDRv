@@ -36,6 +36,9 @@ namespace TDRv
         //单端
         public const int SINGLE = 2;
 
+        //E5080B设备类弄
+        public static int gDevType = 0;
+
         public const int CURRENT_RECORD = 100;
         public const int HISTORY_RECORD = 999;
 
@@ -49,6 +52,7 @@ namespace TDRv
 
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
+
 
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
@@ -451,8 +455,18 @@ namespace TDRv
 
                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                 {
+                    string strDevType = INI.GetValueFromIniFile("Instrument", "NA");
+                    if (strDevType.Equals("E5080B-port2"))
+                    {
+                        gDevType = 2;
+                    }
+                    else
+                    {
+                        gDevType = 0;
+                    }
+
                     //差分开路定义
-                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, out result);
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, gDevType, out result);
                 }
                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                 {
@@ -496,7 +510,7 @@ namespace TDRv
                 {
                     //单端开路定义
                     result2 = string.Empty;
-                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, out result2);
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, gDevType,out result2);
                     tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
@@ -811,7 +825,7 @@ namespace TDRv
             }
 
 
-            E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+            E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
 
             //获取要生成报表的数据
             CreateMeasChart(packetMaesData(result, index, channel));
@@ -1056,7 +1070,7 @@ namespace TDRv
 
                     if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                     {
-                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
                     }
                     else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                     {
@@ -1257,6 +1271,7 @@ namespace TDRv
                 {
                     isExecuteComplete = false;
 
+                    System.Threading.Thread.Sleep(500);
 
                     if (optParam.keyMode == 1)
                     {

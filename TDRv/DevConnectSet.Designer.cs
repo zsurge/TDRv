@@ -43,20 +43,21 @@
             this.combDevType.FormattingEnabled = true;
             this.combDevType.Items.AddRange(new object[] {
             "E5080B",
+            "E5080B-port2",
             "E5071C",
             "E5063A",
             "PNA",
             "USB-ENA"});
             this.combDevType.Location = new System.Drawing.Point(71, 16);
             this.combDevType.Name = "combDevType";
-            this.combDevType.Size = new System.Drawing.Size(72, 20);
+            this.combDevType.Size = new System.Drawing.Size(102, 20);
             this.combDevType.TabIndex = 0;
             this.combDevType.Text = "E5063A";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(160, 19);
+            this.label1.Location = new System.Drawing.Point(192, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 1;
@@ -64,7 +65,7 @@
             // 
             // btn_ConnectDev
             // 
-            this.btn_ConnectDev.Location = new System.Drawing.Point(476, 14);
+            this.btn_ConnectDev.Location = new System.Drawing.Point(532, 14);
             this.btn_ConnectDev.Name = "btn_ConnectDev";
             this.btn_ConnectDev.Size = new System.Drawing.Size(75, 23);
             this.btn_ConnectDev.TabIndex = 3;
@@ -75,9 +76,9 @@
             // combDevString
             // 
             this.combDevString.FormattingEnabled = true;
-            this.combDevString.Location = new System.Drawing.Point(225, 16);
+            this.combDevString.Location = new System.Drawing.Point(257, 16);
             this.combDevString.Name = "combDevString";
-            this.combDevString.Size = new System.Drawing.Size(234, 20);
+            this.combDevString.Size = new System.Drawing.Size(257, 20);
             this.combDevString.TabIndex = 4;
             // 
             // label2
@@ -102,7 +103,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(71, 46);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(388, 21);
+            this.textBox1.Size = new System.Drawing.Size(443, 21);
             this.textBox1.TabIndex = 7;
             // 
             // DevConnectSet
