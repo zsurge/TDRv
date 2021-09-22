@@ -42,8 +42,8 @@
             // 
             this.combDevType.FormattingEnabled = true;
             this.combDevType.Items.AddRange(new object[] {
-            "E5080B",
-            "E5080B-port2",
+            "E5080B 4-port",
+            "E5080B 2-port",
             "E5071C",
             "E5063A",
             "PNA",

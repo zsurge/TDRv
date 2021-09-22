@@ -200,15 +200,21 @@ namespace TDRv.Driver
 
             if (channel == 1)
             {
-                cmd1 = "CALC:PAR:SEL \"win1_tr1\"";        //差分
-                //cmd1 = "CALC:PAR:MNUM 1";
+                if (devType == 2)
+                {
+                    cmd1 = "CALC:PAR:MNUM 1";
+                }
+                else
+                {
+                    cmd1 = "CALC:PAR:SEL \"win1_tr1\"";        //差分
+                }  
             }
             else
             {
                 if (devType == 2)
                 {
-                    cmd1 = "CALC:PAR:SEL \"win2_tr1\"";        //单端
-                    //cmd1 = "CALC:PAR:MNUM 2";
+                    //cmd1 = "CALC:PAR:SEL \"win2_tr1\"";        //单端
+                    cmd1 = "CALC:PAR:MNUM 2";
                 }
                 else
                 {
@@ -273,15 +279,22 @@ namespace TDRv.Driver
             string str5 = string.Empty;
             if (channel == 1)
             {
-                str5 = "CALC:PAR:SEL \"win1_tr1\"";//差分   
-                //str5 = "CALC:PAR:MNUM 1";
+                if (devType == 2)
+                {
+                    str5 = "CALC:PAR:MNUM 1";
+                }
+                else
+                {
+                    str5 = "CALC:PAR:SEL \"win1_tr1\"";//差分   
+                }
+                
             }
             else
             {
                 if (devType == 2)
                 {
-                    str5 = "CALC:PAR:SEL \"win2_tr1\"";//单端
-                    //str5 = "CALC:PAR:MNUM 2";
+                    //str5 = "CALC:PAR:SEL \"win2_tr1\"";//单端
+                    str5 = "CALC:PAR:MNUM 2";
                 }
                 else
                 {

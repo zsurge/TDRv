@@ -456,7 +456,7 @@ namespace TDRv
                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                 {
                     string strDevType = INI.GetValueFromIniFile("Instrument", "NA");
-                    if (strDevType.Equals("E5080B-port2"))
+                    if (strDevType.Equals("E5080B 2-port"))
                     {
                         gDevType = 2;
                     }
@@ -1269,9 +1269,7 @@ namespace TDRv
             {
                 if (isExecuteComplete)
                 {
-                    isExecuteComplete = false;
-
-                    System.Threading.Thread.Sleep(500);
+                    isExecuteComplete = false;                    
 
                     if (optParam.keyMode == 1)
                     {
