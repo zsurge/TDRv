@@ -78,7 +78,7 @@ namespace TDRv
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
-        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.3.20210914";
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.3.20210925";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -396,96 +396,99 @@ namespace TDRv
                 else
                 {
 
-                    //release
-                    byte[] buffer = new byte[sks.Offset - 2];
-                    Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
 
-                    string stohbuff = string.Empty;
-                    string ret = string.Empty;
-
-                    string str = Encoding.Unicode.GetString(buffer);
-                    
-                    if (str == "ServerOff")
+                    if (sks.Offset >= 2)
                     {
-                        LoggerHelper._.Trace("服务端主动关闭");
-                    }
-                    else
-                    {
-                        LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");                     
+                        byte[] buffer = new byte[sks.Offset - 2];
+                        Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
 
+                        string stohbuff = string.Empty;
+                        string ret = string.Empty;
 
-                        switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                        string str = Encoding.Unicode.GetString(buffer);
+
+                        if (str == "ServerOff")
                         {
-                            //响应初始数据访问
-                            case "INITIALDATAREQUEST":
-                                //1.这里记录日志
-                                LoggerHelper._.Info("开始处理初始化请求");
-                                //2.获取要发送到服务器的数据
-                                ISendToHost _devInitResp = new DevInitResp();
-                                _devInitResp.eventSend += new DelegateSend(dev._DevInitResp);
-                                stohbuff = _devInitResp.packetXmlData();
-                                //3.发送到服务器                                
-                                SocketHelper.TcpClients.Instance.SendData(stohbuff);         
-                                
-                                LoggerHelper._.Info("初始化返回数据为：" + stohbuff);
-                                break;
-                            //响应校验时间
-                            case "DATETIMESYNCCOMMAND":
-                                //1.这里记录日志
-                                LoggerHelper._.Info("开始处理校时请求");
+                            LoggerHelper._.Trace("服务端主动关闭");
+                        }
+                        else
+                        {
+                            LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
-                                //2.处理返回数据
-                                ret = QueryElementByName(str, "body", "date_time");
 
-                                string tmpTime = ret.Substring(0, 4) + "-" + ret.Substring(4, 2) + "-" + ret.Substring(6, 2) + " " + ret.Substring(8, 2) + ":" + ret.Substring(10, 2) + ":" + ret.Substring(12, 2);
-                                
-                                //3.转换时间
-                                DateTime dt = Convert.ToDateTime(tmpTime);
+                            switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                            {
+                                //响应初始数据访问
+                                case "INITIALDATAREQUEST":
+                                    //1.这里记录日志
+                                    LoggerHelper._.Info("开始处理初始化请求");
+                                    //2.获取要发送到服务器的数据
+                                    ISendToHost _devInitResp = new DevInitResp();
+                                    _devInitResp.eventSend += new DelegateSend(dev._DevInitResp);
+                                    stohbuff = _devInitResp.packetXmlData();
+                                    //3.发送到服务器                                
+                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
 
-                                //4.设置当前时间
-                                SyncServerTime.SetDate(dt);
+                                    LoggerHelper._.Info("初始化返回数据为：" + stohbuff);
+                                    break;
+                                //响应校验时间
+                                case "DATETIMESYNCCOMMAND":
+                                    //1.这里记录日志
+                                    LoggerHelper._.Info("开始处理校时请求");
 
-                                //5.获取要发送到服务器的数据
-                                ISendToHost _syncTimeResp = new SyncTimeResp();
-                                _syncTimeResp.eventSend += new DelegateSend(dev._SyncTimeResp);
-                                stohbuff = _syncTimeResp.packetXmlData();
-                                //6.发送到服务器
-                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                                LoggerHelper._.Info("校时返回数据为：" + stohbuff);
-                                break;
-                            //响应任务信息下载
-                            case "JOBDATADOWNLOAD":
-                                //1.这里记录日志
-                                LoggerHelper._.Info("开始处理JOB下载任务");
+                                    //2.处理返回数据
+                                    ret = QueryElementByName(str, "body", "date_time");
 
-                                job_down_process(str);
+                                    string tmpTime = ret.Substring(0, 4) + "-" + ret.Substring(4, 2) + "-" + ret.Substring(6, 2) + " " + ret.Substring(8, 2) + ":" + ret.Substring(10, 2) + ":" + ret.Substring(12, 2);
 
-                                //2.获取要发送到服务器的数据
-                                ISendToHost _jobDownResp = new JobDownResp();
-                                _jobDownResp.eventSend += new DelegateSend(dev._JobDownResp);
-                                stohbuff = _jobDownResp.packetXmlData();
-                                //3.发送到服务器
-                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                                LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
+                                    //3.转换时间
+                                    DateTime dt = Convert.ToDateTime(tmpTime);
 
-                                //4.上送调用通知
-                                stohbuff = string.Empty;
-                                stohbuff = EquipmentRecipeSetupReport("1");
-                                //5.发送到服务器
-                                SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                                LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
-                                break;
+                                    //4.设置当前时间
+                                    SyncServerTime.SetDate(dt);
 
-                            //响应读板报告
-                            case "PanelReadReportReply":
-                                //1.这里记录日志
-                                LoggerHelper._.Info("响应读板报告");
-                          
-                                ret = QueryElementByName(str, "body", "eqp_id");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 响应对方是否存在. result = " + ret);
-                                break;
-                               
+                                    //5.获取要发送到服务器的数据
+                                    ISendToHost _syncTimeResp = new SyncTimeResp();
+                                    _syncTimeResp.eventSend += new DelegateSend(dev._SyncTimeResp);
+                                    stohbuff = _syncTimeResp.packetXmlData();
+                                    //6.发送到服务器
+                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                    LoggerHelper._.Info("校时返回数据为：" + stohbuff);
+                                    break;
+                                //响应任务信息下载
+                                case "JOBDATADOWNLOAD":
+                                    //1.这里记录日志
+                                    LoggerHelper._.Info("开始处理JOB下载任务");
+
+                                    job_down_process(str);
+
+                                    //2.获取要发送到服务器的数据
+                                    ISendToHost _jobDownResp = new JobDownResp();
+                                    _jobDownResp.eventSend += new DelegateSend(dev._JobDownResp);
+                                    stohbuff = _jobDownResp.packetXmlData();
+                                    //3.发送到服务器
+                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                    LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
+
+                                    //4.上送调用通知
+                                    stohbuff = string.Empty;
+                                    stohbuff = EquipmentRecipeSetupReport("1");
+                                    //5.发送到服务器
+                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                    LoggerHelper._.Info("JOB下载任务返回：" + stohbuff);
+                                    break;
+
+                                //响应读板报告
+                                case "PanelReadReportReply":
+                                    //1.这里记录日志
+                                    LoggerHelper._.Info("响应读板报告");
+
+                                    ret = QueryElementByName(str, "body", "eqp_id");
+                                    //2.记录日志
+                                    LoggerHelper._.Info("HOST 响应对方是否存在. result = " + ret);
+                                    break;
+
+                            }
                         }
                     }
                 }
@@ -2062,23 +2065,30 @@ namespace TDRv
 
         private void Heartbeat()
         {
-            while (SocketHelper.TcpClients.Instance.client.Connected)
+            while (true)
             {
-                if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") == 0)
+                if (SocketHelper.TcpClients.Instance.client.Connected)
                 {
-                    isOnline = true;
+                    if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") == 0)
+                    {
+                        isOnline = true;
 
-                    // 向服务端发送心跳包
-                    SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
+                        // 向服务端发送心跳包
+                        SocketHelper.TcpClients.Instance.SendData(HeartbeatPacket());
 
-                    
+
+                    }
+                    else
+                    {
+                        isOnline = false;
+                    }
                 }
                 else
                 {
-                    isOnline = false;
+                    SocketHelper.TcpClients.Instance.RestartInit();
                 }
 
-                Thread.Sleep(60000);
+                Thread.Sleep(50000);
             }
         }
 

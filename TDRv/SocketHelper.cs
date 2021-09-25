@@ -99,7 +99,8 @@ namespace TDRv
                 Port = port;
                 ip = new IPEndPoint(Ipaddress, Port);
 
-                if (client != null && client.Connected)
+                if (client != null)
+                //if (client != null && client.Connected)
                 {
                     client.Close();
                 }
@@ -120,7 +121,8 @@ namespace TDRv
 
             public void RestartInit()
             {
-                if(client != null&& client.Connected)
+                // if(client != null&& client.Connected)
+                if (client != null)
                     client.Close();
 
                 InitSocket(Ipaddress, Port);
@@ -130,11 +132,6 @@ namespace TDRv
             {
                 try
                 {                    
-                    if (string.Compare(INI.GetValueFromIniFile("ControlMode", "Mode"), "OnLine") != 0)
-                    {
-                        return;
-                    }
-
                     //如果连接则发送
                     if (client != null)
                     {
@@ -156,7 +153,7 @@ namespace TDRv
                             lstData.Add((byte)TAIL);
                             byte[] buffer = lstData.ToArray();
                             nStream.Write(buffer, 0, buffer.Length);
-                            //LoggerHelper._.Info(SendData);
+                            LoggerHelper._.Info(SendData);
 
                         }
                         else

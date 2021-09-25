@@ -63,7 +63,7 @@ namespace TDRv
                     new XElement("transactionid", GetCuerrtTime())),
                 new XElement("body",
                     new XElement("eqp_id", optParam.devSn),
-                    new XElement("control_mode", cMode)),
+                    new XElement("control_mode", cMode),
                     new XElement("operation_mode", "1"),
                     new XElement("eqp_status", "1"),
                     new XElement("recipe_path", recipe_path),
@@ -71,7 +71,7 @@ namespace TDRv
                     new XElement("cam_path", cam_path),
                     new XElement("job_id", job_id),
                     new XElement("total_panel_count", total_panel_count),
-                    new XElement("process_panel_count", process_panel_count),
+                    new XElement("process_panel_count", process_panel_count)),
                 new XElement("return",
                     new XElement("returncode", ""),
                     new XElement("returnmessage", ""))));
