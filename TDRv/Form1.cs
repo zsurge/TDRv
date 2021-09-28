@@ -1573,7 +1573,14 @@ namespace TDRv
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
                     {
-                        historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
+                        if (j == 10)
+                        {
+                            historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
+                        }
+                        else
+                        {
+                            historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
+                        }
                     }
                     string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
                     writeHistoryRecord(historyRecord, defName);
