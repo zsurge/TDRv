@@ -75,7 +75,7 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59201567"))
+                else if (sn.Contains("MY59201567")|| sn.Contains("MY59101009") || sn.Contains("MY59100173"))
                 {
 
                     if (20211007 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
@@ -121,10 +121,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59101009") || sn.Contains("MY59100173"))
+                else if (sn.Contains("MY59201793"))
                 {
 
-                    if (20211007 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20211228 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
