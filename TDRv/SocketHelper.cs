@@ -72,7 +72,7 @@ namespace TDRv
                 Port = port;
                 ip = new IPEndPoint(Ipaddress, Port);
 
-                if(client!=null && client.Connected)
+                if(client!=null)
                 {
                     client.Close();
                 }

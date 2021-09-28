@@ -284,9 +284,6 @@ namespace TDRv
             }));
         }
 
-
-
-
         //上机报告确认
         public string LoginConfrimPacket(string ret)
         {
