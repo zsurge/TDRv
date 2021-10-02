@@ -220,67 +220,69 @@ namespace TDRv
                 }
                 else
                 {
-                    byte[] buffer = new byte[sks.Offset - 2];
-                    //Array.Copy(sks.RecBuffer, buffer, sks.Offset);
-
-                    Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
-
-                    string stohbuff = string.Empty;
-                    string ret = string.Empty;
-
-                    string str = Encoding.Unicode.GetString(buffer);
-                    if (str == "ServerOff")
+                    if (sks.Offset >= 2)
                     {
-                        LoggerHelper._.Trace("服务端主动关闭");
-                    }
-                    else
-                    {
-                        LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
-                        switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                        byte[] buffer = new byte[sks.Offset - 2];
+                        //Array.Copy(sks.RecBuffer, buffer, sks.Offset);
+
+                        Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
+
+                        string stohbuff = string.Empty;
+                        string ret = string.Empty;
+
+                        string str = Encoding.Unicode.GetString(buffer);
+                        if (str == "ServerOff")
                         {
-                            //响应上机报告
-                            case "OPERATORLOGINLOGOUTREPORTREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
-                                break;
-                            //响应人员上机确认
-                            case "OPERATORLOGINCONFIRM":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "result");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
+                            LoggerHelper._.Trace("服务端主动关闭");
+                        }
+                        else
+                        {
+                            LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
-                                if(ret.Equals("1"))
-                                {
-                                    //3.打包数据
-                                    stohbuff = string.Empty;
-                                    stohbuff = LoginConfrimPacket("1");
+                            switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                            {
+                                //响应上机报告
+                                case "OPERATORLOGINLOGOUTREPORTREPLY":
+                                    //1.处理返回数据
+                                    ret = QueryElementByName(str, "body", "return_code");
+                                    //2.记录日志
+                                    LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
+                                    break;
+                                //响应人员上机确认
+                                case "OPERATORLOGINCONFIRM":
+                                    //1.处理返回数据
+                                    ret = QueryElementByName(str, "body", "result");
+                                    //2.记录日志
+                                    LoggerHelper._.Info("HOST 人员下机报告 result = " + ret);
 
-                                    //4.发送到服务器
-                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                                    // 跳转主界面
-                                    this.DialogResult = DialogResult.OK;
-                                    this.Dispose();
-                                    this.Close();
-                                }
-                                else
-                                {
-                                    //3.打包数据
-                                    stohbuff = string.Empty;
-                                    stohbuff = LoginConfrimPacket("0");
+                                    if (ret.Equals("1"))
+                                    {
+                                        //3.打包数据
+                                        stohbuff = string.Empty;
+                                        stohbuff = LoginConfrimPacket("1");
 
-                                    //4.发送到服务器
-                                    SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                                }
-                                break;
+                                        //4.发送到服务器
+                                        SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                        // 跳转主界面
+                                        this.DialogResult = DialogResult.OK;
+                                        this.Dispose();
+                                        this.Close();
+                                    }
+                                    else
+                                    {
+                                        //3.打包数据
+                                        stohbuff = string.Empty;
+                                        stohbuff = LoginConfrimPacket("0");
+
+                                        //4.发送到服务器
+                                        SocketHelper.TcpClients.Instance.SendData(stohbuff);
+                                    }
+                                    break;
+                            }
                         }
                     }
-
-
-                }
+                }//end else
             }));
         }
 

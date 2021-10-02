@@ -146,37 +146,38 @@ namespace TDRv
                 }
                 else
                 {
-                    byte[] buffer = new byte[sks.Offset - 2];
-                    //Array.Copy(sks.RecBuffer, buffer, sks.Offset);
-
-                    Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
-
-                    string stohbuff = string.Empty;
-                    string ret = string.Empty;
-
-                    string str = Encoding.Unicode.GetString(buffer);
-                    if (str == "ServerOff")
+                    if (sks.Offset >= 2)
                     {
-                        LoggerHelper._.Trace("服务端主动关闭");
-                    }
-                    else
-                    {
-                        LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
+                        byte[] buffer = new byte[sks.Offset - 2];
+                        //Array.Copy(sks.RecBuffer, buffer, sks.Offset);
 
-                        switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                        Array.Copy(sks.RecBuffer, 1, buffer, 0, sks.Offset - 2);
+
+                        string stohbuff = string.Empty;
+                        string ret = string.Empty;
+
+                        string str = Encoding.Unicode.GetString(buffer);
+                        if (str == "ServerOff")
                         {
-                            //机台当前控制模式4.14
-                            case "EQUIPMENTCONTROLMODEREPLY":
-                                //1.处理返回数据
-                                ret = QueryElementByName(str, "body", "return_code");
-                                //2.记录日志
-                                LoggerHelper._.Info("HOST 响应机台工作模式 result = " + ret);
-                                break;
+                            LoggerHelper._.Trace("服务端主动关闭");
+                        }
+                        else
+                        {
+                            LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
+                            switch (QueryElementByName(str).Replace(" ", "").ToUpper())
+                            {
+                                //机台当前控制模式4.14
+                                case "EQUIPMENTCONTROLMODEREPLY":
+                                    //1.处理返回数据
+                                    ret = QueryElementByName(str, "body", "return_code");
+                                    //2.记录日志
+                                    LoggerHelper._.Info("HOST 响应机台工作模式 result = " + ret);
+                                    break;
+
+                            }
                         }
                     }
-
-
                 }
             }));
         }

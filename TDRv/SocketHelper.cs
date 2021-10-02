@@ -162,7 +162,7 @@ namespace TDRv
                             sks.ErrorCode = Sockets.ErrorCodes.TrySendData;
                             sks.ex = new Exception("客户端发送时无连接,开始进行重连上端..");
                             sks.ClientDispose = true;
-                            pushSockets.Invoke(sks);//推送至UI
+                            //pushSockets.Invoke(sks);//推送至UI
                             RestartInit();
                         }
                     }
@@ -172,7 +172,7 @@ namespace TDRv
                         sks.ErrorCode = Sockets.ErrorCodes.TrySendData;
                         sks.ex = new Exception("客户端对象为null,开始重连上端..");
                         sks.ClientDispose = true;
-                        pushSockets.Invoke(sks);//推送至UI 
+                        //pushSockets.Invoke(sks);//推送至UI 
                         RestartInit();
                     }
                 }
@@ -182,7 +182,7 @@ namespace TDRv
                     sks.ErrorCode = Sockets.ErrorCodes.TrySendData;
                     sks.ex = new Exception("客户端出现异常,开始重连上端..异常信息:" + skex.Message);
                     sks.ClientDispose = true;
-                    pushSockets.Invoke(sks);//推送至UI
+                    //pushSockets.Invoke(sks);//推送至UI
                     RestartInit();
                 }
             }
