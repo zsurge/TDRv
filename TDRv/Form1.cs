@@ -78,7 +78,7 @@ namespace TDRv
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
-        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.3.20210925";
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.3.20211007";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -371,6 +371,11 @@ namespace TDRv
         /// <param name="rec"></param>
         private void Rec(SocketHelper.Sockets sks)
         {
+            if (sks.Client == null)
+            {
+                return;
+            }
+
             this.Invoke(new ThreadStart(delegate
             {
                 if (sks.ex != null)
@@ -968,6 +973,10 @@ namespace TDRv
             {
                 MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
+
+			//修改于20211007 版本冲突
+            //logFileName = DateTime.Now.ToString("yyyyMMddhh:mm:ss.ff");
+            //SaveDataToCSVFile(result, logFileName);
 
             return result;
         }
@@ -1960,7 +1969,14 @@ namespace TDRv
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
                     {
-                        historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
+                        if (j == 10)
+                        {
+                            historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
+                        }
+                        else
+                        {
+                            historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
+                        }
                     }
                     string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
                     writeHistoryRecord(historyRecord, defName);

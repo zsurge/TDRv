@@ -190,6 +190,11 @@ namespace TDRv
 
         private void Rec(SocketHelper.Sockets sks)
         {
+            if (sks.Client == null)
+            {
+                return;
+            }
+
             this.Invoke(new ThreadStart(delegate
             {
                 if (sks.ex != null)
