@@ -352,6 +352,7 @@ namespace TDRv
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            //this.WindowState = FormWindowState.Maximized;
             //创建默认文件夹
             CreateDefaultDir();
             //获取当前测试模式
