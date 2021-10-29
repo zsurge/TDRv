@@ -19,6 +19,7 @@ H:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.pdb
 H:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.dll
 H:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.xml
+H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csprojAssemblyReference.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevConnectSet.resources
 H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevOptSet.resources
 H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevParamSet.resources
