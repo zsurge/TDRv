@@ -38,7 +38,8 @@ namespace TDRv
         public string result { get; set; }
         public string pannelid { get; set; }
         public string setid { get; set; }
-        public string serialNumber { get; set; }
+        public string test_date { get; set; }
+        public string test_time { get; set; }
     }
 }
 

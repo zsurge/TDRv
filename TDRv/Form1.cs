@@ -78,7 +78,7 @@ namespace TDRv
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
-        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.3.20211007";
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20211107";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -90,7 +90,7 @@ namespace TDRv
 
         private void tsb_DevOptSet_Click(object sender, EventArgs e)
         {
-            if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
             {
                 optStatus.isConnect = false;
                 optStatus.isGetIndex = false;
@@ -105,7 +105,7 @@ namespace TDRv
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
             {
                 optStatus.isConnect = false;
                 optStatus.isGetIndex = false;
@@ -395,7 +395,7 @@ namespace TDRv
                         default:
                             break;
                     }
-                    LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
+                    //LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
 
                 }
                 else
@@ -418,7 +418,7 @@ namespace TDRv
                         }
                         else
                         {
-                            LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
+                            //LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
 
                             switch (QueryElementByName(str).Replace(" ", "").ToUpper())
@@ -571,11 +571,11 @@ namespace TDRv
                 cmd = elements[0].Value;
             }
             catch (Exception ex)
-            {
-                MessageBox.Show("服务器返回数据格式错误，无法解析!");
+            {                
+                CommonFuncs.ShowMsg(eHintInfoType.error, "服务器返回数据格式错误，无法解析!");
             }
 
-            LoggerHelper._.Info("当前查找到的内容是：" + cmd);
+            //LoggerHelper._.Info("当前查找到的内容是：" + cmd);
             return cmd;
 
         }
@@ -698,7 +698,7 @@ namespace TDRv
                 {
                     isExecuteIndex = false;
 
-                    if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         optStatus.isGetIndex = false;
@@ -713,13 +713,14 @@ namespace TDRv
 
                     if (dataGridView1.Rows.Count == 0)
                     {
-                        MessageBox.Show("请先装载配方");
+                      
+                        CommonFuncs.ShowMsg(eHintInfoType.hint, "请先装载配方");
                         return;
                     }
 
                     if (!optStatus.isConnect)
-                    {
-                        MessageBox.Show("请先连接设备");
+                    {                        
+                        CommonFuncs.ShowMsg(eHintInfoType.hint, "请先连接设备");
                         return;
                     }
 
@@ -732,8 +733,8 @@ namespace TDRv
                     result = string.Empty;
 
                     if (tdd11_array.Length < 200)
-                    {
-                        MessageBox.Show("获取差分开路定义失败");
+                    {                        
+                        CommonFuncs.ShowMsg(eHintInfoType.error, "获取差分开路定义失败");
                     }
 
                     //查找tdd11差分的索引值
@@ -1394,8 +1395,8 @@ namespace TDRv
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
             if(tsb_Pnl_ID.Text.Length == 0)
-            {
-                MessageBox.Show("panel id 不能为空");
+            {                
+                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
                 return;
             }
 
@@ -1403,7 +1404,7 @@ namespace TDRv
             {
                 isExecuteComplete = false;
                 
-                if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                 {
                     optStatus.isConnect = false;
                     optStatus.isGetIndex = false;
@@ -1609,13 +1610,13 @@ namespace TDRv
                         sw.WriteLine(columnValue);
                     }
                     sw.Close();
-                    myStream.Close();
-                    MessageBox.Show("导出报告成功！");
+                    myStream.Close();                    
+                    CommonFuncs.ShowMsg(eHintInfoType.hint, "导出报告成功!");
                     return true;
                 }
                 catch (Exception e)
-                {
-                    MessageBox.Show("导出报告失败！");
+                {                    
+                    CommonFuncs.ShowMsg(eHintInfoType.error, "导出报告失败!");
                     return false;
                 }
                 finally
@@ -1625,8 +1626,8 @@ namespace TDRv
                 }
             }
             else
-            {
-                MessageBox.Show("取消导出报告操作!");
+            {                
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "取消导出报告操作!");
                 return false;
             }
         }
@@ -1636,8 +1637,8 @@ namespace TDRv
             if (e.KeyCode == Keys.Space)
             {
                 if (tsb_Pnl_ID.Text.Length == 0)
-                {
-                    MessageBox.Show("panel id 不能为空");
+                {                    
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空!");
                     return;
                 }
 
@@ -1647,7 +1648,7 @@ namespace TDRv
 
                     if (optParam.keyMode == 1)
                     {
-                        if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                        if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                         {
                             optStatus.isConnect = false;
                             optStatus.isGetIndex = false;
@@ -2250,46 +2251,51 @@ namespace TDRv
                     new XElement("job_id", job_id),
                         new XElement("proc_data_list",
                             new XElement("proc_data",
-                                new XElement("data_item", "panel_id"),
-                                new XElement("data_value", data.pannelid)),
-                            new XElement("proc_data",
-                                new XElement("data_item", "set_id"),
-                                new XElement("data_value", data.setid)),
-                            new XElement("proc_data",
-                                new XElement("data_item", "serial_number"),
-                                new XElement("data_value", data.serialNumber)),
-                            new XElement("proc_data",
-                                new XElement("data_item", "layer"),
+                                new XElement("data_item", "D0001"),
                                 new XElement("data_value", data.layer)),
                             new XElement("proc_data",
-                                new XElement("data_item", "upper_limit"),
-                                new XElement("data_value", data.upper_limit)),
-                            new XElement("proc_data",
-                                new XElement("data_item", "low_limit"),
-                                new XElement("data_value", data.low_limit)),
-                            new XElement("proc_data",
-                                new XElement("data_item", "spec"),
+                                new XElement("data_item", "D0002"),
                                 new XElement("data_value", data.spec)),
                             new XElement("proc_data",
-                                new XElement("data_item", "average"),
+                                new XElement("data_item", "D0003"),
+                                new XElement("data_value", data.upper_limit)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "D0004"),
+                                new XElement("data_value", data.low_limit)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "D0005"),
                                 new XElement("data_value", data.average)),
                             new XElement("proc_data",
-                                new XElement("data_item", "max"),
+                                new XElement("data_item", "D0006"),
                                 new XElement("data_value", data.max)),
                             new XElement("proc_data",
-                                new XElement("data_item", "min"),
+                                new XElement("data_item", "D0007"),
                                 new XElement("data_value", data.min)),
                             new XElement("proc_data",
-                                new XElement("data_item", "mode"),
+                                new XElement("data_item", "D0008"),
+                                new XElement("data_value", data.result)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "D0009"),
+                                new XElement("data_value", data.test_date)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "D0010"),
+                                new XElement("data_value", data.test_time)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "D0011"),
                                 new XElement("data_value", data.mode)),
                             new XElement("proc_data",
-                                new XElement("data_item", "result"),
-                                new XElement("data_value", data.result)))),
+                                new XElement("data_item", "D0012"),
+                                new XElement("data_value", data.pannelid)),
+                            new XElement("proc_data",
+                                new XElement("data_item", "D0013"),
+                                new XElement("data_value", data.setid)))),        
                 new XElement("return",
                     new XElement("returncode", " "),
                     new XElement("returnmessage", " "))));
 
             xmlbuf = xmldata.Declaration.ToString() + xmldata.ToString();
+
+            //LoggerHelper._.Info("测试报告：" + xmlbuf);
 
             return xmlbuf;
         }
@@ -2321,14 +2327,14 @@ namespace TDRv
             {
                 string stohbuff = string.Empty;
                 //1.这里记录日志
-                LoggerHelper._.Info("读板报告");
+                //LoggerHelper._.Info("读板报告");
 
                 //2.获取要发送到服务器的数据
                 stohbuff = PanelReadReport(tsb_Pnl_ID.Text);
 
                 //3.发送数据到服务器
                 SocketHelper.TcpClients.Instance.SendData(stohbuff);
-                LoggerHelper._.Info("读板报告：" + stohbuff);
+                //LoggerHelper._.Info("读板报告：" + stohbuff);
             }
         }
 
@@ -2387,7 +2393,8 @@ namespace TDRv
                             max = values[5],
                             min = values[6],
                             result = values[7],
-                            serialNumber = values[8],
+                            test_date = values[9],
+                            test_time = values[10],
                             mode = values[11],
                             pannelid = values[14],
                             setid = values[15]
@@ -2402,12 +2409,14 @@ namespace TDRv
                     string strXml = TestResultReportPacket(read[i]);
                     SocketHelper.TcpClients.Instance.SendData(strXml);
                     Thread.Sleep(500);
-                }
-
-                
+                }                
             });
 
             task1.Start();
+            task1.ContinueWith((Task) =>
+            {                
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "测试数据已上传完成!");
+            });
         }
 
 

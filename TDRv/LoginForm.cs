@@ -221,7 +221,7 @@ namespace TDRv
                             break;
                     }
                     //logger.Trace(string.Format("客户端信息{0}", sks.ex));
-                    LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
+                    //LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
                 }
                 else
                 {
@@ -243,7 +243,7 @@ namespace TDRv
                         }
                         else
                         {
-                            LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
+                            //LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
                             switch (QueryElementByName(str).Replace(" ", "").ToUpper())
                             {
@@ -376,7 +376,7 @@ namespace TDRv
 
             cmd = elements[0].Value;
 
-            LoggerHelper._.Info("当前元素值为：" + cmd);
+            //LoggerHelper._.Info("当前元素值为：" + cmd);
             return cmd;
 
         }

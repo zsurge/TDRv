@@ -153,7 +153,7 @@ namespace TDRv
                             lstData.Add((byte)TAIL);
                             byte[] buffer = lstData.ToArray();
                             nStream.Write(buffer, 0, buffer.Length);
-                            LoggerHelper._.Info(SendData);
+                            //LoggerHelper._.Info(SendData);
 
                         }
                         else

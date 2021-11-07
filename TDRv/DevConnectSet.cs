@@ -43,7 +43,7 @@ namespace TDRv
 
             string NowDate = DateTime.Now.ToString("yyyyMMdd");
 
-            if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
             {
                 optStatus.isConnect = false;
                 combDevString.BackColor = Color.Red;
@@ -147,7 +147,7 @@ namespace TDRv
                             break;
                     }
                     //logger.Trace(string.Format("客户端信息{0}", sks.ex));
-                    LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
+                    //LoggerHelper._.Trace(string.Format("客户端信息{0}", sks.ex));
                 }
                 else
                 {
@@ -164,11 +164,11 @@ namespace TDRv
                         string str = Encoding.Unicode.GetString(buffer);
                         if (str == "ServerOff")
                         {
-                            LoggerHelper._.Trace("服务端主动关闭");
+                            //LoggerHelper._.Trace("服务端主动关闭");
                         }
                         else
                         {
-                            LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
+                            //LoggerHelper._.Trace(string.Format("服务端{0}发来消息：{1}", sks.Ip, str) + "\r\n");
 
                             switch (QueryElementByName(str).Replace(" ", "").ToUpper())
                             {
@@ -177,7 +177,7 @@ namespace TDRv
                                     //1.处理返回数据
                                     ret = QueryElementByName(str, "body", "return_code");
                                     //2.记录日志
-                                    LoggerHelper._.Info("HOST 响应机台工作模式 result = " + ret);
+                                    //LoggerHelper._.Info("HOST 响应机台工作模式 result = " + ret);
                                     break;
 
                             }
@@ -215,7 +215,7 @@ namespace TDRv
 
             cmd = elements[0].Value;
 
-            LoggerHelper._.Info("当前元素值为：" + cmd);
+            //LoggerHelper._.Info("当前元素值为：" + cmd);
             return cmd;
 
         }
