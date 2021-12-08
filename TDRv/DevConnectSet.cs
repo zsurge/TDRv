@@ -190,12 +190,58 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY59201701"))
+                {
+
+                    if (20220204 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59100175")) //add 2021.11.22 测试样机使用
+                {
+
+                    if (20220122 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else
                 {
                     optStatus.isConnect = false;
                     combDevString.BackColor = Color.Red;
                 }
-            }
+            }//end 5080B
             else if(combDevType.Text.Contains("E5063A"))
             {
                 CGloabal.g_InstrE5063AModule.adress = combDevString.Text;
@@ -260,9 +306,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                //modify 2021.11.30 delay 2021.12.30
                 else if (sn.Contains("MY54605475") || sn.Contains("MY54605474") || sn.Contains("MY54605473"))
                 {
-                    if (20211130 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20211230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
