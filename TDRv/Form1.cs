@@ -588,52 +588,60 @@ namespace TDRv
             float tmp = 0;
             int i = 0;
 
-
-            if (mode == DIFFERENCE) //差分模式
+            try
             {
-                for (i = index; i < tmpArray.Length; i++)
+                if (mode == DIFFERENCE) //差分模式
                 {
-                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
-                    {                  
-                        //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
+                    for (i = index; i < tmpArray.Length; i++)
+                    {
+                        tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
+                        if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
+                        {
+                            //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
+                            result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if (mode == SINGLE)//单端模式
+                {
+                    for (i = index; i < tmpArray.Length; i++)
+                    {
+                        tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
+                        if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
+                        {
+                            result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    //开路定义模式，返回所有数据
+                    for (i = 0; i < tmpArray.Length; i++)
+                    {
+                        //logger.Trace(tmpArray[i]);
+                        //LoggerHelper.mlog.Debug(tmpArray[i]);
+                        tmp = Convert.ToSingle(tmpArray[i]);
                         result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                     }
-                    else
-                    {
-                        break;
-                    }
                 }
+
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                SaveDataToCSVFile(result, logFileName);                
             }
-            else if (mode == SINGLE)//单端模式
+            catch (Exception ex)
             {
-                for (i = index; i < tmpArray.Length; i++)
-                {
-                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
-                    {
-                        result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                //开路定义模式，返回所有数据
-                for (i = 0; i < tmpArray.Length; i++)
-                {
-                    //logger.Trace(tmpArray[i]);
-                    //LoggerHelper.mlog.Debug(tmpArray[i]);
-                    tmp = Convert.ToSingle(tmpArray[i]);
-                    result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
-                }
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
 
-            logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
-            SaveDataToCSVFile(result, logFileName);
+
 
             return result;
         }
@@ -1027,6 +1035,12 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
+            if (tsb_Pnl_ID.Text.Length == 0)
+            {
+                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
+                return;
+            }
+
             if (isExecuteComplete)
             {
                 isExecuteComplete = false;
@@ -1246,13 +1260,13 @@ namespace TDRv
                         sw.WriteLine(columnValue);
                     }
                     sw.Close();
-                    myStream.Close();
-                    MessageBox.Show("导出报告成功！");
+                    myStream.Close();                    
+                    CommonFuncs.ShowMsg(eHintInfoType.hint, "导出报告成功!");
                     return true;
                 }
                 catch (Exception e)
-                {
-                    MessageBox.Show("导出报告失败！");
+                {                    
+                    CommonFuncs.ShowMsg(eHintInfoType.error, "导出报告失败!");
                     return false;
                 }
                 finally
@@ -1262,8 +1276,8 @@ namespace TDRv
                 }
             }
             else
-            {
-                MessageBox.Show("取消导出报告操作!");
+            {                
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "取消导出报告操作!");
                 return false;
             }
         }
@@ -1272,6 +1286,11 @@ namespace TDRv
         {
             if (e.KeyCode == Keys.Space)
             {
+                if (tsb_Pnl_ID.Text.Length == 0)
+                {
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空!");
+                    return;
+                }
                 if (isExecuteComplete)
                 {
                     isExecuteComplete = false;                    
@@ -1559,7 +1578,8 @@ namespace TDRv
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
-
+                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
+                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1607,7 +1627,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage" + "PanelID" + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;

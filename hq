@@ -1,0 +1,440 @@
+[33mcommit b95bac15dd0d49891c257eff10ce47d2220c59d0[m[33m ([m[1;36mHEAD -> [m[1;32maddE5063A[m[33m)[m
+Author: zsurge <zdsurge@163.com>
+Date:   Thu Jan 13 20:21:08 2022 +0800
+
+    Date:   Wed Jan 5 19:37:14 2022 +0800
+    
+        V1.0.4.20220105
+        1.delay MY59201567 to 20220208
+    
+    Date:   Mon Jan 3 11:26:22 2022 +0800
+    
+        V1.0.4.20220131
+        1.delay MY59201793 to 20220131
+    
+    Date:   Thu Dec 30 16:44:40 2021 +0800
+    
+        V1.0.4.20211230002
+        1.delay MY54504547 to 20220130
+    
+    Date:   Thu Dec 30 08:49:41 2021 +0800
+    
+        V1.0.4.20211230
+        1.delay 5473 5474 5475 to 20220228
+    
+    Date:   Thu Dec 30 08:43:29 2021 +0800
+    
+        V1.0.3.20211212
+        1. 添加E5071C
+        2.修正保存XML时有时会错乱的BUG“
+        3.修正部分错误提示语
+    
+    Date:   Tue Nov 30 09:01:44 2021 +0800
+
+[33mcommit cb7171cb57e7586ac61bfbea9d80b86864a2655b[m[33m ([m[1;31morigin/addE5063A[m[33m)[m
+Author: zsurge <zdsurge@163.com>
+Date:   Wed Dec 8 21:12:13 2021 +0800
+
+    V1.0.3.20211208
+    1.添加两个新的ID
+    2.延长一个ID时间
+
+[33mcommit d90fd8ab59f5c9f8321200cc86a1e8d1b4f167f1[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun Nov 7 12:50:45 2021 +0800
+
+    1.修改MY54605417 改为20220130
+
+[33mcommit 2ee3290560a6ac70c9d07250f60ab6e323d7876e[m
+Author: zsurge <zdsurge@163.com>
+Date:   Fri Oct 29 22:37:43 2021 +0800
+
+    V1.0.3.20211029
+    1.修改MY54504547到12.30
+
+[33mcommit 8f7c57e54fd31fc9fb87a63641af39ee90dd6c12[m
+Author: zsurge <zdsurge@163.com>
+Date:   Wed Oct 27 23:38:03 2021 +0800
+
+    V1.0.3.20211027
+    1.修改MY54605473、MY54605474、MY54605475到2021。11.30到期;
+    2.添加MY59201890到2022.01.28到期
+
+[33mcommit 85c7f5c7fb708e74bd6ee85416b617290c1decad[m
+Author: zsurge <zdsurge@163.com>
+Date:   Thu Oct 7 08:38:35 2021 +0800
+
+    V1.0.3.20211007
+    1.修改MY59201567到20220107
+
+[33mcommit 9b2de81e7637d64a59963e3dfd99009db90d66ef[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Tue Sep 28 11:59:07 2021 +0800
+
+     V1.0.3.20210922
+    1.修正历史记录时间格式问题，在前面添加空格
+
+[33mcommit 03527235740f6e7e9e5986a5613e0912a758167e[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Tue Sep 28 11:17:41 2021 +0800
+
+    V1.0.3.20210922
+    1.添加MY59201793到20211228
+
+[33mcommit 8583b91332091d3c02e8e01764aac5354fa00f6a[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Wed Sep 22 16:52:54 2021 +0800
+
+    V1.0.3.20210922
+    1.添加E5080B 4PORT 和  2PORT
+
+[33mcommit 1f0a8b411b24302230ece4f8ea543bc10afcac7b[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon Sep 20 09:20:06 2021 +0800
+
+    V1.0.3.20210920
+    1.修正开路定义时，有一条指令会造成内存泄露的现象
+    2.修正量测时的量测指令
+    3.添加E5080B-PORT2的功能
+
+[33mcommit 36784a77de0247eadc359404e06bb04444ab1aab[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Thu Sep 2 17:25:34 2021 +0800
+
+    修改深圳超能有效期
+
+[33mcommit a4502348b5d9e06eddbe93ef2f61bbeb43bd15fd[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Mon Aug 30 14:22:59 2021 +0800
+
+    修改一个使用时间
+
+[33mcommit 14ff7b55b7d30dd1791cae77397b402170df6b13[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Thu Aug 19 13:37:44 2021 +0800
+
+    V1.0.3
+    1.修改测试数据精度为小数点后两位；
+    2.修正在转换为CSV文件时，添加的制表符，导致报告数据不可编译的问题
+
+[33mcommit 7160d5c1fd576dfbedefff85995fa9ed01beca14[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Tue Aug 17 09:19:09 2021 +0800
+
+    V1.0.3
+    1.修正开路定义时，使用带小数数值死机的BUG
+    2.添加一SN“
+
+[33mcommit 550c4d2fd2b53e2746ff8a987a24452958412999[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Thu Jul 29 14:25:02 2021 +0800
+
+    ?V1.0.3
+
+[33mcommit 88ca0c21f75ed1eb6761a89cfa2f1bceabe16870[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Mon Jul 26 17:26:54 2021 +0800
+
+    V1.0.3
+    1.添加对外接扩展器的支持；
+    2.修改开路定义时的错误
+
+[33mcommit c70b757ee270ba38c3bcc3ed77dcad8f7c171a97[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon Jul 26 08:04:18 2021 +0800
+
+    V1.0.2
+    1.添加E5063A 三个端口的支持
+
+[33mcommit 898f274077c308403a147cd1205590926a61e960[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Thu Jul 22 16:45:22 2021 +0800
+
+    添加一些SN
+
+[33mcommit fe6bdae445b0dc0307df344b808367e657668c65[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Tue Jun 29 12:41:08 2021 +0800
+
+    V1.0.2
+    1.修正主界面还能删除配方条目的BUG；
+    2.删除之前的日期限制；
+
+[33mcommit 36aaec86667fda24845a20f9a325b862f1a0a5de[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon Jun 14 20:53:49 2021 +0800
+
+    V1.0.1
+    1.添加保存XML文件防呆
+    2.修正生成图表时，会有一个蓝边的BUG
+    3.修正无SN号时可能出现的BUG
+
+[33mcommit 48f5a308ceaa145565744825d514a24803539eb5[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon May 31 00:11:13 2021 +0800
+
+    V1.0.1
+    1.未经测试
+    2.更改日志文件夹位置
+
+[33mcommit 6b0b21363bdb577dafca87b5886f76dea1f58f11[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 30 23:49:27 2021 +0800
+
+    V1.0.1
+    1.修正数据不稳定的现象
+
+[33mcommit 5d3e615042d57394b17f4e260359d7622b75d72a[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 30 20:20:36 2021 +0800
+
+    V1.0.1
+    1.添加E5063A的支持；
+    2.添加开路防呆；
+    3.添加量测时间间隔;
+
+[33mcommit 34d7100319239731c23ace29cbca1867eb206219[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 30 10:31:54 2021 +0800
+
+    V1.0.1
+    1.添加对E5063A的支持；
+    2.修正历史记录文件夹的路径错误
+
+[33mcommit 9f44b822929565075322af72bd8c1206fcf41144[m[33m ([m[1;33mtag: V1.0.1[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: zsurge <zdsurge@163.com>
+Date:   Thu May 13 22:12:40 2021 +0800
+
+    V1.0.1
+    1.正式版本
+    2.日志文件名添加年月日
+
+[33mcommit bdb246d4208270f19ddf0966cf2fd59f53a62276[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 9 22:37:22 2021 +0800
+
+    V1.0.1
+    1.修正历史文件名错误的BUG
+    2.添加时间限制到0817
+
+[33mcommit 5ec838805ace640aa81cd6f2c74c7578f0259981[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 9 17:39:22 2021 +0800
+
+    添加量测数据生成功能
+
+[33mcommit 0f5ac5cfda445817ac8fc13a79f869141e9a6d74[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 9 15:45:21 2021 +0800
+
+    修正截图功能
+
+[33mcommit b3be465680e3c71856c810b5e4abb82a0c0fee4f[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 9 10:12:15 2021 +0800
+
+    V1.0.1
+    1.修正新增配方时，百分比和欧姆错乱BUG
+    2.添加补偿值功能
+
+[33mcommit b3419e91bf23c8e691fd243e3828a7e4ee3932c8[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sat May 8 01:49:41 2021 +0800
+
+    V1.0.1
+    1.修正测试产出一笔测试结果，测试步骤不会往下走的BUG
+    2.修正测试过程中，打开操作设置，测试步骤不会往下走的BUG
+    3.修正按照欧姆判定，测试结果合格判定结果显示fail的BUG
+    4.修正测试过程中，打开操作设置，测试结果不会按照料号输出的BUG
+    5.添加 测试图保存在一个固定文件夹中，例如Image文件夹
+    6.添加 修改测试参数，关闭测试参数的话来个提醒，是否保存的提醒.
+
+[33mcommit f79781399e7d31a63b82b6939ad78f8cc210d1a0[m
+Author: zsurge <zdsurge@163.com>
+Date:   Fri May 7 00:50:15 2021 +0800
+
+    修改了一些BUG“
+
+[33mcommit 79c226edb5b2443a14c6486cb875a9ec03b7fe71[m
+Author: zsurge <zdsurge@163.com>
+Date:   Thu May 6 01:11:26 2021 +0800
+
+    V1.0.0
+    1.添加了截图功能
+    2.添加了历史记录功能
+
+[33mcommit e59f1ff720cc90a11bd2c9fb6eb0bacae9f05198[m
+Author: zsurge <zdsurge@163.com>
+Date:   Wed May 5 12:42:19 2021 +0800
+
+    基本版本
+    1.缺加密；
+    2.缺历史记录写入；
+    3.缺网络功能;
+
+[33mcommit f390fd55a3fd0af234a61e1523b2f0e78fc4ad7c[m
+Author: zsurge <zdsurge@163.com>
+Date:   Tue May 4 10:18:39 2021 +0800
+
+    基本功能OK
+    1.截图未添加
+    2.网络部分未添加
+    3.历史记录未添加
+
+[33mcommit f1a16633232c5b8a4f2cab9d5e600234678f75aa[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon May 3 23:20:24 2021 +0800
+
+    还有截图，红线区域未完成
+
+[33mcommit 73cb4aca752d0e1debfdd6b77cc9c4153852e3cb[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon May 3 13:12:20 2021 +0800
+
+    日常保存
+
+[33mcommit ec3976fcad478c43505a967bb76c87fa457fec35[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon May 3 10:37:41 2021 +0800
+
+    日常更新
+
+[33mcommit 89e33ad17cc39635bc5ff0497d4958d1fcdf46cc[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 2 17:26:11 2021 +0800
+
+    更改了对设备操作的类
+
+[33mcommit 74c4e8066fe32d26f387b565047ee9cf298a0eb4[m[33m ([m[1;31morigin/dev202104040837[m[33m, [m[1;32mdev202104040837[m[33m)[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun May 2 09:46:15 2021 +0800
+
+    20210501_back
+
+[33mcommit b1224a828f2e077a3e2f5c03402d3a3bf14fe680[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun Apr 18 23:09:30 2021 +0800
+
+    日常更新
+
+[33mcommit e651b46c4800fe9e5da014a1647d825e851f3f09[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun Apr 18 18:29:45 2021 +0800
+
+    备份,为了更改历史量测而备份
+
+[33mcommit 229ba5b2b98cba902ab4b4008e8b0df9e58f38b9[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sat Apr 17 20:29:56 2021 +0800
+
+    日常更新，待修正问题已更改，未测试
+
+[33mcommit 2f79da17c1947b85a3a366b174f070f3e492c828[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon Apr 12 00:15:55 2021 +0800
+
+    “
+
+[33mcommit af7d76d43796109b8409e7432096efbede869e22[m
+Author: zsurge <zdsurge@163.com>
+Date:   Fri Apr 9 22:59:20 2021 +0800
+
+    去掉没有用处的两条指令
+
+[33mcommit e873edb64d0d9406b491740878ada50446f8a44b[m
+Author: zsurge <zdsurge@163.com>
+Date:   Thu Apr 8 23:15:50 2021 +0800
+
+    1.添加参数设置从父窗体传到子窗体的datagridview的值；
+    2.添加了对参数设置中，可以拉取表格序列的功能，目前有BUG，“
+    '
+
+[33mcommit 4d8027e47829c47045777e8c1169f66732dea1ba[m
+Author: zsurge <zdsurge@163.com>
+Date:   Wed Apr 7 23:29:22 2021 +0800
+
+    添加了，目前量测，点一下会自动复制到已量测中这个功能
+
+[33mcommit 6bf66b763f9418759a45b6426c4e850f93952d38[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon Apr 5 19:06:32 2021 +0800
+
+    0405 日常更新，大部分功能完成
+
+[33mcommit 67f0d380c779c2930a156bd69d1a62eb418a5eac[m
+Author: zsurge <zdsurge@163.com>
+Date:   Mon Apr 5 14:22:34 2021 +0800
+
+    202104051422 主界面添加弹出菜单前备份
+
+[33mcommit bc2d82c6205c1d2ccef1150fb70abcfa44be5ffb[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun Apr 4 15:46:59 2021 +0800
+
+    日常更新
+
+[33mcommit 9b5200cc3c2f103474b282376ec7c42c91ece26f[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun Apr 4 08:36:25 2021 +0800
+
+    0404 08:36 备份
+
+[33mcommit 4c54423c21a29d156155f3ced4e5343cfe3429a9[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sat Apr 3 23:32:25 2021 +0800
+
+    日常修改
+
+[33mcommit 0a0f387466bc061ebd0f13fbb6ff821b44efb0f4[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sat Apr 3 19:16:12 2021 +0800
+
+    0403修改，完善参数设置
+
+[33mcommit a214d5cb0b654d53d66f7cbecb84dba166007a69[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Fri Apr 2 15:55:07 2021 +0800
+
+    0402 添加对参数菜单的编写
+
+[33mcommit bd472e7104d8e2eb5cf4f6c1af5cf71f1261d025[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Thu Apr 1 21:21:59 2021 +0800
+
+    0401添加参数设置菜单功能
+
+[33mcommit e22aa095cf632d8373baecc33cae6a52ada7a60c[m
+Author: zsurge <zdsurge@163.com>
+Date:   Wed Mar 31 23:46:49 2021 +0800
+
+    0331 添加菜单图标
+
+[33mcommit 4e58e81ba6724bd07a9d41a166a85546f6887cae[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Tue Mar 30 21:06:02 2021 +0800
+
+    添加子窗体向主窗体传值
+
+[33mcommit 00a0a7aad05fb8d299a740aa2741f3e8d62fa67a[m
+Author: zsurge <zdsurge@163.com>
+Date:   Sun Mar 28 19:10:07 2021 +0800
+
+    添加参数载入
+
+[33mcommit cc0e4cc5d4ddd987cc14e4f302be8a2a30c8a707[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Sat Mar 27 10:33:32 2021 +0800
+
+    gitignore
+
+[33mcommit 8b0d61c1edee9324a96223f748a652b6d2ab67ba[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Sat Mar 27 10:26:54 2021 +0800
+
+    修改gitignore
+
+[33mcommit 9ecf2a82d1ecdb250f3d5f03cdad8c60344043db[m
+Author: zhangduo <zdsurge@163.com>
+Date:   Sat Mar 27 10:22:30 2021 +0800
+
+    init

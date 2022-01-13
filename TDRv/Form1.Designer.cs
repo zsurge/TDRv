@@ -48,6 +48,10 @@
             this.tsb_StartTest = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_XmlFileName = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tsb_Pnl_ID = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.tsb_Set_id = new System.Windows.Forms.ToolStripTextBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -66,6 +70,8 @@
             this.cSeDiff = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cCurveData = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cCurveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cPanel_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cSet_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,6 +88,8 @@
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,6 +106,8 @@
             this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.mFlag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -135,26 +145,26 @@
             this.tsmi_delselect,
             this.tsmi_export});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(189, 94);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 70);
             // 
             // tsmi_delAll
             // 
             this.tsmi_delAll.Name = "tsmi_delAll";
-            this.tsmi_delAll.Size = new System.Drawing.Size(188, 30);
+            this.tsmi_delAll.Size = new System.Drawing.Size(148, 22);
             this.tsmi_delAll.Text = "删除所有数据";
             this.tsmi_delAll.Click += new System.EventHandler(this.tsmi_delAll_Click);
             // 
             // tsmi_delselect
             // 
             this.tsmi_delselect.Name = "tsmi_delselect";
-            this.tsmi_delselect.Size = new System.Drawing.Size(188, 30);
+            this.tsmi_delselect.Size = new System.Drawing.Size(148, 22);
             this.tsmi_delselect.Text = "删除单笔数据";
             this.tsmi_delselect.Click += new System.EventHandler(this.tsmi_delselect_Click);
             // 
             // tsmi_export
             // 
             this.tsmi_export.Name = "tsmi_export";
-            this.tsmi_export.Size = new System.Drawing.Size(188, 30);
+            this.tsmi_export.Size = new System.Drawing.Size(148, 22);
             this.tsmi_export.Text = "输出测试报告";
             this.tsmi_export.Click += new System.EventHandler(this.tsmi_export_Click);
             // 
@@ -168,10 +178,14 @@
             this.tsb_GetTestIndex,
             this.tsb_StartTest,
             this.toolStripSeparator1,
-            this.tsb_XmlFileName});
+            this.tsb_XmlFileName,
+            this.toolStripLabel1,
+            this.tsb_Pnl_ID,
+            this.toolStripLabel2,
+            this.tsb_Set_id});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1634, 41);
+            this.toolStrip1.Size = new System.Drawing.Size(1634, 39);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -182,7 +196,7 @@
             this.tsb_DevConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevConnect.Name = "tsb_DevConnect";
-            this.tsb_DevConnect.Size = new System.Drawing.Size(142, 36);
+            this.tsb_DevConnect.Size = new System.Drawing.Size(108, 36);
             this.tsb_DevConnect.Text = "仪器设置";
             this.tsb_DevConnect.Click += new System.EventHandler(this.tsb_DevConnect_Click);
             // 
@@ -193,7 +207,7 @@
             this.tsb_DevPOptSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevPOptSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevPOptSet.Name = "tsb_DevPOptSet";
-            this.tsb_DevPOptSet.Size = new System.Drawing.Size(142, 36);
+            this.tsb_DevPOptSet.Size = new System.Drawing.Size(108, 36);
             this.tsb_DevPOptSet.Text = "操作设置";
             this.tsb_DevPOptSet.Click += new System.EventHandler(this.tsb_DevOptSet_Click);
             // 
@@ -204,7 +218,7 @@
             this.tsb_DevParamSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevParamSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevParamSet.Name = "tsb_DevParamSet";
-            this.tsb_DevParamSet.Size = new System.Drawing.Size(143, 36);
+            this.tsb_DevParamSet.Size = new System.Drawing.Size(109, 36);
             this.tsb_DevParamSet.Text = "量测参数";
             this.tsb_DevParamSet.Click += new System.EventHandler(this.tsb_DevParamSet_Click);
             // 
@@ -216,7 +230,7 @@
             this.tsb_GetTestIndex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_GetTestIndex.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_GetTestIndex.Name = "tsb_GetTestIndex";
-            this.tsb_GetTestIndex.Size = new System.Drawing.Size(142, 36);
+            this.tsb_GetTestIndex.Size = new System.Drawing.Size(108, 36);
             this.tsb_GetTestIndex.Text = "开路定义";
             this.tsb_GetTestIndex.Click += new System.EventHandler(this.tsb_GetTestIndex_Click);
             // 
@@ -228,19 +242,41 @@
             this.tsb_StartTest.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_StartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_StartTest.Name = "tsb_StartTest";
-            this.tsb_StartTest.Size = new System.Drawing.Size(94, 36);
+            this.tsb_StartTest.Size = new System.Drawing.Size(76, 36);
             this.tsb_StartTest.Text = "量测";
             this.tsb_StartTest.Click += new System.EventHandler(this.tsb_StartTest_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 41);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // tsb_XmlFileName
             // 
             this.tsb_XmlFileName.Name = "tsb_XmlFileName";
             this.tsb_XmlFileName.Size = new System.Drawing.Size(0, 36);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(56, 36);
+            this.toolStripLabel1.Text = "Panel ID";
+            // 
+            // tsb_Pnl_ID
+            // 
+            this.tsb_Pnl_ID.Name = "tsb_Pnl_ID";
+            this.tsb_Pnl_ID.Size = new System.Drawing.Size(200, 39);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(43, 36);
+            this.toolStripLabel2.Text = "Set ID";
+            // 
+            // tsb_Set_id
+            // 
+            this.tsb_Set_id.Name = "tsb_Set_id";
+            this.tsb_Set_id.Size = new System.Drawing.Size(200, 39);
             // 
             // chart1
             // 
@@ -273,7 +309,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(1227, 744);
+            this.chart1.Size = new System.Drawing.Size(1227, 688);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -288,16 +324,16 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1628, 346);
+            this.tabControl1.Size = new System.Drawing.Size(1628, 320);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.dgv_CurrentResult);
-            this.tabPage1.Location = new System.Drawing.Point(4, 28);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1620, 314);
+            this.tabPage1.Size = new System.Drawing.Size(1620, 294);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "目前量测";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -325,7 +361,9 @@
             this.cTime,
             this.cSeDiff,
             this.cCurveData,
-            this.cCurveImage});
+            this.cCurveImage,
+            this.cPanel_ID,
+            this.cSet_ID});
             this.dgv_CurrentResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_CurrentResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
@@ -334,7 +372,7 @@
             this.dgv_CurrentResult.RowHeadersWidth = 82;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 313);
+            this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 293);
             this.dgv_CurrentResult.TabIndex = 0;
             // 
             // cLayer
@@ -435,13 +473,25 @@
             this.cCurveImage.Name = "cCurveImage";
             this.cCurveImage.ReadOnly = true;
             // 
+            // cPanel_ID
+            // 
+            this.cPanel_ID.HeaderText = "Panel_ID";
+            this.cPanel_ID.Name = "cPanel_ID";
+            this.cPanel_ID.ReadOnly = true;
+            // 
+            // cSet_ID
+            // 
+            this.cSet_ID.HeaderText = "Set_ID";
+            this.cSet_ID.Name = "cSet_ID";
+            this.cSet_ID.ReadOnly = true;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dgv_OutPutResult);
-            this.tabPage2.Location = new System.Drawing.Point(4, 28);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1620, 314);
+            this.tabPage2.Size = new System.Drawing.Size(1620, 294);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "已输出量测";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -469,13 +519,15 @@
             this.dataGridViewTextBoxColumn11,
             this.dataGridViewTextBoxColumn12,
             this.dataGridViewTextBoxColumn13,
-            this.dataGridViewTextBoxColumn14});
+            this.dataGridViewTextBoxColumn14,
+            this.Column1,
+            this.Column2});
             this.dgv_OutPutResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_OutPutResult.Name = "dgv_OutPutResult";
             this.dgv_OutPutResult.RowHeadersVisible = false;
             this.dgv_OutPutResult.RowHeadersWidth = 82;
             this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 307);
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 287);
             this.dgv_OutPutResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
@@ -562,12 +614,22 @@
             this.dataGridViewTextBoxColumn14.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Panel_ID";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Set_ID";
+            this.Column2.Name = "Column2";
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.dgv_HistoryResult);
-            this.tabPage3.Location = new System.Drawing.Point(4, 28);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1620, 314);
+            this.tabPage3.Size = new System.Drawing.Size(1620, 294);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "历史量测";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -595,7 +657,9 @@
             this.dataGridViewTextBoxColumn25,
             this.dataGridViewTextBoxColumn26,
             this.dataGridViewTextBoxColumn27,
-            this.dataGridViewTextBoxColumn28});
+            this.dataGridViewTextBoxColumn28,
+            this.Column3,
+            this.Column4});
             this.dgv_HistoryResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_HistoryResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_HistoryResult.Name = "dgv_HistoryResult";
@@ -603,7 +667,7 @@
             this.dgv_HistoryResult.RowHeadersWidth = 82;
             this.dgv_HistoryResult.RowTemplate.Height = 23;
             this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 307);
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 287);
             this.dgv_HistoryResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn15
@@ -690,6 +754,16 @@
             this.dataGridViewTextBoxColumn28.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
             // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Panel_ID";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Set_ID";
+            this.Column4.Name = "Column4";
+            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -711,7 +785,7 @@
             this.dataGridView1.RowHeadersWidth = 82;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(392, 692);
+            this.dataGridView1.Size = new System.Drawing.Size(392, 636);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -755,7 +829,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 41);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 39);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -766,8 +840,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1634, 1104);
-            this.splitContainer1.SplitterDistance = 746;
+            this.splitContainer1.Size = new System.Drawing.Size(1634, 1022);
+            this.splitContainer1.SplitterDistance = 690;
             this.splitContainer1.TabIndex = 5;
             // 
             // splitContainer2
@@ -784,7 +858,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.chart1);
-            this.splitContainer2.Size = new System.Drawing.Size(1634, 746);
+            this.splitContainer2.Size = new System.Drawing.Size(1634, 690);
             this.splitContainer2.SplitterDistance = 395;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -793,7 +867,7 @@
             this.lable_test_result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lable_test_result.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lable_test_result.Location = new System.Drawing.Point(3, 694);
+            this.lable_test_result.Location = new System.Drawing.Point(3, 638);
             this.lable_test_result.Name = "lable_test_result";
             this.lable_test_result.Size = new System.Drawing.Size(389, 49);
             this.lable_test_result.TabIndex = 1;
@@ -802,13 +876,13 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1634, 1145);
+            this.ClientSize = new System.Drawing.Size(1634, 1061);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20210110";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20220113";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
@@ -858,20 +932,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cLayer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cSPEC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cMaxOffset;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cMinOffset;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cAverage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cMax;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cMin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cResult;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cSerial;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cTime;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cSeDiff;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cCurveData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cCurveImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn mFlag;
         private System.Windows.Forms.DataGridViewTextBoxColumn mStep;
         private System.Windows.Forms.DataGridViewTextBoxColumn mDescription;
@@ -891,6 +951,31 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridView dgv_HistoryResult;
+        private System.Windows.Forms.ToolStripLabel tsb_XmlFileName;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Label lable_test_result;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripTextBox tsb_Pnl_ID;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripTextBox tsb_Set_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cLayer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cSPEC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cMaxOffset;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cMinOffset;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cAverage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cMax;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cMin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cResult;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cSerial;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cSeDiff;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cCurveData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cCurveImage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cPanel_ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cSet_ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
@@ -905,9 +990,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
-        private System.Windows.Forms.ToolStripLabel tsb_XmlFileName;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.Label lable_test_result;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }
 
