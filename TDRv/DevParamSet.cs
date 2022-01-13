@@ -44,17 +44,25 @@ namespace TDRv
         /// <param name="filePath">XML文件路径</param>
         private void getXmlInfo(string filePath)
         {
-            DataSet myds = new DataSet();
-            if (filePath.Length != 0)
+            try
             {
-                myds.ReadXml(filePath);
-                dgv_param.DataSource = myds.Tables[0];
-                dgv_param.Tag = Path.GetFileNameWithoutExtension(filePath);
+                DataSet myds = new DataSet();
+                if (filePath.Length != 0)
+                {
+                    myds.ReadXml(filePath);
+                    dgv_param.DataSource = myds.Tables[0];
+                    dgv_param.Tag = Path.GetFileNameWithoutExtension(filePath);
+                }
+                else
+                {
+                    MessageBox.Show("未正确装载配方文件");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("未正确装载配方文件");
+                MessageBox.Show("配方文件格式错误\r\n" + ex.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void TranToParentForm()
@@ -159,8 +167,14 @@ namespace TDRv
             sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
             sfd.Filter = "XML文件|*.xml";
 
+
+
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+
+                if (File.Exists(sfd.FileName))
+                    File.Delete(sfd.FileName);
+
                 DataTable dT = GetDataTableFromDGV(dgv_param);
                 DataSet dS = new DataSet();
                 dS.Tables.Add(dT);
@@ -860,6 +874,9 @@ namespace TDRv
           
         }
 
-
+        private void radio_p_image_close_CheckedChanged(object sender, EventArgs e)
+        {
+            tx_p_savePath.Text = "";
+        }
     }//end class
 }//end namespace

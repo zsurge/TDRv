@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Driver\CommonFuncs.cs" />
     <Compile Include="Driver\E5063A.cs" />
+    <Compile Include="Driver\E5071C.cs" />
     <Compile Include="Driver\E5080B.cs" />
     <Compile Include="Driver\visa32.cs" />
     <Compile Include="Form1.cs">

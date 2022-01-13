@@ -36,7 +36,7 @@ namespace TDRv
         //单端
         public const int SINGLE = 2;
 
-        //E5080B设备类弄
+        //E5080B设备类型
         public static int gDevType = 0;
 
         public const int CURRENT_RECORD = 100;
@@ -476,6 +476,20 @@ namespace TDRv
                     E5063A.measuration(CGloabal.g_curInstrument.nHandle, DIFFERENCE, out result);
 
                 }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    string strDevType = INI.GetValueFromIniFile("Instrument", "NA");
+                    if (strDevType.Equals("E5071C 2-port"))
+                    {
+                        gDevType = 2;
+                    }
+                    else
+                    {
+                        gDevType = 0;
+                    }
+                    //差分开路定义
+                    E5071C.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, gDevType, out result);
+                }
 
                 //这里需要处理win1_tr1的数据
                 tmpDiffMeasData = packetMaesData(result, 0, 0);
@@ -519,6 +533,13 @@ namespace TDRv
                     //单端开路定义
                     result2 = string.Empty;
                     E5063A.measuration(CGloabal.g_curInstrument.nHandle, SINGLE, out result2);
+                    tmpSingleMeasData = packetMaesData(result2, 0, 0);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    //单端开路定义
+                    result2 = string.Empty;
+                    E5071C.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, gDevType, out result2);
                     tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
 
@@ -810,28 +831,7 @@ namespace TDRv
         }
 
 
-        private void startMeasuration(int channel)
-        {
-            string result = string.Empty;
-            int index = 0;
 
-
-            if (channel == SINGLE)
-            {
-                index = MeasPosition.tdd22IndexValue;
-            }
-            else
-            {
-                index = MeasPosition.tdd11IndexValue;  
-            }
-
-
-            E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-
-            //获取要生成报表的数据
-            CreateMeasChart(packetMaesData(result, index, channel));
-
-        }
 
         /// <summary>
         /// 字符串转浮点型数据
@@ -1076,7 +1076,11 @@ namespace TDRv
                     else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                     {
                         E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                    }            
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                    {
+                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                    }
 
                     //量测并生成图表                    
                     List<float> disResult = packetMaesData(result, index, channel);
@@ -1124,12 +1128,12 @@ namespace TDRv
                 return;
             }
 
-            if(paramList[measIndex.currentIndex].Curve_image.Length != 0)
+            if(paramList[0].Curve_image.Length > 3)
             {
                 task1.ContinueWith((Task) =>
                 {
-                    if(paramList[0].Curve_image.Length >3)
-                    CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
+                   
+                    CaptureScreenChart(chart1, paramList[0].Curve_image);
                 });
             }            
          
@@ -1654,28 +1658,35 @@ namespace TDRv
             }
             else
             {
-                string fileDir = path + "\\Image";
-
-                if (!Directory.Exists(fileDir))
+                try
                 {
-                    Directory.CreateDirectory(fileDir);
+                    string fileDir = path + "\\Image";
+
+                    if (!Directory.Exists(fileDir))
+                    {
+                        Directory.CreateDirectory(fileDir);
+                    }
+
+                    Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
+                    Point ScreenP = this.PointToScreen(FrmP);
+                    int x = splitContainer2.SplitterDistance + ScreenP.X;
+                    int y = ScreenP.Y;
+
+                    //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+                    Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
+                    Graphics g = Graphics.FromImage(bit);
+                    g.CompositingQuality = CompositingQuality.HighSpeed;//质量设为最高
+                                                                        //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+                    g.CopyFromScreen(x, y, 0, 0, _chart.Size);//只保存某个控件
+                                                              //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
+
+                    bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                                                                                                      //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
                 }
-
-                Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
-                Point ScreenP = this.PointToScreen(FrmP);
-                int x = splitContainer2.SplitterDistance + ScreenP.X;
-                int y = ScreenP.Y;
-
-                //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
-                Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
-                Graphics g = Graphics.FromImage(bit);
-                g.CompositingQuality = CompositingQuality.HighSpeed;//质量设为最高
-                //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
-                g.CopyFromScreen(x,y,0,0, _chart.Size);//只保存某个控件
-                //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
-                
-                bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
-               //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
+                catch (Exception ex)
+                {
+                    MessageBox.Show("日志文件路径错误，请重新设置\r\n", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -1685,7 +1696,7 @@ namespace TDRv
             {
                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                 {
-                    //差分开路定义
+                    //清空
                     E5080B.viClear(CGloabal.g_curInstrument.nHandle);
                     E5080B.viClose(CGloabal.g_curInstrument.nHandle);
                 }
@@ -1693,6 +1704,12 @@ namespace TDRv
                 {
                     E5063A.viClear(CGloabal.g_curInstrument.nHandle);
                     E5063A.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    //差分开路定义
+                    E5071C.viClear(CGloabal.g_curInstrument.nHandle);
+                    E5071C.viClose(CGloabal.g_curInstrument.nHandle);
                 }
             }
         }

@@ -32,7 +32,6 @@ H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.pdb
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.dll
 H:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.xml
-H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources

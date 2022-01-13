@@ -55,7 +55,7 @@ namespace TDRv
                 if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY60213234"))
                 {
 
-                    if (20211017 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220210 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -101,7 +101,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201567"))
                 {
 
-                    if (20220107 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220208 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -147,7 +147,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201793"))
                 {
 
-                    if (20211228 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220131 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -242,7 +242,7 @@ namespace TDRv
                     combDevString.BackColor = Color.Red;
                 }
             }//end 5080B
-            else if(combDevType.Text.Contains("E5063A"))
+            else if (combDevType.Text.Contains("E5063A"))
             {
                 CGloabal.g_InstrE5063AModule.adress = combDevString.Text;
 
@@ -253,7 +253,7 @@ namespace TDRv
 
                 int ret = E5063A.Open(CGloabal.g_curInstrument.adress, ref CGloabal.g_curInstrument.nHandle);
 
-                LoggerHelper.mlog.Debug("E5063A.Open ret = " + ret.ToString()) ;
+                LoggerHelper.mlog.Debug("E5063A.Open ret = " + ret.ToString());
 
                 LoggerHelper.mlog.Debug("nInstrumentHandle = " + CGloabal.g_curInstrument.nHandle.ToString());
 
@@ -263,10 +263,10 @@ namespace TDRv
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
 
-                //深圳超能 改为20211230
+                //深圳超能 改为20210130
                 if (sn.Contains("MY54504547"))
                 {
-                    if (20211230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220130 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -309,7 +309,7 @@ namespace TDRv
                 //modify 2021.11.30 delay 2021.12.30
                 else if (sn.Contains("MY54605475") || sn.Contains("MY54605474") || sn.Contains("MY54605473"))
                 {
-                    if (20211230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220228 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -333,7 +333,66 @@ namespace TDRv
                     optStatus.isConnect = false;
                     combDevString.BackColor = Color.Red;
                 }
-            }
+            }//end E5063A
+            else if (combDevType.Text.Contains("E5071C"))
+            {
+                CGloabal.g_InstrE5071CModule.adress = combDevString.Text;
+
+                INI.WriteValueToIniFile("Instrument", "AddressNA", combDevString.Text);
+                INI.WriteValueToIniFile("Instrument", "NA", combDevType.Text);
+
+                CGloabal.g_curInstrument = CGloabal.g_InstrE5071CModule;
+
+                int ret = E5071C.Open(CGloabal.g_curInstrument.adress, ref CGloabal.g_curInstrument.nHandle);
+                E5071C.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
+                E5071C.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
+                E5071C.setAttribute(CGloabal.g_curInstrument.nHandle);
+                
+                if (sn.Contains("MY46734604"))
+                {
+
+                    if (20220201 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY46419308"))
+                {
+                    if (20220306 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+            }//end E5071C
 
 
         }
