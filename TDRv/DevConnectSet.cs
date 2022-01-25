@@ -147,7 +147,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201793"))
                 {
 
-                    if (20220131 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -170,7 +170,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201890"))
                 {
 
-                    if (20220128 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -193,7 +193,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201701"))
                 {
 
-                    if (20220204 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -266,7 +266,7 @@ namespace TDRv
                 //深圳超能 改为20210130
                 if (sn.Contains("MY54504547"))
                 {
-                    if (20220130 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
