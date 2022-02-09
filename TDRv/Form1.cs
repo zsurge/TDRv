@@ -78,7 +78,7 @@ namespace TDRv
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
-        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20211107";
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20220210";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -90,7 +90,7 @@ namespace TDRv
 
         private void tsb_DevOptSet_Click(object sender, EventArgs e)
         {
-            if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (20220310 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
             {
                 optStatus.isConnect = false;
                 optStatus.isGetIndex = false;
@@ -105,7 +105,7 @@ namespace TDRv
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (20220310 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
             {
                 optStatus.isConnect = false;
                 optStatus.isGetIndex = false;
@@ -698,7 +698,7 @@ namespace TDRv
                 {
                     isExecuteIndex = false;
 
-                    if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220310 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         optStatus.isGetIndex = false;
@@ -1404,7 +1404,7 @@ namespace TDRv
             {
                 isExecuteComplete = false;
                 
-                if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                if (20220310 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                 {
                     optStatus.isConnect = false;
                     optStatus.isGetIndex = false;
@@ -1648,7 +1648,7 @@ namespace TDRv
 
                     if (optParam.keyMode == 1)
                     {
-                        if (20211217 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                        if (20220310 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                         {
                             optStatus.isConnect = false;
                             optStatus.isGetIndex = false;
