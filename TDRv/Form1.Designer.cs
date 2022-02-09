@@ -264,6 +264,7 @@
             // 
             // tsb_Pnl_ID
             // 
+            this.tsb_Pnl_ID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Pnl_ID.Name = "tsb_Pnl_ID";
             this.tsb_Pnl_ID.Size = new System.Drawing.Size(200, 41);
             // 
@@ -275,6 +276,7 @@
             // 
             // tsb_Set_id
             // 
+            this.tsb_Set_id.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Set_id.Name = "tsb_Set_id";
             this.tsb_Set_id.Size = new System.Drawing.Size(200, 41);
             // 
@@ -888,7 +890,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20220125";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20220209";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
