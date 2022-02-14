@@ -251,31 +251,31 @@ namespace TDRv.Driver
             byte[] ret = new byte[200000];
 
             string str0 = string.Empty;
-            if (channel == 1)
+
+            if (channel == 1) //差分通道
             {
-                if (devType == 2)
+                if (devType == 2) //2端口
                 {
                     str0 = ":CONTrol:HANDler:A:DATA 0";//差分  
                 }
-                else
+                else //4端口
                 {
-                    //这里因为不知道4PORT的指令，所以都是2PORT
-                    str0 = ":CONTrol:HANDler:A:DATA 0"; //差分   
+                    str0 = "CALC1:PAR1:SEL";//差分   
                 }
 
             }
-            else
+            else //单端通道
             {
-                if (devType == 2)
+                if (devType == 2)//2端口
                 {
                     str0 = ":CONTrol:HANDler:A:DATA 1";//单端
                 }
-                else
+                else //4端口
                 {
-                    //这里因为不知道4PORT的指令，所以都是2PORT
-                    str0 = ":CONTrol:HANDler:A:DATA 1";//单端
+                    str0 = "CALC1:PAR5:SEL";//单端
                 }
             }
+
 
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str0 + "\n"), str0.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
@@ -285,18 +285,28 @@ namespace TDRv.Driver
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
+            //add 0213 兼容2PORT和4PORT
             string str2 = string.Empty;
-            if (channel == 1)
-            {
-                str2 = "CALCulate1:PARameter1:SELect";
-            }
-            else
-            {
-                str2 = "CALCulate1:PARameter2:SELect";
 
+            if (channel == 1) //差分通道
+            {
+                str2 = "CALC1:PAR1:SEL";//差分   
             }
+            else //单端通道
+            {
+                if (devType == 2) //2端口
+                {
+                    str2 = "CALC1:PAR2:SEL";//单端
+                }
+                else //4端口
+                {
+                    str2 = "CALC1:PAR5:SEL";//单端
+                }
+            }
+
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str2 + "\n"), str2.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
+
 
             string str3 = ":INITiate1:CONTinuous ON";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str3 + "\n"), str3.Length, out count);
@@ -363,51 +373,28 @@ namespace TDRv.Driver
             byte[] ret = new byte[200000];
 
             string str0 = string.Empty;
-            //if (channel == 1)
-            //{
-            //    if (devType == 2)
-            //    {
-            //        str0 = ":CONTrol:HANDler:A:DATA 0";//差分  
-            //    }
-            //    else
-            //    {
-            //        //str0 = "CALC:PAR:SEL \"win1_tr1\"";//差分   
-            //    }
 
-            //}
-            //else
-            //{
-            //    if (devType == 2)
-            //    {
-            //        str0 = ":CONTrol:HANDler:A:DATA 1";//单端
-            //    }
-            //    else
-            //    {
-            //        //str0 = "CALC:PAR:SEL \"win1_tr2\"";//单端
-            //    }
-            //}
-
-            if (channel == 1)
+            if (channel == 1) //差分通道
             {
-                if (devType == 2)
+                if (devType == 2) //2端口
                 {
                     str0 = ":CONTrol:HANDler:A:DATA 0";//差分  
                 }
-                else
+                else //4端口
                 {
-                    //str0 = "CALC:PAR:SEL \"win1_tr1\"";//差分   
+                    str0 = "CALC1:PAR1:SEL";//差分   
                 }
 
             }
-            else
+            else //单端通道
             {
-                if (devType == 2)
+                if (devType == 2) //2端口
                 {
                     str0 = ":CONTrol:HANDler:A:DATA 1";//单端
                 }
-                else
+                else //4端口
                 {
-                    //str0 = "CALC:PAR:SEL \"win1_tr2\"";//单端
+                    str0 = "CALC1:PAR5:SEL";//单端
                 }
             }
 
@@ -420,29 +407,28 @@ namespace TDRv.Driver
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
 
+            //add 0213 兼容2PORT和4PORT
             string str2 = string.Empty;
-            //if (channel == 1)
-            //{
-            //    str2 = "CALCulate1:PARameter2:SELect";
-            //}
-            //else
-            //{
-            //    str2 = "CALCulate1:PARameter1:SELect";
 
-            //}
-
-            if (channel == 1)
+            if (channel == 1) //差分通道
             {
-                str2 = "CALCulate1:PARameter1:SELect";
+                str2 = "CALC1:PAR1:SEL";//差分   
             }
-            else
+            else //单端通道
             {
-                str2 = "CALCulate1:PARameter2:SELect";
-
+                if (devType == 2) //2端口
+                {
+                    str2 = "CALC1:PAR2:SEL";//单端
+                }
+                else //4端口
+                {
+                    str2 = "CALC1:PAR5:SEL";//单端
+                }
             }
 
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str2 + "\n"), str2.Length, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
+
 
             string str3 = ":INITiate1:CONTinuous ON";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str3 + "\n"), str3.Length, out count);
