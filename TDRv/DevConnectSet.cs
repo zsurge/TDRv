@@ -266,7 +266,8 @@ namespace TDRv
                 //深圳超能 改为20210130
                 if (sn.Contains("MY54504547"))
                 {
-                    if (20220301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    //已付款
+                    if (20990301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
