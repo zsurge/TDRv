@@ -45,3 +45,21 @@ E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 E:\CsharpPro\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
+C:\Work\TDRv\TDRv\bin\Debug\NLog.config
+C:\Work\TDRv\TDRv\bin\Debug\TDRv.exe.config
+C:\Work\TDRv\TDRv\bin\Debug\TDRv.exe
+C:\Work\TDRv\TDRv\bin\Debug\TDRv.pdb
+C:\Work\TDRv\TDRv\bin\Debug\NLog.dll
+C:\Work\TDRv\TDRv\bin\Debug\NLog.xml
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.csprojAssemblyReference.cache
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.Form1.resources
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.LoginForm.resources
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.Properties.Resources.resources
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.exe
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.pdb

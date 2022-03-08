@@ -163,6 +163,12 @@ namespace TDRv
 
         public void OpenSerialPort()
         {
+            string[] sName = SerialPort.GetPortNames();
+            if(sName.Length < 1)
+            {
+                return;
+            }
+
             try
             {
                 ComDevice.PortName = INI.GetValueFromIniFile("COM", "PORT");

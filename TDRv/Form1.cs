@@ -78,7 +78,7 @@ namespace TDRv
         public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
         public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
-        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20220307";
+        public string version = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20220308";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
