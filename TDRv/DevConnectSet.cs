@@ -144,6 +144,27 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY58100210"))//临时ID，试用一个月
+                {
+                    if (20220522 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else if (sn.Contains("MY59101203")) //add 2022.03.25 临时增加测试使用
                 {
 
@@ -213,10 +234,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59201890"))
+                else if (sn.Contains("MY59201890"))//modify 0427
                 {
 
-                    if (20220428 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220728 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -335,27 +356,6 @@ namespace TDRv
                 else if (sn.Contains("MY54605417"))//unlock
                 {
                     if (21000101 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                    {
-                        optStatus.isConnect = false;
-                        combDevString.BackColor = Color.Red;
-                        return;
-                    }
-
-                    if (ret != 0)
-                    {
-                        optStatus.isConnect = false;
-                        combDevString.BackColor = Color.Red;
-                        MessageBox.Show("error!");
-                    }
-                    else
-                    {
-                        optStatus.isConnect = true;
-                        combDevString.BackColor = Color.Green;
-                    }
-                }
-                else if (sn.Contains("MY58100210"))//临时ID，试用一个月
-                {
-                    if (20220522 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
