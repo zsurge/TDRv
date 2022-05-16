@@ -443,7 +443,7 @@ namespace TDRv
                 //modify 2021.11.30 delay 2021.12.30
                 else if (sn.Contains("MY54605475") || sn.Contains("MY54605474") || sn.Contains("MY54605473"))
                 {
-                    if (20220430 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220630 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -505,9 +505,9 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY46524686")) //add 2022.03.31 样机 三个月 06.30
+                else if (sn.Contains("MY46524686")) //add 2022.05.11 样机 三个月 09.01
                 {
-                    if (20220630 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220901 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -631,9 +631,9 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY46901713"))
+                else if (sn.Contains("MY46901713"))  //modify 20220516
                 {
-                    if (20220514 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (20220716 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
