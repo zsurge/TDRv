@@ -55,7 +55,7 @@ namespace TDRv
                 if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY60213234"))
                 {
 
-                    if (20220210 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202202101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -78,7 +78,7 @@ namespace TDRv
                 else if (sn.Contains("MY59101009") || sn.Contains("MY59100173"))
                 {
 
-                    if (20211007 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202110071400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -101,7 +101,7 @@ namespace TDRv
                 else if (sn.Contains("MY59100856") || sn.Contains("MY59100857")) //add 2022.04.02 to 2022.04.12
                 {
 
-                    if (20220412 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202204121400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -124,7 +124,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201567"))
                 {
 
-                    if (20220910 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202209101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -146,7 +146,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY58100210"))//临时ID，试用一个月
                 {
-                    if (20220522 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202205221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -167,7 +167,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY59100164"))//临时ID，试用15天
                 {
-                    if (20220615 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202206151400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -189,7 +189,7 @@ namespace TDRv
                 else if (sn.Contains("MY59101203")) //add 2022.05.27 临时增加测试使用
                 {
 
-                    if (20220630 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202207111400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -212,7 +212,7 @@ namespace TDRv
                 else if (sn.Contains("MY59202202")) //add 2022.05.27 临时增加测试使用
                 {
 
-                    if (20220902 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202209021400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -235,7 +235,7 @@ namespace TDRv
                 else if (sn.Contains("MY59202302")) //add 2022.05.27 临时增加测试使用
                 {
 
-                    if (20220802 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202208021400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -258,7 +258,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201572"))
                 {
 
-                    if (20211107 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202111071400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -281,7 +281,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201793"))
                 {
 
-                    if (20221015 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202210151400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -304,7 +304,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201890"))//modify 0427
                 {
 
-                    if (20220830 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202208301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -327,7 +327,7 @@ namespace TDRv
                 else if (sn.Contains("MY59201701")) //永久
                 {
 
-                    if (20991230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -350,7 +350,7 @@ namespace TDRv
                 else if (sn.Contains("MY59100175")) //add 2021.11.22 测试样机使用
                 {
 
-                    if (20220122 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202201221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -401,7 +401,7 @@ namespace TDRv
                 if (sn.Contains("MY54504547"))
                 {
                     //已付款
-                    if (20990301 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (209903011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -422,7 +422,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY54605417"))//unlock
                 {
-                    if (21000101 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (210001011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -444,7 +444,7 @@ namespace TDRv
                 //add 2022.01.15
                 else if (sn.Contains("MY54705656"))
                 {
-                    if (20220820 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202208201400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -466,7 +466,7 @@ namespace TDRv
                 //add 2022.01.18
                 else if (sn.Contains("MY54705720"))
                 {
-                    if (20220718 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202207181400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -488,7 +488,7 @@ namespace TDRv
                 //add 2022.03.23
                 else if (sn.Contains("MY54705796"))
                 {
-                    if (20991230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -510,7 +510,7 @@ namespace TDRv
                 //modify 2021.11.30 delay 2021.12.30
                 else if (sn.Contains("MY54605475") || sn.Contains("MY54605474") || sn.Contains("MY54605473"))
                 {
-                    if (20220630 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202208311500 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -552,7 +552,7 @@ namespace TDRv
                 if (sn.Contains("MY46734604"))
                 {
 
-                    if (20220201 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202202011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -574,7 +574,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46524686")) //add 2022.05.11 样机 三个月 09.01
                 {
-                    if (20220901 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202209011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -595,7 +595,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46419308"))
                 {
-                    if (20220306 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202203061400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -616,7 +616,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY47002100")) //样机 到4月18号
                 {
-                    if (20220418 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202204181400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -637,7 +637,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46528681")) //样机 到9月10号
                 {
-                    if (20220910 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202209101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -658,7 +658,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46522885")) //样机 到7月14号
                 {
-                    if (20220714 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202207141400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -679,7 +679,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46103317")) //add 2022.03.29 样机 到06.10
                 {
-                    if (20220610 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202206101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -700,7 +700,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46520437")) //add 2022.03.30 样机 到永久
                 {
-                    if (20991230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -721,7 +721,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46901713"))  //modify 20220516
                 {
-                    if (20220716 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    if (202207161400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
