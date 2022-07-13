@@ -189,7 +189,7 @@ namespace TDRv
                 else if (sn.Contains("MY59101203")) //add 2022.05.27 临时增加测试使用
                 {
 
-                    if (202207111400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202210111400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -466,7 +466,7 @@ namespace TDRv
                 //add 2022.01.18
                 else if (sn.Contains("MY54705720"))
                 {
-                    if (202207181400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202209181400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
