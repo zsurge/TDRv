@@ -721,7 +721,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46901713"))  //modify 20220516
                 {
-                    if (202207161400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202209181400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
