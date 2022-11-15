@@ -255,10 +255,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59202302")) //add 2022.05.27 临时增加测试使用
+                else if (sn.Contains("MY59202302")) //add 2022.05.27 临时增加测试使用,2022.11.03 delay 2023.02.03
                 {
 
-                    if (202211021400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202302031400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
