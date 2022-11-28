@@ -283,6 +283,9 @@ namespace TDRv
                 tr.Open_hreshold = int.Parse(dt.Rows[i].Cells["OpenThreshold"].Value.ToString()); //开路位置
                 tr.ImpedanceLimit_Unit = dt.Rows[i].Cells["ImpedanceLimitUnit"].Value.ToString(); //单位
                 tr.Offset = Convert.ToSingle(dt.Rows[i].Cells["CalibrateOffset"].Value.ToString());
+
+                //add 2022.11.28
+                tr.Test_Serial_Id = dt.Rows[i].Cells["TestStep"].Value.ToString();
                 paramList.Add(tr);
             }
         }
@@ -1581,6 +1584,9 @@ namespace TDRv
                 _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
                 _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
 
+                //add 2022.11.28
+                _dgv.Rows[index].Cells[16].Value = paramList[measIndex.currentIndex].Test_Serial_Id;//记录测试序列号
+
                 if (flag == CURRENT_RECORD) //当前量测
                 {
                     //只有最后一个走完，流水才++
@@ -1627,7 +1633,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage" + "PanelID" + "SETID";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID," + "TestID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;

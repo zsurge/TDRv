@@ -197,7 +197,7 @@ namespace TDRv
                     int index = this.dgv_param.Rows.Add();
                     this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
                     //this.dgv_param.Rows[index].Cells[1].Value = (dp.TestStep++).ToString();          
-                    this.dgv_param.Rows[index].Cells[1].Value = dgv_param.Rows.Count;
+                    this.dgv_param.Rows[index].Cells[1].Value = dgv_param.Rows.Count.ToString();
                     this.dgv_param.Rows[index].Cells[2].Value = dp.Description;
                     this.dgv_param.Rows[index].Cells[3].Value = dp.Layer;
                     this.dgv_param.Rows[index].Cells[4].Value = dp.Remark;

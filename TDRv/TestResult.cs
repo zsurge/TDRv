@@ -31,6 +31,10 @@ namespace TDRv
         private int total_item = 0;   //当前配方的总的条数
         private int open_threshold = 0;  //开路位置
 
+        //add 2022.11.28
+        private string test_serial_id = string.Empty;   //测试编号
+
+
         public string Layer
         {
             get { return layer; }
@@ -148,6 +152,12 @@ namespace TDRv
         {
             get { return open_threshold; }
             set { open_threshold = value; }
+        }
+
+        public string Test_Serial_Id
+        {
+            get { return test_serial_id; }
+            set { test_serial_id = value; }
         }
     }
 }
