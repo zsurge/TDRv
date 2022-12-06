@@ -1627,7 +1627,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage" + "PanelID" + "SETID";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
