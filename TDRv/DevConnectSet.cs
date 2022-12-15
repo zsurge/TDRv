@@ -347,7 +347,8 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59201701")) //永久
+                //add 2022.12.15
+                else if (sn.Contains("MY59201701") || sn.Contains("MY59202460") || sn.Contains("MY59202462")) //永久
                 {
 
                     if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
