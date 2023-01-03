@@ -43,7 +43,7 @@ namespace TDRv
 
             string NowDate = DateTime.Now.ToString("yyyyMMdd");
 
-            if (20230105 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (20991230 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
             {
                 optStatus.isConnect = false;
                 combDevString.BackColor = Color.Red;
