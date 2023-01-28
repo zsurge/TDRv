@@ -577,28 +577,7 @@ namespace TDRv
                     }
                 }
                 //add 2022.07.25 modify 2022.10.25,delay 2023.01.25
-                else if (sn.Contains("MY54705910"))
-                {
-                    if (202301251400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
-                    {
-                        optStatus.isConnect = false;
-                        combDevString.BackColor = Color.Red;
-                        return;
-                    }
-
-                    if (ret != 0)
-                    {
-                        optStatus.isConnect = false;
-                        combDevString.BackColor = Color.Red;
-                        MessageBox.Show("error!");
-                    }
-                    else
-                    {
-                        optStatus.isConnect = true;
-                        combDevString.BackColor = Color.Green;
-                    }
-                }
-                else if (sn.Contains("MY54705930"))
+                else if (sn.Contains("MY54705930")|| sn.Contains("MY54705910"))
                 {
                     if (202304281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
