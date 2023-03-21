@@ -89,7 +89,13 @@ namespace TDRv
             //}
 
             DevOptSet devOptSet = new DevOptSet();
+            devOptSet.ChangeSn += new DevOptSet.ChangeSnHandler(update_sn_begin);
             devOptSet.Show();
+        }
+
+        public void update_sn_begin(string sn)
+        {
+            gSerialInc = Convert.ToInt32(sn);
         }
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)

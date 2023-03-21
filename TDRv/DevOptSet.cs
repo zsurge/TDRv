@@ -18,6 +18,9 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
+        public delegate void ChangeSnHandler(string sn);  //定义委托
+        public event ChangeSnHandler ChangeSn;  //定义事件
+
         public string historyFile = Environment.CurrentDirectory + "\\MeasureData\\History\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
         public string exportFile = Environment.CurrentDirectory + "\\MeasureData\\Report\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
 
@@ -100,8 +103,14 @@ namespace TDRv
                 optParam.exportMode = 2;
                 radio_sn_auto.Checked = true;
             }
+        }
 
-
+        public void OnSnChanged()
+        {
+            if (ChangeSn != null)
+            {
+                ChangeSn(optParam.snBegin); /* 事件被触发 */
+            }
         }
 
         private void btn_opt_ok_Click(object sender, EventArgs e)
@@ -184,6 +193,8 @@ namespace TDRv
 
                 INI.WriteValueToIniFile("TDR", "ExportFile", tx_export_report.Text);
             }
+
+            OnSnChanged();
 
             this.Close();
         }
