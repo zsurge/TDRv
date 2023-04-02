@@ -39,7 +39,7 @@ namespace TDRv
             string NowDate = DateTime.Now.ToString("yyyyMMdd");
 
 
-            if (combDevType.Text.Contains("E5080B"))
+            if (combDevType.Text.Contains("E5080B") || combDevType.Text.Contains("PNA"))
             {
                 CGloabal.g_InstrE5080BModule.adress = combDevString.Text;
 
@@ -394,6 +394,30 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                //////////////////////////////PNA/////////////////////////////////////////////////
+                else if (sn.Contains("MY63056301")) //add 2023.04.02
+                {
+
+                    if (202307021400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else
                 {
                     optStatus.isConnect = false;
@@ -554,10 +578,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                //add 2022.12.26
+                //add 2022.12.26 delay 2023.0508
                 else if (sn.Contains("MY54706015"))
                 {
-                    if (202303271400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202305081400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -599,7 +623,7 @@ namespace TDRv
                     }
                 }
                 //add 2022.07.25 modify 2022.10.25,delay 2023.01.25
-                else if (sn.Contains("MY54705930")|| sn.Contains("MY54705910"))
+                else if (sn.Contains("MY54705930") || sn.Contains("MY54705910"))
                 {
                     if (202304281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
@@ -683,7 +707,7 @@ namespace TDRv
                 E5071C.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
                 E5071C.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
                 E5071C.setAttribute(CGloabal.g_curInstrument.nHandle);
-                
+
                 if (sn.Contains("MY46734604"))
                 {
 
@@ -944,6 +968,12 @@ namespace TDRv
                     combDevString.BackColor = Color.Red;
                 }
             }//end E5071C
+            else
+            {
+                optStatus.isConnect = false;
+                combDevString.BackColor = Color.Red;
+                MessageBox.Show("暂不支持，请联系支持人员!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
         }
