@@ -491,10 +491,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                //add 2023.03.12-2023.05.12
+                //add 2023.03.12-2023.05.12  delay2023.06.12
                 else if (sn.Contains("MY54100391"))
                 {
-                    if (202305121400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202306121400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -604,7 +604,7 @@ namespace TDRv
                 //add 2022.12.26 delay 2023.0508
                 else if (sn.Contains("MY54706015"))
                 {
-                    if (202305081400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202306081400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -667,10 +667,31 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                //add 2022.07.25 modify 2022.10.25,delay 2023.01.25
-                else if (sn.Contains("MY54705930") || sn.Contains("MY54705910"))
+                //add 2022.07.25 modify 2022.10.25,delay 2023.01.25 delay 2023.05.28
+                else if (sn.Contains("MY54705930") )
                 {
-                    if (202304281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202305281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY54705910"))
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
