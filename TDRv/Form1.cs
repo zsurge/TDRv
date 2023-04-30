@@ -1439,7 +1439,8 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
+                    //chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
+                    chart1.Series[0].LegendText = $"平均值:{tmpResult.Average():F2}[{calc_average_perc(paramList[measIndex.currentIndex].Spec, tmpResult.Average().ToString("F2"))}]";
                     chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
                     chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
                 }
@@ -1601,8 +1602,9 @@ namespace TDRv
                     _dgv.Rows[index].Cells[4].Value = str_average; //平均值
                     _dgv.Rows[index].Cells[5].Value = calc_average_perc(paramList[measIndex.currentIndex].Spec, str_average); //平均值百分比
                     _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                    _dgv.Rows[index].Cells[7].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+                    _dgv.Rows[index].Cells[7].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
                 }
+
 
                 _dgv.Rows[index].Cells[9].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
                 _dgv.Rows[index].Cells[10].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
