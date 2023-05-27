@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_delAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_delselect = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,8 +72,21 @@
             this.cCurveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPanel_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSet_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaterialNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BatchNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.mStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.limit_up = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.limit_down = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lable_test_result = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,8 +103,8 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,14 +121,8 @@
             this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.mFlag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lable_test_result = new System.Windows.Forms.Label();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -260,7 +267,7 @@
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(56, 36);
-            this.toolStripLabel1.Text = "Panel ID";
+            this.toolStripLabel1.Text = "大板编号";
             // 
             // tsb_Pnl_ID
             // 
@@ -271,8 +278,8 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(43, 36);
-            this.toolStripLabel2.Text = "Set ID";
+            this.toolStripLabel2.Size = new System.Drawing.Size(56, 36);
+            this.toolStripLabel2.Text = "小板编号";
             // 
             // tsb_Set_id
             // 
@@ -284,32 +291,32 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(3, 0);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Series2";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series3.Legend = "Legend1";
-            series3.Name = "Series3";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Legend = "Legend1";
-            series4.Name = "Series4";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series6.Legend = "Legend1";
+            series6.Name = "Series2";
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series7.Legend = "Legend1";
+            series7.Name = "Series3";
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series8.Legend = "Legend1";
+            series8.Name = "Series4";
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
+            this.chart1.Series.Add(series7);
+            this.chart1.Series.Add(series8);
             this.chart1.Size = new System.Drawing.Size(1227, 687);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -364,7 +371,9 @@
             this.cCurveData,
             this.cCurveImage,
             this.cPanel_ID,
-            this.cSet_ID});
+            this.cSet_ID,
+            this.MaterialNo,
+            this.BatchNo});
             this.dgv_CurrentResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_CurrentResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
@@ -378,115 +387,127 @@
             // 
             // cLayer
             // 
-            this.cLayer.HeaderText = "Layer";
+            this.cLayer.HeaderText = "层别";
             this.cLayer.MinimumWidth = 10;
             this.cLayer.Name = "cLayer";
             this.cLayer.ReadOnly = true;
             // 
             // cSPEC
             // 
-            this.cSPEC.HeaderText = "SPEC";
+            this.cSPEC.HeaderText = "标准值";
             this.cSPEC.MinimumWidth = 10;
             this.cSPEC.Name = "cSPEC";
             this.cSPEC.ReadOnly = true;
             // 
             // cMaxOffset
             // 
-            this.cMaxOffset.HeaderText = "Up";
+            this.cMaxOffset.HeaderText = "上限";
             this.cMaxOffset.MinimumWidth = 10;
             this.cMaxOffset.Name = "cMaxOffset";
             this.cMaxOffset.ReadOnly = true;
             // 
             // cMinOffset
             // 
-            this.cMinOffset.HeaderText = "Down";
+            this.cMinOffset.HeaderText = "下限";
             this.cMinOffset.MinimumWidth = 10;
             this.cMinOffset.Name = "cMinOffset";
             this.cMinOffset.ReadOnly = true;
             // 
             // cAverage
             // 
-            this.cAverage.HeaderText = "Average";
+            this.cAverage.HeaderText = "平均值";
             this.cAverage.MinimumWidth = 10;
             this.cAverage.Name = "cAverage";
             this.cAverage.ReadOnly = true;
             // 
             // cMax
             // 
-            this.cMax.HeaderText = "Max";
+            this.cMax.HeaderText = "最大值";
             this.cMax.MinimumWidth = 10;
             this.cMax.Name = "cMax";
             this.cMax.ReadOnly = true;
             // 
             // cMin
             // 
-            this.cMin.HeaderText = "Min";
+            this.cMin.HeaderText = "最小值";
             this.cMin.MinimumWidth = 10;
             this.cMin.Name = "cMin";
             this.cMin.ReadOnly = true;
             // 
             // cResult
             // 
-            this.cResult.HeaderText = "Result";
+            this.cResult.HeaderText = "结果";
             this.cResult.MinimumWidth = 10;
             this.cResult.Name = "cResult";
             this.cResult.ReadOnly = true;
             // 
             // cSerial
             // 
-            this.cSerial.HeaderText = "Serial";
+            this.cSerial.HeaderText = "序列号";
             this.cSerial.MinimumWidth = 10;
             this.cSerial.Name = "cSerial";
             this.cSerial.ReadOnly = true;
             // 
             // cData
             // 
-            this.cData.HeaderText = "Data";
+            this.cData.HeaderText = "日期";
             this.cData.MinimumWidth = 10;
             this.cData.Name = "cData";
             this.cData.ReadOnly = true;
             // 
             // cTime
             // 
-            this.cTime.HeaderText = "Time";
+            this.cTime.HeaderText = "时间";
             this.cTime.MinimumWidth = 10;
             this.cTime.Name = "cTime";
             this.cTime.ReadOnly = true;
             // 
             // cSeDiff
             // 
-            this.cSeDiff.HeaderText = "SE/DIFF";
+            this.cSeDiff.HeaderText = "单端/差分";
             this.cSeDiff.MinimumWidth = 10;
             this.cSeDiff.Name = "cSeDiff";
             this.cSeDiff.ReadOnly = true;
             // 
             // cCurveData
             // 
-            this.cCurveData.HeaderText = "CurveData";
+            this.cCurveData.HeaderText = "数据路径";
             this.cCurveData.MinimumWidth = 10;
             this.cCurveData.Name = "cCurveData";
             this.cCurveData.ReadOnly = true;
             // 
             // cCurveImage
             // 
-            this.cCurveImage.HeaderText = "CurveImage";
+            this.cCurveImage.HeaderText = "图片路径";
             this.cCurveImage.MinimumWidth = 10;
             this.cCurveImage.Name = "cCurveImage";
             this.cCurveImage.ReadOnly = true;
             // 
             // cPanel_ID
             // 
-            this.cPanel_ID.HeaderText = "Panel_ID";
+            this.cPanel_ID.HeaderText = "大板编号";
             this.cPanel_ID.MinimumWidth = 8;
             this.cPanel_ID.Name = "cPanel_ID";
             this.cPanel_ID.ReadOnly = true;
             // 
             // cSet_ID
             // 
-            this.cSet_ID.HeaderText = "Set_ID";
+            this.cSet_ID.HeaderText = "小板编号";
             this.cSet_ID.MinimumWidth = 8;
             this.cSet_ID.Name = "cSet_ID";
             this.cSet_ID.ReadOnly = true;
+            // 
+            // MaterialNo
+            // 
+            this.MaterialNo.HeaderText = "料号";
+            this.MaterialNo.Name = "MaterialNo";
+            this.MaterialNo.ReadOnly = true;
+            // 
+            // BatchNo
+            // 
+            this.BatchNo.HeaderText = "批号";
+            this.BatchNo.Name = "BatchNo";
+            this.BatchNo.ReadOnly = true;
             // 
             // tabPage2
             // 
@@ -524,7 +545,9 @@
             this.dataGridViewTextBoxColumn13,
             this.dataGridViewTextBoxColumn14,
             this.Column1,
-            this.Column2});
+            this.Column2,
+            this.Column5,
+            this.Column6});
             this.dgv_OutPutResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_OutPutResult.Name = "dgv_OutPutResult";
             this.dgv_OutPutResult.RowHeadersVisible = false;
@@ -532,102 +555,6 @@
             this.dgv_OutPutResult.RowTemplate.Height = 23;
             this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 288);
             this.dgv_OutPutResult.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Layer";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "SPEC";
-            this.dataGridViewTextBoxColumn2.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Up";
-            this.dataGridViewTextBoxColumn3.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Down";
-            this.dataGridViewTextBoxColumn4.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Average";
-            this.dataGridViewTextBoxColumn5.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Max";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Min";
-            this.dataGridViewTextBoxColumn7.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "Result";
-            this.dataGridViewTextBoxColumn8.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.HeaderText = "Serial";
-            this.dataGridViewTextBoxColumn9.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.HeaderText = "Data";
-            this.dataGridViewTextBoxColumn10.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.HeaderText = "Time";
-            this.dataGridViewTextBoxColumn11.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            this.dataGridViewTextBoxColumn12.HeaderText = "SE/DIFF";
-            this.dataGridViewTextBoxColumn12.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "CurveData";
-            this.dataGridViewTextBoxColumn13.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "CurveImage";
-            this.dataGridViewTextBoxColumn14.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Panel_ID";
-            this.Column1.MinimumWidth = 8;
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Set_ID";
-            this.Column2.MinimumWidth = 8;
-            this.Column2.Name = "Column2";
             // 
             // tabPage3
             // 
@@ -664,7 +591,9 @@
             this.dataGridViewTextBoxColumn27,
             this.dataGridViewTextBoxColumn28,
             this.Column3,
-            this.Column4});
+            this.Column4,
+            this.Column7,
+            this.Column8});
             this.dgv_HistoryResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_HistoryResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_HistoryResult.Name = "dgv_HistoryResult";
@@ -675,114 +604,20 @@
             this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 288);
             this.dgv_HistoryResult.TabIndex = 1;
             // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.HeaderText = "Layer";
-            this.dataGridViewTextBoxColumn15.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "SPEC";
-            this.dataGridViewTextBoxColumn16.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.HeaderText = "Up";
-            this.dataGridViewTextBoxColumn17.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.HeaderText = "Down";
-            this.dataGridViewTextBoxColumn18.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.HeaderText = "Average";
-            this.dataGridViewTextBoxColumn19.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            // 
-            // dataGridViewTextBoxColumn20
-            // 
-            this.dataGridViewTextBoxColumn20.HeaderText = "Max";
-            this.dataGridViewTextBoxColumn20.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-            // 
-            // dataGridViewTextBoxColumn21
-            // 
-            this.dataGridViewTextBoxColumn21.HeaderText = "Min";
-            this.dataGridViewTextBoxColumn21.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-            // 
-            // dataGridViewTextBoxColumn22
-            // 
-            this.dataGridViewTextBoxColumn22.HeaderText = "Result";
-            this.dataGridViewTextBoxColumn22.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            // 
-            // dataGridViewTextBoxColumn23
-            // 
-            this.dataGridViewTextBoxColumn23.HeaderText = "Serial";
-            this.dataGridViewTextBoxColumn23.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
-            // 
-            // dataGridViewTextBoxColumn24
-            // 
-            this.dataGridViewTextBoxColumn24.HeaderText = "Data";
-            this.dataGridViewTextBoxColumn24.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-            // 
-            // dataGridViewTextBoxColumn25
-            // 
-            this.dataGridViewTextBoxColumn25.HeaderText = "Time";
-            this.dataGridViewTextBoxColumn25.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
-            // 
-            // dataGridViewTextBoxColumn26
-            // 
-            this.dataGridViewTextBoxColumn26.HeaderText = "SE/DIFF";
-            this.dataGridViewTextBoxColumn26.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-            // 
-            // dataGridViewTextBoxColumn27
-            // 
-            this.dataGridViewTextBoxColumn27.HeaderText = "CurveData";
-            this.dataGridViewTextBoxColumn27.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-            // 
-            // dataGridViewTextBoxColumn28
-            // 
-            this.dataGridViewTextBoxColumn28.HeaderText = "CurveImage";
-            this.dataGridViewTextBoxColumn28.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Panel_ID";
-            this.Column3.MinimumWidth = 8;
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Set_ID";
-            this.Column4.MinimumWidth = 8;
-            this.Column4.Name = "Column4";
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.mFlag,
             this.mStep,
             this.mDescription,
+            this.limit_up,
+            this.limit_down,
             this.mLayer});
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.MultiSelect = false;
@@ -797,41 +632,51 @@
             this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // mFlag
-            // 
-            this.mFlag.HeaderText = "Flag";
-            this.mFlag.MinimumWidth = 10;
-            this.mFlag.Name = "mFlag";
-            this.mFlag.ReadOnly = true;
-            this.mFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mFlag.Width = 54;
-            // 
             // mStep
             // 
-            this.mStep.HeaderText = "Step";
+            this.mStep.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.mStep.FillWeight = 101.5228F;
+            this.mStep.HeaderText = "测试步骤";
             this.mStep.MinimumWidth = 10;
             this.mStep.Name = "mStep";
             this.mStep.ReadOnly = true;
             this.mStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mStep.Width = 54;
             // 
             // mDescription
             // 
-            this.mDescription.HeaderText = "Description";
+            this.mDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.mDescription.FillWeight = 99.61929F;
+            this.mDescription.HeaderText = "标准值";
             this.mDescription.MinimumWidth = 10;
             this.mDescription.Name = "mDescription";
             this.mDescription.ReadOnly = true;
             this.mDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mDescription.Width = 96;
+            // 
+            // limit_up
+            // 
+            this.limit_up.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.limit_up.FillWeight = 99.61929F;
+            this.limit_up.HeaderText = "上限";
+            this.limit_up.Name = "limit_up";
+            this.limit_up.ReadOnly = true;
+            // 
+            // limit_down
+            // 
+            this.limit_down.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.limit_down.FillWeight = 99.61929F;
+            this.limit_down.HeaderText = "下限";
+            this.limit_down.Name = "limit_down";
+            this.limit_down.ReadOnly = true;
             // 
             // mLayer
             // 
-            this.mLayer.HeaderText = "Layer";
+            this.mLayer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.mLayer.FillWeight = 99.61929F;
+            this.mLayer.HeaderText = "层别";
             this.mLayer.MinimumWidth = 10;
             this.mLayer.Name = "mLayer";
             this.mLayer.ReadOnly = true;
             this.mLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mLayer.Width = 60;
             // 
             // splitContainer1
             // 
@@ -880,6 +725,218 @@
             this.lable_test_result.TabIndex = 1;
             this.lable_test_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "层别";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "标准值";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "上限";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "下限";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "平均值";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "最大值";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "最小值";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "结果";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "序列号";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.HeaderText = "日期";
+            this.dataGridViewTextBoxColumn10.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.HeaderText = "时间";
+            this.dataGridViewTextBoxColumn11.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.HeaderText = "单端/差分";
+            this.dataGridViewTextBoxColumn12.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.HeaderText = "数据路径";
+            this.dataGridViewTextBoxColumn13.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.HeaderText = "图片路径";
+            this.dataGridViewTextBoxColumn14.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "大板编号";
+            this.Column1.MinimumWidth = 8;
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "小板编号";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "料号";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "批号";
+            this.Column6.Name = "Column6";
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.HeaderText = "层别";
+            this.dataGridViewTextBoxColumn15.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.HeaderText = "标准值";
+            this.dataGridViewTextBoxColumn16.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.HeaderText = "上限";
+            this.dataGridViewTextBoxColumn17.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.HeaderText = "下限";
+            this.dataGridViewTextBoxColumn18.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.HeaderText = "平均值";
+            this.dataGridViewTextBoxColumn19.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.HeaderText = "最大值";
+            this.dataGridViewTextBoxColumn20.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            // 
+            // dataGridViewTextBoxColumn21
+            // 
+            this.dataGridViewTextBoxColumn21.HeaderText = "最小值";
+            this.dataGridViewTextBoxColumn21.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
+            // 
+            // dataGridViewTextBoxColumn22
+            // 
+            this.dataGridViewTextBoxColumn22.HeaderText = "结果";
+            this.dataGridViewTextBoxColumn22.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            // 
+            // dataGridViewTextBoxColumn23
+            // 
+            this.dataGridViewTextBoxColumn23.HeaderText = "序列号";
+            this.dataGridViewTextBoxColumn23.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
+            // 
+            // dataGridViewTextBoxColumn24
+            // 
+            this.dataGridViewTextBoxColumn24.HeaderText = "日期";
+            this.dataGridViewTextBoxColumn24.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+            // 
+            // dataGridViewTextBoxColumn25
+            // 
+            this.dataGridViewTextBoxColumn25.HeaderText = "时间";
+            this.dataGridViewTextBoxColumn25.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
+            // 
+            // dataGridViewTextBoxColumn26
+            // 
+            this.dataGridViewTextBoxColumn26.HeaderText = "单端/差分";
+            this.dataGridViewTextBoxColumn26.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+            // 
+            // dataGridViewTextBoxColumn27
+            // 
+            this.dataGridViewTextBoxColumn27.HeaderText = "数据路径";
+            this.dataGridViewTextBoxColumn27.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+            // 
+            // dataGridViewTextBoxColumn28
+            // 
+            this.dataGridViewTextBoxColumn28.HeaderText = "图片路径";
+            this.dataGridViewTextBoxColumn28.MinimumWidth = 10;
+            this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "大板编号";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "小板编号";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "料号";
+            this.Column7.Name = "Column7";
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "批号";
+            this.Column8.Name = "Column8";
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -889,7 +946,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230524";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230527";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
@@ -939,24 +996,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mFlag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mStep;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mDescription;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mLayer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridView dgv_HistoryResult;
         private System.Windows.Forms.ToolStripLabel tsb_XmlFileName;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -965,6 +1004,11 @@
         private System.Windows.Forms.ToolStripTextBox tsb_Pnl_ID;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox tsb_Set_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mStep;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn limit_up;
+        private System.Windows.Forms.DataGridViewTextBoxColumn limit_down;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mLayer;
         private System.Windows.Forms.DataGridViewTextBoxColumn cLayer;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSPEC;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMaxOffset;
@@ -981,8 +1025,26 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cCurveImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPanel_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSet_ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaterialNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BatchNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
@@ -999,6 +1061,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
     }
 }
 

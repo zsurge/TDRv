@@ -180,9 +180,27 @@ namespace TDRv
             {
                 int index = dataGridView1.Rows.Add();
 
-                dataGridView1.Rows[index].Cells[1].Value = dt.Rows[i].Cells[1].Value;
-                dataGridView1.Rows[index].Cells[2].Value = dt.Rows[i].Cells[2].Value;
-                dataGridView1.Rows[index].Cells[3].Value = dt.Rows[i].Cells[3].Value;
+                dataGridView1.Rows[index].Cells[0].Value = dt.Rows[i].Cells[1].Value;
+                dataGridView1.Rows[index].Cells[1].Value = dt.Rows[i].Cells[5].Value;
+
+                if (dt.Rows[i].Cells[8].Value.ToString() == "%")
+                {
+                    float impedanceDefine = float.Parse(dt.Rows[i].Cells[5].Value.ToString());
+                    float impedanceDefine_up = (float.Parse(dt.Rows[i].Cells[7].Value.ToString())+100)/100;
+                    float impedanceDefine_low = (float.Parse(dt.Rows[i].Cells[6].Value.ToString())+100)/100;
+
+                    dataGridView1.Rows[index].Cells[2].Value = (impedanceDefine * impedanceDefine_up).ToString();
+                    dataGridView1.Rows[index].Cells[3].Value = (impedanceDefine * impedanceDefine_low).ToString();
+                }
+                else
+                {
+                    dataGridView1.Rows[index].Cells[2].Value = dt.Rows[i].Cells[7].Value;
+                    dataGridView1.Rows[index].Cells[3].Value = dt.Rows[i].Cells[6].Value;
+                }
+
+
+
+                dataGridView1.Rows[index].Cells[4].Value = dt.Rows[i].Cells[3].Value;
             }
 
             if (optStatus.isConnect && optStatus.isLoadXml)
@@ -282,13 +300,15 @@ namespace TDRv
                 tr.Valid_End = dt.Rows[i].Cells["TestToThreshold"].Value.ToString();
                 tr.Mode = dt.Rows[i].Cells["InputMode"].Value.ToString();
                 tr.Std = dt.Rows[i].Cells["DataPointCheck"].Value.ToString();
-                //tr.Curve_data = dt.Rows[i].Cells["SaveCurve"].Value.ToString();
-                //tr.Curve_image = dt.Rows[i].Cells["SaveImage"].Value.ToString();
                 tr.Curve_data = dt.Rows[i].Cells["RecordPath"].Value.ToString();
                 tr.Curve_image = dt.Rows[i].Cells["RecordPath"].Value.ToString();
                 tr.Open_hreshold = int.Parse(dt.Rows[i].Cells["OpenThreshold"].Value.ToString()); //开路位置
                 tr.ImpedanceLimit_Unit = dt.Rows[i].Cells["ImpedanceLimitUnit"].Value.ToString(); //单位
-                tr.Offset = Convert.ToSingle(dt.Rows[i].Cells["CalibrateOffset"].Value.ToString());
+                tr.Offset = Convert.ToSingle(dt.Rows[i].Cells["DielectricConstant"].Value.ToString());
+
+                tr.MaterialNo = dt.Rows[i].Cells["CalibratedTimeScale"].Value.ToString();
+                tr.BatchNo = dt.Rows[i].Cells["CalibrateOffset"].Value.ToString();
+
                 paramList.Add(tr);
             }
         }
@@ -1587,6 +1607,9 @@ namespace TDRv
                 _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
                 _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
 
+                _dgv.Rows[index].Cells[16].Value = paramList[measIndex.currentIndex].MaterialNo; //记录料号
+                _dgv.Rows[index].Cells[17].Value = paramList[measIndex.currentIndex].BatchNo; //记录批号  
+
                 if (flag == CURRENT_RECORD) //当前量测
                 {
                     //只有最后一个走完，流水才++
@@ -1633,7 +1656,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID" + "MaterialNo," + "BatchNo";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;

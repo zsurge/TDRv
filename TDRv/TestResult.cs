@@ -30,6 +30,8 @@ namespace TDRv
         private int devmode = 0;        //为区分当前测试模式是单端还是差分
         private int total_item = 0;   //当前配方的总的条数
         private int open_threshold = 0;  //开路位置
+        private string materialNo = string.Empty; //批号
+        private string batchNo = string.Empty;    //料号
 
         public string Layer
         {
@@ -149,5 +151,19 @@ namespace TDRv
             get { return open_threshold; }
             set { open_threshold = value; }
         }
+
+        public string MaterialNo
+        {
+            get { return materialNo; }
+            set { materialNo = value; }
+        }
+
+
+        public string BatchNo
+        {
+            get { return batchNo; }
+            set { batchNo = value; }
+        }
+
     }
 }

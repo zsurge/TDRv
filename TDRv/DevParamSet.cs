@@ -380,7 +380,7 @@ namespace TDRv
                 tx_p_testSn.Text = (e.RowIndex+1).ToString();
                 tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
                 tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
-                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
+                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["CalibratedTimeScale"].Value.ToString();
                 tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
                 tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
                 tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
@@ -415,11 +415,14 @@ namespace TDRv
                 tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
                 tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
                 tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
-                tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
+                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["CalibratedTimeScale"].Value.ToString();//modify 2023.05.27 料号
+                tx_p_batchNo.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();//modify 2023.05.27 批号
                 tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
-
-
                 string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
+
+
+
+
                 if (string.Compare(isSaveCsv, "Enable", true) == 0)
                 {
                     radio_p_data_open.Checked = true;
@@ -489,10 +492,8 @@ namespace TDRv
                     return;
                 }
 
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                //tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
 
-                tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-         
             }
         }
 
@@ -509,8 +510,7 @@ namespace TDRv
                     return;
                 }
 
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();               
+                //tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
              
             }
         }
@@ -573,10 +573,12 @@ namespace TDRv
             this.dgv_param.Rows[index].Cells[1].Value = index+1;            
             this.dgv_param.Rows[index].Cells[2].Value = tx_p_Description.Text;
             this.dgv_param.Rows[index].Cells[3].Value = tx_p_Layer.Text;
-            this.dgv_param.Rows[index].Cells[4].Value = tx_p_Remark.Text;
             this.dgv_param.Rows[index].Cells[5].Value = tx_p_TargetValue.Text;
             this.dgv_param.Rows[index].Cells[6].Value = tx_p_lowLimit.Text;
             this.dgv_param.Rows[index].Cells[7].Value = tx_p_highLimit.Text;
+
+           
+
 
             if (radio_units_ohm.Checked)
             {
@@ -606,8 +608,11 @@ namespace TDRv
             this.dgv_param.Rows[index].Cells[14].Value = tx_p_Index.Text;
             this.dgv_param.Rows[index].Cells[15].Value = "0";
             this.dgv_param.Rows[index].Cells[16].Value = "0";
-            this.dgv_param.Rows[index].Cells[17].Value = "0";
-            this.dgv_param.Rows[index].Cells[18].Value = tx_p_yOffset.Text;
+
+            //添加料号批号
+            this.dgv_param.Rows[index].Cells[17].Value = tx_p_Remark.Text;
+            this.dgv_param.Rows[index].Cells[18].Value = tx_p_batchNo.Text;
+
             this.dgv_param.Rows[index].Cells[19].Value = tx_p_savePath.Text;
 
             if (radio_p_data_open.Checked)
@@ -628,8 +633,8 @@ namespace TDRv
                 this.dgv_param.Rows[index].Cells[21].Value = "Disable";
             }
 
-
-            this.dgv_param.Rows[index].Cells[22].Value = "4.2";
+            //这里改为偏移量
+            this.dgv_param.Rows[index].Cells[22].Value = tx_p_yOffset.Text;
 
 
             if (radio_p_tag_avg.Checked)
@@ -743,11 +748,11 @@ namespace TDRv
         {
             if (radio_p_single.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
 
                 tx_p_Description.Text = "50";
                 tx_p_Index.Text = "125";
@@ -771,11 +776,11 @@ namespace TDRv
         {
             if (radio_p_diff.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
 
                 tx_p_Description.Text = "100";
                 tx_p_Index.Text = "200";
@@ -793,8 +798,8 @@ namespace TDRv
             }
         }
 
-        private void tx_p_yOffset_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        //private void tx_p_yOffset_KeyPress(object sender, KeyPressEventArgs e)
+        //{
             /*
             //数字、小数点（最大到2位）、退格键、负号
             if ((e.KeyChar < 48 || e.KeyChar > 57) && e.KeyChar != 8 && e.KeyChar != (char)('.') && e.KeyChar != (char)('-'))
@@ -848,7 +853,7 @@ namespace TDRv
                 e.Handled = true;
             }
           */ 
-        }
+        //}
 
 
         private void save_xmlfilename_config()
@@ -877,6 +882,25 @@ namespace TDRv
         private void radio_p_image_close_CheckedChanged(object sender, EventArgs e)
         {
             tx_p_savePath.Text = "";
+        }
+
+        private void tx_p_highLimit_TextChanged(object sender, EventArgs e)
+        {
+            if (int.TryParse(tx_p_highLimit.Text, out int input))
+            {
+                tx_p_lowLimit.Text = "-" + input.ToString();
+                //if (radio_units_percent.Checked)
+                //{
+                //    tx_p_lowLimit.Text = "-" + input.ToString();
+                //}
+                //else
+                //{
+                //    if (tx_p_TargetValue.Text != null)
+                //    {
+                //        tx_p_lowLimit.Text =  (float.Parse(tx_p_TargetValue.Text)*2 - input).ToString();
+                //    }
+                //}
+            }
         }
     }//end class
 }//end namespace
