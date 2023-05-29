@@ -690,10 +690,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                //add 2022.07.25 modify 2022.10.25,delay 2023.01.25 delay 2023.05.28
+                //add 2022.07.25 modify 2022.10.25,delay 2023.01.25 delay 2023.05.28 2023.01.25 delay 2023.06.28 
                 else if (sn.Contains("MY54705930") )
                 {
-                    if (202305281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202306281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
