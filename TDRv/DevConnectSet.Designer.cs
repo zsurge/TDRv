@@ -49,76 +49,76 @@
             "E5063A",
             "PNA",
             "USB-ENA"});
-            this.combDevType.Location = new System.Drawing.Point(106, 24);
-            this.combDevType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.combDevType.Location = new System.Drawing.Point(161, 20);
+            this.combDevType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.combDevType.Name = "combDevType";
-            this.combDevType.Size = new System.Drawing.Size(151, 26);
+            this.combDevType.Size = new System.Drawing.Size(118, 23);
             this.combDevType.TabIndex = 0;
             this.combDevType.Text = "E5063A";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(288, 28);
+            this.label1.Location = new System.Drawing.Point(293, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 18);
+            this.label1.Size = new System.Drawing.Size(111, 15);
             this.label1.TabIndex = 1;
-            this.label1.Text = "VISA位置:";
+            this.label1.Text = "VISA Address:";
             // 
             // btn_ConnectDev
             // 
-            this.btn_ConnectDev.Location = new System.Drawing.Point(798, 21);
-            this.btn_ConnectDev.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_ConnectDev.Location = new System.Drawing.Point(709, 18);
+            this.btn_ConnectDev.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn_ConnectDev.Name = "btn_ConnectDev";
-            this.btn_ConnectDev.Size = new System.Drawing.Size(112, 34);
+            this.btn_ConnectDev.Size = new System.Drawing.Size(100, 28);
             this.btn_ConnectDev.TabIndex = 3;
-            this.btn_ConnectDev.Text = "连接仪器";
+            this.btn_ConnectDev.Text = "Connection";
             this.btn_ConnectDev.UseVisualStyleBackColor = true;
             this.btn_ConnectDev.Click += new System.EventHandler(this.btn_ConnectDev_Click);
             // 
             // combDevString
             // 
             this.combDevString.FormattingEnabled = true;
-            this.combDevString.Location = new System.Drawing.Point(386, 24);
-            this.combDevString.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.combDevString.Location = new System.Drawing.Point(410, 20);
+            this.combDevString.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.combDevString.Name = "combDevString";
-            this.combDevString.Size = new System.Drawing.Size(384, 26);
+            this.combDevString.Size = new System.Drawing.Size(275, 23);
             this.combDevString.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 28);
+            this.label2.Location = new System.Drawing.Point(16, 23);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.Size = new System.Drawing.Size(127, 15);
             this.label2.TabIndex = 5;
-            this.label2.Text = "设备型号";
+            this.label2.Text = "Instrument Type";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 74);
+            this.label3.Location = new System.Drawing.Point(16, 62);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 18);
+            this.label3.Size = new System.Drawing.Size(142, 15);
             this.label3.TabIndex = 6;
-            this.label3.Text = "料号：";
+            this.label3.Text = "Material Number：";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(106, 69);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Location = new System.Drawing.Point(161, 58);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(662, 28);
+            this.textBox1.Size = new System.Drawing.Size(522, 25);
             this.textBox1.TabIndex = 7;
             // 
             // DevConnectSet
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1010, 456);
+            this.ClientSize = new System.Drawing.Size(898, 380);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -127,9 +127,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.combDevType);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "DevConnectSet";
-            this.Text = "仪器设定";
+            this.Text = "Instrument settings";
             this.Load += new System.EventHandler(this.DevConnectSet_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

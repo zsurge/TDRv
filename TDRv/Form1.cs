@@ -119,7 +119,7 @@ namespace TDRv
         {
             if (dgv_CurrentResult.Rows.Count > 0)
             {
-                DialogResult dr = MessageBox.Show("将要清除测试数据，是否保存","提示",MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show("About to clear test data, do you want to save it", "Tip",MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                 {
                     DataGridViewToExcel(dgv_CurrentResult);
@@ -188,7 +188,7 @@ namespace TDRv
             if (optStatus.isConnect && optStatus.isLoadXml)
             {
                 tsb_GetTestIndex.Enabled = true;
-                CommonFuncs.ShowMsg(eHintInfoType.hint, "请执行开路定义");
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "Please execute open circuit definition");
             }
 
             //禁止删除行
@@ -450,13 +450,13 @@ namespace TDRv
 
                 if (dataGridView1.Rows.Count == 0)
                 {
-                    MessageBox.Show("请先装载配方");
+                    MessageBox.Show("Please load the recipe first");
                     return;
                 }
 
                 if (!optStatus.isConnect)
                 {
-                    MessageBox.Show("请先连接设备");
+                    MessageBox.Show("Please connect the device first");
                     return;
                 }
 
@@ -504,7 +504,7 @@ namespace TDRv
 
                 if (tdd11_array.Length < 200)
                 {
-                    MessageBox.Show("获取差分开路定义失败");
+                    MessageBox.Show("Failed to obtain differential open circuit definition");
                 }
 
                 //查找tdd11差分的索引值
@@ -644,7 +644,7 @@ namespace TDRv
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
 
 
@@ -821,9 +821,9 @@ namespace TDRv
                 chart1.ChartAreas[0].AxisX.Maximum = (float)measData.Count; //设置X坐标最大值
                 chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString();
-                chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
-                chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
+                chart1.Series[0].LegendText = "AVG:" + tmpResult.Average().ToString();
+                chart1.Series[1].LegendText = "Max:" + tmpResult.Max().ToString();
+                chart1.Series[2].LegendText = "Min:" + tmpResult.Min().ToString();
             }
             else
             {
@@ -1043,7 +1043,7 @@ namespace TDRv
         {
             if (tsb_Pnl_ID.Text.Length == 0)
             {
-                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
+                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id cannot be empty");
                 return;
             }
 
@@ -1137,7 +1137,7 @@ namespace TDRv
                 }
                 else
                 {                    
-                    CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "Device not connected or not open circuit");
                 }
             });
 
@@ -1210,7 +1210,7 @@ namespace TDRv
             dlg.FilterIndex = 0;
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
-            dlg.Title = "保存为csv文件";    
+            dlg.Title = "Save as CSV file";    
             dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName);            
 
             if (dlg.ShowDialog() == DialogResult.OK)
@@ -1267,12 +1267,12 @@ namespace TDRv
                     }
                     sw.Close();
                     myStream.Close();                    
-                    CommonFuncs.ShowMsg(eHintInfoType.hint, "导出报告成功!");
+                    CommonFuncs.ShowMsg(eHintInfoType.hint, "Export report successful!");
                     return true;
                 }
                 catch (Exception e)
                 {                    
-                    CommonFuncs.ShowMsg(eHintInfoType.error, "导出报告失败!");
+                    CommonFuncs.ShowMsg(eHintInfoType.error, "Export report failed!");
                     return false;
                 }
                 finally
@@ -1283,7 +1283,7 @@ namespace TDRv
             }
             else
             {                
-                CommonFuncs.ShowMsg(eHintInfoType.hint, "取消导出报告操作!");
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "Cancel export report operation!");
                 return false;
             }
         }
@@ -1294,7 +1294,7 @@ namespace TDRv
             {
                 if (tsb_Pnl_ID.Text.Length == 0)
                 {
-                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空!");
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id cannot be empty!");
                     return;
                 }
                 if (isExecuteComplete)
@@ -1418,9 +1418,9 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
-                    chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
-                    chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
+                    chart1.Series[0].LegendText = "AVG:" + tmpResult.Average().ToString("F2");
+                    chart1.Series[1].LegendText = "Max:" + tmpResult.Max().ToString("F2");
+                    chart1.Series[2].LegendText = "Min:" + tmpResult.Min().ToString("F2");
                 }
                 else
                 {
@@ -1711,7 +1711,7 @@ namespace TDRv
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("日志文件路径错误，请重新设置\r\n", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Log file path error, please reset", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

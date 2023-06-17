@@ -55,12 +55,12 @@ namespace TDRv
                 }
                 else
                 {
-                    MessageBox.Show("未正确装载配方文件");
+                    MessageBox.Show("Recipe file not loaded correctly");
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show("配方文件格式错误\r\n" + ex.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Recipe file format error" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -80,8 +80,8 @@ namespace TDRv
             OpenFileDialog pOpenFileDialog = new OpenFileDialog();
 
             //设置对话框标题
-            pOpenFileDialog.Title = "载入XML文件";
-            pOpenFileDialog.Filter = "XML文件|*.xml";
+            pOpenFileDialog.Title = "Load XML file";
+            pOpenFileDialog.Filter = "XML File|*.xml";
             pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory + "\\Config";
             //监测文件是否存在
             pOpenFileDialog.CheckFileExists = true;
@@ -158,14 +158,14 @@ namespace TDRv
         {
             if (dgv_param.Rows.Count == 0)
             {
-                MessageBox.Show("请新建配方");
+                MessageBox.Show("Please create a new recipe");
                 return;
             }
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Title = "保存XML文件";
+            sfd.Title = "Save XML file";
             sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
-            sfd.Filter = "XML文件|*.xml";
+            sfd.Filter = "XML File|*.xml";
 
 
 
@@ -309,7 +309,7 @@ namespace TDRv
 
             if (dgv_param.Rows.Count == 0)
             {
-                MessageBox.Show("请先新建一条配方");
+                MessageBox.Show("Please create a new recipe");
                 return;
             }
 
@@ -391,8 +391,8 @@ namespace TDRv
                 if (string.Compare(units, "ohms", true) == 0)
                 {
                     radio_units_ohm.Checked = true;
-                    lab_highlimit_unit.Text = "欧姆";
-                    lab_lowlimit_unit.Text  = "欧姆";
+                    lab_highlimit_unit.Text = "ohm";
+                    lab_lowlimit_unit.Text  = "ohm";
                 }
                 else
                 {
@@ -460,7 +460,7 @@ namespace TDRv
         private void btn_p_SavePath_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog sOpt = new FolderBrowserDialog();
-            sOpt.Description = "请选择文件路径";
+            sOpt.Description = "Please select a file path";
             
             DialogResult result = sOpt.ShowDialog();
             if (result == DialogResult.Cancel)
@@ -480,8 +480,8 @@ namespace TDRv
             if (radio_units_ohm.Checked)
             {
        
-                lab_highlimit_unit.Text = "欧姆";
-                lab_lowlimit_unit.Text = "欧姆";
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
 
                 if (clickFlag)
                 {
@@ -520,9 +520,9 @@ namespace TDRv
             if (isSaveXml == false)
             {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Title = "保存XML文件";
+                sfd.Title = "Save XML file";
                 sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
-                sfd.Filter = "XML文件|*.xml";
+                sfd.Filter = "XML File|*.xml";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {

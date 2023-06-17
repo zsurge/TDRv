@@ -32,13 +32,13 @@ namespace TDRv.Driver
             switch (eInfoType)
             {
                 case eHintInfoType.hint://提示类型的信息
-                    MessageBox.Show(strInfor, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(strInfor, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case eHintInfoType.waring://警告类型的信息
-                    MessageBox.Show(strInfor, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(strInfor, "warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     break;
                 case eHintInfoType.error://错误类型的信息
-                    MessageBox.Show(strInfor, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(strInfor, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
                 default:
                     break;

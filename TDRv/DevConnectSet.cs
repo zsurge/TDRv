@@ -417,10 +417,11 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59100175")) //add 2021.11.22 测试样机使用
+                //TCPIP0::192.168.1.2::inst0::INSTR MY59203255
+                else if (sn.Contains("MY59203255")) //add 2023 0617 测试样机使用
                 {
 
-                    if (202201221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202306291400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -1104,7 +1105,7 @@ namespace TDRv
             {
                 optStatus.isConnect = false;
                 combDevString.BackColor = Color.Red;
-                MessageBox.Show("暂不支持，请联系支持人员!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please contact the technician", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
