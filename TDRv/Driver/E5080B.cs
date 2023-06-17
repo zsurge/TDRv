@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TDRv.Driver
@@ -193,51 +194,47 @@ namespace TDRv.Driver
             string response = string.Empty;
             string cmd0,cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
 
-            Array.Clear(ret, 0, 200000);
-            cmd0 = "CALC:PAR:CAT?";
-            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd0 + "\n"), cmd0.Length, out count);
-            visa32.viRead(nInstrumentHandle, ret, 200000, out count);
 
-            if (channel == 1)
-            {
-                if (devType == 2)
-                {
-                    cmd1 = "CALC:PAR:MNUM 1";
-                }
-                else
-                {
-                    cmd1 = "CALC:PAR:SEL \"win1_tr1\"";        //差分
-                }  
-            }
-            else
-            {
-                if (devType == 2)
-                {
-                    //cmd1 = "CALC:PAR:SEL \"win2_tr1\"";        //单端
-                    cmd1 = "CALC:PAR:MNUM 2";
-                }
-                else
-                {
-                    cmd1 = "CALC:PAR:SEL \"win1_tr2\"";        //单端
-                }
-            }
+            //用于查询仪器中所有计算通道（Parameter）的信息和配置。执行该指令后，仪器会返回一个由逗号分隔的字符串列表，其中每个字符串表示一个计算通道的信息和配置，包括名称、类型、表达式、单位等。
+            //Array.Clear(ret, 0, 200000);
+            //cmd0 = "CALC:PAR:CAT?";
+            //visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd0 + "\n"), cmd0.Length, out count);
+            //visa32.viRead(nInstrumentHandle, ret, 200000, out count);
+
+            //if (channel == 1)
+            //{
+            //    if (devType == 2)
+            //    {
+            //        cmd1 = "CALC:PAR:MNUM 1";
+            //    }
+            //    else
+            //    {
+            //        cmd1 = "CALC:PAR:SEL \"win1_tr1\"";        //差分
+            //    }  
+            //}
+            //else
+            //{
+            //    if (devType == 2)
+            //    {
+            //        //cmd1 = "CALC:PAR:SEL \"win2_tr1\"";        //单端
+            //        cmd1 = "CALC:PAR:MNUM 2";
+            //    }
+            //    else
+            //    {
+            //        cmd1 = "CALC:PAR:SEL \"win1_tr2\"";        //单端
+            //    }
+            //}
+
+      
             
-            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
+            //visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
+
+            //cmd3 = "DISPlay:ENABle ON";
+            //visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd3 + "\n"), cmd3.Length, out count);
 
 
-            //cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
-            //viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd2 + "\n"), cmd2.Length, out count);
-            //viError = visa32.viRead(nInstrumentHandle, result, 256, out count);
-            //response = Encoding.ASCII.GetString(result, 0, count); 
-
-            cmd3 = "DISPlay:ENABle ON";
-            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd3 + "\n"), cmd3.Length, out count);
-
-            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
-
-
-            cmd5 = ":INITiate1:CONTinuous ON";
-            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd5 + "\n"), cmd5.Length, out count);
+            //cmd5 = ":INITiate1:CONTinuous ON";
+            //visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd5 + "\n"), cmd5.Length, out count);
 
             visa32.viClear(nInstrumentHandle);
 
@@ -251,7 +248,46 @@ namespace TDRv.Driver
             return viError;
         }
 
+        public static int pre_measuration(int nInstrumentHandle, int channel, int devType)
+        {
+            int viError = 0;
+            int count;
+   
+            string  cmd1, cmd3, cmd5;
 
+            if (channel == 1)
+            {
+                if (devType == 2)
+                {
+                    cmd1 = "CALC:PAR:MNUM 1";
+                }
+                else
+                {
+                    cmd1 = "CALC:PAR:SEL \"win1_tr1\"";        //差分
+                }
+            }
+            else
+            {
+                if (devType == 2)
+                {
+                    //cmd1 = "CALC:PAR:SEL \"win2_tr1\"";        //单端
+                    cmd1 = "CALC:PAR:MNUM 2";
+                }
+                else
+                {
+                    cmd1 = "CALC:PAR:SEL \"win1_tr2\"";        //单端
+                }
+            }
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
+
+            cmd3 = "DISPlay:ENABle ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd3 + "\n"), cmd3.Length, out count);
+
+            cmd5 = ":INITiate1:CONTinuous ON";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd5 + "\n"), cmd5.Length, out count);
+
+            return viError;
+        }
 
         public static int getStartIndex(int nInstrumentHandle, int channel,int devType, out string msg)
         {

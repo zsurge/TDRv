@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -53,12 +54,23 @@ namespace TDRv
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
 
+        public int exec_cnt = 0;
+
+        public bool is_real_check = false;
+
+        //实时数据读取及处理
+        private CancellationTokenSource cts;
+        private Task measTask;
+
 
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
+
+        //记录上一笔测试数据
+        LastTestData lastData = new LastTestData();
 
         //测试数据目录，该目录下有子目录
         public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
@@ -639,8 +651,13 @@ namespace TDRv
                     }
                 }
 
-                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
-                SaveDataToCSVFile(result, logFileName);                
+
+                //由于要实时确认，所以这里产生太多文件，暂时先注释掉
+                if (!is_real_check)
+                {
+                    logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                    SaveDataToCSVFile(result, logFileName);
+                }
             }
             catch (Exception ex)
             {
@@ -891,156 +908,159 @@ namespace TDRv
         /// 更新测试结果到datagridview中去
         /// </summary>
         /// <param name="channel">这个好像不需要？</param>
-        private bool upgradeTestResult(int channel)
-        {
-            bool ret = false;
-            float avg = 0;
-            float max = 0;
-            float min = 0;
+        //private bool upgradeTestResult(int channel)
+        //{
+        //    bool ret = false;
+        //    float avg = 0;
+        //    float max = 0;
+        //    float min = 0;
 
-            if (gEmptyFlag)
-            {
-                avg = 9999;
-                max = 9999;
-                min = 9999;
-            }
-            else
-            {
-                avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
-            }
-
-
-            float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
-            float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
-            float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
-
-            float stdLowValue = stdValue * ((100 + loLimite) / 100);
-            float stdHiValue = stdValue * ((100 + hiLimite) / 100);
+        //    if (gEmptyFlag)
+        //    {
+        //        avg = 9999;
+        //        max = 9999;
+        //        min = 9999;
+        //    }
+        //    else
+        //    {
+        //        avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+        //        max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
+        //        min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
+        //    }
 
 
-            //这里判定是以点的方式还是以平均值的方式来判定结果
-            if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
-            {
-                if (avg > stdLowValue && avg < stdHiValue)
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-            else //以点的形式去判定
-            {
-                if (((max < stdHiValue) && (max > stdLowValue)) && ((min < stdHiValue) && (min > stdLowValue)))
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
+        //    float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
+        //    float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
+        //    float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
 
-            //这里需要添加对比
-            if (ret == false)
-            {    
-                //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
-                if (optParam.testMode == 4)
-                {                   
-                    return ret;
-                }
+        //    float stdLowValue = stdValue * ((100 + loLimite) / 100);
+        //    float stdHiValue = stdValue * ((100 + hiLimite) / 100);
+
+
+        //    //这里判定是以点的方式还是以平均值的方式来判定结果
+        //    if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
+        //    {
+        //        if (avg > stdLowValue && avg < stdHiValue)
+        //        {
+        //            ret = true;
+        //        }
+        //        else
+        //        {
+        //            ret = false;
+        //        }
+        //    }
+        //    else //以点的形式去判定
+        //    {
+        //        if (((max < stdHiValue) && (max > stdLowValue)) && ((min < stdHiValue) && (min > stdLowValue)))
+        //        {
+        //            ret = true;
+        //        }
+        //        else
+        //        {
+        //            ret = false;
+        //        }
+        //    }
+
+        //    //这里需要添加对比
+        //    if (ret == false)
+        //    {    
+        //        //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
+        //        if (optParam.testMode == 4)
+        //        {                   
+        //            return ret;
+        //        }
                 
-            }
+        //    }
 
-            int index = this.dgv_CurrentResult.Rows.Add();
-            int history_index = this.dgv_HistoryResult.Rows.Add();
-            if (ret)
-            {
-                SetLableText("PASS", "Green");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
-            }
-            else
-            {
-                SetLableText("FAIL", "Red");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
-            }
+        //    int index = this.dgv_CurrentResult.Rows.Add();
+        //    int history_index = this.dgv_HistoryResult.Rows.Add();
+        //    if (ret)
+        //    {
+        //        SetLableText("PASS", "Green");
+        //        this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
+        //    }
+        //    else
+        //    {
+        //        SetLableText("FAIL", "Red");
+        //        this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
+        //    }
 
             
-            //目前量测
-            this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
+        //    //目前量测
+        //    this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
+        //    this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
+        //    this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
+        //    this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
 
-            if (gEmptyFlag)
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = "∞"; //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = "∞"; //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = "∞"; //最小值
-            }
-            else
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
-            }
+        //    if (gEmptyFlag)
+        //    {
+        //        this.dgv_CurrentResult.Rows[index].Cells[4].Value = "∞"; //平均值
+        //        this.dgv_CurrentResult.Rows[index].Cells[5].Value = "∞"; //最大值
+        //        this.dgv_CurrentResult.Rows[index].Cells[6].Value = "∞"; //最小值
+        //    }
+        //    else
+        //    {
+        //        this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+        //        this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+        //        this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+        //    }
 
-            this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-
-            //历史量测
-            this.dgv_HistoryResult.Rows[history_index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "9999"; //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "9999"; //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "9999"; //最小值
-            }
-            else
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
-            }
+        //    this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+        //    this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
+        //    this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
+        //    this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
+        //    this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
+        //    this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
 
 
-            this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
+        //    //历史量测
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
 
-            //只有最后一个走完，流水才++
-            if (measIndex.currentIndex == paramList.Count - 1)
-            {
-                gSerialInc++;
-            }
+        //    if (gEmptyFlag)
+        //    {
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "9999"; //平均值
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "9999"; //最大值
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "9999"; //最小值
+        //    }
+        //    else
+        //    {
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+        //        this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
+        //    }
 
-            //光标在最后一行
-            dgv_CurrentResult.CurrentCell = dgv_CurrentResult.Rows[this.dgv_CurrentResult.Rows.Count - 1].Cells[0];
 
-            return ret;
-        }
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
+        //    this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
+
+        //    //只有最后一个走完，流水才++
+        //    if (measIndex.currentIndex == paramList.Count - 1)
+        //    {
+        //        gSerialInc++;
+        //    }
+
+        //    //光标在最后一行
+        //    dgv_CurrentResult.CurrentCell = dgv_CurrentResult.Rows[this.dgv_CurrentResult.Rows.Count - 1].Cells[0];
+
+        //    return ret;
+        //}
 
         
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
+  
+            LoggerHelper.mlog.Debug("---start" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+
             if (tsb_Pnl_ID.Text.Length == 0)
             {
                 CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
@@ -1060,7 +1080,8 @@ namespace TDRv
                 //    return;
                 //}
 
-                toDoWork();
+                //toDoWork();
+                loopWork();
             }
         }
 
@@ -1150,13 +1171,165 @@ namespace TDRv
 
             if(paramList[0].Curve_image.Length > 3)
             {
+                LoggerHelper.mlog.Debug("---end 02" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
                 task1.ContinueWith((Task) =>
                 {
-                   
                     CaptureScreenChart(chart1, paramList[0].Curve_image);
                 });
             }            
          
+        }
+
+        public void loopWork()
+        {
+            if (measTask == null || measTask.IsCompleted)
+            {
+                bool ret = false;
+
+                string result = string.Empty;
+                int index = 0;
+
+                int channel = paramList[measIndex.currentIndex].DevMode;
+
+                if (channel == SINGLE)
+                {
+                    index = MeasPosition.tdd22IndexValue;
+                }
+                else
+                {
+                    index = MeasPosition.tdd11IndexValue;
+                }
+
+                SetLableText("", "Control");
+
+
+                //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                }
+
+
+                cts = new CancellationTokenSource();
+                measTask = Task.Factory.StartNew(() =>
+                {
+                    while (!cts.Token.IsCancellationRequested)
+                    {
+
+                        if (optStatus.isConnect && optStatus.isGetIndex)
+                        {
+                            //bool ret = false;
+
+                            //string result = string.Empty;
+                            //int index = 0;
+
+                            //int channel = paramList[measIndex.currentIndex].DevMode;
+
+                            //if (channel == SINGLE)
+                            //{
+                            //    index = MeasPosition.tdd22IndexValue;
+                            //}
+                            //else
+                            //{
+                            //    index = MeasPosition.tdd11IndexValue;
+                            //}
+
+                            //SetLableText("", "Control");
+
+                            //这里循环读取数据并刷新到屏幕上去
+                            if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                            {
+                                E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                            }
+                            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                            {
+                                E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                            }
+                            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                            {
+                                E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                            }
+
+                            //量测并生成图表                    
+                            List<float> disResult = packetMaesData(result, index, channel);
+
+                            DisplayChartValue(chart1, disResult);
+
+
+                            ////更新测试数据到主界面测试结果中
+                            //CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
+                            //CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+
+                            //if (optParam.testMode == 3)
+                            //{
+                            //    //量测配方参数依次向后移
+                            //    measIndex.incIndex();
+                            //}
+                            //else if (optParam.testMode == 1 || optParam.testMode == 4)
+                            //{
+                            //    if (gTestResultValue == 1)
+                            //    {
+                            //        //量测配方参数依次向后移
+                            //        measIndex.incIndex();
+                            //    }
+                            //}
+                            //else if (optParam.testMode == 2)
+                            //{
+                            //    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+                            //}
+
+                            //reFreshDatagridview(dataGridView1);
+                            isExecuteComplete = true;
+
+                        }
+                        else
+                        {
+                            CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
+                        }
+
+                    }
+                }, cts.Token);
+
+               // btnStart.Enabled = false;
+            }
+            //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
+        }
+
+        public void upgrade_data_ui()
+        {
+            //更新测试数据到主界面测试结果中
+            CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
+            CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+
+            if (optParam.testMode == 3)
+            {
+                //量测配方参数依次向后移
+                measIndex.incIndex();
+            }
+            else if (optParam.testMode == 1 || optParam.testMode == 4)
+            {
+                if (gTestResultValue == 1)
+                {
+                    //量测配方参数依次向后移
+                    measIndex.incIndex();
+                }
+            }
+            else if (optParam.testMode == 2)
+            {
+                measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+            }
+
+            reFreshDatagridview(dataGridView1);
+
+
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1303,14 +1476,15 @@ namespace TDRv
 
                     if (optParam.keyMode == 1)
                     {
-                        //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                        //{
-                        //    optStatus.isConnect = false;
-                        //    optStatus.isGetIndex = false;
-                        //    optStatus.isLoadXml = false;
-                        //    return;
-                        //}
-                        toDoWork();
+                        //toDoWork();
+
+                        if (measTask != null && !measTask.IsCompleted)
+                        {
+                            cts.Cancel();
+                            //measTask.Wait();
+                            upgrade_data_ui();
+                            //btnStart.Enabled = true;
+                        }
                     }
                 }
             }
@@ -1421,6 +1595,12 @@ namespace TDRv
                     chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
                     chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
                     chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
+
+                    lastData.avg = tmpResult.Average().ToString("F2");
+                    lastData.max = tmpResult.Max().ToString("F2");
+                    lastData.min = tmpResult.Min().ToString("F2");
+
+                    LoggerHelper.mlog.Debug("last data avg= " + lastData.avg + " max= " + lastData.max + " min=" +lastData.min);
                 }
                 else
                 {
@@ -1470,9 +1650,15 @@ namespace TDRv
                 }
                 else
                 {
-                    avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                    max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                    min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
+                    //avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+                    //max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
+                    //min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值
+                 
+                    avg = Convert.ToSingle(lastData.avg); //设备平均值
+                    max = Convert.ToSingle(lastData.max); //设备最大值
+                    min = Convert.ToSingle(lastData.min); //设备最小值
+
+
                 }
 
 
@@ -1616,7 +1802,7 @@ namespace TDRv
                     string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
                     writeHistoryRecord(historyRecord, defName);
                 }
-
+                LoggerHelper.mlog.Debug("---end" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
             }
         }
 
@@ -1740,6 +1926,14 @@ namespace TDRv
             }
         }
     }//end form
+
+
+    public class LastTestData
+    {
+        public string avg { get; set; }
+        public string max { get; set; }
+        public string min { get; set; }
+    }
 
     public class MeasIndex
     {

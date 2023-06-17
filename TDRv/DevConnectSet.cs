@@ -417,10 +417,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59100175")) //add 2021.11.22 测试样机使用
+                else if (sn.Contains("MY59203255")) //add 2021.11.22 测试样机使用
                 {
 
-                    if (202201221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202306291400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
