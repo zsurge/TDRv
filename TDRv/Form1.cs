@@ -1182,125 +1182,89 @@ namespace TDRv
 
         public void loopWork()
         {
-            if (measTask == null || measTask.IsCompleted)
+            lock (loop_work_lock)
             {
-                bool ret = false;
-
-                string result = string.Empty;
-                int index = 0;
-
-                int channel = paramList[measIndex.currentIndex].DevMode;
-
-                if (channel == SINGLE)
+                if (measTask == null || measTask.IsCompleted)
                 {
-                    index = MeasPosition.tdd22IndexValue;
-                }
-                else
-                {
-                    index = MeasPosition.tdd11IndexValue;
-                }
+                    bool ret = false;
 
-                SetLableText("", "Control");
+                    string result = string.Empty;
+                    int index = 0;
 
+                    int channel = paramList[measIndex.currentIndex].DevMode;
 
-                //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
-                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-                {
-                    E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType);
-                }
-                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                {
-                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                }
-                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                {
-                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                }
-
-
-                cts = new CancellationTokenSource();
-                measTask = Task.Factory.StartNew(() =>
-                {
-                    while (!cts.Token.IsCancellationRequested)
+                    if (channel == SINGLE)
                     {
+                        index = MeasPosition.tdd22IndexValue;
+                    }
+                    else
+                    {
+                        index = MeasPosition.tdd11IndexValue;
+                    }
 
-                        if (optStatus.isConnect && optStatus.isGetIndex)
+                    SetLableText("", "Control");
+
+
+                    //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
+                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                    {
+                        E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType);
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                    {
+                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                    {
+                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                    }
+
+
+                    cts = new CancellationTokenSource();
+                    measTask = Task.Factory.StartNew(() =>
+                    {
+                        while (!cts.Token.IsCancellationRequested)
                         {
-                            //bool ret = false;
 
-                            //string result = string.Empty;
-                            //int index = 0;
+                            if (optStatus.isConnect && optStatus.isGetIndex)
+                            {
 
-                            //int channel = paramList[measIndex.currentIndex].DevMode;
-
-                            //if (channel == SINGLE)
-                            //{
-                            //    index = MeasPosition.tdd22IndexValue;
-                            //}
-                            //else
-                            //{
-                            //    index = MeasPosition.tdd11IndexValue;
-                            //}
-
-                            //SetLableText("", "Control");
 
                             //这里循环读取数据并刷新到屏幕上去
                             if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-                            {
-                                E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                            }
-                            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                            {
-                                E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                            }
-                            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                            {
-                                E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                            }
+                                {
+                                    E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                }
+                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                                {
+                                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                                }
+                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                                {
+                                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                }
 
                             //量测并生成图表                    
                             List<float> disResult = packetMaesData(result, index, channel);
 
-                            DisplayChartValue(chart1, disResult);
+                                DisplayChartValue(chart1, disResult);
 
 
-                            ////更新测试数据到主界面测试结果中
-                            //CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
-                            //CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+                                isExecuteComplete = true;
 
-                            //if (optParam.testMode == 3)
-                            //{
-                            //    //量测配方参数依次向后移
-                            //    measIndex.incIndex();
-                            //}
-                            //else if (optParam.testMode == 1 || optParam.testMode == 4)
-                            //{
-                            //    if (gTestResultValue == 1)
-                            //    {
-                            //        //量测配方参数依次向后移
-                            //        measIndex.incIndex();
-                            //    }
-                            //}
-                            //else if (optParam.testMode == 2)
-                            //{
-                            //    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
-                            //}
-
-                            //reFreshDatagridview(dataGridView1);
-                            isExecuteComplete = true;
+                            }
+                            else
+                            {
+                                CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
+                            }
 
                         }
-                        else
-                        {
-                            CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
-                        }
+                    }, cts.Token);
 
-                    }
-                }, cts.Token);
-
-               // btnStart.Enabled = false;
+                    // btnStart.Enabled = false;
+                }
+                //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
             }
-            //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
         }
 
         public void upgrade_data_ui()
@@ -1335,7 +1299,7 @@ namespace TDRv
         //这里使用线程池的方法验证
 
         private int isRunning = 0;
-
+        private object loop_work_lock = new object(); // 加锁对象
         private void Fun1()
         {
             bool ret = false;
@@ -1376,7 +1340,8 @@ namespace TDRv
 
                 if (optStatus.isConnect && optStatus.isGetIndex)
                 {
-
+                    lock(loop_work_lock)
+                    { 
                     //这里循环读取数据并刷新到屏幕上去
                     if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                     {
@@ -1398,6 +1363,7 @@ namespace TDRv
 
 
                     isExecuteComplete = true;
+                        }
 
                 }
                 else
@@ -1482,17 +1448,6 @@ namespace TDRv
         //}
 
         /// ////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
 
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1644,7 +1599,7 @@ namespace TDRv
                         if (measTask != null && !measTask.IsCompleted)
                         {
                             cts.Cancel();
-                            //measTask.Wait();
+                            measTask = null;
                             upgrade_data_ui();
                             loopWork();
                         }
