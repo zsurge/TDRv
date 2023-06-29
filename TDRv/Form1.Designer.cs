@@ -56,18 +56,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgv_CurrentResult = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.mFlag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lable_test_result = new System.Windows.Forms.Label();
             this.cLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSPEC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMaxOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -85,6 +73,8 @@
             this.cCurveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPanel_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSet_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,6 +92,8 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -119,6 +111,14 @@
             this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.mFlag = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mLayer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lable_test_result = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -267,7 +267,6 @@
             // 
             // tsb_Pnl_ID
             // 
-            this.tsb_Pnl_ID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Pnl_ID.Name = "tsb_Pnl_ID";
             this.tsb_Pnl_ID.Size = new System.Drawing.Size(200, 39);
             this.tsb_Pnl_ID.Text = "0001";
@@ -280,7 +279,6 @@
             // 
             // tsb_Set_id
             // 
-            this.tsb_Set_id.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Set_id.Name = "tsb_Set_id";
             this.tsb_Set_id.Size = new System.Drawing.Size(200, 39);
             // 
@@ -381,208 +379,6 @@
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 294);
             this.dgv_CurrentResult.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.dgv_OutPutResult);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1620, 295);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "已输出量测";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // dgv_OutPutResult
-            // 
-            this.dgv_OutPutResult.AllowUserToAddRows = false;
-            this.dgv_OutPutResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv_OutPutResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_OutPutResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_OutPutResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_OutPutResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.Column5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7,
-            this.dataGridViewTextBoxColumn8,
-            this.dataGridViewTextBoxColumn9,
-            this.dataGridViewTextBoxColumn10,
-            this.dataGridViewTextBoxColumn11,
-            this.dataGridViewTextBoxColumn12,
-            this.dataGridViewTextBoxColumn13,
-            this.dataGridViewTextBoxColumn14,
-            this.Column1,
-            this.Column2});
-            this.dgv_OutPutResult.Location = new System.Drawing.Point(0, 3);
-            this.dgv_OutPutResult.Name = "dgv_OutPutResult";
-            this.dgv_OutPutResult.RowHeadersVisible = false;
-            this.dgv_OutPutResult.RowHeadersWidth = 82;
-            this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 288);
-            this.dgv_OutPutResult.TabIndex = 1;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.dgv_HistoryResult);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1620, 295);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "历史量测";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // dgv_HistoryResult
-            // 
-            this.dgv_HistoryResult.AllowUserToAddRows = false;
-            this.dgv_HistoryResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv_HistoryResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_HistoryResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv_HistoryResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_HistoryResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn15,
-            this.dataGridViewTextBoxColumn16,
-            this.dataGridViewTextBoxColumn17,
-            this.dataGridViewTextBoxColumn18,
-            this.dataGridViewTextBoxColumn19,
-            this.Column6,
-            this.dataGridViewTextBoxColumn20,
-            this.dataGridViewTextBoxColumn21,
-            this.dataGridViewTextBoxColumn22,
-            this.dataGridViewTextBoxColumn23,
-            this.dataGridViewTextBoxColumn24,
-            this.dataGridViewTextBoxColumn25,
-            this.dataGridViewTextBoxColumn26,
-            this.dataGridViewTextBoxColumn27,
-            this.dataGridViewTextBoxColumn28,
-            this.Column3,
-            this.Column4});
-            this.dgv_HistoryResult.ContextMenuStrip = this.contextMenuStrip1;
-            this.dgv_HistoryResult.Location = new System.Drawing.Point(0, 3);
-            this.dgv_HistoryResult.Name = "dgv_HistoryResult";
-            this.dgv_HistoryResult.RowHeadersVisible = false;
-            this.dgv_HistoryResult.RowHeadersWidth = 82;
-            this.dgv_HistoryResult.RowTemplate.Height = 23;
-            this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 288);
-            this.dgv_HistoryResult.TabIndex = 1;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.mFlag,
-            this.mStep,
-            this.mDescription,
-            this.mLayer});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidth = 82;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(392, 635);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.Visible = false;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // mFlag
-            // 
-            this.mFlag.HeaderText = "Flag";
-            this.mFlag.MinimumWidth = 10;
-            this.mFlag.Name = "mFlag";
-            this.mFlag.ReadOnly = true;
-            this.mFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mFlag.Width = 54;
-            // 
-            // mStep
-            // 
-            this.mStep.HeaderText = "Step";
-            this.mStep.MinimumWidth = 10;
-            this.mStep.Name = "mStep";
-            this.mStep.ReadOnly = true;
-            this.mStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mStep.Width = 54;
-            // 
-            // mDescription
-            // 
-            this.mDescription.HeaderText = "Description";
-            this.mDescription.MinimumWidth = 10;
-            this.mDescription.Name = "mDescription";
-            this.mDescription.ReadOnly = true;
-            this.mDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mDescription.Width = 96;
-            // 
-            // mLayer
-            // 
-            this.mLayer.HeaderText = "Layer";
-            this.mLayer.MinimumWidth = 10;
-            this.mLayer.Name = "mLayer";
-            this.mLayer.ReadOnly = true;
-            this.mLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.mLayer.Width = 60;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 39);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1634, 1022);
-            this.splitContainer1.SplitterDistance = 689;
-            this.splitContainer1.TabIndex = 5;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.lable_test_result);
-            this.splitContainer2.Panel1.Controls.Add(this.dataGridView1);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.chart1);
-            this.splitContainer2.Size = new System.Drawing.Size(1634, 689);
-            this.splitContainer2.SplitterDistance = 395;
-            this.splitContainer2.TabIndex = 0;
-            // 
-            // lable_test_result
-            // 
-            this.lable_test_result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lable_test_result.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lable_test_result.Location = new System.Drawing.Point(3, 637);
-            this.lable_test_result.Name = "lable_test_result";
-            this.lable_test_result.Size = new System.Drawing.Size(389, 49);
-            this.lable_test_result.TabIndex = 1;
-            this.lable_test_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cLayer
             // 
@@ -702,6 +498,52 @@
             this.cSet_ID.Name = "cSet_ID";
             this.cSet_ID.ReadOnly = true;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dgv_OutPutResult);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1620, 295);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "已输出量测";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dgv_OutPutResult
+            // 
+            this.dgv_OutPutResult.AllowUserToAddRows = false;
+            this.dgv_OutPutResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_OutPutResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_OutPutResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgv_OutPutResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_OutPutResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4,
+            this.dataGridViewTextBoxColumn5,
+            this.Column5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12,
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewTextBoxColumn14,
+            this.Column1,
+            this.Column2});
+            this.dgv_OutPutResult.Location = new System.Drawing.Point(0, 3);
+            this.dgv_OutPutResult.Name = "dgv_OutPutResult";
+            this.dgv_OutPutResult.RowHeadersVisible = false;
+            this.dgv_OutPutResult.RowHeadersWidth = 82;
+            this.dgv_OutPutResult.RowTemplate.Height = 23;
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 288);
+            this.dgv_OutPutResult.TabIndex = 1;
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Layer";
@@ -802,6 +644,53 @@
             this.Column2.HeaderText = "Set_ID";
             this.Column2.MinimumWidth = 8;
             this.Column2.Name = "Column2";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.dgv_HistoryResult);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1620, 295);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "历史量测";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dgv_HistoryResult
+            // 
+            this.dgv_HistoryResult.AllowUserToAddRows = false;
+            this.dgv_HistoryResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_HistoryResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_HistoryResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgv_HistoryResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_HistoryResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn15,
+            this.dataGridViewTextBoxColumn16,
+            this.dataGridViewTextBoxColumn17,
+            this.dataGridViewTextBoxColumn18,
+            this.dataGridViewTextBoxColumn19,
+            this.Column6,
+            this.dataGridViewTextBoxColumn20,
+            this.dataGridViewTextBoxColumn21,
+            this.dataGridViewTextBoxColumn22,
+            this.dataGridViewTextBoxColumn23,
+            this.dataGridViewTextBoxColumn24,
+            this.dataGridViewTextBoxColumn25,
+            this.dataGridViewTextBoxColumn26,
+            this.dataGridViewTextBoxColumn27,
+            this.dataGridViewTextBoxColumn28,
+            this.Column3,
+            this.Column4});
+            this.dgv_HistoryResult.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgv_HistoryResult.Location = new System.Drawing.Point(0, 3);
+            this.dgv_HistoryResult.Name = "dgv_HistoryResult";
+            this.dgv_HistoryResult.RowHeadersVisible = false;
+            this.dgv_HistoryResult.RowHeadersWidth = 82;
+            this.dgv_HistoryResult.RowTemplate.Height = 23;
+            this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 288);
+            this.dgv_HistoryResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn15
             // 
@@ -904,6 +793,115 @@
             this.Column4.MinimumWidth = 8;
             this.Column4.Name = "Column4";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.mFlag,
+            this.mStep,
+            this.mDescription,
+            this.mLayer});
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 82;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(392, 635);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.Visible = false;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // mFlag
+            // 
+            this.mFlag.HeaderText = "Flag";
+            this.mFlag.MinimumWidth = 10;
+            this.mFlag.Name = "mFlag";
+            this.mFlag.ReadOnly = true;
+            this.mFlag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.mFlag.Width = 54;
+            // 
+            // mStep
+            // 
+            this.mStep.HeaderText = "Step";
+            this.mStep.MinimumWidth = 10;
+            this.mStep.Name = "mStep";
+            this.mStep.ReadOnly = true;
+            this.mStep.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.mStep.Width = 54;
+            // 
+            // mDescription
+            // 
+            this.mDescription.HeaderText = "Description";
+            this.mDescription.MinimumWidth = 10;
+            this.mDescription.Name = "mDescription";
+            this.mDescription.ReadOnly = true;
+            this.mDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.mDescription.Width = 96;
+            // 
+            // mLayer
+            // 
+            this.mLayer.HeaderText = "Layer";
+            this.mLayer.MinimumWidth = 10;
+            this.mLayer.Name = "mLayer";
+            this.mLayer.ReadOnly = true;
+            this.mLayer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.mLayer.Width = 60;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 39);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer1.Size = new System.Drawing.Size(1634, 1022);
+            this.splitContainer1.SplitterDistance = 689;
+            this.splitContainer1.TabIndex = 5;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.lable_test_result);
+            this.splitContainer2.Panel1.Controls.Add(this.dataGridView1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.chart1);
+            this.splitContainer2.Size = new System.Drawing.Size(1634, 689);
+            this.splitContainer2.SplitterDistance = 395;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // lable_test_result
+            // 
+            this.lable_test_result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lable_test_result.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lable_test_result.Location = new System.Drawing.Point(3, 637);
+            this.lable_test_result.Name = "lable_test_result";
+            this.lable_test_result.Size = new System.Drawing.Size(389, 49);
+            this.lable_test_result.TabIndex = 1;
+            this.lable_test_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -913,7 +911,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230430";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230629";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
