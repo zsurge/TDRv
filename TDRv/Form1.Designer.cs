@@ -277,6 +277,7 @@
             // 
             // tsb_Pnl_ID
             // 
+            this.tsb_Pnl_ID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Pnl_ID.Name = "tsb_Pnl_ID";
             this.tsb_Pnl_ID.Size = new System.Drawing.Size(120, 39);
             this.tsb_Pnl_ID.Text = "0001";
@@ -289,6 +290,7 @@
             // 
             // tsb_Set_id
             // 
+            this.tsb_Set_id.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Set_id.Name = "tsb_Set_id";
             this.tsb_Set_id.Size = new System.Drawing.Size(120, 39);
             // 
@@ -300,6 +302,7 @@
             // 
             // tsb_Set_operator
             // 
+            this.tsb_Set_operator.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Set_operator.Name = "tsb_Set_operator";
             this.tsb_Set_operator.Size = new System.Drawing.Size(120, 39);
             // 
@@ -340,16 +343,14 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1628, 322);
+            this.tabControl1.Size = new System.Drawing.Size(1634, 330);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -358,7 +359,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1620, 296);
+            this.tabPage1.Size = new System.Drawing.Size(1626, 304);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "目前量测";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -398,14 +399,15 @@
             this.cTechNo,
             this.cDataChainId});
             this.dgv_CurrentResult.ContextMenuStrip = this.contextMenuStrip1;
-            this.dgv_CurrentResult.Location = new System.Drawing.Point(0, 3);
+            this.dgv_CurrentResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_CurrentResult.Location = new System.Drawing.Point(3, 3);
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
             this.dgv_CurrentResult.ReadOnly = true;
             this.dgv_CurrentResult.RowHeadersVisible = false;
             this.dgv_CurrentResult.RowHeadersWidth = 82;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 295);
+            this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 298);
             this.dgv_CurrentResult.TabIndex = 0;
             // 
             // cImpedanceCheckId
@@ -1022,7 +1024,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230628 http";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230702 http";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
