@@ -90,6 +90,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HttpHelper.cs" />
     <Compile Include="ini.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="LoggerHelper.cs" />
