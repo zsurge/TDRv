@@ -6,6 +6,26 @@ using System.Threading.Tasks;
 
 namespace TDRv
 {
+
+ //   [ImpedanceCheckId] [char](12) NULL           --ID
+ //   [LotNo] [nvarchar](20) NOT NULL              --批量卡号、工单条码
+ //   [WorkNo][nvarchar] (20) NULL                 --批号
+ //   [ProdNo][nvarchar] (20) NULL                 --料号流水号
+ //   [CheckTime][datetime] NULL                  --检查时间
+ //   [CheckOp][nvarchar] (10) NULL                --检查结果
+ //   [Layer][nvarchar] (10) NOT NULL              --层别
+ //   [ImpedanceSpec][nvarchar] (20) NOT NULL      --标准阻抗
+ //   [ImpedanceMax][numeric] (15, 3) NULL         --最大阻抗
+ //   [ImpedanceMin][numeric] (15, 3) NULL         --最小阻抗
+ //   [ImpedanceAVG][numeric] (15, 3) NULL         --评价阻抗
+ //   [EquitMent][nvarchar] (10) NULL              --设备名称编号
+ //   [FileName][nvarchar] (100) NULL              --文件名
+ //   [Number][nvarchar] (10) NULL                 --稼动率0%~100%        
+ //   [Operator][nvarchar] (50) NULL               --作业员
+ //   [TechNo][nvarchar] (10) NULL                 --工艺
+ //   [DataChainId][char] (12) NULL                --每片板数据链ID
+
+
     class TestResult
     {
         private string layer = string.Empty; //这个是配方上显示的layer，跟current_index不是同一个概念

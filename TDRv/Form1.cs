@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml;
 using TDRv.Driver;
 
 namespace TDRv
@@ -53,12 +55,19 @@ namespace TDRv
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
 
+        public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ImpedancePostData";
+
+
 
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
+
+        //用于保存列表数据，好上送到服务器
+        List<Dictionary<string, string>> postDataList = new List<Dictionary<string, string>>();
+
 
         //测试数据目录，该目录下有子目录
         public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
@@ -887,155 +896,6 @@ namespace TDRv
         }
 
 
-        /// <summary>
-        /// 更新测试结果到datagridview中去
-        /// </summary>
-        /// <param name="channel">这个好像不需要？</param>
-        private bool upgradeTestResult(int channel)
-        {
-            bool ret = false;
-            float avg = 0;
-            float max = 0;
-            float min = 0;
-
-            if (gEmptyFlag)
-            {
-                avg = 9999;
-                max = 9999;
-                min = 9999;
-            }
-            else
-            {
-                avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
-            }
-
-
-            float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
-            float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
-            float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
-
-            float stdLowValue = stdValue * ((100 + loLimite) / 100);
-            float stdHiValue = stdValue * ((100 + hiLimite) / 100);
-
-
-            //这里判定是以点的方式还是以平均值的方式来判定结果
-            if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
-            {
-                if (avg > stdLowValue && avg < stdHiValue)
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-            else //以点的形式去判定
-            {
-                if (((max < stdHiValue) && (max > stdLowValue)) && ((min < stdHiValue) && (min > stdLowValue)))
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-
-            //这里需要添加对比
-            if (ret == false)
-            {    
-                //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
-                if (optParam.testMode == 4)
-                {                   
-                    return ret;
-                }
-                
-            }
-
-            int index = this.dgv_CurrentResult.Rows.Add();
-            int history_index = this.dgv_HistoryResult.Rows.Add();
-            if (ret)
-            {
-                SetLableText("PASS", "Green");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
-            }
-            else
-            {
-                SetLableText("FAIL", "Red");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
-            }
-
-            
-            //目前量测
-            this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = "∞"; //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = "∞"; //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = "∞"; //最小值
-            }
-            else
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
-            }
-
-            this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-
-            //历史量测
-            this.dgv_HistoryResult.Rows[history_index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "9999"; //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "9999"; //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "9999"; //最小值
-            }
-            else
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
-            }
-
-
-            this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-            //只有最后一个走完，流水才++
-            if (measIndex.currentIndex == paramList.Count - 1)
-            {
-                gSerialInc++;
-            }
-
-            //光标在最后一行
-            dgv_CurrentResult.CurrentCell = dgv_CurrentResult.Rows[this.dgv_CurrentResult.Rows.Count - 1].Cells[0];
-
-            return ret;
-        }
 
         
 
@@ -1050,15 +910,6 @@ namespace TDRv
             if (isExecuteComplete)
             {
                 isExecuteComplete = false;
-                
-                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                //{
-                //    optStatus.isConnect = false;
-                //    optStatus.isGetIndex = false;
-                //    optStatus.isLoadXml = false;
-                //    tsb_StartTest.Enabled = false;
-                //    return;
-                //}
 
                 toDoWork();
             }
@@ -1111,6 +962,12 @@ namespace TDRv
                     CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
                     CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
 
+                    //添加判定，如果测试完一片板子后，就要开始上传数据
+                    if ((measIndex.total - 1) == measIndex.currentIndex)
+                    {
+                        UploadDataInBackground();
+                    }
+
                     if (optParam.testMode == 3)
                     {
                         //量测配方参数依次向后移
@@ -1136,7 +993,7 @@ namespace TDRv
 
                 }
                 else
-                {                    
+                {
                     CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
                 }
             });
@@ -1152,14 +1009,48 @@ namespace TDRv
             {
                 task1.ContinueWith((Task) =>
                 {
-                   
                     CaptureScreenChart(chart1, paramList[0].Curve_image);
                 });
             }            
          
         }
+        
+        //在后台发送数据到服务器
+        public void UploadDataInBackground()
+        {
+            Task.Run(() =>
+            {
+                foreach (var parameters in postDataList)
+                {
+                    HttpWebResponse res = HttpHelper.CreatePostHttpResponse(gUrl, parameters, 2000, null, null);
 
-        private void tsmi_delAll_Click(object sender, EventArgs e)
+                    if (res == null)
+                    {
+                        MessageBox.Show("URL无法访问");
+                        LoggerHelper.mlog.Debug("URL无法访问");
+                        return;
+                    }
+
+                    // 进一步处理响应或保存响应的代码（可以根据自己的需求进行操作）
+                    string resp = HttpHelper.GetResponseString(res);
+
+                    XmlDocument docXml = new XmlDocument();
+                    docXml.LoadXml(resp);
+                    string str = docXml.ChildNodes[1].InnerText;
+
+                    if (str.ToUpper().Contains("OK"))
+                    {
+                        LoggerHelper.mlog.Debug("发送成功");
+                    }
+                }
+
+                // 清空postDataList
+                postDataList.Clear();
+            });
+        }
+
+
+    private void tsmi_delAll_Click(object sender, EventArgs e)
         {
             //删除所有测试数据
             dgv_CurrentResult.Rows.Clear();
@@ -1485,10 +1376,6 @@ namespace TDRv
                 }
                 else
                 {
-                    //float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
-                    //float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
-                    //hiLimit = stdValue * (1 + hi_offset);
-                    //lowLimit = stdValue * (1 - low_offset);
                     hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
                     lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
                 }
@@ -1541,12 +1428,12 @@ namespace TDRv
                 if (ret)
                 {
                     SetLableText("PASS", "Green");
-                    _dgv.Rows[index].Cells[7].Value = "PASS";     
+                    _dgv.Rows[index].Cells[5].Value = "PASS";     
                 }
                 else
                 {
                     SetLableText("FAIL", "Red");
-                    _dgv.Rows[index].Cells[7].Value = "FAIL";             
+                    _dgv.Rows[index].Cells[5].Value = "NG";             
                 }
 
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
@@ -1559,36 +1446,131 @@ namespace TDRv
                     strUnit = " %";
                 }
 
+                //   [ImpedanceCheckId] [char](12) NULL           --ID
+                //   [LotNo] [nvarchar](20) NOT NULL              --批量卡号、工单条码
+                //   [WorkNo][nvarchar] (20) NULL                 --批号
+                //   [ProdNo][nvarchar] (20) NULL                 --料号流水号
+                //   [CheckTime][datetime] NULL                  --检查时间
+                //   [CheckOp][nvarchar] (10) NULL                --检查结果
+                //   [Layer][nvarchar] (10) NOT NULL              --层别
+                //   [ImpedanceSpec][nvarchar] (20) NOT NULL      --标准阻抗
+                //   [ImpedanceMax][numeric] (15, 3) NULL         --最大阻抗
+                //   [ImpedanceMin][numeric] (15, 3) NULL         --最小阻抗
+                //   [ImpedanceAVG][numeric] (15, 3) NULL         --评价阻抗
+                //   [EquitMent][nvarchar] (10) NULL              --设备名称编号
+                //   [FileName][nvarchar] (100) NULL              --文件名
+                //   [Number][nvarchar] (10) NULL                 --稼动率0%~100%        
+                //   [Operator][nvarchar] (50) NULL               --作业员
+                //   [TechNo][nvarchar] (10) NULL                 --工艺
+                //   [DataChainId][char] (12) NULL                --每片板数据链ID
+
+                ////目前量测
+                //_dgv.Rows[index].Cells["ImpedanceCheckId"].Value = "test id";  //ID
+                //_dgv.Rows[index].Cells["LotNo"].Value = tsb_Pnl_ID.Text;     //批量卡号、工单条码
+                //_dgv.Rows[index].Cells["WorkNo"].Value = tsb_Set_id.Text;    //批号
+                //_dgv.Rows[index].Cells["ProdNo"].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0');    //料号流水号
+
+                ////_dgv.Rows[index].Cells["CheckTime"].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); //检查时间
+                ////这样做的目的是让日志和记录可以对得上
+                //_dgv.Rows[index].Cells["CheckTime"].Value = DateTime.Now.ToString("yyyy-MM-dd") +" "+ logFileName.Substring(8, logFileName.Length - 8); //检查时间
+
+                //_dgv.Rows[index].Cells["Layer"].Value = paramList[measIndex.currentIndex].Layer; //层别
+                //_dgv.Rows[index].Cells["ImpedanceSpec"].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString() + "Ohm"; //标准阻抗
+                //_dgv.Rows[index].Cells["ImpedanceMax"].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "");    //最大阻抗
+                //_dgv.Rows[index].Cells["ImpedanceMin"].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "");    //最小阻抗
+                //_dgv.Rows[index].Cells["ImpedanceAVG"].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "");    //平均阻抗
+                //_dgv.Rows[index].Cells["EquitMent"].Value = "E5063A"; //设备名称编号
+                //_dgv.Rows[index].Cells["FileName"].Value = paramList[measIndex.currentIndex].Curve_data; //文件路径名
+                //_dgv.Rows[index].Cells["CurveImage"].Value = paramList[measIndex.currentIndex].Curve_image; //图片路径名      
+                //_dgv.Rows[index].Cells["Number"].Value = "100"; //稼动率0%~100%   
+                //_dgv.Rows[index].Cells["Operator"].Value = tsb_Set_operator.Text; //作业员     
+                //_dgv.Rows[index].Cells["TechNo"].Value = "test"; //工艺
+                //_dgv.Rows[index].Cells["DataChainId"].Value = (gSerialInc).ToString().PadLeft(6, '0'); //每片板数据链ID  
+
+                //测试用，要删除掉
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+
                 //目前量测
-                _dgv.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-                _dgv.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-                _dgv.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit + strUnit;  //最大上限比例 
-                _dgv.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit + strUnit;    //最小下限比例
+                _dgv.Rows[index].Cells[0].Value = "test id";  //ID
+                _dgv.Rows[index].Cells[1].Value = tsb_Pnl_ID.Text;     //批量卡号、工单条码
+                _dgv.Rows[index].Cells[2].Value = tsb_Set_id.Text;    //批号
+                _dgv.Rows[index].Cells[3].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0');    //料号流水号
+
+                //_dgv.Rows[index].Cells["CheckTime"].Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); //检查时间
+                //这样做的目的是让日志和记录可以对得上
+                _dgv.Rows[index].Cells[4].Value = DateTime.Now.ToString("yyyy-MM-dd") + " " + logFileName.Substring(8, logFileName.Length - 8); //检查时间
+
+                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Layer; //层别
+                _dgv.Rows[index].Cells[7].Value = paramList[measIndex.currentIndex].Spec + " ±" + (hiLimit - stdValue).ToString() + " Ω"; //标准阻抗
 
                 if (gEmptyFlag)
                 {
-                    _dgv.Rows[index].Cells[4].Value = "9999"; //平均值
-                    _dgv.Rows[index].Cells[5].Value = "9999"; //最大值
-                    _dgv.Rows[index].Cells[6].Value = "9999"; //最小值
+                    _dgv.Rows[index].Cells[8].Value = "9999"; //平均值
+                    _dgv.Rows[index].Cells[9].Value = "9999"; //最大值
+                    _dgv.Rows[index].Cells[10].Value = "9999"; //最小值
                 }
                 else
                 {
-                    _dgv.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                    _dgv.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                    _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+                    _dgv.Rows[index].Cells[8].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+                    _dgv.Rows[index].Cells[9].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+                    _dgv.Rows[index].Cells[10].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
                 }
 
-                _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-                _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
-                _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
-                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
-                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
-                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
+
+
+                //_dgv.Rows[index].Cells[8].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "");    //最大阻抗
+                //_dgv.Rows[index].Cells[9].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "");    //最小阻抗
+                //_dgv.Rows[index].Cells[10].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "");    //平均阻抗
+
+
+
+
+                _dgv.Rows[index].Cells[11].Value = "E5063A"; //设备名称编号
+                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //文件路径名
+                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //图片路径名      
+                _dgv.Rows[index].Cells[14].Value = "100"; //稼动率0%~100%   
+                _dgv.Rows[index].Cells[15].Value = tsb_Set_operator.Text; //作业员     
+                _dgv.Rows[index].Cells[16].Value = "test"; //工艺
+                _dgv.Rows[index].Cells[17].Value = (gSerialInc).ToString().PadLeft(6, '0'); //每片板数据链ID  
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
+                    //添加需要上送的数据
+                    // 创建一个 IDictionary<string, string> 对象
+                    Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                    // 遍历 DataGridView 的列标题
+                    //foreach (DataGridViewColumn column in _dgv.Columns)
+                    //{
+                    //    string key = column.HeaderText;
+
+                    //    // 假设你想获取第index行的值
+                    //    string value = _dgv.Rows[index].Cells[column.Index].Value?.ToString();
+
+                    //    // 将键值对添加到 IDictionary 对象中
+                    //    parameters[key] = value;
+                    //}
+
+                    parameters.Add("EquitMent", "E5063A");
+                    parameters.Add("LotNo", tsb_Pnl_ID.Text);
+                    parameters.Add("Layer", paramList[measIndex.currentIndex].Layer);
+                    parameters.Add("CheckOp", _dgv.Rows[index].Cells[5].Value.ToString());
+                    parameters.Add("ImpedanceSpec", _dgv.Rows[index].Cells[7].Value.ToString());
+                    parameters.Add("ImpedanceMax", _dgv.Rows[index].Cells[8].Value.ToString());
+                    parameters.Add("ImpedanceMin", _dgv.Rows[index].Cells[9].Value.ToString());
+                    parameters.Add("ImpedanceAvg", _dgv.Rows[index].Cells[10].Value.ToString());
+
+                    //parameters.Add("EquitMent", "E5063A");
+                    //parameters.Add("LotNo", "123456");
+                    //parameters.Add("Layer", "111");
+                    //parameters.Add("CheckOp", "pass");
+                    //parameters.Add("ImpedanceSpec", "50 +- 10");
+                    //parameters.Add("ImpedanceMax", "55.65");
+                    //parameters.Add("ImpedanceMin", "48.65");
+                    //parameters.Add("ImpedanceAvg", "50.65");
+
+                    postDataList.Add(parameters);
+
                     //只有最后一个走完，流水才++
                     if (measIndex.currentIndex == paramList.Count - 1)
                     {
@@ -1604,7 +1586,7 @@ namespace TDRv
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
                     {
-                        if (j == 10)
+                        if (j == 4)//这里时间要加一个空格，要不会显示不正确
                         {
                             historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
                         }
@@ -1629,11 +1611,16 @@ namespace TDRv
                 Directory.CreateDirectory(fileDir);
             }
 
+
             if (!File.Exists(filePath))
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
+                //string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
+                string str = "ImpedanceCheckId," + "LotNo," + "WorkNo," + "ProdNo," + "CheckTime," + "CheckOp" + "Layer,"
+                             + "ImpedanceSpec," + "ImpedanceMax," + "ImpedanceMin," + "ImpedanceAVG," + "EquitMent,"
+                             + "FileName," + "CurveImage," + "Number," + "Operator," + "TechNo," + "DataChainId";
+
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
