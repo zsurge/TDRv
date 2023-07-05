@@ -94,7 +94,8 @@ namespace TDRv
                         i++;
                     }
                 }
-                byte[] data = Encoding.ASCII.GetBytes(buffer.ToString());
+                //byte[] data = Encoding.ASCII.GetBytes(buffer.ToString());
+                byte[] data = Encoding.UTF8.GetBytes(buffer.ToString());
                 using (Stream stream = request.GetRequestStream())
                 {
                     stream.Write(data, 0, data.Length);

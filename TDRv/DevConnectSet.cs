@@ -144,6 +144,29 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY59203255")) //临时测试使用1个月，2023.07.03
+                {
+
+                    if (202308031400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else if (sn.Contains("MY59202618"))
                 {
 
@@ -444,7 +467,7 @@ namespace TDRv
                 else if (sn.Contains("MY63056301")) //add 2023.04.02
                 {
 
-                    if (202307021400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202309031400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;

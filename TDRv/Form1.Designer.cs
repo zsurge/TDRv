@@ -61,7 +61,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgv_CurrentResult = new System.Windows.Forms.DataGridView();
-            this.cImpedanceCheckId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPanel_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSet_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSerial = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,7 +80,6 @@
             this.cDataChainId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,7 +99,6 @@
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -337,7 +334,7 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(1227, 686);
+            this.chart1.Size = new System.Drawing.Size(1227, 685);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -350,7 +347,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1634, 330);
+            this.tabControl1.Size = new System.Drawing.Size(1634, 331);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -359,7 +356,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1626, 304);
+            this.tabPage1.Size = new System.Drawing.Size(1626, 305);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "目前量测";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -380,7 +377,6 @@
             this.dgv_CurrentResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_CurrentResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_CurrentResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cImpedanceCheckId,
             this.cPanel_ID,
             this.cSet_ID,
             this.cSerial,
@@ -407,16 +403,8 @@
             this.dgv_CurrentResult.RowHeadersWidth = 82;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 298);
+            this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 299);
             this.dgv_CurrentResult.TabIndex = 0;
-            // 
-            // cImpedanceCheckId
-            // 
-            this.cImpedanceCheckId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.cImpedanceCheckId.HeaderText = "ImpedanceCheckId";
-            this.cImpedanceCheckId.Name = "cImpedanceCheckId";
-            this.cImpedanceCheckId.ReadOnly = true;
-            this.cImpedanceCheckId.Width = 126;
             // 
             // cPanel_ID
             // 
@@ -546,6 +534,7 @@
             // 
             this.cTechNo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.cTechNo.HeaderText = "TechNo";
+            this.cTechNo.MinimumWidth = 8;
             this.cTechNo.Name = "cTechNo";
             this.cTechNo.ReadOnly = true;
             // 
@@ -553,6 +542,7 @@
             // 
             this.cDataChainId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.cDataChainId.HeaderText = "DataChainId";
+            this.cDataChainId.MinimumWidth = 8;
             this.cDataChainId.Name = "cDataChainId";
             this.cDataChainId.ReadOnly = true;
             // 
@@ -562,7 +552,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1620, 296);
+            this.tabPage2.Size = new System.Drawing.Size(1626, 304);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "已输出量测";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -585,7 +575,6 @@
             this.dgv_OutPutResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_OutPutResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_OutPutResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
@@ -608,16 +597,8 @@
             this.dgv_OutPutResult.RowHeadersVisible = false;
             this.dgv_OutPutResult.RowHeadersWidth = 82;
             this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 289);
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(1626, 297);
             this.dgv_OutPutResult.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn1.HeaderText = "ImpedanceCheckId";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 126;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -729,12 +710,14 @@
             // 
             this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column5.HeaderText = "TechNo";
+            this.Column5.MinimumWidth = 8;
             this.Column5.Name = "Column5";
             // 
             // Column6
             // 
             this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Column6.HeaderText = "DataChainId";
+            this.Column6.MinimumWidth = 8;
             this.Column6.Name = "Column6";
             this.Column6.Width = 96;
             // 
@@ -743,7 +726,7 @@
             this.tabPage3.Controls.Add(this.dgv_HistoryResult);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1620, 296);
+            this.tabPage3.Size = new System.Drawing.Size(1626, 304);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "历史量测";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -766,7 +749,6 @@
             this.dgv_HistoryResult.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_HistoryResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_HistoryResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn15,
             this.dataGridViewTextBoxColumn16,
             this.dataGridViewTextBoxColumn17,
             this.dataGridViewTextBoxColumn18,
@@ -791,16 +773,8 @@
             this.dgv_HistoryResult.RowHeadersWidth = 82;
             this.dgv_HistoryResult.RowTemplate.Height = 23;
             this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 289);
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(1626, 297);
             this.dgv_HistoryResult.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.dataGridViewTextBoxColumn15.HeaderText = "ImpedanceCheckId";
-            this.dataGridViewTextBoxColumn15.MinimumWidth = 10;
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.Width = 126;
             // 
             // dataGridViewTextBoxColumn16
             // 
@@ -897,12 +871,14 @@
             // Column7
             // 
             this.Column7.HeaderText = "TechNo";
+            this.Column7.MinimumWidth = 8;
             this.Column7.Name = "Column7";
             // 
             // Column8
             // 
             this.Column8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Column8.HeaderText = "DataChainId";
+            this.Column8.MinimumWidth = 8;
             this.Column8.Name = "Column8";
             this.Column8.Width = 96;
             // 
@@ -927,7 +903,7 @@
             this.dataGridView1.RowHeadersWidth = 82;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(392, 634);
+            this.dataGridView1.Size = new System.Drawing.Size(392, 633);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -983,7 +959,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Size = new System.Drawing.Size(1634, 1022);
-            this.splitContainer1.SplitterDistance = 688;
+            this.splitContainer1.SplitterDistance = 687;
             this.splitContainer1.TabIndex = 5;
             // 
             // splitContainer2
@@ -1000,7 +976,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.chart1);
-            this.splitContainer2.Size = new System.Drawing.Size(1634, 688);
+            this.splitContainer2.Size = new System.Drawing.Size(1634, 687);
             this.splitContainer2.SplitterDistance = 395;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -1009,7 +985,7 @@
             this.lable_test_result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lable_test_result.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lable_test_result.Location = new System.Drawing.Point(3, 636);
+            this.lable_test_result.Location = new System.Drawing.Point(3, 635);
             this.lable_test_result.Name = "lable_test_result";
             this.lable_test_result.Size = new System.Drawing.Size(389, 49);
             this.lable_test_result.TabIndex = 1;
@@ -1024,7 +1000,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230702 http";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司 V1.0.4.20230706 http";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
@@ -1088,7 +1064,6 @@
         private System.Windows.Forms.ToolStripTextBox tsb_Set_id;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripTextBox tsb_Set_operator;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cImpedanceCheckId;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPanel_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSet_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSerial;
@@ -1106,7 +1081,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cSeDiff;
         private System.Windows.Forms.DataGridViewTextBoxColumn cTechNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDataChainId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
@@ -1124,7 +1098,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
