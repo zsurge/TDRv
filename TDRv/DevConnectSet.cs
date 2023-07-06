@@ -714,9 +714,9 @@ namespace TDRv
                     }
                 }
                 //add 2022.07.25 modify 2022.10.25,delay 2023.01.25 delay 2023.05.28 2023.01.25 delay 2023.06.28 
-                else if (sn.Contains("MY54705930") )
+                else if (sn.Contains("MY54705930") ) //2023.07.06 add to 2099
                 {
-                    if (202307281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
