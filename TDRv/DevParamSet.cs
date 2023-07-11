@@ -388,18 +388,19 @@ namespace TDRv
                 string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
 
                 clickFlag = true;
-                if (string.Compare(units, "ohms", true) == 0)
-                {
-                    radio_units_ohm.Checked = true;
-                    lab_highlimit_unit.Text = "欧姆";
-                    lab_lowlimit_unit.Text  = "欧姆";
-                }
-                else
-                {
-                    radio_units_percent.Checked = true;
-                    lab_highlimit_unit.Text = "%";
-                    lab_lowlimit_unit.Text = "%";
-                }
+
+                //if (string.Compare(units, "ohms", true) == 0)
+                //{
+                radio_units_ohm.Checked = true;
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
+                //}
+                //else
+                //{
+                //    radio_units_percent.Checked = true;
+                //    lab_highlimit_unit.Text = "%";
+                //    lab_lowlimit_unit.Text = "%";
+                //}
 
                 string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
                 if (string.Compare(testMode, "Differential", true) == 0)
@@ -480,8 +481,8 @@ namespace TDRv
             if (radio_units_ohm.Checked)
             {
        
-                lab_highlimit_unit.Text = "欧姆";
-                lab_lowlimit_unit.Text = "欧姆";
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
 
                 if (clickFlag)
                 {
@@ -654,6 +655,7 @@ namespace TDRv
         private void DevParamSet_Load(object sender, EventArgs e)
         {
             initControl(false);
+            radio_units_ohm.Checked = true;
             //禁止列排序
             for (int i = 0; i < dgv_param.Columns.Count; i++)
             {
@@ -877,6 +879,15 @@ namespace TDRv
         private void radio_p_image_close_CheckedChanged(object sender, EventArgs e)
         {
             tx_p_savePath.Text = "";
+        }
+
+        private void tx_p_TargetValue_TextChanged(object sender, EventArgs e)
+        {
+            if (tx_p_TargetValue.Text != null)
+            {
+                tx_p_highLimit.Text = (Convert.ToSingle(tx_p_TargetValue.Text)*1.1).ToString();
+                tx_p_lowLimit.Text = (Convert.ToSingle(tx_p_TargetValue.Text) * 0.9).ToString(); ;
+            }
         }
     }//end class
 }//end namespace

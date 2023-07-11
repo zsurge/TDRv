@@ -46,7 +46,7 @@ namespace TDRv
         public const int HISTORY_RECORD = 999;
 
         //流水
-        public int gSerialInc = 0;        
+        public int gSerialInc = 0;
 
         private bool gEmptyFlag = true; //标志是否有空的待测物
         public static int gTestResultValue = 0;
@@ -61,11 +61,11 @@ namespace TDRv
         /// </summary>
 
         public const string gUrl = "http://172.16.1.67/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
-        
+
 
         public double utilization_rate = 0.0;
         public TimeSpan day_shift_idle = TimeSpan.Zero;
-        public TimeSpan night_shift_idle = TimeSpan.Zero; 
+        public TimeSpan night_shift_idle = TimeSpan.Zero;
 
 
 
@@ -131,7 +131,7 @@ namespace TDRv
         {
             if (dgv_CurrentResult.Rows.Count > 0)
             {
-                DialogResult dr = MessageBox.Show("将要清除测试数据，是否保存","提示",MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show("将要清除测试数据，是否保存", "提示", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                 {
                     DataGridViewToExcel(dgv_CurrentResult);
@@ -186,7 +186,7 @@ namespace TDRv
             }
 
             //读取配方中的数据
-            GetIndexStart(dt);            
+            GetIndexStart(dt);
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -278,7 +278,7 @@ namespace TDRv
                 {
                     tr.DevMode = DIFFERENCE;
                 }
-                
+
                 tr.Layer = dt.Rows[i].Cells["Layer"].Value.ToString();
                 tr.Spec = dt.Rows[i].Cells["ImpedanceDefine"].Value.ToString();
                 tr.Upper_limit = dt.Rows[i].Cells["ImpedanceLimitUpper"].Value.ToString();
@@ -310,22 +310,22 @@ namespace TDRv
         {
             if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Pass") == 0)
             {
-        
+
                 optParam.testMode = 1;
             }
             else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Manual") == 0)
             {
-    
+
                 optParam.testMode = 2;
             }
             else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "Next") == 0)
             {
-            
+
                 optParam.testMode = 3;
             }
             else if (string.Compare(INI.GetValueFromIniFile("TDR", "TestStep"), "PassRecord") == 0)
             {
-        
+
                 optParam.testMode = 4;
             }
         }
@@ -376,12 +376,12 @@ namespace TDRv
             //获取当前测试模式
             ReadTestMode();
             //获取序列号起始值
-            gSerialInc =  Convert.ToInt32(optParam.snBegin);
-          
+            gSerialInc = Convert.ToInt32(optParam.snBegin);
+
             //初始化折线图
             initChart();
 
-        
+
 
             //禁止列排序
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
@@ -393,7 +393,7 @@ namespace TDRv
                 dgv_CurrentResult.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
-            
+
         }
 
         private void initChart()
@@ -543,7 +543,7 @@ namespace TDRv
                 {
                     //单端开路定义
                     result2 = string.Empty;
-                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, gDevType,out result2);
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, gDevType, out result2);
                     tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
@@ -567,7 +567,7 @@ namespace TDRv
                 for (int i = 0; i < tdd22_array.Length; i++)
                 {
                     if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
-                    {   
+                    {
                         if (i == 0)
                         {
                             MeasPosition.tdd22IndexValue = 0;
@@ -588,7 +588,7 @@ namespace TDRv
                 tsb_StartTest.Enabled = true;
 
                 CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
-            }            
+            }
         }
 
 
@@ -652,11 +652,11 @@ namespace TDRv
                 }
 
                 logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
-                SaveDataToCSVFile(result, logFileName);                
+                SaveDataToCSVFile(result, logFileName);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -709,12 +709,12 @@ namespace TDRv
             }
 
             //生成测试数据曲线
-            for (int i = 0; i < measDiffData.Count-1; i++)
+            for (int i = 0; i < measDiffData.Count - 1; i++)
             {
                 chart1.Series[0].Points.AddXY(i, measDiffData[i]);
             }
 
-            for (int i = 0; i < measSingleData.Count-1; i++)
+            for (int i = 0; i < measSingleData.Count - 1; i++)
             {
                 chart1.Series[3].Points.AddXY(i, measSingleData[i]);
             }
@@ -738,7 +738,7 @@ namespace TDRv
                 Directory.CreateDirectory(CurveDir);
             }
 
-            string spath = CurveDir + "\\"+ fileName.Replace(":","").Replace(".","")+".csv";
+            string spath = CurveDir + "\\" + fileName.Replace(":", "").Replace(".", "") + ".csv";
 
             try
             {
@@ -826,7 +826,7 @@ namespace TDRv
 
 
             //求最大值及最小值
-            if (tmpResult.Count != 0)            
+            if (tmpResult.Count != 0)
             {
                 //设置网格间距
                 chart1.ChartAreas[0].AxisX.Interval = (float)measData.Count / 10;//X轴间距
@@ -882,7 +882,7 @@ namespace TDRv
             }
         }
 
-        delegate void SetLableCB(string text,string color);
+        delegate void SetLableCB(string text, string color);
         public void SetLableText(string text, string color)
         {
             if (this.lable_test_result.InvokeRequired)
@@ -914,7 +914,7 @@ namespace TDRv
             TimeSpan startTime = new TimeSpan(8, 0, 0); // 早上8点
             TimeSpan endTime = new TimeSpan(20, 0, 0); // 晚上8点
             TimeSpan currentTimeOfDay = currentTime.TimeOfDay; // 获取当前时间的小时、分钟和秒数部分
-  
+
 
             // 判断当前时间是否在早上8点到晚上8点之间
             if (currentTimeOfDay >= startTime && currentTimeOfDay <= endTime)
@@ -963,13 +963,13 @@ namespace TDRv
 
                 toDoWork();
             }
-    }
+        }
 
         public void toDoWork()
         {
             var task1 = new Task(() =>
             {
-                
+
                 if (optStatus.isConnect && optStatus.isGetIndex)
                 {
                     CheckIdleTime();
@@ -1057,16 +1057,16 @@ namespace TDRv
                 return;
             }
 
-            if(paramList[0].Curve_image.Length > 3)
+            if (paramList[0].Curve_image.Length > 3)
             {
                 task1.ContinueWith((Task) =>
                 {
                     CaptureScreenChart(chart1, paramList[0].Curve_image);
                 });
-            }            
-         
+            }
+
         }
-        
+
         //在后台发送数据到服务器
         public void UploadDataInBackground()
         {
@@ -1102,10 +1102,18 @@ namespace TDRv
         }
 
 
-    private void tsmi_delAll_Click(object sender, EventArgs e)
+        private void tsmi_delAll_Click(object sender, EventArgs e)
         {
-            //删除所有测试数据
-            dgv_CurrentResult.Rows.Clear();
+            // 提示用户确认删除
+            DialogResult result = MessageBox.Show("是否删除所有数据？", "确认删除", MessageBoxButtons.OKCancel);
+
+            // 根据用户的选择执行相应的操作
+            if (result == DialogResult.OK)
+            {
+                //删除所有测试数据
+                dgv_CurrentResult.Rows.Clear();
+            }
+
         }
 
         //删除选中的测试结果
@@ -1153,8 +1161,8 @@ namespace TDRv
             dlg.FilterIndex = 0;
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
-            dlg.Title = "保存为csv文件";    
-            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName);            
+            dlg.Title = "保存为csv文件";
+            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName);
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -1209,12 +1217,12 @@ namespace TDRv
                         sw.WriteLine(columnValue);
                     }
                     sw.Close();
-                    myStream.Close();                    
+                    myStream.Close();
                     CommonFuncs.ShowMsg(eHintInfoType.hint, "导出报告成功!");
                     return true;
                 }
                 catch (Exception e)
-                {                    
+                {
                     CommonFuncs.ShowMsg(eHintInfoType.error, "导出报告失败!");
                     return false;
                 }
@@ -1225,7 +1233,7 @@ namespace TDRv
                 }
             }
             else
-            {                
+            {
                 CommonFuncs.ShowMsg(eHintInfoType.hint, "取消导出报告操作!");
                 return false;
             }
@@ -1242,7 +1250,7 @@ namespace TDRv
                 }
                 if (isExecuteComplete)
                 {
-                    isExecuteComplete = false;                    
+                    isExecuteComplete = false;
 
                     if (optParam.keyMode == 1)
                     {
@@ -1261,7 +1269,7 @@ namespace TDRv
 
         //鼠标点击单元框选，更改测试次序,同时对比LIMIT里，需要对比相应的LIMIT
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {  
+        {
             if (e.RowIndex > -1)
             {
                 measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引 
@@ -1386,17 +1394,17 @@ namespace TDRv
         }
 
 
-        delegate void CreateDatagridviewDelegate(DataGridView _dgv, int channel,int flag);
-        public void CreateResultDatagridview(DataGridView _dgv, int channel,int flag)
+        delegate void CreateDatagridviewDelegate(DataGridView _dgv, int channel, int flag);
+        public void CreateResultDatagridview(DataGridView _dgv, int channel, int flag)
         {
 
             if (_dgv.InvokeRequired)
             {
                 CreateDatagridviewDelegate d = new CreateDatagridviewDelegate(CreateResultDatagridview);
-                this.Invoke(d, new object[] { _dgv, channel ,flag});
+                this.Invoke(d, new object[] { _dgv, channel, flag });
             }
             else
-            {         
+            {
                 bool ret = false;
                 float avg = 0.0f;
                 float max = 0.0f;
@@ -1464,11 +1472,11 @@ namespace TDRv
                     {
                         gTestResultValue = -1;
                     }
-                    else 
+                    else
                     {
                         gTestResultValue = 1;
                     }
-                } 
+                }
 
 
                 if (optParam.testMode == 4 && gTestResultValue == -1)
@@ -1476,16 +1484,16 @@ namespace TDRv
                     return;
                 }
 
-                int index = _dgv.Rows.Add();                
+                int index = _dgv.Rows.Add();
                 if (ret)
                 {
                     SetLableText("PASS", "Green");
-                    _dgv.Rows[index].Cells[4].Value = "PASS";     
+                    _dgv.Rows[index].Cells[4].Value = "PASS";
                 }
                 else
                 {
                     SetLableText("FAIL", "Red");
-                    _dgv.Rows[index].Cells[4].Value = "NG";             
+                    _dgv.Rows[index].Cells[4].Value = "NG";
                 }
 
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
@@ -1553,7 +1561,9 @@ namespace TDRv
 
                 _dgv.Rows[index].Cells[5].Value = paramList[measIndex.currentIndex].Layer; //层别
                 //_dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + Uri.EscapeDataString("+-") + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
-                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
+                //_dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
+                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString(); //标准阻抗
+
                 if (gEmptyFlag)
                 {
                     _dgv.Rows[index].Cells[7].Value = "9999"; //平均值
@@ -1562,9 +1572,9 @@ namespace TDRv
                 }
                 else
                 {
-                    _dgv.Rows[index].Cells[7].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                    _dgv.Rows[index].Cells[8].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                    _dgv.Rows[index].Cells[9].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+                    _dgv.Rows[index].Cells[7].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+                    _dgv.Rows[index].Cells[8].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值    
+                    _dgv.Rows[index].Cells[9].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值             
                 }
 
 
@@ -1595,11 +1605,11 @@ namespace TDRv
                     {
                         string key = column.HeaderText;
 
-                        // 假设你想获取第index行的值
+                        //获取第index行的值
                         string value = _dgv.Rows[index].Cells[column.Index].Value?.ToString();
 
                         // 对包含"+-"符号的值进行特殊处理
-                        if (key == "ImpedanceSpec") 
+                        if (key == "ImpedanceSpec")
                         {
                             //进行解码操作，将"+-" 替换为  "%2B-"
                             value = value.Replace("+-", "%2B-");
@@ -1617,7 +1627,7 @@ namespace TDRv
                     }
 
                     //光标在最后一行
-                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
+                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];
                 }
                 else
                 {
@@ -1627,21 +1637,23 @@ namespace TDRv
                     {
                         if (j == 4)//这里时间要加一个空格，要不会显示不正确
                         {
-                            historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
+                            //可以将时间转换为字符串并在其前面添加引号。这样做可以确保时间以文本格式保存，而不是被解析为数值
+                            //historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
+                            historyRecord.Add($"\"{_dgv.Rows[index].Cells[j].Value.ToString()}\"");
                         }
                         else
                         {
                             historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
                         }
                     }
-                    string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
+                    string defName = INI.GetValueFromIniFile("TDR", "HistoryFile");
                     writeHistoryRecord(historyRecord, defName);
                 }
 
             }
         }
 
-        private void writeHistoryRecord(List<string>data, string filePath)
+        private void writeHistoryRecord(List<string> data, string filePath)
         {
             string fileDir = Path.GetDirectoryName(filePath);
 
@@ -1678,7 +1690,7 @@ namespace TDRv
                 string strline = string.Empty;
                 for (int i = 0; i < data.Count; i++)
                 {
-                    strline += (data[i]+",");
+                    strline += (data[i] + ",");
                 }
                 fileWriter.WriteLine(strline);
                 fileWriter.Flush();
@@ -1692,7 +1704,7 @@ namespace TDRv
             if (_dgv.InvokeRequired)
             {
                 RefreshDatagridviewDelegate d = new RefreshDatagridviewDelegate(reFreshDatagridview);
-                this.Invoke(d, new object[] { _dgv});
+                this.Invoke(d, new object[] { _dgv });
             }
             else
             {
@@ -1700,13 +1712,13 @@ namespace TDRv
             }
         }
 
-        delegate void CaptureScreenChartDelegate(Chart _chart,string path);
+        delegate void CaptureScreenChartDelegate(Chart _chart, string path);
         public void CaptureScreenChart(Chart _chart, string path)
         {
             if (_chart.InvokeRequired)
             {
                 CaptureScreenChartDelegate d = new CaptureScreenChartDelegate(CaptureScreenChart);
-                this.Invoke(d, new object[] { _chart , path });
+                this.Invoke(d, new object[] { _chart, path });
             }
             else
             {
