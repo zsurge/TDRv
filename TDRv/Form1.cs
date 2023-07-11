@@ -56,7 +56,12 @@ namespace TDRv
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
 
-        public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
+        /// <summary>
+        /// public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
+        /// </summary>
+
+        public const string gUrl = "http://172.16.1.67/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
+        
 
         public double utilization_rate = 0.0;
         public TimeSpan day_shift_idle = TimeSpan.Zero;
