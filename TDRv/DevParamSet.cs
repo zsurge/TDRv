@@ -866,8 +866,9 @@ namespace TDRv
             }
             else
             {
-                historyFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_history.csv");
-                exportFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_Export.csv");
+                string time = DateTime.Now.ToString("yyyyMMddHHmmssff");
+                historyFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_" + time + "_history.csv");
+                exportFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_" + time + "_Export.csv");
             }
 
             INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");

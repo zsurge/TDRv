@@ -1127,7 +1127,8 @@ namespace TDRv
         {
             bool ret = false;
             //输出报告 
-            ret = DataGridViewToExcel(dgv_CurrentResult);
+           //ret = DataGridViewToExcel(dgv_CurrentResult);
+            ret = Backend_Storage_DataGridViewToExcel(dgv_CurrentResult);
 
             if (ret)
             {
@@ -1154,7 +1155,7 @@ namespace TDRv
         /// <param name="dgv">数据源文件</param>
         public bool DataGridViewToExcel(DataGridView dgv)
         {
-            string defName = INI.GetValueFromIniFile("TDR", "ExportFile"); ;
+            string defName = INI.GetValueFromIniFile("TDR", "ExportFile");
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.InitialDirectory = reportDir;
             dlg.Filter = "Execl files (*.csv)|*.csv";
@@ -1237,6 +1238,89 @@ namespace TDRv
                 CommonFuncs.ShowMsg(eHintInfoType.hint, "取消导出报告操作!");
                 return false;
             }
+        }
+
+        public bool Backend_Storage_DataGridViewToExcel(DataGridView dgv)
+        {
+            string defName = INI.GetValueFromIniFile("TDR", "ExportFile");
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.InitialDirectory = reportDir;
+            dlg.Filter = "Execl files (*.csv)|*.csv";
+            dlg.FilterIndex = 0;
+            dlg.RestoreDirectory = true;
+            dlg.CreatePrompt = true;
+            dlg.Title = "保存为csv文件";
+            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName) + ".csv";
+
+
+            Stream myStream;
+            myStream = dlg.OpenFile();
+            StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
+            string columnTitle = "";
+            try
+            {
+                //写入列标题    
+                for (int i = 0; i < dgv.ColumnCount; i++)
+                {
+                    if (i > 0)
+                    {
+                        columnTitle += ",";
+                    }
+                    columnTitle += dgv.Columns[i].HeaderText;
+                }
+
+                sw.WriteLine(columnTitle);
+
+                //写入列内容    
+                for (int j = 0; j < dgv.Rows.Count; j++)
+                {
+                    string columnValue = "";
+                    for (int k = 0; k < dgv.Columns.Count; k++)
+                    {
+                        if (k > 0)
+                        {
+                            columnValue += ",";
+                        }
+                        if (dgv.Rows[j].Cells[k].Value == null)
+                            columnValue += "";
+                        else if (dgv.Rows[j].Cells[k].Value.ToString().Contains(","))
+                        {
+                            columnValue += "\"" + dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\"";
+                        }
+                        else
+                        {
+                            //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                            //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                            if (k == 10)
+                            {
+                                columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                            }
+                            else
+                            {
+                                columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                            }
+                        }
+                    }
+                    sw.WriteLine(columnValue);
+                }
+                sw.Close();
+                myStream.Close();
+            
+                LoggerHelper.mlog.Debug("导出报告成功!");
+                return true;
+            }
+            catch (Exception e)
+            {
+                LoggerHelper.mlog.Debug("导出报告失败!");
+            
+                return false;
+            }
+            finally
+            {
+                sw.Close();
+                myStream.Close();
+            }
+
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -1776,6 +1860,12 @@ namespace TDRv
                     E5071C.viClose(CGloabal.g_curInstrument.nHandle);
                 }
             }
+        }
+
+        //上传报告
+        private void tsb_trans_result_Click(object sender, EventArgs e)
+        {
+
         }
     }//end form
 
