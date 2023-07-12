@@ -56,11 +56,11 @@ namespace TDRv
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
 
-        /// <summary>
-        /// public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
-        /// </summary>
+     
+         public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
 
-        public const string gUrl = "http://172.16.1.67/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
+
+        //public const string gUrl = "http://172.16.1.67/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
 
 
         public double utilization_rate = 0.0;
@@ -1237,7 +1237,7 @@ namespace TDRv
                             {
                                 //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                                 //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
-                                if (k == 10)
+                                if (k == 3)
                                 {
                                     columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                                 }
@@ -1318,7 +1318,7 @@ namespace TDRv
                         }
                         else
                         {
-                            if (k == 10)
+                            if (k == 3)
                             {
                                 columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                             }
@@ -1718,7 +1718,7 @@ namespace TDRv
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
                     {
-                        if (j == 4)//这里时间要加一个空格，要不会显示不正确
+                        if (j == 3)//这里时间要加一个空格，要不会显示不正确
                         {
                             //可以将时间转换为字符串并在其前面添加引号。这样做可以确保时间以文本格式保存，而不是被解析为数值
                             //historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
@@ -1869,23 +1869,20 @@ namespace TDRv
             bool ret = await Task.Run(() => Backend_Storage_DataGridViewToExcel(dgv_CurrentResult));
             if (ret)
             {
-                await Task.Run(() =>
+                // 复制到已量测表格中
+                for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
                 {
-                    // 复制到已量测表格中
-                    for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
+                    int index = dgv_OutPutResult.Rows.Add(); // 在gridview2中添加一空行
+
+                    // 为空行添加列值
+                    for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
                     {
-                        int index = dgv_OutPutResult.Rows.Add(); // 在gridview2中添加一空行
-
-                        // 为空行添加列值
-                        for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
-                        {
-                            dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
-                        }
+                        dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
                     }
+                }
 
-                    // 清空参数表格
-                    dgv_CurrentResult.Rows.Clear();
-                });
+                // 清空参数表格
+                dgv_CurrentResult.Rows.Clear();
             }
         }
 
