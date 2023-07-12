@@ -131,9 +131,10 @@ namespace TDRv
         {
             if (dgv_CurrentResult.Rows.Count > 0)
             {
-                DialogResult dr = MessageBox.Show("将要清除测试数据，是否保存", "提示", MessageBoxButtons.YesNo);
+                DialogResult dr = MessageBox.Show("将要清除测试数据，是否保存并上传服务器", "提示", MessageBoxButtons.YesNo);
                 if (dr == DialogResult.Yes)
                 {
+                    ExecutePacketAndUploadData();
                     DataGridViewToExcel(dgv_CurrentResult);
                 }
             }
@@ -1014,11 +1015,7 @@ namespace TDRv
                     CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
                     CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
 
-                    //添加判定，如果测试完一片板子后，就要开始上传数据
-                    if ((measIndex.total - 1) == measIndex.currentIndex)
-                    {
-                        UploadDataInBackground();
-                    }
+
 
                     if (optParam.testMode == 3)
                     {
@@ -1067,39 +1064,74 @@ namespace TDRv
 
         }
 
-        //在后台发送数据到服务器
-        public void UploadDataInBackground()
-        {
-            Task.Run(() =>
-            {
-                foreach (var parameters in postDataList)
-                {
-                    HttpWebResponse res = HttpHelper.CreatePostHttpResponse(gUrl, parameters, 2000, null, null);
 
-                    if (res == null)
-                    {
-                        MessageBox.Show("URL无法访问");
-                        LoggerHelper.mlog.Debug("URL无法访问");
-                        return;
-                    }
+        //private void packet_result()
+        //{
+        //    // 创建一个 List<Dictionary<string, string>> 对象
+        //    List<Dictionary<string, string>> postDataList = new List<Dictionary<string, string>>();
 
-                    // 进一步处理响应或保存响应的代码（可以根据自己的需求进行操作）
-                    string resp = HttpHelper.GetResponseString(res);
+        //    // 遍历 DataGridView 的行
+        //    foreach (DataGridViewRow row in dgv_CurrentResult.Rows)
+        //    {
+        //        // 创建一个 IDictionary<string, string> 对象
+        //        Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-                    XmlDocument docXml = new XmlDocument();
-                    docXml.LoadXml(resp);
-                    string str = docXml.ChildNodes[1].InnerText;
+        //        // 遍历 DataGridView 的列
+        //        foreach (DataGridViewColumn column in dgv_CurrentResult.Columns)
+        //        {
+        //            string key = column.HeaderText;
 
-                    if (str.ToUpper().Contains("OK"))
-                    {
-                        LoggerHelper.mlog.Debug("发送成功");
-                    }
-                }
+        //            // 获取当前行、当前列的单元格值
+        //            string value = row.Cells[column.Index].Value?.ToString();
 
-                // 清空postDataList
-                postDataList.Clear();
-            });
-        }
+        //            // 对包含"+-"符号的值进行特殊处理
+        //            if (key == "ImpedanceSpec")
+        //            {
+        //                // 进行解码操作，将"+-" 替换为 "%2B-"
+        //                value = value.Replace("+-", "%2B-");
+        //            }
+
+        //            // 将键值对添加到 IDictionary 对象中
+        //            parameters[key] = value;
+        //        }
+
+        //        // 将当前行的数据添加到 List 中
+        //        postDataList.Add(parameters);
+        //    }
+        //}
+        ////在后台发送数据到服务器
+        //public void UploadDataInBackground()
+        //{
+        //    Task.Run(() =>
+        //    {
+        //        foreach (var parameters in postDataList)
+        //        {
+        //            HttpWebResponse res = HttpHelper.CreatePostHttpResponse(gUrl, parameters, 2000, null, null);
+
+        //            if (res == null)
+        //            {
+        //                MessageBox.Show("URL无法访问");
+        //                LoggerHelper.mlog.Debug("URL无法访问");
+        //                return;
+        //            }
+
+        //            // 进一步处理响应或保存响应的代码（可以根据自己的需求进行操作）
+        //            string resp = HttpHelper.GetResponseString(res);
+
+        //            XmlDocument docXml = new XmlDocument();
+        //            docXml.LoadXml(resp);
+        //            string str = docXml.ChildNodes[1].InnerText;
+
+        //            if (str.ToUpper().Contains("OK"))
+        //            {
+        //                LoggerHelper.mlog.Debug("发送成功");
+        //            }
+        //        }
+
+        //        // 清空postDataList
+        //        postDataList.Clear();
+        //    });
+        //}
 
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1127,8 +1159,8 @@ namespace TDRv
         {
             bool ret = false;
             //输出报告 
-           //ret = DataGridViewToExcel(dgv_CurrentResult);
-            ret = Backend_Storage_DataGridViewToExcel(dgv_CurrentResult);
+            ret = DataGridViewToExcel(dgv_CurrentResult);
+           
 
             if (ret)
             {
@@ -1250,8 +1282,7 @@ namespace TDRv
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
             dlg.Title = "保存为csv文件";
-            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName) + ".csv";
-
+            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName)+ DateTime.Now.ToString("yyyyMMddHHmmss")+"_" + ".csv";
 
             Stream myStream;
             myStream = dlg.OpenFile();
@@ -1268,9 +1299,7 @@ namespace TDRv
                     }
                     columnTitle += dgv.Columns[i].HeaderText;
                 }
-
                 sw.WriteLine(columnTitle);
-
                 //写入列内容    
                 for (int j = 0; j < dgv.Rows.Count; j++)
                 {
@@ -1289,8 +1318,6 @@ namespace TDRv
                         }
                         else
                         {
-                            //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
-                            //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
                             if (k == 10)
                             {
                                 columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
@@ -1305,14 +1332,12 @@ namespace TDRv
                 }
                 sw.Close();
                 myStream.Close();
-            
                 LoggerHelper.mlog.Debug("导出报告成功!");
                 return true;
             }
             catch (Exception e)
             {
                 LoggerHelper.mlog.Debug("导出报告失败!");
-            
                 return false;
             }
             finally
@@ -1320,7 +1345,6 @@ namespace TDRv
                 sw.Close();
                 myStream.Close();
             }
-
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -1587,7 +1611,7 @@ namespace TDRv
                 }
                 else
                 {
-                    strUnit = " %";
+                    strUnit = " Ohm";
                 }
 
                 //   [ImpedanceCheckId] [char](12) NULL           --ID
@@ -1645,8 +1669,7 @@ namespace TDRv
 
                 _dgv.Rows[index].Cells[5].Value = paramList[measIndex.currentIndex].Layer; //层别
                 //_dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + Uri.EscapeDataString("+-") + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
-                //_dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
-                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString(); //标准阻抗
+                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
 
                 if (gEmptyFlag)
                 {
@@ -1680,30 +1703,6 @@ namespace TDRv
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
-                    //添加需要上送的数据
-                    // 创建一个 IDictionary<string, string> 对象
-                    Dictionary<string, string> parameters = new Dictionary<string, string>();
-
-                    // 遍历 DataGridView 的列标题
-                    foreach (DataGridViewColumn column in _dgv.Columns)
-                    {
-                        string key = column.HeaderText;
-
-                        //获取第index行的值
-                        string value = _dgv.Rows[index].Cells[column.Index].Value?.ToString();
-
-                        // 对包含"+-"符号的值进行特殊处理
-                        if (key == "ImpedanceSpec")
-                        {
-                            //进行解码操作，将"+-" 替换为  "%2B-"
-                            value = value.Replace("+-", "%2B-");
-                        }
-                        // 将键值对添加到 IDictionary 对象中
-                        parameters[key] = value;
-                    }
-
-                    postDataList.Add(parameters);
-
                     //只有最后一个走完，流水才++
                     if (measIndex.currentIndex == paramList.Count - 1)
                     {
@@ -1862,10 +1861,111 @@ namespace TDRv
             }
         }
 
-        //上传报告
-        private void tsb_trans_result_Click(object sender, EventArgs e)
-        {
 
+
+        //保存日志文件
+        private async Task SaveResultInBackground()
+        {
+            bool ret = await Task.Run(() => Backend_Storage_DataGridViewToExcel(dgv_CurrentResult));
+            if (ret)
+            {
+                await Task.Run(() =>
+                {
+                    // 复制到已量测表格中
+                    for (int i = 0; i < dgv_CurrentResult.Rows.Count; i++)
+                    {
+                        int index = dgv_OutPutResult.Rows.Add(); // 在gridview2中添加一空行
+
+                        // 为空行添加列值
+                        for (int j = 0; j < dgv_CurrentResult.Rows[i].Cells.Count; j++)
+                        {
+                            dgv_OutPutResult.Rows[i].Cells[j].Value = dgv_CurrentResult.Rows[i].Cells[j].Value;
+                        }
+                    }
+
+                    // 清空参数表格
+                    dgv_CurrentResult.Rows.Clear();
+                });
+            }
+        }
+
+        public void ExecutePacketAndUploadData()
+        {
+            Task.Run(() =>
+            {
+                List<Dictionary<string, string>> postDataList = new List<Dictionary<string, string>>();
+
+                if (dgv_CurrentResult.Rows.Count <= 0)
+                {
+                    return;
+                }
+
+                // packet_result()方法
+                foreach (DataGridViewRow row in dgv_CurrentResult.Rows)
+                {
+                    Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+                    foreach (DataGridViewColumn column in dgv_CurrentResult.Columns)
+                    {
+                        string key = column.HeaderText;
+                        string value = row.Cells[column.Index].Value?.ToString();
+
+                        if (key == "ImpedanceSpec")
+                        {
+                            value = value.Replace("+-", "%2B-");
+                        }
+
+                        parameters[key] = value;
+                    }
+
+                    postDataList.Add(parameters);
+                }
+
+                // UploadDataInBackground方法
+                Task.Run(() =>
+                {
+                    foreach (var parameters in postDataList)
+                    {
+                        HttpWebResponse res = HttpHelper.CreatePostHttpResponse(gUrl, parameters, 2000, null, null);
+
+                        if (res == null)
+                        {
+                            MessageBox.Show("URL无法访问");
+                            LoggerHelper.mlog.Debug("URL无法访问");
+                            return;
+                        }
+
+                        // 进一步处理响应或保存响应的代码（可以根据自己的需求进行操作）
+                        string resp = HttpHelper.GetResponseString(res);
+
+                        XmlDocument docXml = new XmlDocument();
+                        docXml.LoadXml(resp);
+                        string str = docXml.ChildNodes[1].InnerText;
+
+                        if (str.ToUpper().Contains("OK"))
+                        {
+                            LoggerHelper.mlog.Debug("发送成功");
+                        }
+                    }
+
+                    // 清空postDataList
+                    postDataList.Clear();
+                });
+            });
+        }
+
+
+        //上传报告
+        private async void tsb_trans_result_Click(object sender, EventArgs e)
+        {
+            //打包需要上送的数据
+            //开始上送
+            //packet_result();
+            //UploadDataInBackground();
+            //打包并上送
+            ExecutePacketAndUploadData();
+
+            await SaveResultInBackground();
         }
     }//end form
 

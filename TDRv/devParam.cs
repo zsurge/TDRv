@@ -14,8 +14,8 @@ namespace TDRv
         public string Layer { get; set; } = "L1";//"Layer1";
         public string Remark { get; set; } = "";
         public string ImpedanceDefine { get; set; } = "50";
-        public string ImpedanceLimitLower { get; set; } = "45";
-        public string ImpedanceLimitUpper { get; set; } = "55";
+        public string ImpedanceLimitLower { get; set; } = "-5";
+        public string ImpedanceLimitUpper { get; set; } = "5";
         public string ImpedanceLimitUnit { get; set; } = "%";
         public string InputChannel { get; set; } = "1";
         public string InputMode { get; set; } = "SingleEnded";

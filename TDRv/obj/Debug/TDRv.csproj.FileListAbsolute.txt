@@ -59,6 +59,7 @@ C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.exe
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.pdb
+C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.AssemblyReference.cache
 E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.config
 E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe.config
 E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe
@@ -77,4 +78,3 @@ E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
-C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.AssemblyReference.cache

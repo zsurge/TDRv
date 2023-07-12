@@ -576,8 +576,8 @@ namespace TDRv
             this.dgv_param.Rows[index].Cells[3].Value = tx_p_Layer.Text;
             this.dgv_param.Rows[index].Cells[4].Value = tx_p_Remark.Text;
             this.dgv_param.Rows[index].Cells[5].Value = tx_p_TargetValue.Text;
-            this.dgv_param.Rows[index].Cells[6].Value = tx_p_lowLimit.Text;
-            this.dgv_param.Rows[index].Cells[7].Value = tx_p_highLimit.Text;
+            this.dgv_param.Rows[index].Cells[6].Value = (float.Parse(tx_p_TargetValue.Text) + float.Parse(tx_p_lowLimit.Text)).ToString();
+            this.dgv_param.Rows[index].Cells[7].Value = (float.Parse(tx_p_TargetValue.Text) + float.Parse(tx_p_highLimit.Text)).ToString();
 
             if (radio_units_ohm.Checked)
             {
@@ -866,9 +866,8 @@ namespace TDRv
             }
             else
             {
-                string time = DateTime.Now.ToString("yyyyMMddHHmmssff");
-                historyFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_" + time + "_history.csv");
-                exportFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_" + time + "_Export.csv");
+                historyFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_history.csv");
+                exportFile_bypro += (Path.GetFileNameWithoutExtension(xmlFilePath) + "_Export.csv");
             }
 
             INI.WriteValueToIniFile("TDR", "Naming Method", "ByProject");
@@ -884,11 +883,11 @@ namespace TDRv
 
         private void tx_p_TargetValue_TextChanged(object sender, EventArgs e)
         {
-            if (tx_p_TargetValue.Text != null)
-            {
-                tx_p_highLimit.Text = (Convert.ToSingle(tx_p_TargetValue.Text)*1.1).ToString();
-                tx_p_lowLimit.Text = (Convert.ToSingle(tx_p_TargetValue.Text) * 0.9).ToString(); ;
-            }
+            //if (tx_p_TargetValue.Text != null)
+            //{
+            //    tx_p_highLimit.Text = (Convert.ToSingle(tx_p_TargetValue.Text)*1.1).ToString();
+            //    tx_p_lowLimit.Text = (Convert.ToSingle(tx_p_TargetValue.Text) * 0.9).ToString(); ;
+            //}
         }
     }//end class
 }//end namespace
