@@ -57,10 +57,10 @@ namespace TDRv
         public static bool isExecuteIndex = true;
 
      
-         public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
+         //public const string gUrl = "Http://58.254.36.190/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
 
 
-        //public const string gUrl = "http://172.16.1.67/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
+        public const string gUrl = "http://172.16.1.67/OrBitWCFServiceR13/PostHole.asmx/ETIImpedancePostData";
 
 
         public double utilization_rate = 0.0;
@@ -1286,7 +1286,7 @@ namespace TDRv
 
             Stream myStream;
             myStream = dlg.OpenFile();
-            StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
+            StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.UTF8);
             string columnTitle = "";
             try
             {
@@ -1420,22 +1420,22 @@ namespace TDRv
                 xbegin = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100; //有效区起始位置
                 xend = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;     //有效区结束位置
 
-                if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
-                {
-                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100)); //量测值上限
-                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));//量测值下限
-                }
-                else
-                {
-                    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
-                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
-                    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
-                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
-                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
+                //if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
+                //{
+                //    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100)); //量测值上限
+                //    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));//量测值下限
+                //}
+                //else
+                //{
+                //    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
+                //    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                //    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
+                //    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                //    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
 
-                }
+                //}
 
                 if (xend - xbegin < 3)
                 {
@@ -1537,16 +1537,16 @@ namespace TDRv
 
                 float stdValue = Convert.ToSingle(paramList[measIndex.currentIndex].Spec); //标准值
 
-                if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
-                {
-                    lowLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Low_limit) / 100); //下限
-                    hiLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Upper_limit) / 100); //上限
-                }
-                else
-                {
-                    hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
-                    lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
-                }
+                //if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
+                //{
+                //    lowLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Low_limit) / 100); //下限
+                //    hiLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Upper_limit) / 100); //上限
+                //}
+                //else
+                //{
+                hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
+                //}
 
 
                 //这里判定是以点的方式还是以平均值的方式来判定结果
@@ -1605,14 +1605,15 @@ namespace TDRv
                 }
 
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
-                if (string.Compare(strUnit, "ohms") == 0)
-                {
-                    strUnit = " Ohm";
-                }
-                else
-                {
-                    strUnit = " Ohm";
-                }
+
+                //if (string.Compare(strUnit, "ohms") == 0)
+                //{
+                strUnit = " Ohm";
+                //}
+                //else
+                //{
+                //    strUnit = " Ohm";
+                //}
 
                 //   [ImpedanceCheckId] [char](12) NULL           --ID
                 //   [LotNo] [nvarchar](20) NOT NULL              --批量卡号、工单条码
