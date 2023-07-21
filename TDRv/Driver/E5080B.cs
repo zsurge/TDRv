@@ -225,8 +225,8 @@ namespace TDRv.Driver
             //    }
             //}
 
-      
-            
+
+
             //visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
 
             //cmd3 = "DISPlay:ENABle ON";
@@ -236,14 +236,17 @@ namespace TDRv.Driver
             //cmd5 = ":INITiate1:CONTinuous ON";
             //visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd5 + "\n"), cmd5.Length, out count);
 
-            visa32.viClear(nInstrumentHandle);
 
+
+            visa32.viClear(nInstrumentHandle);
 
             Array.Clear(ret, 0, 200000);
             cmd6 = ":CALC1:DATA? FDATa";
             viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd6 + "\n"), cmd6.Length, out count);
             viError = visa32.viRead(nInstrumentHandle, ret, 200000, out count);
             msg = Encoding.ASCII.GetString(ret, 0, count);
+
+            
 
             return viError;
         }

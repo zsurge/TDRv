@@ -1108,7 +1108,7 @@ namespace TDRv
                         index = MeasPosition.tdd11IndexValue;
                     }
 
-                    SetLableText("", "Control");
+                    //SetLableText("", "Control");
 
                     if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                     {
@@ -1180,43 +1180,45 @@ namespace TDRv
          
         }
 
+        public int g_current_mode = 0;
+        public int g_current_index = 0;
+
         public void loopWork()
         {
-            lock (loop_work_lock)
-            {
                 if (measTask == null || measTask.IsCompleted)
                 {
                     bool ret = false;
 
                     string result = string.Empty;
-                    int index = 0;
+            
 
-                    int channel = paramList[measIndex.currentIndex].DevMode;
+                    g_current_mode = paramList[measIndex.currentIndex].DevMode;
+                    //LoggerHelper.mlog.Info($"{g_current_mode}"+"   "+ $"{measIndex.currentIndex}");
 
-                    if (channel == SINGLE)
+                    if (g_current_mode == SINGLE)
                     {
-                        index = MeasPosition.tdd22IndexValue;
+                    g_current_index = MeasPosition.tdd22IndexValue;
                     }
                     else
                     {
-                        index = MeasPosition.tdd11IndexValue;
+                    g_current_index = MeasPosition.tdd11IndexValue;
                     }
 
-                    SetLableText("", "Control");
+                    //SetLableText("", "Control");
 
 
                     //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
                     if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                     {
-                        E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType);
+                        E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType);
                     }
                     else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                     {
-                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
                     }
                     else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
                     {
-                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
                     }
 
 
@@ -1229,29 +1231,32 @@ namespace TDRv
                             if (optStatus.isConnect && optStatus.isGetIndex)
                             {
 
-
-                            //这里循环读取数据并刷新到屏幕上去
-                            if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                                lock (loop_work_lock)
                                 {
-                                    E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                    //这里循环读取数据并刷新到屏幕上去
+                                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                                    {
+                                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+                                    }
+                                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                                    {
+                                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
+                                    }
+                                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                                    {
+                                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+                                    }
+
+                                    //LoggerHelper.mlog.Debug($"Mode = {g_current_mode}" + "   index=" + $"{g_current_index}");
+
+                                    //量测并生成图表                    
+                                    List<float> disResult = packetMaesData(result, g_current_index, g_current_mode);
+
+                                    DisplayChartValue(chart1, disResult);
+
+
+                                    isExecuteComplete = true;
                                 }
-                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                                {
-                                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                                }
-                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                                {
-                                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                                }
-
-                            //量测并生成图表                    
-                            List<float> disResult = packetMaesData(result, index, channel);
-
-                                DisplayChartValue(chart1, disResult);
-
-
-                                isExecuteComplete = true;
-
                             }
                             else
                             {
@@ -1264,7 +1269,7 @@ namespace TDRv
                     // btnStart.Enabled = false;
                 }
                 //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
-            }
+           
         }
 
         public void upgrade_data_ui()
@@ -1318,7 +1323,7 @@ namespace TDRv
                 index = MeasPosition.tdd11IndexValue;
             }
 
-            SetLableText("", "Control");
+            //SetLableText("", "Control");
 
 
             //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
@@ -1601,6 +1606,7 @@ namespace TDRv
                             cts.Cancel();
                             measTask = null;
                             upgrade_data_ui();
+                            Thread.Sleep(200);
                             loopWork();
                         }
                     }
