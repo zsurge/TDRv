@@ -1653,7 +1653,7 @@ namespace TDRv
             float f_spec = Convert.ToSingle(spec);
             float f_average = Convert.ToSingle(average);
 
-            return $"{Math.Abs(f_spec - f_average) / f_spec:P2}";
+            return $"{(f_average- f_spec) / f_spec:P2}";
         }
 
         private void writeHistoryRecord(List<string>data, string filePath)
