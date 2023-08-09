@@ -1670,7 +1670,11 @@ namespace TDRv
 
                 _dgv.Rows[index].Cells[5].Value = paramList[measIndex.currentIndex].Layer; //层别
                 //_dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + Uri.EscapeDataString("+-") + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
-                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + (hiLimit - stdValue).ToString() + "Ω"; //标准阻抗
+
+                double offset_value = hiLimit - stdValue;
+                string strOffset = offset_value.ToString(offset_value % 1 == 0 ? "0" : "0.0");
+
+                _dgv.Rows[index].Cells[6].Value = paramList[measIndex.currentIndex].Spec + "+-" + strOffset + "Ω"; //标准阻抗
 
                 if (gEmptyFlag)
                 {
@@ -1694,8 +1698,8 @@ namespace TDRv
 
 
 
-                _dgv.Rows[index].Cells[10].Value = "E5063A"; //设备名称编号
-                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Curve_data; //文件路径名
+                _dgv.Rows[index].Cells[10].Value = "外层领创阻抗机"; //设备名称编号
+                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Curve_data +"-" +tsc_cobox_test_type.Text; //文件路径名
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_image; //图片路径名      
                 _dgv.Rows[index].Cells[13].Value = utilization_rate.ToString() + "%"; //稼动率0%~100%   
                 _dgv.Rows[index].Cells[14].Value = tsb_Set_operator.Text; //作业员     
