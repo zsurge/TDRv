@@ -17,8 +17,11 @@ using System.Xml;
 using TDRv.Driver;
 using System.Web;
 
+
+
 namespace TDRv
 {
+    
     public partial class Form1 : Form
     {
         public Form1()
@@ -26,6 +29,8 @@ namespace TDRv
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
+
+        public const int isDebug = 1; //isDebug=0 是release模式，=1是debug模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -140,8 +145,16 @@ namespace TDRv
             }
 
             //清除开路定义，需重新开路
-            optStatus.isGetIndex = false;
-            tsb_StartTest.Enabled = false;
+            if (isDebug == 0)
+            {
+                optStatus.isGetIndex = false;
+                tsb_StartTest.Enabled = false;
+            }
+            else
+            {
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+            }
 
             //指令步骤显示栏清空
             dataGridView1.Visible = true;
@@ -329,6 +342,8 @@ namespace TDRv
 
                 optParam.testMode = 4;
             }
+
+
         }
 
         //建立默认文件夹
@@ -952,17 +967,25 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-            if (tsb_Pnl_ID.Text.Length == 0)
+
+            if (isDebug == 0)
             {
-                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
-                return;
+                if (tsb_Pnl_ID.Text.Length == 0)
+                {
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
+                    return;
+                }
+
+                if (isExecuteComplete)
+                {
+                    isExecuteComplete = false;
+
+                    toDoWork();
+                }
             }
-
-            if (isExecuteComplete)
+            else
             {
-                isExecuteComplete = false;
-
-                toDoWork();
+                toDoTest();
             }
         }
 
@@ -1045,6 +1068,83 @@ namespace TDRv
                 {
                     CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
                 }
+            });
+
+            task1.Start();
+
+            if (paramList.Count <= 0)
+            {
+                return;
+            }
+
+            if (paramList[0].Curve_image.Length > 3)
+            {
+                task1.ContinueWith((Task) =>
+                {
+                    CaptureScreenChart(chart1, paramList[0].Curve_image);
+                });
+            }
+
+        }
+
+        public void toDoTest()
+        {
+            var task1 = new Task(() =>
+            {
+
+                CheckIdleTime();
+
+                bool ret = false;
+
+                string result = string.Empty;
+                int index = 0;
+
+                int channel = paramList[measIndex.currentIndex].DevMode;
+
+                if (channel == SINGLE)
+                {
+                    index = MeasPosition.tdd22IndexValue;
+                }
+                else
+                {
+                    index = MeasPosition.tdd11IndexValue;
+                }
+
+                ////量测并生成图表                    
+                List<float> disResult = packetMaesData(result, index, channel);
+
+                DisplayChartValue(chart1, disResult);
+
+                //更新测试数据到主界面测试结果中
+                CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
+                CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+
+
+
+                if (optParam.testMode == 3)
+                {
+                    //量测配方参数依次向后移
+                    measIndex.incIndex();
+                }
+                else if (optParam.testMode == 1 || optParam.testMode == 4)
+                {
+                    if (gTestResultValue == 1)
+                    {
+                        //量测配方参数依次向后移
+                        measIndex.incIndex();
+                    }
+                }
+                else if (optParam.testMode == 2)
+                {
+                    measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+                }
+
+                //高亮显示相应测试配方的那一行            
+                //dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
+                reFreshDatagridview(dataGridView1);
+                isExecuteComplete = true;
+
+
             });
 
             task1.Start();
@@ -1356,6 +1456,7 @@ namespace TDRv
                     CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空!");
                     return;
                 }
+
                 if (isExecuteComplete)
                 {
                     isExecuteComplete = false;
@@ -1369,7 +1470,14 @@ namespace TDRv
                         //    optStatus.isLoadXml = false;
                         //    return;
                         //}
-                        toDoWork();
+                        if (isDebug == 0)
+                        {
+                            toDoWork();
+                        }
+                        else
+                        {
+                            toDoTest();
+                        }
                     }
                 }
             }
@@ -1657,7 +1765,10 @@ namespace TDRv
                 //_dgv.Rows[index].Cells["DataChainId"].Value = (gSerialInc).ToString().PadLeft(6, '0'); //每片板数据链ID  
 
                 //测试用，要删除掉
-                //logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                if (isDebug != 0)
+                {
+                    logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                }
 
                 //目前量测
                 _dgv.Rows[index].Cells[0].Value = tsb_Pnl_ID.Text;     //批量卡号、工单条码
