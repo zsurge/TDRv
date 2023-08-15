@@ -537,10 +537,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                //add 2023.03.12-2023.05.12  delay2023.06.12
+                //2023.08.15  delay2099 12 30
                 else if (sn.Contains("MY54100391"))
                 {
-                    if (202308141400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
