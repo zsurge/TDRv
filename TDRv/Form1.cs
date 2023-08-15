@@ -30,7 +30,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public const int isDebug = 1; //isDebug=0 是release模式，=1是debug模式
+        public const int isDebug = 0; //isDebug=0 是release模式，=1是debug模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -1301,7 +1301,7 @@ namespace TDRv
             {
                 Stream myStream;
                 myStream = dlg.OpenFile();
-                StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
+                StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));            
                 string columnTitle = "";
                 try
                 {
@@ -1386,7 +1386,7 @@ namespace TDRv
 
             Stream myStream;
             myStream = dlg.OpenFile();
-            StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.UTF8);
+            StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
             string columnTitle = "";
             try
             {
@@ -1810,7 +1810,15 @@ namespace TDRv
 
 
                 _dgv.Rows[index].Cells[10].Value = "外层领创阻抗机"; //设备名称编号
-                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Curve_data +"-" +tsc_cobox_test_type.Text; //文件路径名
+                if (paramList[measIndex.currentIndex].Curve_data.Length == 0)
+                {
+                    _dgv.Rows[index].Cells[11].Value = tsc_cobox_test_type.Text; //文件路径名
+                }
+                else
+                {
+                    //_dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Curve_data + "-" + tsc_cobox_test_type.Text; //文件路径名
+                    _dgv.Rows[index].Cells[11].Value = $"{paramList[measIndex.currentIndex].Curve_data}-{tsc_cobox_test_type.Text}";
+                }
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_image; //图片路径名      
                 _dgv.Rows[index].Cells[13].Value = utilization_rate.ToString() + "%"; //稼动率0%~100%   
                 _dgv.Rows[index].Cells[14].Value = tsb_Set_operator.Text; //作业员     

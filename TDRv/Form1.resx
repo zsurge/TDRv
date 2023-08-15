@@ -210,10 +210,10 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADwSURBVFhH7ZbBCcIwFIa7gU26hOASLiEeVPDiBC7QoydR
-        m6Qj6NmTt04hmgRn0A20z74cFCoG+opCPniQvynvfcmhNAoE/hou9JQrO8DYLnF+GZXD71BM2iE+bgcm
-        bI+vjjcnwOXpmmzOXdymh0ldVCfXhVvzXB9wm5ZY2eVzuLBzJ8CEnuFtLPA1GhJlJ9XJzRqyE8B1CnuJ
-        NGPIJJQD9lyZHcYXAYBLs2WZlRjpeRdonSAQBEgEyoYpFMaP+Ah83bf60NAIQG+M9XgK+NxW8wI+BAFv
-        gU5m+02WlwBl4Zh64EcTbCkKeuOYQOBXiKIHqsdL+jvFet0AAAAASUVORK5CYII=
+        m6Qj6NmTty4haBKcQTfQPvtyUKgY6CsK+eBB/qa89yWH0igQ+Gu40FOu7ABju8T5ZVQOv0MxaYf4uB2Y
+        sD2+Ot6cAJena7I5d3GbHiZ1UZ1cF27Nc33AbVpiZZfP4cLOnQATeoa3scDXaEiUnVQnN2vITgDXKewl
+        0owhk1AO2HNldhhfBAAuzZZlVmKk512gdYJAECARKBumUBg/4iPwdd/qQ0MjAL0x1uMp4HNbzQv4EAS8
+        BTqZ7TdZXgKUhWPqgR9NsKUo6I1jAoFfIYoenmlL+S5UevEAAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="cPanel_ID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -367,18 +367,6 @@
     <value>True</value>
   </metadata>
   <metadata name="Column8.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mFlag.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mStep.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mDescription.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="mLayer.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="mFlag.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
