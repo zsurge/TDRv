@@ -144,6 +144,29 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY63057096")) //add 2023.09.09
+                {
+
+                    if (202312091400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else if (sn.Contains("MY59203255")) //临时测试使用1个月，2023.07.03
                 {
 
