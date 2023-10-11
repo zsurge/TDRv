@@ -486,6 +486,27 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY63057093")) //add 2023.09.26 到永久
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 //////////////////////////////PNA/////////////////////////////////////////////////
                 else if (sn.Contains("MY63056301")) //add 2023.04.02
                 {
@@ -953,7 +974,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY47003065")) //
                 {
-                    if (202310111400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -1141,27 +1162,6 @@ namespace TDRv
                     }
                 }
                 else if (sn.Contains("MY46520437")) //add 2022.03.30 样机 到永久
-                {
-                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
-                    {
-                        optStatus.isConnect = false;
-                        combDevString.BackColor = Color.Red;
-                        return;
-                    }
-
-                    if (ret != 0)
-                    {
-                        optStatus.isConnect = false;
-                        combDevString.BackColor = Color.Red;
-                        MessageBox.Show("error!");
-                    }
-                    else
-                    {
-                        optStatus.isConnect = true;
-                        combDevString.BackColor = Color.Green;
-                    }
-                }
-                else if (sn.Contains("MY63057093")) //add 2023.09.26 到永久
                 {
                     if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
