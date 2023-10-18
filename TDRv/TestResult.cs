@@ -14,6 +14,7 @@ namespace TDRv
         private string impedanceLimit_Unit = string.Empty; //阻抗单位
         private string spec = string.Empty;        //标准值
         private string average = string.Empty;   //设备计算出的平均值
+        private string average_perc = string.Empty;   //设备计算出的平均值的百分比
         private string max = string.Empty;      //设备计算出的最大值
         private string min = string.Empty;      //设备计算出的最小值
         private string serial = string.Empty;   //序列号
@@ -63,6 +64,12 @@ namespace TDRv
             get { return average; }
             set { average = value; }
         }
+        public string Average_Perc
+        {
+            get { return average_perc; }
+            set { average_perc = value; }
+        }
+        
         public string Max
         {
             get { return max; }
