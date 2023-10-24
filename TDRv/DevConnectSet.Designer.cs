@@ -50,7 +50,7 @@
             "PNA",
             "USB-ENA"});
             this.combDevType.Location = new System.Drawing.Point(106, 24);
-            this.combDevType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.combDevType.Margin = new System.Windows.Forms.Padding(4);
             this.combDevType.Name = "combDevType";
             this.combDevType.Size = new System.Drawing.Size(151, 26);
             this.combDevType.TabIndex = 0;
@@ -69,7 +69,7 @@
             // btn_ConnectDev
             // 
             this.btn_ConnectDev.Location = new System.Drawing.Point(798, 21);
-            this.btn_ConnectDev.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_ConnectDev.Margin = new System.Windows.Forms.Padding(4);
             this.btn_ConnectDev.Name = "btn_ConnectDev";
             this.btn_ConnectDev.Size = new System.Drawing.Size(112, 34);
             this.btn_ConnectDev.TabIndex = 3;
@@ -81,7 +81,7 @@
             // 
             this.combDevString.FormattingEnabled = true;
             this.combDevString.Location = new System.Drawing.Point(386, 24);
-            this.combDevString.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.combDevString.Margin = new System.Windows.Forms.Padding(4);
             this.combDevString.Name = "combDevString";
             this.combDevString.Size = new System.Drawing.Size(384, 26);
             this.combDevString.TabIndex = 4;
@@ -109,7 +109,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(106, 69);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(662, 28);
             this.textBox1.TabIndex = 7;
@@ -127,8 +127,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.combDevType);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DevConnectSet";
+            this.ShowIcon = false;
             this.Text = "仪器设定";
             this.Load += new System.EventHandler(this.DevConnectSet_Load);
             this.ResumeLayout(false);

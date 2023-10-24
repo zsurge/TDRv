@@ -230,7 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.dgv_param);
             this.panel1.Location = new System.Drawing.Point(0, 63);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1220, 290);
             this.panel1.TabIndex = 1;
@@ -270,7 +270,7 @@
             this.DielectricConstant,
             this.DataPointCheck});
             this.dgv_param.Location = new System.Drawing.Point(0, 4);
-            this.dgv_param.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_param.Margin = new System.Windows.Forms.Padding(4);
             this.dgv_param.MultiSelect = false;
             this.dgv_param.Name = "dgv_param";
             this.dgv_param.ReadOnly = true;
@@ -537,9 +537,9 @@
             this.groupBox1.Controls.Add(this.tx_p_testSn);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(0, 362);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(502, 207);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -548,7 +548,7 @@
             // tx_p_Description
             // 
             this.tx_p_Description.Location = new System.Drawing.Point(106, 75);
-            this.tx_p_Description.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_Description.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_Description.Name = "tx_p_Description";
             this.tx_p_Description.Size = new System.Drawing.Size(366, 28);
             this.tx_p_Description.TabIndex = 8;
@@ -566,7 +566,7 @@
             // tx_p_Remark
             // 
             this.tx_p_Remark.Location = new System.Drawing.Point(106, 156);
-            this.tx_p_Remark.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_Remark.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_Remark.Name = "tx_p_Remark";
             this.tx_p_Remark.Size = new System.Drawing.Size(366, 28);
             this.tx_p_Remark.TabIndex = 6;
@@ -574,7 +574,7 @@
             // tx_p_Layer
             // 
             this.tx_p_Layer.Location = new System.Drawing.Point(106, 116);
-            this.tx_p_Layer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_Layer.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_Layer.Name = "tx_p_Layer";
             this.tx_p_Layer.Size = new System.Drawing.Size(366, 28);
             this.tx_p_Layer.TabIndex = 5;
@@ -602,7 +602,7 @@
             // tx_p_testSn
             // 
             this.tx_p_testSn.Location = new System.Drawing.Point(106, 34);
-            this.tx_p_testSn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_testSn.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_testSn.Name = "tx_p_testSn";
             this.tx_p_testSn.ReadOnly = true;
             this.tx_p_testSn.Size = new System.Drawing.Size(148, 28);
@@ -625,9 +625,9 @@
             this.groupBox2.Controls.Add(this.btn_p_SavePath);
             this.groupBox2.Controls.Add(this.tx_p_savePath);
             this.groupBox2.Location = new System.Drawing.Point(0, 578);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(502, 154);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
@@ -638,9 +638,9 @@
             this.groupBox9.Controls.Add(this.radio_p_image_close);
             this.groupBox9.Controls.Add(this.radio_p_image_open);
             this.groupBox9.Location = new System.Drawing.Point(250, 70);
-            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox9.Size = new System.Drawing.Size(232, 78);
             this.groupBox9.TabIndex = 3;
             this.groupBox9.TabStop = false;
@@ -651,7 +651,7 @@
             this.radio_p_image_close.AutoSize = true;
             this.radio_p_image_close.Checked = true;
             this.radio_p_image_close.Location = new System.Drawing.Point(120, 38);
-            this.radio_p_image_close.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_image_close.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_image_close.Name = "radio_p_image_close";
             this.radio_p_image_close.Size = new System.Drawing.Size(69, 22);
             this.radio_p_image_close.TabIndex = 3;
@@ -664,7 +664,7 @@
             // 
             this.radio_p_image_open.AutoSize = true;
             this.radio_p_image_open.Location = new System.Drawing.Point(24, 38);
-            this.radio_p_image_open.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_image_open.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_image_open.Name = "radio_p_image_open";
             this.radio_p_image_open.Size = new System.Drawing.Size(69, 22);
             this.radio_p_image_open.TabIndex = 2;
@@ -676,9 +676,9 @@
             this.groupBox8.Controls.Add(this.radio_p_data_close);
             this.groupBox8.Controls.Add(this.radio_p_data_open);
             this.groupBox8.Location = new System.Drawing.Point(9, 70);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox8.Size = new System.Drawing.Size(232, 78);
             this.groupBox8.TabIndex = 2;
             this.groupBox8.TabStop = false;
@@ -688,7 +688,7 @@
             // 
             this.radio_p_data_close.AutoSize = true;
             this.radio_p_data_close.Location = new System.Drawing.Point(124, 38);
-            this.radio_p_data_close.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_data_close.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_data_close.Name = "radio_p_data_close";
             this.radio_p_data_close.Size = new System.Drawing.Size(69, 22);
             this.radio_p_data_close.TabIndex = 1;
@@ -700,7 +700,7 @@
             this.radio_p_data_open.AutoSize = true;
             this.radio_p_data_open.Checked = true;
             this.radio_p_data_open.Location = new System.Drawing.Point(18, 38);
-            this.radio_p_data_open.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_data_open.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_data_open.Name = "radio_p_data_open";
             this.radio_p_data_open.Size = new System.Drawing.Size(69, 22);
             this.radio_p_data_open.TabIndex = 0;
@@ -711,7 +711,7 @@
             // btn_p_SavePath
             // 
             this.btn_p_SavePath.Location = new System.Drawing.Point(402, 27);
-            this.btn_p_SavePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_p_SavePath.Margin = new System.Windows.Forms.Padding(4);
             this.btn_p_SavePath.Name = "btn_p_SavePath";
             this.btn_p_SavePath.Size = new System.Drawing.Size(72, 34);
             this.btn_p_SavePath.TabIndex = 1;
@@ -722,7 +722,7 @@
             // tx_p_savePath
             // 
             this.tx_p_savePath.Location = new System.Drawing.Point(9, 30);
-            this.tx_p_savePath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_savePath.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_savePath.Name = "tx_p_savePath";
             this.tx_p_savePath.Size = new System.Drawing.Size(382, 28);
             this.tx_p_savePath.TabIndex = 0;
@@ -733,9 +733,9 @@
             this.groupBox3.Controls.Add(this.radio_p_single);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Location = new System.Drawing.Point(894, 362);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox3.Size = new System.Drawing.Size(308, 99);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
@@ -746,7 +746,7 @@
             this.radio_p_diff.AutoSize = true;
             this.radio_p_diff.Checked = true;
             this.radio_p_diff.Location = new System.Drawing.Point(124, 66);
-            this.radio_p_diff.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_diff.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_diff.Name = "radio_p_diff";
             this.radio_p_diff.Size = new System.Drawing.Size(69, 22);
             this.radio_p_diff.TabIndex = 8;
@@ -759,7 +759,7 @@
             // 
             this.radio_p_single.AutoSize = true;
             this.radio_p_single.Location = new System.Drawing.Point(124, 34);
-            this.radio_p_single.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_single.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_single.Name = "radio_p_single";
             this.radio_p_single.Size = new System.Drawing.Size(69, 22);
             this.radio_p_single.TabIndex = 2;
@@ -789,9 +789,9 @@
             this.groupBox4.Controls.Add(this.tx_p_Index);
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Location = new System.Drawing.Point(530, 362);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox4.Size = new System.Drawing.Size(346, 168);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
@@ -832,7 +832,7 @@
             // tx_p_end
             // 
             this.tx_p_end.Location = new System.Drawing.Point(111, 118);
-            this.tx_p_end.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_end.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_end.Name = "tx_p_end";
             this.tx_p_end.Size = new System.Drawing.Size(127, 28);
             this.tx_p_end.TabIndex = 12;
@@ -850,7 +850,7 @@
             // tx_p_begin
             // 
             this.tx_p_begin.Location = new System.Drawing.Point(111, 80);
-            this.tx_p_begin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_begin.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_begin.Name = "tx_p_begin";
             this.tx_p_begin.Size = new System.Drawing.Size(127, 28);
             this.tx_p_begin.TabIndex = 10;
@@ -868,7 +868,7 @@
             // tx_p_Index
             // 
             this.tx_p_Index.Location = new System.Drawing.Point(111, 39);
-            this.tx_p_Index.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_Index.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_Index.Name = "tx_p_Index";
             this.tx_p_Index.Size = new System.Drawing.Size(127, 28);
             this.tx_p_Index.TabIndex = 8;
@@ -898,9 +898,9 @@
             this.groupBox5.Controls.Add(this.tx_p_highLimit);
             this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Location = new System.Drawing.Point(530, 532);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox5.Size = new System.Drawing.Size(346, 200);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
@@ -932,7 +932,7 @@
             this.radio_units_percent.AutoSize = true;
             this.radio_units_percent.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.radio_units_percent.Location = new System.Drawing.Point(196, 22);
-            this.radio_units_percent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_units_percent.Margin = new System.Windows.Forms.Padding(4);
             this.radio_units_percent.Name = "radio_units_percent";
             this.radio_units_percent.Size = new System.Drawing.Size(47, 28);
             this.radio_units_percent.TabIndex = 3;
@@ -956,7 +956,7 @@
             this.radio_units_ohm.AutoSize = true;
             this.radio_units_ohm.Checked = true;
             this.radio_units_ohm.Location = new System.Drawing.Point(116, 26);
-            this.radio_units_ohm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_units_ohm.Margin = new System.Windows.Forms.Padding(4);
             this.radio_units_ohm.Name = "radio_units_ohm";
             this.radio_units_ohm.Size = new System.Drawing.Size(69, 22);
             this.radio_units_ohm.TabIndex = 2;
@@ -978,7 +978,7 @@
             // tx_p_lowLimit
             // 
             this.tx_p_lowLimit.Location = new System.Drawing.Point(116, 153);
-            this.tx_p_lowLimit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_lowLimit.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_lowLimit.Name = "tx_p_lowLimit";
             this.tx_p_lowLimit.Size = new System.Drawing.Size(127, 28);
             this.tx_p_lowLimit.TabIndex = 21;
@@ -986,7 +986,7 @@
             // tx_p_TargetValue
             // 
             this.tx_p_TargetValue.Location = new System.Drawing.Point(116, 54);
-            this.tx_p_TargetValue.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_TargetValue.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_TargetValue.Name = "tx_p_TargetValue";
             this.tx_p_TargetValue.Size = new System.Drawing.Size(127, 28);
             this.tx_p_TargetValue.TabIndex = 17;
@@ -1014,7 +1014,7 @@
             // tx_p_highLimit
             // 
             this.tx_p_highLimit.Location = new System.Drawing.Point(116, 104);
-            this.tx_p_highLimit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_highLimit.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_highLimit.Name = "tx_p_highLimit";
             this.tx_p_highLimit.Size = new System.Drawing.Size(127, 28);
             this.tx_p_highLimit.TabIndex = 19;
@@ -1043,7 +1043,7 @@
             // tx_p_offset
             // 
             this.tx_p_offset.Location = new System.Drawing.Point(726, 717);
-            this.tx_p_offset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_offset.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_offset.Name = "tx_p_offset";
             this.tx_p_offset.Size = new System.Drawing.Size(127, 28);
             this.tx_p_offset.TabIndex = 26;
@@ -1067,9 +1067,9 @@
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.tx_p_yOffset);
             this.groupBox6.Location = new System.Drawing.Point(896, 576);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox6.Size = new System.Drawing.Size(308, 105);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
@@ -1107,7 +1107,7 @@
             // tx_p_yOffset
             // 
             this.tx_p_yOffset.Location = new System.Drawing.Point(114, 33);
-            this.tx_p_yOffset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tx_p_yOffset.Margin = new System.Windows.Forms.Padding(4);
             this.tx_p_yOffset.Name = "tx_p_yOffset";
             this.tx_p_yOffset.Size = new System.Drawing.Size(103, 28);
             this.tx_p_yOffset.TabIndex = 5;
@@ -1118,9 +1118,9 @@
             this.groupBox7.Controls.Add(this.radio_p_tag_point);
             this.groupBox7.Controls.Add(this.radio_p_tag_avg);
             this.groupBox7.Location = new System.Drawing.Point(896, 489);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox7.Size = new System.Drawing.Size(308, 58);
             this.groupBox7.TabIndex = 6;
             this.groupBox7.TabStop = false;
@@ -1131,7 +1131,7 @@
             this.radio_p_tag_point.AutoSize = true;
             this.radio_p_tag_point.Checked = true;
             this.radio_p_tag_point.Location = new System.Drawing.Point(202, 26);
-            this.radio_p_tag_point.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_tag_point.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_tag_point.Name = "radio_p_tag_point";
             this.radio_p_tag_point.Size = new System.Drawing.Size(69, 22);
             this.radio_p_tag_point.TabIndex = 5;
@@ -1143,7 +1143,7 @@
             // 
             this.radio_p_tag_avg.AutoSize = true;
             this.radio_p_tag_avg.Location = new System.Drawing.Point(54, 26);
-            this.radio_p_tag_avg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radio_p_tag_avg.Margin = new System.Windows.Forms.Padding(4);
             this.radio_p_tag_avg.Name = "radio_p_tag_avg";
             this.radio_p_tag_avg.Size = new System.Drawing.Size(87, 22);
             this.radio_p_tag_avg.TabIndex = 4;
@@ -1153,7 +1153,7 @@
             // btn_update
             // 
             this.btn_update.Location = new System.Drawing.Point(1089, 692);
-            this.btn_update.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_update.Margin = new System.Windows.Forms.Padding(4);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(112, 34);
             this.btn_update.TabIndex = 7;
@@ -1164,7 +1164,7 @@
             // btn_cancel
             // 
             this.btn_cancel.Location = new System.Drawing.Point(896, 692);
-            this.btn_cancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_cancel.Margin = new System.Windows.Forms.Padding(4);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(112, 34);
             this.btn_cancel.TabIndex = 8;
@@ -1192,8 +1192,9 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DevParamSet";
+            this.ShowIcon = false;
             this.Text = "TDR 量测试参数";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DevParamSet_FormClosed);
             this.Load += new System.EventHandler(this.DevParamSet_Load);
