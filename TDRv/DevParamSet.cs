@@ -22,6 +22,8 @@ namespace TDRv
 
         public bool clickFlag = false;
 
+        public string last_units = "ohm";
+
         DataTable tmpDt;
 
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
@@ -387,6 +389,7 @@ namespace TDRv
             }
         }
 
+
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -413,19 +416,23 @@ namespace TDRv
 
                     string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
 
-                    clickFlag = true;
-                    if (string.Compare(units, "ohms", true) == 0)
+                    //clickFlag = true;
+
+                    if (string.Compare(units, "%", true) == 0)
                     {
-                        radio_units_ohm.Checked = true;
-                        lab_highlimit_unit.Text = "欧姆";
-                        lab_lowlimit_unit.Text = "欧姆";
-                    }
-                    else
-                    {
+                        last_units = "%";
                         radio_units_percent.Checked = true;
                         lab_highlimit_unit.Text = "%";
                         lab_lowlimit_unit.Text = "%";
                     }
+                    else
+                    {
+                        last_units = "ohm";
+                        radio_units_ohm.Checked = true;
+                        lab_highlimit_unit.Text = "欧姆";
+                        lab_lowlimit_unit.Text = "欧姆";
+                    }
+
 
                     string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
                     if (string.Compare(testMode, "Differential", true) == 0)
@@ -514,19 +521,24 @@ namespace TDRv
                 lab_highlimit_unit.Text = "欧姆";
                 lab_lowlimit_unit.Text = "欧姆";
 
-                if (clickFlag)
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
+
+                if (string.Compare(last_units, "%", true) == 0)
                 {
-                    clickFlag = false;
-                    return;
+                    last_units = "ohm";
+                    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                    tx_p_max_hi.Text = ((Convert.ToSingle(tx_p_max_hi.Text) / 100 + 1) * Convert.ToSingle(tx_p_max_value.Text)).ToString();
+                    tx_p_min_hi.Text = ((Convert.ToSingle(tx_p_min_hi.Text) / 100 + 1) * Convert.ToSingle(tx_p_min_value.Text)).ToString();
+
+                    tx_p_lowLimit.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                    tx_p_max_low.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_max_low.Text)) / 100) * Convert.ToSingle(tx_p_max_value.Text)).ToString();
+                    tx_p_min_low.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_min_low.Text)) / 100) * Convert.ToSingle(tx_p_min_value.Text)).ToString();
                 }
 
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-                tx_p_max_hi.Text = ((Convert.ToSingle(tx_p_max_hi.Text) / 100 + 1) * Convert.ToSingle(tx_p_max_value.Text)).ToString();
-                tx_p_min_hi.Text = ((Convert.ToSingle(tx_p_min_hi.Text) / 100 + 1) * Convert.ToSingle(tx_p_min_value.Text)).ToString();
-
-                tx_p_lowLimit.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-                tx_p_max_low.Text =  ((1 - Math.Abs(Convert.ToSingle(tx_p_max_low.Text)) / 100) * Convert.ToSingle(tx_p_max_value.Text)).ToString();
-                tx_p_min_low.Text =  ((1 - Math.Abs(Convert.ToSingle(tx_p_min_low.Text)) / 100) * Convert.ToSingle(tx_p_min_value.Text)).ToString();
 
             }
         }
@@ -538,19 +550,24 @@ namespace TDRv
                 lab_highlimit_unit.Text = "%";
                 lab_lowlimit_unit.Text = "%";
 
-                if (clickFlag)
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
+
+                if (string.Compare(last_units, "ohm", true) == 0)
                 {
-                    clickFlag = false;
-                    return;
+                    last_units = "%";
+                    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                    tx_p_max_hi.Text = ((Convert.ToSingle(tx_p_max_hi.Text) / Convert.ToSingle(tx_p_max_value.Text) - 1) * 100).ToString();
+                    tx_p_min_hi.Text = ((Convert.ToSingle(tx_p_min_hi.Text) / Convert.ToSingle(tx_p_min_value.Text) - 1) * 100).ToString();
+
+                    tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                    tx_p_max_low.Text = ((Convert.ToSingle(tx_p_max_low.Text) / Convert.ToSingle(tx_p_max_value.Text) - 1) * 100).ToString();
+                    tx_p_min_low.Text = ((Convert.ToSingle(tx_p_min_low.Text) / Convert.ToSingle(tx_p_min_value.Text) - 1) * 100).ToString();
+
                 }
-
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_max_hi.Text = ((Convert.ToSingle(tx_p_max_hi.Text) / Convert.ToSingle(tx_p_max_value.Text) - 1) * 100).ToString();
-                tx_p_min_hi.Text = ((Convert.ToSingle(tx_p_min_hi.Text) / Convert.ToSingle(tx_p_min_value.Text) - 1) * 100).ToString();
-
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_max_low.Text = ((Convert.ToSingle(tx_p_max_low.Text) / Convert.ToSingle(tx_p_max_value.Text) - 1) * 100).ToString();
-                tx_p_min_low.Text = ((Convert.ToSingle(tx_p_min_low.Text) / Convert.ToSingle(tx_p_min_value.Text) - 1) * 100).ToString();
 
             }
         }
@@ -602,11 +619,67 @@ namespace TDRv
             groupBox7.Enabled = isEnable;
         }
 
+        private bool check_param_empty()
+        {
+            bool ret = true;
+
+            if (tx_p_TargetValue.TextLength == 0)
+            {
+                MessageBox.Show("阻抗值不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_highLimit.TextLength == 0)
+            {
+                MessageBox.Show("阻抗上限不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_lowLimit.TextLength == 0)
+            {
+                MessageBox.Show("阻抗下限不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_max_value.TextLength == 0)
+            {
+                MessageBox.Show("最大值设置不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_max_hi.TextLength == 0)
+            {
+                MessageBox.Show("最大值上限不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_max_low.TextLength == 0)
+            {
+                MessageBox.Show("最大值下限不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_min_value.TextLength == 0)
+            {
+                MessageBox.Show("最小值设置不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_min_hi.TextLength == 0)
+            {
+                MessageBox.Show("最小值上限不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+            if (tx_p_min_low.TextLength == 0)
+            {
+                MessageBox.Show("最小值下限不能为零", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ret = false;
+            }
+
+            return ret;
+        }
+
         private void btn_update_Click(object sender, EventArgs e)
         {
             int index = dgv_param.CurrentRow.Index;
             ctrIsEnable(false);
-
+            if (check_param_empty() == false)
+            {
+                return;
+            }
 
             this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
             this.dgv_param.Rows[index].Cells[1].Value = index+1;            
@@ -791,11 +864,11 @@ namespace TDRv
         {
             if (radio_p_single.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
 
                 tx_p_Description.Text = "50";
                 tx_p_Index.Text = "125";
@@ -819,11 +892,11 @@ namespace TDRv
         {
             if (radio_p_diff.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
 
                 tx_p_Description.Text = "100";
                 tx_p_Index.Text = "200";
