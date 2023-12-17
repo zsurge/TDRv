@@ -1085,6 +1085,7 @@
             // 
             // ImpedanceMax
             // 
+            this.ImpedanceMax.DataPropertyName = "ImpedanceMax";
             this.ImpedanceMax.HeaderText = "ImpedanceMax";
             this.ImpedanceMax.Name = "ImpedanceMax";
             this.ImpedanceMax.ReadOnly = true;
@@ -1092,6 +1093,7 @@
             // 
             // ImpedanceMaxLimitLower
             // 
+            this.ImpedanceMaxLimitLower.DataPropertyName = "ImpedanceMaxLimitLower";
             this.ImpedanceMaxLimitLower.HeaderText = "ImpedanceMaxLimitLower";
             this.ImpedanceMaxLimitLower.Name = "ImpedanceMaxLimitLower";
             this.ImpedanceMaxLimitLower.ReadOnly = true;
@@ -1099,6 +1101,7 @@
             // 
             // ImpedanceMaxLimitUpper
             // 
+            this.ImpedanceMaxLimitUpper.DataPropertyName = "ImpedanceMaxLimitUpper";
             this.ImpedanceMaxLimitUpper.HeaderText = "ImpedanceMaxLimitUpper";
             this.ImpedanceMaxLimitUpper.Name = "ImpedanceMaxLimitUpper";
             this.ImpedanceMaxLimitUpper.ReadOnly = true;
@@ -1106,6 +1109,7 @@
             // 
             // ImpedanceMin
             // 
+            this.ImpedanceMin.DataPropertyName = "ImpedanceMin";
             this.ImpedanceMin.HeaderText = "ImpedanceMin";
             this.ImpedanceMin.Name = "ImpedanceMin";
             this.ImpedanceMin.ReadOnly = true;
@@ -1113,6 +1117,7 @@
             // 
             // ImpedanceMinLimitLower
             // 
+            this.ImpedanceMinLimitLower.DataPropertyName = "ImpedanceMinLimitLower";
             this.ImpedanceMinLimitLower.HeaderText = "ImpedanceMinLimitLower";
             this.ImpedanceMinLimitLower.Name = "ImpedanceMinLimitLower";
             this.ImpedanceMinLimitLower.ReadOnly = true;
@@ -1120,6 +1125,7 @@
             // 
             // ImpedanceMinLimitUpper
             // 
+            this.ImpedanceMinLimitUpper.DataPropertyName = "ImpedanceMinLimitUpper";
             this.ImpedanceMinLimitUpper.HeaderText = "ImpedanceMinLimitUpper";
             this.ImpedanceMinLimitUpper.Name = "ImpedanceMinLimitUpper";
             this.ImpedanceMinLimitUpper.ReadOnly = true;
