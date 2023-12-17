@@ -92,8 +92,8 @@ namespace TDRv
         }
         public string Max_low_limit
         {
-            get { return low_limit; }
-            set { low_limit = value; }
+            get { return spec_max_low; }
+            set { spec_max_low = value; }
         }
 
         public string Min_hi_limit

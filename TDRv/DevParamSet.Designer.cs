@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DevParamSet));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_create_xml = new System.Windows.Forms.ToolStripButton();
             this.tsb_measure_loadXml = new System.Windows.Forms.ToolStripButton();
@@ -73,26 +73,29 @@
             this.tx_p_Index = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.tx_p_min_low = new System.Windows.Forms.TextBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.tx_p_max_hi = new System.Windows.Forms.TextBox();
+            this.tx_p_max_low = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.lab_highlimit_unit = new System.Windows.Forms.Label();
+            this.tx_p_max_value = new System.Windows.Forms.TextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.tx_p_highLimit = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.tx_p_min_value = new System.Windows.Forms.TextBox();
             this.radio_units_percent = new System.Windows.Forms.RadioButton();
             this.radio_units_ohm = new System.Windows.Forms.RadioButton();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tx_p_min_low = new System.Windows.Forms.TextBox();
-            this.tx_p_min_value = new System.Windows.Forms.TextBox();
-            this.tx_p_max_low = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.tx_p_min_hi = new System.Windows.Forms.TextBox();
-            this.tx_p_max_value = new System.Windows.Forms.TextBox();
-            this.tx_p_max_hi = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.lab_lowlimit_unit = new System.Windows.Forms.Label();
-            this.lab_highlimit_unit = new System.Windows.Forms.Label();
-            this.tx_p_lowLimit = new System.Windows.Forms.TextBox();
-            this.tx_p_TargetValue = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tx_p_min_hi = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.tx_p_highLimit = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.tx_p_TargetValue = new System.Windows.Forms.TextBox();
+            this.tx_p_lowLimit = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.tx_p_offset = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -106,9 +109,6 @@
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.label24 = new System.Windows.Forms.Label();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TestStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -149,10 +149,10 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox11.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -262,14 +262,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_param.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_param.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_param.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_param.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_param.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -661,6 +661,127 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "边界设定";
             // 
+            // tx_p_min_low
+            // 
+            this.tx_p_min_low.Location = new System.Drawing.Point(177, 147);
+            this.tx_p_min_low.Name = "tx_p_min_low";
+            this.tx_p_min_low.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_min_low.TabIndex = 35;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.tx_p_max_hi);
+            this.groupBox10.Controls.Add(this.tx_p_max_low);
+            this.groupBox10.Controls.Add(this.label22);
+            this.groupBox10.Controls.Add(this.lab_highlimit_unit);
+            this.groupBox10.Controls.Add(this.tx_p_max_value);
+            this.groupBox10.Location = new System.Drawing.Point(1, 99);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(277, 42);
+            this.groupBox10.TabIndex = 36;
+            this.groupBox10.TabStop = false;
+            // 
+            // tx_p_max_hi
+            // 
+            this.tx_p_max_hi.Location = new System.Drawing.Point(117, 13);
+            this.tx_p_max_hi.Name = "tx_p_max_hi";
+            this.tx_p_max_hi.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_max_hi.TabIndex = 29;
+            // 
+            // tx_p_max_low
+            // 
+            this.tx_p_max_low.Location = new System.Drawing.Point(177, 13);
+            this.tx_p_max_low.Name = "tx_p_max_low";
+            this.tx_p_max_low.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_max_low.TabIndex = 34;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(11, 17);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(41, 12);
+            this.label22.TabIndex = 31;
+            this.label22.Text = "最大值";
+            // 
+            // lab_highlimit_unit
+            // 
+            this.lab_highlimit_unit.AutoSize = true;
+            this.lab_highlimit_unit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lab_highlimit_unit.Location = new System.Drawing.Point(230, 16);
+            this.lab_highlimit_unit.Name = "lab_highlimit_unit";
+            this.lab_highlimit_unit.Size = new System.Drawing.Size(15, 16);
+            this.lab_highlimit_unit.TabIndex = 23;
+            this.lab_highlimit_unit.Text = "%";
+            // 
+            // tx_p_max_value
+            // 
+            this.tx_p_max_value.Location = new System.Drawing.Point(55, 13);
+            this.tx_p_max_value.Name = "tx_p_max_value";
+            this.tx_p_max_value.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_max_value.TabIndex = 28;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.label24);
+            this.groupBox11.Controls.Add(this.label17);
+            this.groupBox11.Controls.Add(this.label16);
+            this.groupBox11.Location = new System.Drawing.Point(1, 33);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(277, 42);
+            this.groupBox11.TabIndex = 38;
+            this.groupBox11.TabStop = false;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(60, 17);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(41, 12);
+            this.label24.TabIndex = 21;
+            this.label24.Text = "设定值";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(126, 17);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(29, 12);
+            this.label17.TabIndex = 18;
+            this.label17.Text = "上限";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(186, 17);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(29, 12);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "下限";
+            // 
+            // tx_p_highLimit
+            // 
+            this.tx_p_highLimit.Location = new System.Drawing.Point(117, 77);
+            this.tx_p_highLimit.Name = "tx_p_highLimit";
+            this.tx_p_highLimit.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_highLimit.TabIndex = 19;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(11, 150);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 12);
+            this.label23.TabIndex = 32;
+            this.label23.Text = "最小值";
+            // 
+            // tx_p_min_value
+            // 
+            this.tx_p_min_value.Location = new System.Drawing.Point(56, 147);
+            this.tx_p_min_value.Name = "tx_p_min_value";
+            this.tx_p_min_value.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_min_value.TabIndex = 33;
+            // 
             // radio_units_percent
             // 
             this.radio_units_percent.AutoSize = true;
@@ -686,75 +807,6 @@
             this.radio_units_ohm.UseVisualStyleBackColor = true;
             this.radio_units_ohm.CheckedChanged += new System.EventHandler(this.radio_units_ohm_CheckedChanged);
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(15, 15);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(29, 12);
-            this.label12.TabIndex = 7;
-            this.label12.Text = "单位";
-            // 
-            // tx_p_min_low
-            // 
-            this.tx_p_min_low.Location = new System.Drawing.Point(177, 147);
-            this.tx_p_min_low.Name = "tx_p_min_low";
-            this.tx_p_min_low.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_min_low.TabIndex = 35;
-            // 
-            // tx_p_min_value
-            // 
-            this.tx_p_min_value.Location = new System.Drawing.Point(56, 147);
-            this.tx_p_min_value.Name = "tx_p_min_value";
-            this.tx_p_min_value.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_min_value.TabIndex = 33;
-            // 
-            // tx_p_max_low
-            // 
-            this.tx_p_max_low.Location = new System.Drawing.Point(177, 13);
-            this.tx_p_max_low.Name = "tx_p_max_low";
-            this.tx_p_max_low.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_max_low.TabIndex = 34;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(11, 150);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(41, 12);
-            this.label23.TabIndex = 32;
-            this.label23.Text = "最小值";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(11, 17);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(41, 12);
-            this.label22.TabIndex = 31;
-            this.label22.Text = "最大值";
-            // 
-            // tx_p_min_hi
-            // 
-            this.tx_p_min_hi.Location = new System.Drawing.Point(117, 147);
-            this.tx_p_min_hi.Name = "tx_p_min_hi";
-            this.tx_p_min_hi.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_min_hi.TabIndex = 30;
-            // 
-            // tx_p_max_value
-            // 
-            this.tx_p_max_value.Location = new System.Drawing.Point(55, 13);
-            this.tx_p_max_value.Name = "tx_p_max_value";
-            this.tx_p_max_value.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_max_value.TabIndex = 28;
-            // 
-            // tx_p_max_hi
-            // 
-            this.tx_p_max_hi.Location = new System.Drawing.Point(117, 13);
-            this.tx_p_max_hi.Name = "tx_p_max_hi";
-            this.tx_p_max_hi.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_max_hi.TabIndex = 29;
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -774,38 +826,21 @@
             this.lab_lowlimit_unit.TabIndex = 24;
             this.lab_lowlimit_unit.Text = "%";
             // 
-            // lab_highlimit_unit
+            // label12
             // 
-            this.lab_highlimit_unit.AutoSize = true;
-            this.lab_highlimit_unit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_highlimit_unit.Location = new System.Drawing.Point(230, 16);
-            this.lab_highlimit_unit.Name = "lab_highlimit_unit";
-            this.lab_highlimit_unit.Size = new System.Drawing.Size(15, 16);
-            this.lab_highlimit_unit.TabIndex = 23;
-            this.lab_highlimit_unit.Text = "%";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(15, 15);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 12);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "单位";
             // 
-            // tx_p_lowLimit
+            // tx_p_min_hi
             // 
-            this.tx_p_lowLimit.Location = new System.Drawing.Point(177, 77);
-            this.tx_p_lowLimit.Name = "tx_p_lowLimit";
-            this.tx_p_lowLimit.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_lowLimit.TabIndex = 21;
-            // 
-            // tx_p_TargetValue
-            // 
-            this.tx_p_TargetValue.Location = new System.Drawing.Point(57, 77);
-            this.tx_p_TargetValue.Name = "tx_p_TargetValue";
-            this.tx_p_TargetValue.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_TargetValue.TabIndex = 17;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(186, 17);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(29, 12);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "下限";
+            this.tx_p_min_hi.Location = new System.Drawing.Point(117, 147);
+            this.tx_p_min_hi.Name = "tx_p_min_hi";
+            this.tx_p_min_hi.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_min_hi.TabIndex = 30;
             // 
             // label18
             // 
@@ -816,21 +851,19 @@
             this.label18.TabIndex = 16;
             this.label18.Text = "阻抗";
             // 
-            // tx_p_highLimit
+            // tx_p_TargetValue
             // 
-            this.tx_p_highLimit.Location = new System.Drawing.Point(117, 77);
-            this.tx_p_highLimit.Name = "tx_p_highLimit";
-            this.tx_p_highLimit.Size = new System.Drawing.Size(46, 21);
-            this.tx_p_highLimit.TabIndex = 19;
+            this.tx_p_TargetValue.Location = new System.Drawing.Point(57, 77);
+            this.tx_p_TargetValue.Name = "tx_p_TargetValue";
+            this.tx_p_TargetValue.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_TargetValue.TabIndex = 17;
             // 
-            // label17
+            // tx_p_lowLimit
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(126, 17);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(29, 12);
-            this.label17.TabIndex = 18;
-            this.label17.Text = "上限";
+            this.tx_p_lowLimit.Location = new System.Drawing.Point(177, 77);
+            this.tx_p_lowLimit.Name = "tx_p_lowLimit";
+            this.tx_p_lowLimit.Size = new System.Drawing.Size(46, 21);
+            this.tx_p_lowLimit.TabIndex = 21;
             // 
             // label15
             // 
@@ -960,39 +993,6 @@
             this.btn_cancel.UseVisualStyleBackColor = true;
             this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.tx_p_max_hi);
-            this.groupBox10.Controls.Add(this.tx_p_max_low);
-            this.groupBox10.Controls.Add(this.label22);
-            this.groupBox10.Controls.Add(this.lab_highlimit_unit);
-            this.groupBox10.Controls.Add(this.tx_p_max_value);
-            this.groupBox10.Location = new System.Drawing.Point(1, 99);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(277, 42);
-            this.groupBox10.TabIndex = 36;
-            this.groupBox10.TabStop = false;
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.label24);
-            this.groupBox11.Controls.Add(this.label17);
-            this.groupBox11.Controls.Add(this.label16);
-            this.groupBox11.Location = new System.Drawing.Point(1, 33);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(277, 42);
-            this.groupBox11.TabIndex = 38;
-            this.groupBox11.TabStop = false;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(60, 17);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 12);
-            this.label24.TabIndex = 21;
-            this.label24.Text = "设定值";
-            // 
             // id
             // 
             this.id.DataPropertyName = "id";
@@ -1088,36 +1088,42 @@
             this.ImpedanceMax.HeaderText = "ImpedanceMax";
             this.ImpedanceMax.Name = "ImpedanceMax";
             this.ImpedanceMax.ReadOnly = true;
+            this.ImpedanceMax.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ImpedanceMaxLimitLower
             // 
             this.ImpedanceMaxLimitLower.HeaderText = "ImpedanceMaxLimitLower";
             this.ImpedanceMaxLimitLower.Name = "ImpedanceMaxLimitLower";
             this.ImpedanceMaxLimitLower.ReadOnly = true;
+            this.ImpedanceMaxLimitLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ImpedanceMaxLimitUpper
             // 
             this.ImpedanceMaxLimitUpper.HeaderText = "ImpedanceMaxLimitUpper";
             this.ImpedanceMaxLimitUpper.Name = "ImpedanceMaxLimitUpper";
             this.ImpedanceMaxLimitUpper.ReadOnly = true;
+            this.ImpedanceMaxLimitUpper.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ImpedanceMin
             // 
             this.ImpedanceMin.HeaderText = "ImpedanceMin";
             this.ImpedanceMin.Name = "ImpedanceMin";
             this.ImpedanceMin.ReadOnly = true;
+            this.ImpedanceMin.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ImpedanceMinLimitLower
             // 
             this.ImpedanceMinLimitLower.HeaderText = "ImpedanceMinLimitLower";
             this.ImpedanceMinLimitLower.Name = "ImpedanceMinLimitLower";
             this.ImpedanceMinLimitLower.ReadOnly = true;
+            this.ImpedanceMinLimitLower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ImpedanceMinLimitUpper
             // 
             this.ImpedanceMinLimitUpper.HeaderText = "ImpedanceMinLimitUpper";
             this.ImpedanceMinLimitUpper.Name = "ImpedanceMinLimitUpper";
             this.ImpedanceMinLimitUpper.ReadOnly = true;
+            this.ImpedanceMinLimitUpper.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // InputChannel
             // 
@@ -1311,14 +1317,14 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

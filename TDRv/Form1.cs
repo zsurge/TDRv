@@ -27,6 +27,8 @@ namespace TDRv
         //设置参数设置窗体的表数据
         DataTable gdt;
 
+        public static bool isTest = true;   //true 测试模式,falsh生产模式
+
         //获取当前
         public string exPortFilePath = string.Empty;
 
@@ -1295,12 +1297,12 @@ namespace TDRv
                 if (ret)
                 {
                     SetLableText("PASS", "Green");
-                    _dgv.Rows[index].Cells[7].Value = "PASS";     
+                    _dgv.Rows[index].Cells[13].Value = "PASS";     
                 }
                 else
                 {
                     SetLableText("FAIL", "Red");
-                    _dgv.Rows[index].Cells[7].Value = "FAIL";             
+                    _dgv.Rows[index].Cells[13].Value = "FAIL";             
                 }
 
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
@@ -1332,14 +1334,23 @@ namespace TDRv
                     _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
                 }
 
-                _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-                _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
-                _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
-                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
-                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
-                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
+                _dgv.Rows[index].Cells[7].Value = paramList[measIndex.currentIndex].Spec_max + strUnit;      //设定的最大值
+                _dgv.Rows[index].Cells[8].Value = paramList[measIndex.currentIndex].Max_hi_limit + strUnit;  //最大上限比例 
+                _dgv.Rows[index].Cells[9].Value = paramList[measIndex.currentIndex].Max_low_limit + strUnit;   //最小下限比例
+                _dgv.Rows[index].Cells[10].Value = paramList[measIndex.currentIndex].Spec_min + strUnit;    //设定的最小值
+                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Min_hi_limit + strUnit;  //最大上限比例 
+                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Min_low_limit + strUnit;    //最小下限比例
+
+
+
+                _dgv.Rows[index].Cells[14].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+                _dgv.Rows[index].Cells[15].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
+                _dgv.Rows[index].Cells[16].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
+                _dgv.Rows[index].Cells[17].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
+                _dgv.Rows[index].Cells[18].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
+                _dgv.Rows[index].Cells[19].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
+                _dgv.Rows[index].Cells[20].Value = tsb_Pnl_ID.Text; //Panel ID
+                _dgv.Rows[index].Cells[21].Value = tsb_Set_id.Text; //setID     
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1387,7 +1398,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "MaxSpec," + "MaxUp," + "MaxDown," + "MinSpec," + "MinUp," + "MinDown," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
