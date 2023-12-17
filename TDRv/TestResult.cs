@@ -31,6 +31,21 @@ namespace TDRv
         private int total_item = 0;   //当前配方的总的条数
         private int open_threshold = 0;  //开路位置
 
+        //新增标准最大值和标准最小值，判定时，需要同时判定最大值和最小值，平均值是否全部通过，才算是PASS
+        //标准值，          上限，             下限
+        //spec             upper_limit      low_limit  
+        //最大值,           上限，             下限
+        //spec_max         spec_max_upper    spec_max_low
+        //最小值，          上限，             下限
+        //spec_min         spec_min_upper    spec_min_low
+        private string spec_max = string.Empty;         //最大值
+        private string spec_max_upper = string.Empty;   //最大值的上限比例 
+        private string spec_max_low = string.Empty;     //最小值的下限比例
+        private string spec_min = string.Empty;     //最小值
+        private string spec_min_upper = string.Empty;     //最小值的上限比例 
+        private string spec_min_low = string.Empty;     //最小值的下限比例
+
+
         public string Layer
         {
             get { return layer; }
@@ -58,6 +73,40 @@ namespace TDRv
             get { return spec; }
             set { spec = value; }
         }
+
+        public string Spec_max
+        {
+            get { return spec_max; }
+            set { spec_max = value; }
+        }
+        public string Spec_min
+        {
+            get { return spec_min; }
+            set { spec_min = value; }
+        }
+
+        public string Max_hi_limit
+        {
+            get { return spec_max_upper; }
+            set { spec_max_upper = value; }
+        }
+        public string Max_low_limit
+        {
+            get { return low_limit; }
+            set { low_limit = value; }
+        }
+
+        public string Min_hi_limit
+        {
+            get { return spec_min_upper; }
+            set { spec_min_upper = value; }
+        }
+        public string Min_low_limit
+        {
+            get { return spec_min_low; }
+            set { spec_min_low = value; }
+        }
+
         public string Average
         {
             get { return average; }

@@ -17,6 +17,15 @@ namespace TDRv
         public string ImpedanceLimitLower { get; set; } = "-10";
         public string ImpedanceLimitUpper { get; set; } = "10";
         public string ImpedanceLimitUnit { get; set; } = "%";
+
+        public string ImpedanceMax { get; set; } = "125";
+        public string ImpedanceMaxLimitLower { get; set; } = "-10";
+        public string ImpedanceMaxLimitUpper { get; set; } = "10";
+
+        public string ImpedanceMin { get; set; } = "30";
+        public string ImpedanceMinLimitLower { get; set; } = "-10";
+        public string ImpedanceMinLimitUpper { get; set; } = "10";
+
         public string InputChannel { get; set; } = "1";
         public string InputMode { get; set; } = "SingleEnded";
         public string TestMethod { get; set; } = "Enable";

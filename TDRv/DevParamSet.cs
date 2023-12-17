@@ -205,25 +205,33 @@ namespace TDRv
                     this.dgv_param.Rows[index].Cells[6].Value = dp.ImpedanceLimitLower;
                     this.dgv_param.Rows[index].Cells[7].Value = dp.ImpedanceLimitUpper;
                     this.dgv_param.Rows[index].Cells[8].Value = dp.ImpedanceLimitUnit;
-                    this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
-                    this.dgv_param.Rows[index].Cells[10].Value = dp.InputMode;
-                    this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
-                    this.dgv_param.Rows[index].Cells[12].Value = dp.TestFromThreshold;
-                    this.dgv_param.Rows[index].Cells[13].Value = dp.TestToThreshold;
-                    this.dgv_param.Rows[index].Cells[14].Value = dp.OpenThreshold;
-                    this.dgv_param.Rows[index].Cells[15].Value = dp.TraceStartPosition;
-                    this.dgv_param.Rows[index].Cells[16].Value = dp.TraceEndPosition;
-                    this.dgv_param.Rows[index].Cells[17].Value = dp.CalibratedTimeScale;
-                    this.dgv_param.Rows[index].Cells[18].Value = dp.CalibrateOffset;
-                    this.dgv_param.Rows[index].Cells[19].Value = dp.RecordPath;
-                    this.dgv_param.Rows[index].Cells[20].Value = dp.SaveCurve;
-                    this.dgv_param.Rows[index].Cells[21].Value = dp.SaveImage;
-                    this.dgv_param.Rows[index].Cells[22].Value = dp.DielectricConstant;
-                    this.dgv_param.Rows[index].Cells[23].Value = dp.DataPointCheck;
+
+                    this.dgv_param.Rows[index].Cells[9].Value =  dp.ImpedanceMax;
+                    this.dgv_param.Rows[index].Cells[10].Value = dp.ImpedanceMaxLimitLower;
+                    this.dgv_param.Rows[index].Cells[11].Value = dp.ImpedanceMaxLimitUpper;
+                    this.dgv_param.Rows[index].Cells[12].Value = dp.ImpedanceMin;
+                    this.dgv_param.Rows[index].Cells[13].Value = dp.ImpedanceMinLimitLower;
+                    this.dgv_param.Rows[index].Cells[14].Value = dp.ImpedanceMinLimitUpper;
+
+                    this.dgv_param.Rows[index].Cells[15].Value = dp.InputChannel;
+                    this.dgv_param.Rows[index].Cells[16].Value = dp.InputMode;
+                    this.dgv_param.Rows[index].Cells[17].Value = dp.TestMethod;
+                    this.dgv_param.Rows[index].Cells[18].Value = dp.TestFromThreshold;
+                    this.dgv_param.Rows[index].Cells[19].Value = dp.TestToThreshold;
+                    this.dgv_param.Rows[index].Cells[20].Value = dp.OpenThreshold;
+                    this.dgv_param.Rows[index].Cells[21].Value = dp.TraceStartPosition;
+                    this.dgv_param.Rows[index].Cells[22].Value = dp.TraceEndPosition;
+                    this.dgv_param.Rows[index].Cells[23].Value = dp.CalibratedTimeScale;
+                    this.dgv_param.Rows[index].Cells[24].Value = dp.CalibrateOffset;
+                    this.dgv_param.Rows[index].Cells[25].Value = dp.RecordPath;
+                    this.dgv_param.Rows[index].Cells[26].Value = dp.SaveCurve;
+                    this.dgv_param.Rows[index].Cells[27].Value = dp.SaveImage;
+                    this.dgv_param.Rows[index].Cells[28].Value = dp.DielectricConstant;
+                    this.dgv_param.Rows[index].Cells[29].Value = dp.DataPointCheck;
                 }
                 else
                 {
-                    string[] rowVals = new string[24];
+                    string[] rowVals = new string[30];
                     rowVals[0] = dp.Id;
                     rowVals[1] = (dgv_param.Rows.Count+1).ToString(); //(dp.TestStep++).ToString();
                     rowVals[2] = dp.Description;
@@ -233,21 +241,29 @@ namespace TDRv
                     rowVals[6] = dp.ImpedanceLimitLower;
                     rowVals[7] = dp.ImpedanceLimitUpper;
                     rowVals[8] = dp.ImpedanceLimitUnit;
-                    rowVals[9] = dp.InputChannel;
-                    rowVals[10] = dp.InputMode;
-                    rowVals[11] = dp.TestMethod;
-                    rowVals[12] = dp.TestFromThreshold;
-                    rowVals[13] = dp.TestToThreshold;
-                    rowVals[14] = dp.OpenThreshold;
-                    rowVals[15] = dp.TraceStartPosition;
-                    rowVals[16] = dp.TraceEndPosition;
-                    rowVals[17] = dp.CalibratedTimeScale;
-                    rowVals[18] = dp.CalibrateOffset;
-                    rowVals[19] = dp.RecordPath;
-                    rowVals[20] = dp.SaveCurve;
-                    rowVals[21] = dp.SaveImage;
-                    rowVals[22] = dp.DielectricConstant;
-                    rowVals[23] = dp.DataPointCheck;
+
+                    rowVals[9] = dp.ImpedanceMax;
+                    rowVals[10] = dp.ImpedanceMaxLimitLower;
+                    rowVals[11] = dp.ImpedanceMaxLimitUpper;
+                    rowVals[12] = dp.ImpedanceMin;
+                    rowVals[13] = dp.ImpedanceMinLimitLower;
+                    rowVals[14] = dp.ImpedanceMinLimitUpper;
+
+                    rowVals[15] = dp.InputChannel;
+                    rowVals[16] = dp.InputMode;
+                    rowVals[17] = dp.TestMethod;
+                    rowVals[18] = dp.TestFromThreshold;
+                    rowVals[19] = dp.TestToThreshold;
+                    rowVals[20] = dp.OpenThreshold;
+                    rowVals[21] = dp.TraceStartPosition;
+                    rowVals[22] = dp.TraceEndPosition;
+                    rowVals[23] = dp.CalibratedTimeScale;
+                    rowVals[24] = dp.CalibrateOffset;
+                    rowVals[25] = dp.RecordPath;
+                    rowVals[26] = dp.SaveCurve;
+                    rowVals[27] = dp.SaveImage;
+                    rowVals[28] = dp.DielectricConstant;
+                    rowVals[29] = dp.DataPointCheck;
                     ((DataTable)dgv_param.DataSource).Rows.Add(rowVals);
                 }
             }
@@ -373,81 +389,96 @@ namespace TDRv
 
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1)
+            try
             {
-                initControl(true);
-                ctrIsEnable(true);
-                tx_p_testSn.Text = (e.RowIndex+1).ToString();
-                tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
-                tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
-                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
-                tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
-                tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
-                tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
+                if (e.RowIndex > -1)
+                {
+                    initControl(true);
+                    ctrIsEnable(true);
+                    tx_p_testSn.Text = (e.RowIndex + 1).ToString();
+                    tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
+                    tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
+                    tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
+                    tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
+                    tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
+                    tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
 
-                string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
+                    tx_p_max_value.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceMax"].Value.ToString();
+                    tx_p_max_hi.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceMaxLimitUpper"].Value.ToString();
+                    tx_p_max_low.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceMaxLimitLower"].Value.ToString();
 
-                clickFlag = true;
-                if (string.Compare(units, "ohms", true) == 0)
-                {
-                    radio_units_ohm.Checked = true;
-                    lab_highlimit_unit.Text = "欧姆";
-                    lab_lowlimit_unit.Text  = "欧姆";
-                }
-                else
-                {
-                    radio_units_percent.Checked = true;
-                    lab_highlimit_unit.Text = "%";
-                    lab_lowlimit_unit.Text = "%";
-                }
+                    tx_p_min_value.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceMin"].Value.ToString();
+                    tx_p_min_hi.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceMinLimitUpper"].Value.ToString();
+                    tx_p_min_low.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceMinLimitLower"].Value.ToString();
 
-                string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
-                if (string.Compare(testMode, "Differential", true) == 0)
-                {
-                    radio_p_diff.Checked = true;
-                }
-                else
-                {
-                    radio_p_single.Checked = true;
-                }
-                
+                    string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
 
-                tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
-                tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
-                tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
-                tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
-                tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
+                    clickFlag = true;
+                    if (string.Compare(units, "ohms", true) == 0)
+                    {
+                        radio_units_ohm.Checked = true;
+                        lab_highlimit_unit.Text = "欧姆";
+                        lab_lowlimit_unit.Text = "欧姆";
+                    }
+                    else
+                    {
+                        radio_units_percent.Checked = true;
+                        lab_highlimit_unit.Text = "%";
+                        lab_lowlimit_unit.Text = "%";
+                    }
+
+                    string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
+                    if (string.Compare(testMode, "Differential", true) == 0)
+                    {
+                        radio_p_diff.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_single.Checked = true;
+                    }
 
 
-                string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
-                if (string.Compare(isSaveCsv, "Enable", true) == 0)
-                {
-                    radio_p_data_open.Checked = true;
-                }
-                else
-                {
-                    radio_p_data_close.Checked = true;
-                }
+                    tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
+                    tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
+                    tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
+                    tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
+                    tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
 
-                string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
-                if (string.Compare(isSaveImage, "Enable", true) == 0)
-                {
-                    radio_p_image_open.Checked = true;
-                }
-                else
-                {
-                    radio_p_image_close.Checked = true;
-                }
 
-                string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
-                if (string.Compare(judgMode, "DataPoints", true) == 0)
-                {
-                    radio_p_tag_point.Checked = true;
+                    string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
+                    if (string.Compare(isSaveCsv, "Enable", true) == 0)
+                    {
+                        radio_p_data_open.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_data_close.Checked = true;
+                    }
+
+                    string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
+                    if (string.Compare(isSaveImage, "Enable", true) == 0)
+                    {
+                        radio_p_image_open.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_image_close.Checked = true;
+                    }
+
+                    string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
+                    if (string.Compare(judgMode, "DataPoints", true) == 0)
+                    {
+                        radio_p_tag_point.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_tag_avg.Checked = true;
+                    }
                 }
-                else
-                {
-                    radio_p_tag_avg.Checked = true;
-                }             
+            }
+            catch (IOException ex)
+            {
+                    MessageBox.Show(ex.Message);
             }
         }
 
@@ -490,9 +521,13 @@ namespace TDRv
                 }
 
                 tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                tx_p_max_hi.Text = ((Convert.ToSingle(tx_p_max_hi.Text) / 100 + 1) * Convert.ToSingle(tx_p_max_value.Text)).ToString();
+                tx_p_min_hi.Text = ((Convert.ToSingle(tx_p_min_hi.Text) / 100 + 1) * Convert.ToSingle(tx_p_min_value.Text)).ToString();
 
-                tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-         
+                tx_p_lowLimit.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                tx_p_max_low.Text =  ((1 - Math.Abs(Convert.ToSingle(tx_p_max_low.Text)) / 100) * Convert.ToSingle(tx_p_max_value.Text)).ToString();
+                tx_p_min_low.Text =  ((1 - Math.Abs(Convert.ToSingle(tx_p_min_low.Text)) / 100) * Convert.ToSingle(tx_p_min_value.Text)).ToString();
+
             }
         }
 
@@ -510,8 +545,13 @@ namespace TDRv
                 }
 
                 tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();               
-             
+                tx_p_max_hi.Text = ((Convert.ToSingle(tx_p_max_hi.Text) / Convert.ToSingle(tx_p_max_value.Text) - 1) * 100).ToString();
+                tx_p_min_hi.Text = ((Convert.ToSingle(tx_p_min_hi.Text) / Convert.ToSingle(tx_p_min_value.Text) - 1) * 100).ToString();
+
+                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                tx_p_max_low.Text = ((Convert.ToSingle(tx_p_max_low.Text) / Convert.ToSingle(tx_p_max_value.Text) - 1) * 100).ToString();
+                tx_p_min_low.Text = ((Convert.ToSingle(tx_p_min_low.Text) / Convert.ToSingle(tx_p_min_value.Text) - 1) * 100).ToString();
+
             }
         }
 
@@ -565,9 +605,8 @@ namespace TDRv
         private void btn_update_Click(object sender, EventArgs e)
         {
             int index = dgv_param.CurrentRow.Index;
-
-
             ctrIsEnable(false);
+
 
             this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
             this.dgv_param.Rows[index].Cells[1].Value = index+1;            
@@ -587,58 +626,67 @@ namespace TDRv
                 this.dgv_param.Rows[index].Cells[8].Value = "%";
             }
 
-            this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
+            this.dgv_param.Rows[index].Cells[9].Value = tx_p_max_value.Text;
+            this.dgv_param.Rows[index].Cells[10].Value = tx_p_max_low.Text;
+            this.dgv_param.Rows[index].Cells[11].Value = tx_p_max_hi.Text;
+            this.dgv_param.Rows[index].Cells[12].Value = tx_p_min_value.Text;
+            this.dgv_param.Rows[index].Cells[13].Value = tx_p_min_low.Text;
+            this.dgv_param.Rows[index].Cells[14].Value = tx_p_min_hi.Text;
+
+
+
+            this.dgv_param.Rows[index].Cells[15].Value = dp.InputChannel;
 
             if (radio_p_diff.Checked)
             {
-                this.dgv_param.Rows[index].Cells[10].Value = "Differential";
+                this.dgv_param.Rows[index].Cells[16].Value = "Differential";
             }
             if (radio_p_single.Checked)
             {
-                this.dgv_param.Rows[index].Cells[10].Value = "SingleEnded";
+                this.dgv_param.Rows[index].Cells[16].Value = "SingleEnded";
             }
 
-            this.dgv_param.Rows[index].Cells[11].Value = dp.TestMethod;
+            this.dgv_param.Rows[index].Cells[17].Value = dp.TestMethod;
 
-            this.dgv_param.Rows[index].Cells[12].Value = tx_p_begin.Text;
+            this.dgv_param.Rows[index].Cells[18].Value = tx_p_begin.Text;
 
-            this.dgv_param.Rows[index].Cells[13].Value = tx_p_end.Text;
-            this.dgv_param.Rows[index].Cells[14].Value = tx_p_Index.Text;
-            this.dgv_param.Rows[index].Cells[15].Value = "0";
-            this.dgv_param.Rows[index].Cells[16].Value = "0";
-            this.dgv_param.Rows[index].Cells[17].Value = "0";
-            this.dgv_param.Rows[index].Cells[18].Value = tx_p_yOffset.Text;
-            this.dgv_param.Rows[index].Cells[19].Value = tx_p_savePath.Text;
+            this.dgv_param.Rows[index].Cells[19].Value = tx_p_end.Text;
+            this.dgv_param.Rows[index].Cells[20].Value = tx_p_Index.Text;
+            this.dgv_param.Rows[index].Cells[21].Value = "0";
+            this.dgv_param.Rows[index].Cells[22].Value = "0";
+            this.dgv_param.Rows[index].Cells[23].Value = "0";
+            this.dgv_param.Rows[index].Cells[24].Value = tx_p_yOffset.Text;
+            this.dgv_param.Rows[index].Cells[25].Value = tx_p_savePath.Text;
 
             if (radio_p_data_open.Checked)
             {
-                this.dgv_param.Rows[index].Cells[20].Value = "Enable";
+                this.dgv_param.Rows[index].Cells[26].Value = "Enable";
             }
             if (radio_p_data_close.Checked)
             {
-                this.dgv_param.Rows[index].Cells[20].Value = "Disable";
+                this.dgv_param.Rows[index].Cells[26].Value = "Disable";
             }
 
             if (radio_p_image_open.Checked)
             {
-                this.dgv_param.Rows[index].Cells[21].Value = "Enable";
+                this.dgv_param.Rows[index].Cells[27].Value = "Enable";
             }
             if (radio_p_image_close.Checked)
             {
-                this.dgv_param.Rows[index].Cells[21].Value = "Disable";
+                this.dgv_param.Rows[index].Cells[27].Value = "Disable";
             }
 
 
-            this.dgv_param.Rows[index].Cells[22].Value = "4.2";
+            this.dgv_param.Rows[index].Cells[28].Value = "4.2";
 
 
             if (radio_p_tag_avg.Checked)
             {
-                this.dgv_param.Rows[index].Cells[23].Value = "AverageValue";
+                this.dgv_param.Rows[index].Cells[29].Value = "AverageValue";
             }
             if (radio_p_tag_point.Checked)
             {
-                this.dgv_param.Rows[index].Cells[23].Value = "DataPoints";
+                this.dgv_param.Rows[index].Cells[29].Value = "DataPoints";
             }
         
         }
