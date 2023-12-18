@@ -273,6 +273,14 @@ namespace TDRv
                 tr.Spec = dt.Rows[i].Cells["ImpedanceDefine"].Value.ToString();
                 tr.Upper_limit = dt.Rows[i].Cells["ImpedanceLimitUpper"].Value.ToString();
                 tr.Low_limit = dt.Rows[i].Cells["ImpedanceLimitLower"].Value.ToString();
+
+                tr.Spec_max = dt.Rows[i].Cells["ImpedanceMax"].Value.ToString();
+                tr.Max_hi_limit = dt.Rows[i].Cells["ImpedanceMaxLimitUpper"].Value.ToString();
+                tr.Max_low_limit = dt.Rows[i].Cells["ImpedanceMaxLimitLower"].Value.ToString();
+                tr.Spec_min = dt.Rows[i].Cells["ImpedanceMin"].Value.ToString();
+                tr.Min_hi_limit = dt.Rows[i].Cells["ImpedanceMinLimitUpper"].Value.ToString();
+                tr.Min_low_limit = dt.Rows[i].Cells["ImpedanceMinLimitLower"].Value.ToString();
+
                 //tr.Average = dt.Rows[i].Cells[].Value.ToString();
                 //tr.Max = dt.Rows[i].Cells[].Value.ToString();
                 //tr.Min = dt.Rows[i].Cells[].Value.ToString();
@@ -432,6 +440,13 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
+            if (isTest)
+            {
+                MeasPosition.isOpen = true;
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+                return;
+            }
             if (isExecuteIndex)
             {
                 isExecuteIndex = false;
@@ -845,17 +860,20 @@ namespace TDRv
 
                     SetLableText("", "Control");
 
-                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                    if (isTest == false)
                     {
-                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                    {
-                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                    {
-                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                        {
+                            E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        }
+                        else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                        {
+                            E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                        }
+                        else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                        {
+                            E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        }
                     }
 
                     //量测并生成图表                    
@@ -1211,10 +1229,22 @@ namespace TDRv
             else
             {         
                 bool ret = false;
+
+                bool max_min_ret = false;
+
+
+                float max_std_value = 0.0f;
+                float max_hi_limit = 0.0f;
+                float max_low_limit = 0.0f;
+                float min_std_value = 0.0f;
+                float min_hi_limit = 0.0f;
+                float min_low_limit = 0.0f;
+
                 float avg = 0.0f;
                 float max = 0.0f;
                 float min = 0.0f;
 
+                float stdValue;
                 float lowLimit = 0.0f;
                 float hiLimit = 0.0f;
 
@@ -1231,13 +1261,24 @@ namespace TDRv
                     min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
                 }
 
+                if (isTest)
+                {
+                    logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                }
 
-                float stdValue = Convert.ToSingle(paramList[measIndex.currentIndex].Spec); //标准值
+                stdValue = Convert.ToSingle(paramList[measIndex.currentIndex].Spec); //标准值
+                max_std_value = Convert.ToSingle(paramList[measIndex.currentIndex].Spec_max); //最大标准值
+                min_std_value = Convert.ToSingle(paramList[measIndex.currentIndex].Spec_min); //最小标准值
 
                 if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
                 {
                     lowLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Low_limit) / 100); //下限
                     hiLimit = stdValue * (1 + StrToFloat(paramList[measIndex.currentIndex].Upper_limit) / 100); //上限
+
+                    max_hi_limit = max_std_value * (1 + StrToFloat(paramList[measIndex.currentIndex].Max_hi_limit) / 100); //上限
+                    max_low_limit = max_std_value * (1 + StrToFloat(paramList[measIndex.currentIndex].Max_low_limit) / 100); //下限
+                    min_hi_limit = min_std_value * (1 + StrToFloat(paramList[measIndex.currentIndex].Min_hi_limit) / 100); //上限
+                    min_low_limit = min_std_value * (1 + StrToFloat(paramList[measIndex.currentIndex].Min_low_limit) / 100); //下限
                 }
                 else
                 {
@@ -1247,8 +1288,12 @@ namespace TDRv
                     //lowLimit = stdValue * (1 - low_offset);
                     hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
                     lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
-                }
 
+                    max_hi_limit = Convert.ToSingle(paramList[measIndex.currentIndex].Max_hi_limit);
+                    max_low_limit = Convert.ToSingle(paramList[measIndex.currentIndex].Max_low_limit);
+                    min_hi_limit = Convert.ToSingle(paramList[measIndex.currentIndex].Min_hi_limit);
+                    min_low_limit = Convert.ToSingle(paramList[measIndex.currentIndex].Min_low_limit);
+                }
 
                 //这里判定是以点的方式还是以平均值的方式来判定结果
                 if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
@@ -1274,16 +1319,28 @@ namespace TDRv
                     }
                 }
 
+                //新增的是需要判定最大值和最小值的
+                if (((max < max_hi_limit) && (max > max_low_limit)) && ((min < min_hi_limit) && (min > min_low_limit)))
+                {
+                    max_min_ret = true;
+                }
+                else
+                {
+                    max_min_ret = false;
+                }
+
+
+
                 if (flag == CURRENT_RECORD) //当前量测
                 {
                     //这里需要添加对比
-                    if (ret == false)
+                    if (ret&&max_min_ret)
                     {
-                        gTestResultValue = -1;
+                        gTestResultValue = 1;
                     }
                     else 
                     {
-                        gTestResultValue = 1;
+                        gTestResultValue = -1;
                     }
                 } 
 
@@ -1294,7 +1351,7 @@ namespace TDRv
                 }
 
                 int index = _dgv.Rows.Add();                
-                if (ret)
+                if (ret && max_min_ret)
                 {
                     SetLableText("PASS", "Green");
                     _dgv.Rows[index].Cells[13].Value = "PASS";     
@@ -1334,10 +1391,10 @@ namespace TDRv
                     _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
                 }
 
-                _dgv.Rows[index].Cells[7].Value = paramList[measIndex.currentIndex].Spec_max + strUnit;      //设定的最大值
+                _dgv.Rows[index].Cells[7].Value = paramList[measIndex.currentIndex].Spec_max;      //设定的最大值
                 _dgv.Rows[index].Cells[8].Value = paramList[measIndex.currentIndex].Max_hi_limit + strUnit;  //最大上限比例 
                 _dgv.Rows[index].Cells[9].Value = paramList[measIndex.currentIndex].Max_low_limit + strUnit;   //最小下限比例
-                _dgv.Rows[index].Cells[10].Value = paramList[measIndex.currentIndex].Spec_min + strUnit;    //设定的最小值
+                _dgv.Rows[index].Cells[10].Value = paramList[measIndex.currentIndex].Spec_min;    //设定的最小值
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Min_hi_limit + strUnit;  //最大上限比例 
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Min_low_limit + strUnit;    //最小下限比例
 
