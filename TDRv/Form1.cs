@@ -27,7 +27,7 @@ namespace TDRv
         //设置参数设置窗体的表数据
         DataTable gdt;
 
-        public static bool isTest = true;   //true 测试模式,falsh生产模式
+        public static bool isTest = false;   //true 测试模式,falsh生产模式
 
         //获取当前
         public string exPortFilePath = string.Empty;
@@ -1027,7 +1027,7 @@ namespace TDRv
                             {
                                 //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                                 //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
-                                if (k == 10)
+                                if (k == 16) //将时间前添加一个tab
                                 {
                                     columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                                 }
