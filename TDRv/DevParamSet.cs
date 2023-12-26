@@ -22,6 +22,7 @@ namespace TDRv
 
         public bool clickFlag = false;
 
+        public string last_units = "ohm";
         DataTable tmpDt;
 
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
@@ -373,6 +374,8 @@ namespace TDRv
 
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            try
+        {
             if (e.RowIndex > -1)
             {
                 initControl(true);
@@ -387,19 +390,27 @@ namespace TDRv
 
                 string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
 
-                clickFlag = true;
-                if (string.Compare(units, "ohms", true) == 0)
+                    //clickFlag = true;
+
+                if (string.Compare(units, "%", true) == 0)
                 {
-                    radio_units_ohm.Checked = true;
-                    lab_highlimit_unit.Text = "欧姆";
-                    lab_lowlimit_unit.Text  = "欧姆";
-                }
-                else
-                {
+                    last_units = "%";
                     radio_units_percent.Checked = true;
                     lab_highlimit_unit.Text = "%";
                     lab_lowlimit_unit.Text = "%";
+                    lab_offsetlimit_unit.Text = "ohm";
+                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text)*float.Parse(tx_p_TargetValue.Text)/100).ToString();
                 }
+                else
+                {
+                    last_units = "ohm";
+                    radio_units_ohm.Checked = true;
+                    lab_highlimit_unit.Text = "ohm";
+                    lab_lowlimit_unit.Text = "ohm";
+                    lab_offsetlimit_unit.Text = "ohm";
+                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)).ToString();
+                }
+
 
                 string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
                 if (string.Compare(testMode, "Differential", true) == 0)
@@ -450,6 +461,11 @@ namespace TDRv
                 }             
             }
         }
+            catch (IOException ex)
+            {
+                    MessageBox.Show(ex.Message);
+            }
+        }
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
@@ -480,18 +496,16 @@ namespace TDRv
             if (radio_units_ohm.Checked)
             {
        
-                lab_highlimit_unit.Text = "欧姆";
-                lab_lowlimit_unit.Text = "欧姆";
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
 
-                if (clickFlag)
+                if (string.Compare(last_units, "%", true) == 0)
                 {
-                    clickFlag = false;
-                    return;
+                    last_units = "ohm";
+                    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                    tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)).ToString();
                 }
-
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-
-                tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
          
             }
         }
@@ -503,15 +517,38 @@ namespace TDRv
                 lab_highlimit_unit.Text = "%";
                 lab_lowlimit_unit.Text = "%";
 
-                if (clickFlag)
+                if (string.Compare(last_units, "ohm", true) == 0)
                 {
-                    clickFlag = false;
-                    return;
+                    last_units = "%";
+                    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                    tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
+                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text)*float.Parse(tx_p_TargetValue.Text)/100).ToString();
                 }
+            }
+        }
 
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();               
-             
+        private void radio_units_custom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radio_units_custom.Checked)
+            {
+                tx_limit_offset.Enabled = true;
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
+                lab_offsetlimit_unit.Text = "ohm";
+
+                tx_limit_offset.Text = String.Empty;
+                tx_p_highLimit.Text = String.Empty;
+                tx_p_lowLimit.Text = String.Empty; 
+
+
+                //if (string.Compare(last_units, "%", true) == 0)
+                //{
+                //    last_units = "ohm";
+                //    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                //    tx_p_lowLimit.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                //    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)).ToString();
+                //}
+
             }
         }
 
@@ -649,6 +686,8 @@ namespace TDRv
             btn_update.Enabled = en_disable;
             radio_units_ohm.Enabled = en_disable;
             radio_units_percent.Enabled = en_disable;
+            radio_units_custom.Enabled = en_disable;
+            tx_limit_offset.Enabled = false;
         }
 
         private void DevParamSet_Load(object sender, EventArgs e)
@@ -743,11 +782,11 @@ namespace TDRv
         {
             if (radio_p_single.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
 
                 tx_p_Description.Text = "50";
                 tx_p_Index.Text = "125";
@@ -757,12 +796,17 @@ namespace TDRv
                 {
                     tx_p_highLimit.Text = "55";
                     tx_p_lowLimit.Text = "45";
+                    tx_limit_offset.Text = "5";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
                 else
                 {
                     tx_p_highLimit.Text = "10";
                     tx_p_lowLimit.Text = "-10";
+                    tx_limit_offset.Text = "10";
+                    lab_offsetlimit_unit.Text = "%";
                 }
+
 
             }
         }
@@ -771,11 +815,11 @@ namespace TDRv
         {
             if (radio_p_diff.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                //if (clickFlag)
+                //{
+                //    clickFlag = false;
+                //    return;
+                //}
 
                 tx_p_Description.Text = "100";
                 tx_p_Index.Text = "200";
@@ -784,14 +828,20 @@ namespace TDRv
                 {
                     tx_p_highLimit.Text = "110";
                     tx_p_lowLimit.Text = "90";
+                    tx_limit_offset.Text = "10";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
                 else
                 {
                     tx_p_highLimit.Text = "10";
                     tx_p_lowLimit.Text = "-10";
+                    tx_limit_offset.Text = "10";
+                    lab_offsetlimit_unit.Text = "%";
                 }
             }
         }
+
+
 
         private void tx_p_yOffset_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -877,6 +927,15 @@ namespace TDRv
         private void radio_p_image_close_CheckedChanged(object sender, EventArgs e)
         {
             tx_p_savePath.Text = "";
+        }
+
+        private void tx_limit_offset_TextChanged(object sender, EventArgs e)
+        {
+            if (tx_limit_offset.Text.Length > 0)
+            {
+                tx_p_highLimit.Text = (float.Parse(tx_p_TargetValue.Text) + float.Parse(tx_limit_offset.Text)).ToString();
+                tx_p_lowLimit.Text = (float.Parse(tx_p_TargetValue.Text) - float.Parse(tx_limit_offset.Text)).ToString();
+            }
         }
     }//end class
 }//end namespace
