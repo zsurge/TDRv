@@ -888,6 +888,7 @@
             this.tx_limit_offset.Size = new System.Drawing.Size(101, 21);
             this.tx_limit_offset.TabIndex = 30;
             this.tx_limit_offset.TextChanged += new System.EventHandler(this.tx_limit_offset_TextChanged);
+            this.tx_limit_offset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tx_limit_offset_KeyPress);
             // 
             // label23
             // 

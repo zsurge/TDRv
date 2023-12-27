@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,6 +31,10 @@ namespace TDRv
 
         public static string xmlFilePath = string.Empty;
         public int selectionIdx = 0;
+
+        // private Regex _regex = new Regex("^[0-9]*\\.?[0-9]+$");
+        //private Regex regex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$|\bBackspace\b");
+        private string allowedCharsPattern = @"[0-9\b\.\,]";
 
         //添加是否存储XML标志位，TRUE= 已保存；FALSE = 未保存；
         public bool isSaveXml  = true;
@@ -408,7 +413,7 @@ namespace TDRv
                     lab_highlimit_unit.Text = "ohm";
                     lab_lowlimit_unit.Text = "ohm";
                     lab_offsetlimit_unit.Text = "ohm";
-                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)).ToString();
+                    tx_limit_offset.Text = Math.Abs(Math.Round((float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)),2)).ToString();
                 }
 
 
@@ -491,6 +496,14 @@ namespace TDRv
             }
         }
 
+        private bool is_check_limit_value_empty()
+        {
+            if (tx_p_TargetValue.Text.Length == 0 || tx_p_highLimit.Text.Length==0 || tx_p_lowLimit.Text.Length == 0)
+                return true;
+
+            return false;
+        }
+
         private void radio_units_ohm_CheckedChanged(object sender, EventArgs e)
         {
             if (radio_units_ohm.Checked)
@@ -499,12 +512,18 @@ namespace TDRv
                 lab_highlimit_unit.Text = "ohm";
                 lab_lowlimit_unit.Text = "ohm";
 
+                if (is_check_limit_value_empty())
+                {
+                    MessageBox.Show("limit值不能为空", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 if (string.Compare(last_units, "%", true) == 0)
                 {
                     last_units = "ohm";
-                    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-                    tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)).ToString();
+                    tx_p_highLimit.Text = Math.Round(((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)),2).ToString();
+                    tx_p_lowLimit.Text = Math.Round(((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)),2).ToString();
+                    tx_limit_offset.Text = Math.Abs(Math.Round((float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)),2)).ToString();
                 }
          
             }
@@ -517,12 +536,18 @@ namespace TDRv
                 lab_highlimit_unit.Text = "%";
                 lab_lowlimit_unit.Text = "%";
 
+                if (is_check_limit_value_empty())
+                {
+                    MessageBox.Show("limit值不能为空", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 if (string.Compare(last_units, "ohm", true) == 0)
                 {
                     last_units = "%";
-                    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                    tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text)*float.Parse(tx_p_TargetValue.Text)/100).ToString();
+                    tx_p_highLimit.Text = Math.Round(((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100),2).ToString();
+                    tx_p_lowLimit.Text = Math.Round(((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100),2).ToString();
+                    tx_limit_offset.Text = Math.Round((float.Parse(tx_p_highLimit.Text) * float.Parse(tx_p_TargetValue.Text) / 100), 2).ToString();
                 }
             }
         }
@@ -535,6 +560,7 @@ namespace TDRv
                 lab_highlimit_unit.Text = "ohm";
                 lab_lowlimit_unit.Text = "ohm";
                 lab_offsetlimit_unit.Text = "ohm";
+                last_units = "ohm";
 
                 tx_limit_offset.Text = String.Empty;
                 tx_p_highLimit.Text = String.Empty;
@@ -803,8 +829,8 @@ namespace TDRv
                 {
                     tx_p_highLimit.Text = "10";
                     tx_p_lowLimit.Text = "-10";
-                    tx_limit_offset.Text = "10";
-                    lab_offsetlimit_unit.Text = "%";
+                    tx_limit_offset.Text = "5";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
 
 
@@ -836,7 +862,7 @@ namespace TDRv
                     tx_p_highLimit.Text = "10";
                     tx_p_lowLimit.Text = "-10";
                     tx_limit_offset.Text = "10";
-                    lab_offsetlimit_unit.Text = "%";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
             }
         }
@@ -935,6 +961,16 @@ namespace TDRv
             {
                 tx_p_highLimit.Text = (float.Parse(tx_p_TargetValue.Text) + float.Parse(tx_limit_offset.Text)).ToString();
                 tx_p_lowLimit.Text = (float.Parse(tx_p_TargetValue.Text) - float.Parse(tx_limit_offset.Text)).ToString();
+            }
+        }
+
+        private void tx_limit_offset_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if (!regex.IsMatch(e.KeyChar.ToString()))
+            if (!Regex.IsMatch(e.KeyChar.ToString(), allowedCharsPattern))
+            {
+                e.Handled = true;
+                MessageBox.Show("只能输入数字和小数点", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }//end class
