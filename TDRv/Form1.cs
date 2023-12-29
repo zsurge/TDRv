@@ -246,21 +246,21 @@ namespace TDRv
             {
                 TestResult tr = new TestResult();
 
-                if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "Differential") == 0 && diff) //差分
+                if (string.Compare(dt.Rows[i].Cells[16].Value.ToString(), "Differential") == 0 && diff) //差分
                 {
-                    MeasPosition.tdd11start = Convert.ToSingle(dt.Rows[i].Cells[14].Value);
+                    MeasPosition.tdd11start = Convert.ToSingle(dt.Rows[i].Cells[20].Value);
                     diff = false;
                     tr.DevMode = DIFFERENCE;
                 }
 
-                if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "SingleEnded") == 0 && single) //单端
+                if (string.Compare(dt.Rows[i].Cells[16].Value.ToString(), "SingleEnded") == 0 && single) //单端
                 {
-                    MeasPosition.tdd22start = Convert.ToSingle(dt.Rows[i].Cells[14].Value);
+                    MeasPosition.tdd22start = Convert.ToSingle(dt.Rows[i].Cells[20].Value);
                     single = false;
                     tr.DevMode = SINGLE;
                 }
 
-                if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "SingleEnded") == 0)
+                if (string.Compare(dt.Rows[i].Cells[16].Value.ToString(), "SingleEnded") == 0)
                 {
                     tr.DevMode = SINGLE;
                 }
