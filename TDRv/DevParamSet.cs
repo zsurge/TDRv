@@ -23,6 +23,13 @@ namespace TDRv
 
         public bool clickFlag = false;
 
+        public bool single_click_flag = false;
+        public bool diff_click_flag = false;
+        public bool units_percent_click_flag = false;
+        public bool units_ohm_click_flag = false;
+        public bool units_custom_click_flag = false;
+        public bool limit_value_click_flag = false;
+
         public string last_units = "ohm";
         DataTable tmpDt;
 
@@ -380,92 +387,98 @@ namespace TDRv
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
-        {
-            if (e.RowIndex > -1)
             {
-                initControl(true);
-                ctrIsEnable(true);
-                tx_p_testSn.Text = (e.RowIndex+1).ToString();
-                tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
-                tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
-                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
-                tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
-                tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
-                tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
-
-                string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
-
-                    //clickFlag = true;
-
-                if (string.Compare(units, "%", true) == 0)
+                if (e.RowIndex > -1)
                 {
-                    last_units = "%";
-                    radio_units_percent.Checked = true;
-                    lab_highlimit_unit.Text = "%";
-                    lab_lowlimit_unit.Text = "%";
-                    lab_offsetlimit_unit.Text = "ohm";
-                    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text)*float.Parse(tx_p_TargetValue.Text)/100).ToString();
-                }
-                else
-                {
-                    last_units = "ohm";
-                    radio_units_ohm.Checked = true;
-                    lab_highlimit_unit.Text = "ohm";
-                    lab_lowlimit_unit.Text = "ohm";
-                    lab_offsetlimit_unit.Text = "ohm";
-                    tx_limit_offset.Text = Math.Abs(Math.Round((float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)),2)).ToString();
-                }
+                    initControl(true);
+                    ctrIsEnable(true);
+                    tx_p_testSn.Text = (e.RowIndex+1).ToString();
+                    tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
+                    tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
+                    tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
+                    tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
+                    tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
+                    tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
+
+                    limit_value_click_flag = true;
+
+                    string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
+
+                        //clickFlag = true;
+
+                    if (string.Compare(units, "%", true) == 0)
+                    {
+                        last_units = "%";
+                        units_percent_click_flag = true;
+                        radio_units_percent.Checked = true;
+                        lab_highlimit_unit.Text = "%";
+                        lab_lowlimit_unit.Text = "%";
+                        lab_offsetlimit_unit.Text = "ohm";
+                        tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text)*float.Parse(tx_p_TargetValue.Text)/100).ToString();   
+                    }
+                    else
+                    {
+                        last_units = "ohm";
+                        units_ohm_click_flag = true;
+                        radio_units_ohm.Checked = true;
+                        lab_highlimit_unit.Text = "ohm";
+                        lab_lowlimit_unit.Text = "ohm";
+                        lab_offsetlimit_unit.Text = "ohm";
+                        tx_limit_offset.Text = Math.Abs(Math.Round((float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)),2)).ToString();
+                    }
 
 
-                string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
-                if (string.Compare(testMode, "Differential", true) == 0)
-                {
-                    radio_p_diff.Checked = true;
-                }
-                else
-                {
-                    radio_p_single.Checked = true;
-                }
+                    string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
+                    if (string.Compare(testMode, "Differential", true) == 0)
+                    {
+                        diff_click_flag = true;
+                        radio_p_diff.Checked = true;
+                    }
+                    else
+                    {
+                        single_click_flag = true;
+                        radio_p_single.Checked = true;
+                    }
                 
 
-                tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
-                tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
-                tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
-                tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
-                tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
+                    tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
+                    tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
+                    tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
+                    tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
+                    tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
 
 
-                string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
-                if (string.Compare(isSaveCsv, "Enable", true) == 0)
-                {
-                    radio_p_data_open.Checked = true;
-                }
-                else
-                {
-                    radio_p_data_close.Checked = true;
-                }
+                    string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
+                    if (string.Compare(isSaveCsv, "Enable", true) == 0)
+                    {
+                        radio_p_data_open.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_data_close.Checked = true;
+                    }
 
-                string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
-                if (string.Compare(isSaveImage, "Enable", true) == 0)
-                {
-                    radio_p_image_open.Checked = true;
-                }
-                else
-                {
-                    radio_p_image_close.Checked = true;
-                }
+                    string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
+                    if (string.Compare(isSaveImage, "Enable", true) == 0)
+                    {
+                        radio_p_image_open.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_image_close.Checked = true;
+                    }
 
-                string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
-                if (string.Compare(judgMode, "DataPoints", true) == 0)
-                {
-                    radio_p_tag_point.Checked = true;
+                    string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
+                    if (string.Compare(judgMode, "DataPoints", true) == 0)
+                    {
+                        radio_p_tag_point.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_tag_avg.Checked = true;
+                    }             
                 }
-                else
-                {
-                    radio_p_tag_avg.Checked = true;
-                }             
             }
-        }
             catch (IOException ex)
             {
                     MessageBox.Show(ex.Message);
@@ -506,6 +519,12 @@ namespace TDRv
 
         private void radio_units_ohm_CheckedChanged(object sender, EventArgs e)
         {
+            if (units_ohm_click_flag)
+            {
+                units_ohm_click_flag = false;
+                return;
+            }
+
             if (radio_units_ohm.Checked)
             {
        
@@ -531,6 +550,13 @@ namespace TDRv
 
         private void radio_units_percent_CheckedChanged(object sender, EventArgs e)
         {
+
+            if (units_percent_click_flag)
+            {
+                units_percent_click_flag = false;
+                return;
+            }
+
             if (radio_units_percent.Checked)
             {     
                 lab_highlimit_unit.Text = "%";
@@ -554,6 +580,12 @@ namespace TDRv
 
         private void radio_units_custom_CheckedChanged(object sender, EventArgs e)
         {
+            if (units_custom_click_flag)
+            {
+                units_custom_click_flag = false;
+                return;
+            }
+
             if (radio_units_custom.Checked)
             {
                 tx_limit_offset.Enabled = true;
@@ -564,7 +596,7 @@ namespace TDRv
 
                 tx_limit_offset.Text = String.Empty;
                 tx_p_highLimit.Text = String.Empty;
-                tx_p_lowLimit.Text = String.Empty; 
+                tx_p_lowLimit.Text = String.Empty;
 
 
                 //if (string.Compare(last_units, "%", true) == 0)
@@ -648,6 +680,11 @@ namespace TDRv
             if (radio_units_percent.Checked)
             {
                 this.dgv_param.Rows[index].Cells[8].Value = "%";
+            }
+
+            if (radio_units_custom.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[8].Value = "ohms";
             }
 
             this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
@@ -806,13 +843,16 @@ namespace TDRv
 
         private void radio_p_single_CheckedChanged(object sender, EventArgs e)
         {
+            if (single_click_flag)
+            {
+                single_click_flag = false;
+                return;
+            }
+
+
             if (radio_p_single.Checked)
             {
-                //if (clickFlag)
-                //{
-                //    clickFlag = false;
-                //    return;
-                //}
+                limit_value_click_flag = true;
 
                 tx_p_Description.Text = "50";
                 tx_p_Index.Text = "125";
@@ -839,13 +879,21 @@ namespace TDRv
 
         private void radio_p_diff_CheckedChanged(object sender, EventArgs e)
         {
+            //public bool single_click_flag = false;
+            //public bool diff_click_flag = false;
+            //public bool units_percent_click_flag = false;
+            //public bool units_ohm_click_flag = false;
+            //public bool units_custom_click_flag = false;
+
+            if (diff_click_flag)
+            {
+                diff_click_flag = false;
+                return;
+            }
+
             if (radio_p_diff.Checked)
             {
-                //if (clickFlag)
-                //{
-                //    clickFlag = false;
-                //    return;
-                //}
+                limit_value_click_flag = true;
 
                 tx_p_Description.Text = "100";
                 tx_p_Index.Text = "200";
@@ -959,8 +1007,20 @@ namespace TDRv
         {
             if (tx_limit_offset.Text.Length > 0)
             {
+
+                if (limit_value_click_flag)
+                {
+                    limit_value_click_flag = false;
+                    return;
+                }
                 tx_p_highLimit.Text = (float.Parse(tx_p_TargetValue.Text) + float.Parse(tx_limit_offset.Text)).ToString();
                 tx_p_lowLimit.Text = (float.Parse(tx_p_TargetValue.Text) - float.Parse(tx_limit_offset.Text)).ToString();
+
+
+                //tx_p_highLimit.Text = Math.Round(((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100), 2).ToString();
+                //tx_p_lowLimit.Text = Math.Round(((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100), 2).ToString();
+
+
             }
         }
 
