@@ -264,7 +264,6 @@
             // 
             // tsb_Pnl_ID
             // 
-            this.tsb_Pnl_ID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Pnl_ID.Name = "tsb_Pnl_ID";
             this.tsb_Pnl_ID.Size = new System.Drawing.Size(200, 41);
             this.tsb_Pnl_ID.Text = "0001";
@@ -277,7 +276,6 @@
             // 
             // tsb_Set_id
             // 
-            this.tsb_Set_id.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Set_id.Name = "tsb_Set_id";
             this.tsb_Set_id.Size = new System.Drawing.Size(200, 41);
             // 
@@ -892,7 +890,7 @@
             this.KeyPreview = true;
             this.Name = "Form1";
             this.ShowIcon = false;
-            this.Text = "TDR Automatic Test System Youcan-Technologies V1.0.1.20231024";
+            this.Text = "TDR Automatic Test System Youcan-Technologies V1.0.1.20240125";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
