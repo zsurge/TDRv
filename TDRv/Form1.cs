@@ -496,7 +496,7 @@ namespace TDRv
                     //差分开路定义
                     E5071C.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, gDevType, out result);
                 }
-
+                //LoggerHelper.mlog.Debug("DIFF RESULT = " + result);
                 //这里需要处理win1_tr1的数据
                 tmpDiffMeasData = packetMaesData(result, 0, 0);
                 string[] tdd11_array = result.Split(new char[] { ',' });
@@ -549,6 +549,7 @@ namespace TDRv
                     tmpSingleMeasData = packetMaesData(result2, 0, 0);
                 }
 
+                //LoggerHelper.mlog.Debug("SINGLE RESULT = " + result2);
                 string[] tdd22_array = result2.Split(new char[] { ',' });
 
                 //查找tdd22单端的索引值

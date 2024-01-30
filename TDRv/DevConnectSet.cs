@@ -51,6 +51,7 @@ namespace TDRv
                 int ret = E5080B.Open(CGloabal.g_curInstrument.adress, ref CGloabal.g_curInstrument.nHandle);
 
                 E5080B.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
+                LoggerHelper.mlog.Debug("SN = " + sn);
 
                 if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY60213234"))
                 {
@@ -125,6 +126,52 @@ namespace TDRv
                 {
 
                     if (209912311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY61100183"))
+                {
+
+                    if (202401201400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59100527"))
+                {
+
+                    if (202403161400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -554,6 +601,8 @@ namespace TDRv
 
                 E5063A.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
 
+                LoggerHelper.mlog.Debug("SN = " + sn);
+
                 E5063A.GetThreePortIdentifier(CGloabal.g_curInstrument.nHandle);
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
@@ -903,6 +952,7 @@ namespace TDRv
 
                 int ret = E5071C.Open(CGloabal.g_curInstrument.adress, ref CGloabal.g_curInstrument.nHandle);
                 E5071C.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
+                LoggerHelper.mlog.Debug("SN = " + sn);
                 E5071C.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
                 E5071C.setAttribute(CGloabal.g_curInstrument.nHandle);
 
