@@ -494,7 +494,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1620, 296);
+            this.tabPage2.Size = new System.Drawing.Size(1620, 297);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "已输出量测";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -530,7 +530,7 @@
             this.dgv_OutPutResult.RowHeadersVisible = false;
             this.dgv_OutPutResult.RowHeadersWidth = 82;
             this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 289);
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(1620, 290);
             this.dgv_OutPutResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
@@ -634,7 +634,7 @@
             this.tabPage3.Controls.Add(this.dgv_HistoryResult);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1620, 296);
+            this.tabPage3.Size = new System.Drawing.Size(1620, 297);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "历史量测";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -672,7 +672,7 @@
             this.dgv_HistoryResult.RowHeadersWidth = 82;
             this.dgv_HistoryResult.RowTemplate.Height = 23;
             this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 289);
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(1620, 290);
             this.dgv_HistoryResult.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn15
@@ -889,7 +889,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司V1.0.5.20231227";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司V1.0.5.20240130";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
