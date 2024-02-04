@@ -148,7 +148,7 @@ namespace TDRv
                 else if (sn.Contains("MY61100183"))
                 {
 
-                    if (202401201400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202402201400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -194,7 +194,7 @@ namespace TDRv
                 else if (sn.Contains("MY63057096")) //add 2023.09.09
                 {
 
-                    if (202402091400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202403091400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -237,10 +237,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59203255")) //临时测试使用1个月，2023.07.03
+                else if (sn.Contains("MY59203255")) //2024.02.04 修改到永久版
                 {
 
-                    if (202402161400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -263,7 +263,7 @@ namespace TDRv
                 else if (sn.Contains("MY59202618"))
                 {
 
-                    if (202401221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202402221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -286,7 +286,7 @@ namespace TDRv
                 else if (sn.Contains("MY59202852"))
                 {
 
-                    if (202401311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202403011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -916,7 +916,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY54706013"))
                 {
-                    if (202402111400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202403111400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -1130,7 +1130,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY47002948")) //add 20240210
                 {
-                    if (202402101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202403101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
