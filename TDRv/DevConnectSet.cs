@@ -1130,6 +1130,27 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY47100345")) //add 2024.02.28 三个月2024.05.28
+                {
+                    if (202405281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else if (sn.Contains("MY47002764")) //add 2023.12.06 样机 三个月2024.03.06
                 {
                     if (202403061400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
