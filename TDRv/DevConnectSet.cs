@@ -952,7 +952,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY46733941")) //add 2023.10.24  三个月 
                 {
-                    if (202402251400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202403281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
