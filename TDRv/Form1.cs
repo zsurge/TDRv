@@ -581,6 +581,40 @@ namespace TDRv
         }
 
 
+        //add 2024.03.02 
+        //添加对时间的计算
+        private List<double>packet_time_data(string time_data,int index,int length)
+        {
+            List<double> result = new List<double>();
+            string[] tmpArray = time_data.Split(new char[] { ',' });
+        
+            int i = 0;
+
+            try
+            {
+     
+                    for (i = index; i < length+index; i++)
+                    {
+                            //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
+                            result.Add(double.Parse(tmpArray[i].ToString()));
+                    }
+
+
+
+                logFileName = "time " + DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                SaveDataToCSVFile(result, logFileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+
+            return result;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -728,6 +762,49 @@ namespace TDRv
             }
 
             string spath = CurveDir + "\\"+ fileName.Replace(":","").Replace(".","")+".csv";
+
+            try
+            {
+                sw = new StreamWriter(spath);
+
+                for (int i = 0; i < measData.Count; i++)
+                {
+                    strValue.Remove(0, strValue.Length); //clear the temp row value
+                    strValue.Append(measData[i]);
+                    sw.WriteLine(strValue); //write the row value
+                }
+            }
+            catch (Exception ex)
+            {
+                successFlag = false;
+            }
+            finally
+            {
+                if (sw != null)
+                {
+                    sw.Dispose();
+                }
+            }
+
+            return successFlag;
+        }
+
+        private bool SaveDataToCSVFile(List<double> measData, string fileName)
+        {
+            bool successFlag = true;
+
+            //StringBuilder strColumn = new StringBuilder();
+            StringBuilder strValue = new StringBuilder();
+            StreamWriter sw = null;
+            //PropertyInfo[] props = GetPropertyInfoArray();
+
+
+            if (!Directory.Exists(CurveDir))
+            {
+                Directory.CreateDirectory(CurveDir);
+            }
+
+            string spath = CurveDir + "\\" + fileName.Replace(":", "").Replace(".", "") + ".csv";
 
             try
             {
@@ -1075,6 +1152,7 @@ namespace TDRv
                     bool ret = false;
 
                     string result = string.Empty;
+                    string result_time = string.Empty;//X轴时间
                     int index = 0;
 
                     int channel = paramList[measIndex.currentIndex].DevMode;
@@ -1100,11 +1178,16 @@ namespace TDRv
                     }
                     else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
                     {
-                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result,out result_time);
                     }
+
+                   
 
                     //量测并生成图表                    
                     List<float> disResult = packetMaesData(result, index, channel);
+
+                    List<double> disTimeResult = packet_time_data(result_time, index, disResult.Count);
+
 
                     DisplayChartValue(chart1, disResult);
 

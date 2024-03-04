@@ -243,12 +243,13 @@ namespace TDRv.Driver
             return errorno;
         }
 
-        public static int measuration(int nInstrumentHandle, int channel, int devType, out string msg)
+        public static int measuration(int nInstrumentHandle, int channel, int devType, out string msg,out string str_time)
         {
             int viError, count;
             int attr;
             byte[] result = new byte[256];
             byte[] ret = new byte[200000];
+            byte[] xret = new byte[200000]; //X轴数据
 
             string str0 = string.Empty;
 
@@ -345,6 +346,16 @@ namespace TDRv.Driver
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
             visa32.viRead(nInstrumentHandle, result, 256, out count);
             viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
+
+
+
+            //X轴数据
+            string str14= ":CALCulate1:SELected:DATA:XAXis?";
+            Array.Clear(xret, 0, 200000);
+            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str14 + "\n"), str14.Length, out count);
+            viError = visa32.viRead(nInstrumentHandle, xret, 200000, out count);
+            viError = visa32.viGetAttribute(nInstrumentHandle, visa32.VI_ATTR_TERMCHAR_EN, out attr);
+            str_time = Encoding.ASCII.GetString(xret, 0, count).Replace("+0.00000000000E+000,", "");
 
             string str11 = ":CALCulate1:SELected:TRANsform:TIME:STARt?";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str11 + "\n"), str11.Length, out count);
