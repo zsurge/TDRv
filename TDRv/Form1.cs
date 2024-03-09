@@ -521,6 +521,8 @@ namespace TDRv
                         {
                             MeasPosition.tdd11IndexValue = i - 1;
                         }
+
+
                         //这里需要将开路定义后的索引写入到配方的XML文件中去
                         LoggerHelper.mlog.Debug("差分开路位置：" + MeasPosition.tdd11IndexValue.ToString());
                         break;
@@ -556,7 +558,7 @@ namespace TDRv
                 for (int i = 0; i < tdd22_array.Length; i++)
                 {
                     if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
-                    {   
+                    {
                         if (i == 0)
                         {
                             MeasPosition.tdd22IndexValue = 0;
@@ -565,6 +567,7 @@ namespace TDRv
                         {
                             MeasPosition.tdd22IndexValue = i - 1;
                         }
+
 
                         //这里需要将开路定义后的索引写入到配方的XML文件中去
                         LoggerHelper.mlog.Debug("单端开路位置：" + MeasPosition.tdd22IndexValue.ToString());
@@ -643,6 +646,14 @@ namespace TDRv
                         }
                         else
                         {
+                            //add 2024.03.09 为了添加多一个数据，使之顶200或者150
+                            if ((i + 1) < tmpArray.Length)
+                            {
+                                // 直接添加下一项而不检查是否满足条件
+                                tmp = Convert.ToSingle(tmpArray[i + 1]) + paramList[measIndex.currentIndex].Offset;
+                                result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                            }
+
                             break;
                         }
                     }
@@ -658,6 +669,14 @@ namespace TDRv
                         }
                         else
                         {
+                            //add 2024.03.09 为了添加多一个数据，使之顶200或者150
+                            if ((i + 1) < tmpArray.Length)
+                            {
+                                // 直接添加下一项而不检查是否满足条件
+                                tmp = Convert.ToSingle(tmpArray[i + 1]) + paramList[measIndex.currentIndex].Offset;
+                                result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                            }
+
                             break;
                         }
                     }
@@ -717,7 +736,7 @@ namespace TDRv
                 chart1.Series[0].LegendText = "diff";
                 chart1.Series[1].LegendText = "limit";
                 chart1.Series[2].LegendText = "limit";
-                chart1.Series[3].LegendText = "single";
+                //chart1.Series[3].LegendText = "single";
             }
             else
             {
@@ -836,91 +855,6 @@ namespace TDRv
 
 
 
-        /// <summary>
-        /// 创建量测时的图表
-        /// </summary>
-        /// <param name="measData">量测试的数据</param>
-        /// <param name="channel">单端OR差分</param>
-        private void CreateMeasChart(List<float> measData)
-        {
-            float xbegin = 0;
-            float xend = 0;
-            float yhigh = 0;
-            float ylow = 0;
-
-
-            foreach (var series in chart1.Series)
-            {
-                series.Points.Clear();
-            }
-
-            xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
-            xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
-            yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100));
-            ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));
-
-            if (xend - xbegin < 3)
-            {
-                //initChart();
-                gEmptyFlag = true;
-                return;
-            }
-            else
-            {
-                gEmptyFlag = false;
-            }
-
-            //计算有效区域起始结束位置 
-            chart1.ChartAreas[0].AxisY.Interval = paramList[measIndex.currentIndex].Open_hreshold / 5; //Y轴间距
-            chart1.ChartAreas[0].AxisY.Maximum = paramList[measIndex.currentIndex].Open_hreshold;//设置Y坐标最大值
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
-
-            //生成上半位有效区域
-            chart1.Series[1].Points.AddXY(xbegin, paramList[measIndex.currentIndex].Open_hreshold);
-            chart1.Series[1].Points.AddXY(xbegin, yhigh);
-            chart1.Series[1].Points.AddXY(xend, yhigh);
-            chart1.Series[1].Points.AddXY(xend, paramList[measIndex.currentIndex].Open_hreshold);
-
-            //生成下半部有效区域
-            chart1.Series[2].Points.AddXY(xbegin, 0);
-            chart1.Series[2].Points.AddXY(xbegin, ylow);
-            chart1.Series[2].Points.AddXY(xend, ylow);
-            chart1.Series[2].Points.AddXY(xend, 0);
-
-            //获取有效区域的LIST
-            List<float> tmpResult = measData.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
-
-
-            //求最大值及最小值
-            if (tmpResult.Count != 0)            
-            {
-                //设置网格间距
-                chart1.ChartAreas[0].AxisX.Interval = (float)measData.Count / 10;//X轴间距
-                chart1.ChartAreas[0].AxisX.Maximum = (float)measData.Count; //设置X坐标最大值
-                chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
-
-                chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString();
-                chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
-                chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
-            }
-            else
-            {
-                //设置默认网格间距
-                chart1.ChartAreas[0].AxisX.Interval = 250;//X轴间距
-                chart1.ChartAreas[0].AxisX.Maximum = 2500; //设置X坐标最大值
-                chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
-
-                chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
-                chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
-                chart1.ChartAreas[0].AxisY.Minimum = 0;
-            }
-
-            //生成测试数据曲线
-            for (int i = 0; i < measData.Count; i++)
-            {
-                chart1.Series[0].Points.AddXY(i, measData[i]);
-            }
-        }
 
 
 
@@ -965,155 +899,7 @@ namespace TDRv
         }
 
 
-        /// <summary>
-        /// 更新测试结果到datagridview中去
-        /// </summary>
-        /// <param name="channel">这个好像不需要？</param>
-        private bool upgradeTestResult(int channel)
-        {
-            bool ret = false;
-            float avg = 0;
-            float max = 0;
-            float min = 0;
 
-            if (gEmptyFlag)
-            {
-                avg = 9999;
-                max = 9999;
-                min = 9999;
-            }
-            else
-            {
-                avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
-            }
-
-
-            float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
-            float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
-            float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
-
-            float stdLowValue = stdValue * ((100 + loLimite) / 100);
-            float stdHiValue = stdValue * ((100 + hiLimite) / 100);
-
-
-            //这里判定是以点的方式还是以平均值的方式来判定结果
-            if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
-            {
-                if (avg > stdLowValue && avg < stdHiValue)
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-            else //以点的形式去判定
-            {
-                if (((max < stdHiValue) && (max > stdLowValue)) && ((min < stdHiValue) && (min > stdLowValue)))
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-
-            //这里需要添加对比
-            if (ret == false)
-            {    
-                //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
-                if (optParam.testMode == 4)
-                {                   
-                    return ret;
-                }
-                
-            }
-
-            int index = this.dgv_CurrentResult.Rows.Add();
-            int history_index = this.dgv_HistoryResult.Rows.Add();
-            if (ret)
-            {
-                SetLableText("PASS", "Green");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
-            }
-            else
-            {
-                SetLableText("FAIL", "Red");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
-            }
-
-            
-            //目前量测
-            this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = "∞"; //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = "∞"; //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = "∞"; //最小值
-            }
-            else
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
-            }
-
-            this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-
-            //历史量测
-            this.dgv_HistoryResult.Rows[history_index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "9999"; //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "9999"; //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "9999"; //最小值
-            }
-            else
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
-            }
-
-
-            this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-            //只有最后一个走完，流水才++
-            if (measIndex.currentIndex == paramList.Count - 1)
-            {
-                gSerialInc++;
-            }
-
-            //光标在最后一行
-            dgv_CurrentResult.CurrentCell = dgv_CurrentResult.Rows[this.dgv_CurrentResult.Rows.Count - 1].Cells[0];
-
-            return ret;
-        }
 
         
 
@@ -1436,11 +1222,15 @@ namespace TDRv
                 float yhigh = 0.0f;
                 float ylow = 0.0f;
 
-
+                //清除所有的点
                 foreach (var series in chart1.Series)
                 {
                     series.Points.Clear();
                 }
+
+                //清除标记的虚线
+                chart1.ChartAreas[0].AxisX.StripLines.Clear();
+                chart1.ChartAreas[0].AxisY.StripLines.Clear();
 
                 xbegin = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100; //有效区起始位置
                 xend = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;     //有效区结束位置
@@ -1473,22 +1263,126 @@ namespace TDRv
                     gEmptyFlag = false;
                 }
 
+
+
+                // 设置Y轴主要网格线间隔（每25一个网格线）
+                chart1.ChartAreas[0].AxisY.MajorGrid.Interval = 25;
+
+                // 自定义Y轴标签
+                for (int i = 0; i <= paramList[measIndex.currentIndex].Open_hreshold; i += 25)
+                {
+                    CustomLabel customLabel = new CustomLabel();
+                    customLabel.FromPosition = i - 12.5; // 使标签居中显示
+                    customLabel.ToPosition = i + 12.5;
+                    customLabel.Text = i.ToString();
+                    chart1.ChartAreas[0].AxisY.CustomLabels.Add(customLabel);
+                }
+
+
                 //计算有效区域起始结束位置 
-                chart1.ChartAreas[0].AxisY.Interval = paramList[measIndex.currentIndex].Open_hreshold / 5; //Y轴间距
+                chart1.ChartAreas[0].AxisY.Interval = 5; //Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = paramList[measIndex.currentIndex].Open_hreshold;//设置Y坐标最大值,开路位置
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
 
-                //生成上半位有效区域
-                chart1.Series[1].Points.AddXY(xbegin, paramList[measIndex.currentIndex].Open_hreshold);
-                chart1.Series[1].Points.AddXY(xbegin, yhigh);
-                chart1.Series[1].Points.AddXY(xend, yhigh);
-                chart1.Series[1].Points.AddXY(xend, paramList[measIndex.currentIndex].Open_hreshold);
 
-                //生成下半部有效区域
-                chart1.Series[2].Points.AddXY(xbegin, 0);
-                chart1.Series[2].Points.AddXY(xbegin, ylow);
-                chart1.Series[2].Points.AddXY(xend, ylow);
-                chart1.Series[2].Points.AddXY(xend, 0);
+
+                // 首先，创建一个新的StripLine对象
+                StripLine stripLine_start = new StripLine();
+                StripLine stripLine_end = new StripLine();
+
+                StripLine stripLine_high = new StripLine();
+                StripLine stripLine_low = new StripLine();
+
+                // 设置虚线开始的X轴位置
+                stripLine_start.IntervalOffset = xbegin;
+                stripLine_end.IntervalOffset = xend;
+        
+
+                stripLine_high.IntervalOffset = yhigh;
+                stripLine_low.IntervalOffset = ylow;
+
+                // 设置虚线开始的X轴位置
+                stripLine_start.IntervalOffset = xbegin;
+                stripLine_end.IntervalOffset = xend;
+
+                stripLine_high.IntervalOffset = yhigh;
+                stripLine_low.IntervalOffset = ylow;
+
+                // 设置虚线的颜色
+                stripLine_start.StripWidth = 0; // 设置StripWidth为0，因为我们想要的是线而不是带
+                stripLine_start.BorderColor = Color.Blue; // 设置虚线的颜色
+                stripLine_start.BorderDashStyle = ChartDashStyle.Dash; // 设置为虚线样式
+                stripLine_start.BorderWidth = 1; // 设置虚线的宽度
+
+                // 设置标签文本的样式
+                stripLine_start.Text = paramList[measIndex.currentIndex].Valid_Begin.ToString() +"%";
+                stripLine_start.TextAlignment = StringAlignment.Far; // 标签文本的对齐方式
+                stripLine_start.TextLineAlignment = StringAlignment.Far; // 标签在虚线的哪一侧（近侧或远侧）
+                stripLine_start.ForeColor = Color.Blue; // 设置字体颜色为红色
+                stripLine_start.Font = new Font("Arial", 14, FontStyle.Regular); // 字体样式
+
+
+
+                stripLine_end.StripWidth = 0; // 设置StripWidth为0，因为我们想要的是线而不是带
+                stripLine_end.BorderColor = Color.Blue; // 设置虚线的颜色
+                stripLine_end.BorderDashStyle = ChartDashStyle.Dash; // 设置为虚线样式
+                stripLine_end.BorderWidth = 1; // 设置虚线的宽度
+
+                // 设置标签文本的样式
+                stripLine_end.Text = paramList[measIndex.currentIndex].Valid_End.ToString() + "%";
+                stripLine_end.TextAlignment = StringAlignment.Far; // 标签文本的对齐方式
+                stripLine_end.TextLineAlignment = StringAlignment.Far; // 标签在虚线的哪一侧（近侧或远侧）
+                stripLine_end.ForeColor = Color.Blue; // 设置字体颜色为红色
+                stripLine_end.Font = new Font("Arial", 14, FontStyle.Regular); // 字体样式
+
+                // 设置虚线的颜色
+                stripLine_high.StripWidth = 0; // 设置StripWidth为0，因为我们想要的是线而不是带
+                stripLine_high.BorderColor = Color.Red; // 设置虚线的颜色
+                stripLine_high.BorderDashStyle = ChartDashStyle.Dash; // 设置为虚线样式
+                stripLine_high.BorderWidth = 1; // 设置虚线的宽度
+
+                // 设置标签文本的样式
+                stripLine_high.Text = "SPEC " + yhigh.ToString();
+                stripLine_high.TextAlignment = StringAlignment.Near; // 标签文本的对齐方式
+                stripLine_high.TextLineAlignment = StringAlignment.Far; // 标签在虚线的哪一侧（近侧或远侧）
+                stripLine_high.ForeColor = Color.Red; // 设置字体颜色为红色
+                stripLine_high.Font = new Font("Arial", 14, FontStyle.Regular); // 字体样式
+
+
+
+                stripLine_low.StripWidth = 0; // 设置StripWidth为0，因为我们想要的是线而不是带
+                stripLine_low.BorderColor = Color.Red; // 设置虚线的颜色
+                stripLine_low.BorderDashStyle = ChartDashStyle.Dash; // 设置为虚线样式
+                stripLine_low.BorderWidth = 1; // 设置虚线的宽度
+
+                // 设置标签文本的样式
+                stripLine_low.Text = "SPEC " + ylow.ToString();
+                stripLine_low.TextAlignment = StringAlignment.Near; // 标签文本的对齐方式
+                stripLine_low.TextLineAlignment = StringAlignment.Far; // 标签在虚线的哪一侧（近侧或远侧）
+                stripLine_low.ForeColor = Color.Red; // 设置字体颜色为红色
+                stripLine_low.Font = new Font("Arial", 14, FontStyle.Regular); // 字体样式
+
+
+
+
+                // 将定义好的StripLine添加到Chart的X轴的StripLines集合中
+                chart1.ChartAreas[0].AxisX.StripLines.Add(stripLine_start);
+                chart1.ChartAreas[0].AxisX.StripLines.Add(stripLine_end);
+
+                chart1.ChartAreas[0].AxisY.StripLines.Add(stripLine_high);
+                chart1.ChartAreas[0].AxisY.StripLines.Add(stripLine_low);
+
+                ////生成上半位有效区域
+                //chart1.Series[1].Points.AddXY(xbegin, paramList[measIndex.currentIndex].Open_hreshold);
+                //chart1.Series[1].Points.AddXY(xbegin, yhigh);
+                //chart1.Series[1].Points.AddXY(xend, yhigh);
+                //chart1.Series[1].Points.AddXY(xend, paramList[measIndex.currentIndex].Open_hreshold);
+
+                ////生成下半部有效区域
+                //chart1.Series[2].Points.AddXY(xbegin, 0);
+                //chart1.Series[2].Points.AddXY(xbegin, ylow);
+                //chart1.Series[2].Points.AddXY(xend, ylow);
+                //chart1.Series[2].Points.AddXY(xend, 0);
 
                 //获取有效区域的LIST
                 List<float> tmpResult = result.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
@@ -1518,10 +1412,37 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisY.Minimum = 0;
                 }
 
+                // 初始化标记标志 ，只标记一次，因为精度问题，有可能存在很多最大或者最小值
+                bool markedMin = false;
+                bool markedMax = false;
+
                 //生成测试数据曲线
                 for (int i = 0; i < result.Count; i++)
                 {
-                    chart1.Series[0].Points.AddXY(i, result[i]);
+                    DataPoint point = new DataPoint(i, result[i]);
+                    // 设置标签字体大小
+                    point.Font = new Font(_chart.Series[0].Font.FontFamily, 14, _chart.Series[0].Font.Style);
+
+                    if (result[i] == tmpResult.Min() && !markedMin)
+                    {
+                        point.MarkerStyle = MarkerStyle.Circle;
+                        point.MarkerColor = Color.Purple;
+                        point.MarkerSize = 8; // 设置为适当的大小
+                        point.Label = "Min" + result[i].ToString("F2"); // 标签显示点的值
+                        markedMin = true;
+                    }
+
+                    // 根据特定值设置点的样式
+                    if (result[i] == tmpResult.Max() && !markedMax)
+                    {
+                        point.MarkerStyle = MarkerStyle.Circle;
+                        point.MarkerSize = 8; // 设置为适当的大小
+                        point.MarkerColor = Color.Purple;
+                        point.Label = "Max" + result[i].ToString("F2"); // 标签显示点的值
+                        markedMax = true;
+                    }
+                
+                    chart1.Series[0].Points.Add(point);
                 }
             }
         }
@@ -1823,6 +1744,53 @@ namespace TDRv
                 }
             }
         }
+
+        private void chart1_MouseLeave(object sender, EventArgs e)
+        {
+            if (chart1.Focused)
+                chart1.Parent.Focus();
+        }
+        private void chart1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            // 检查Chart鼠标位置是否在Chart控件内
+            if (IsMouseOnChart(e.Location))
+            {
+                Chart chart = chart1;
+
+                var xAxis = chart.ChartAreas[0].AxisX;
+                var yAxis = chart.ChartAreas[0].AxisY;
+
+                double xMin = xAxis.ScaleView.ViewMinimum;
+                double xMax = xAxis.ScaleView.ViewMaximum;
+                double yMin = yAxis.ScaleView.ViewMinimum;
+                double yMax = yAxis.ScaleView.ViewMaximum;
+
+                const int zoomFactor = 8; // 调整此值以更改缩放速度
+
+                if (e.Delta < 0) // 向下滚动
+                {
+                    xAxis.ScaleView.ZoomReset();
+                    yAxis.ScaleView.ZoomReset();
+                }
+                else if (e.Delta > 0) // 向上滚动
+                {
+                    double newXMin = xMin + (xMax - xMin) / zoomFactor;
+                    double newXMax = xMax - (xMax - xMin) / zoomFactor;
+                    double newYMin = yMin + (yMax - yMin) / zoomFactor;
+                    double newYMax = yMax - (yMax - yMin) / zoomFactor;
+
+                    xAxis.ScaleView.Zoom(newXMin, newXMax);
+                    yAxis.ScaleView.Zoom(newYMin, newYMax);
+                }
+            }
+        }
+
+        private bool IsMouseOnChart(Point mousePosition)
+        {
+            Rectangle chartAreaRect = chart1.ClientRectangle;
+            return chartAreaRect.Contains(mousePosition);
+        }
+
     }//end form
 
     public class MeasIndex
