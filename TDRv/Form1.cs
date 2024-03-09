@@ -956,7 +956,7 @@ namespace TDRv
 
                     if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                     {
-                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result,out result_time);
                     }
                     else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                     {

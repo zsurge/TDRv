@@ -184,11 +184,12 @@ namespace TDRv.Driver
             return errorno;
         }
 
-        public static int measuration(int nInstrumentHandle,int channel, int devType, out string msg)
+        public static int measuration(int nInstrumentHandle,int channel, int devType, out string msg, out string result_time)
         {
             int viError;
             int count;
             byte[] ret = new byte[200000];
+            byte[] xret = new byte[200000];
             byte[] result = new byte[256];
             string response = string.Empty;
             string cmd0,cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
@@ -247,6 +248,22 @@ namespace TDRv.Driver
             viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd6 + "\n"), cmd6.Length, out count);
             viError = visa32.viRead(nInstrumentHandle, ret, 200000, out count);
             msg = Encoding.ASCII.GetString(ret, 0, count);
+
+
+            string str1 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
+
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str1 + "\n"), str1.Length, out count);
+
+            string str2 = ":CALCulate1:TRANsform:TIME:STOP 9.5E-9";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str2 + "\n"), str2.Length, out count);
+            visa32.viClear(nInstrumentHandle);
+
+            Array.Clear(xret, 0, 200000);
+            string str3 = "CALC1:X?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str3 + "\n"), str3.Length, out count);
+            visa32.viRead(nInstrumentHandle, xret, 200000, out count);
+            result_time = Encoding.ASCII.GetString(xret, 0, count).Replace("+0.00000000000E+000,", ""); ;
+
 
             return viError;
         }
