@@ -972,7 +972,7 @@ namespace TDRv
                     //量测并生成图表                    
                     List<float> disResult = packetMaesData(result, index, channel);
 
-                    List<double> disTimeResult = packet_time_data(result_time, index, disResult.Count);
+                    //List<double> disTimeResult = packet_time_data(result_time, index, disResult.Count);
 
 
                     DisplayChartValue(chart1, disResult);
