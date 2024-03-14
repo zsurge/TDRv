@@ -1132,9 +1132,9 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY47003740")) //add 2023.12.12 样机 三个月2024.03.12
+                else if (sn.Contains("MY47003740")) //add 2023.12.12 样机 三个月2024.05.12
                 {
-                    if (202403121400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202405141400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
