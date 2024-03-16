@@ -391,6 +391,10 @@ namespace TDRv
                 series.Points.Clear();
             }
 
+            //清除标记的虚线
+            chart1.ChartAreas[0].AxisX.StripLines.Clear();
+            chart1.ChartAreas[0].AxisY.StripLines.Clear();
+
             chart1.Series[0].LegendText = "TDR Curve";
             chart1.Series[1].LegendText = "limit";
             chart1.Series[2].LegendText = "limit";
@@ -654,6 +658,8 @@ namespace TDRv
                                 result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                             }
 
+                            //LoggerHelper.mlog.Debug("DIFFERENCE value =" + tmpArray[i] + "; start = " + index.ToString() + "; end = "+i.ToString() + "\r\n");
+
                             break;
                         }
                     }
@@ -676,6 +682,7 @@ namespace TDRv
                                 tmp = Convert.ToSingle(tmpArray[i + 1]) + paramList[measIndex.currentIndex].Offset;
                                 result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
                             }
+                            //LoggerHelper.mlog.Debug("SINGLE value =" + tmpArray[i] + "; start = " + index.ToString() + "; end = " + i.ToString() + "\r\n");
 
                             break;
                         }
@@ -713,10 +720,15 @@ namespace TDRv
         /// <param name="measSingleData">单端开路数据</param>
         private void CreateInitMeasChart(List<float> measDiffData, List<float> measSingleData)
         {
+            //清除所有的点
             foreach (var series in chart1.Series)
             {
                 series.Points.Clear();
             }
+
+            //清除标记的虚线
+            chart1.ChartAreas[0].AxisX.StripLines.Clear();
+            chart1.ChartAreas[0].AxisY.StripLines.Clear();
 
             //求最大值及最小值
             if (measDiffData.Count != 0 && measSingleData.Count != 0)
@@ -1221,6 +1233,7 @@ namespace TDRv
                 float xend = 0.0f;
                 float yhigh = 0.0f;
                 float ylow = 0.0f;
+                int valid_idx = 0;
 
                 //清除所有的点
                 foreach (var series in chart1.Series)
@@ -1234,6 +1247,9 @@ namespace TDRv
 
                 xbegin = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100; //有效区起始位置
                 xend = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;     //有效区结束位置
+
+                //LoggerHelper.mlog.Debug("result total =" + result.Count.ToString() + "; valid begin = " + xbegin.ToString() + "; valid end = " + xend.ToString() + "\r\n");
+
 
                 if (string.Compare(paramList[measIndex.currentIndex].ImpedanceLimit_Unit, "%") == 0)
                 {
@@ -1293,20 +1309,20 @@ namespace TDRv
                 StripLine stripLine_high = new StripLine();
                 StripLine stripLine_low = new StripLine();
 
-                // 设置虚线开始的X轴位置
-                stripLine_start.IntervalOffset = xbegin;
-                stripLine_end.IntervalOffset = xend;
-        
-
-                stripLine_high.IntervalOffset = yhigh;
-                stripLine_low.IntervalOffset = ylow;
 
                 // 设置虚线开始的X轴位置
-                stripLine_start.IntervalOffset = xbegin;
-                stripLine_end.IntervalOffset = xend;
+                //stripLine_start.IntervalOffset = xbegin;
+                //stripLine_end.IntervalOffset = xend;
 
-                stripLine_high.IntervalOffset = yhigh;
-                stripLine_low.IntervalOffset = ylow;
+                stripLine_start.IntervalOffset = Math.Floor(xbegin);
+                stripLine_end.IntervalOffset = Math.Ceiling(xend);
+                valid_idx = (int)Math.Floor(xbegin);
+
+                //LoggerHelper.mlog.Debug("x start = " + stripLine_start.IntervalOffset.ToString() + "; x end = " + stripLine_end.IntervalOffset.ToString() + "\r\n");
+
+
+                stripLine_high.IntervalOffset = Math.Ceiling(yhigh);
+                stripLine_low.IntervalOffset = Math.Floor(ylow);
 
                 // 设置虚线的颜色
                 stripLine_start.StripWidth = 0; // 设置StripWidth为0，因为我们想要的是线而不是带
@@ -1387,6 +1403,9 @@ namespace TDRv
                 //获取有效区域的LIST
                 List<float> tmpResult = result.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
 
+                //LoggerHelper.mlog.Debug("valid max = " + tmpResult.Min() + "; valid min = " + tmpResult.Max() + "\r\n");
+
+
 
                 //求最大值及最小值
                 if (tmpResult.Count != 0)
@@ -1420,26 +1439,30 @@ namespace TDRv
                 for (int i = 0; i < result.Count; i++)
                 {
                     DataPoint point = new DataPoint(i, result[i]);
-                    // 设置标签字体大小
-                    point.Font = new Font(_chart.Series[0].Font.FontFamily, 14, _chart.Series[0].Font.Style);
 
-                    if (result[i] == tmpResult.Min() && !markedMin)
+                    if (i >= valid_idx)
                     {
-                        point.MarkerStyle = MarkerStyle.Circle;
-                        point.MarkerColor = Color.Purple;
-                        point.MarkerSize = 8; // 设置为适当的大小
-                        point.Label = "Min" + result[i].ToString("F2"); // 标签显示点的值
-                        markedMin = true;
-                    }
+                        // 设置标签字体大小
+                        point.Font = new Font(_chart.Series[0].Font.FontFamily, 14, _chart.Series[0].Font.Style);
 
-                    // 根据特定值设置点的样式
-                    if (result[i] == tmpResult.Max() && !markedMax)
-                    {
-                        point.MarkerStyle = MarkerStyle.Circle;
-                        point.MarkerSize = 8; // 设置为适当的大小
-                        point.MarkerColor = Color.Purple;
-                        point.Label = "Max" + result[i].ToString("F2"); // 标签显示点的值
-                        markedMax = true;
+                        if (result[i] == tmpResult.Min() && !markedMin)
+                        {
+                            point.MarkerStyle = MarkerStyle.Circle;
+                            point.MarkerColor = Color.Purple;
+                            point.MarkerSize = 8; // 设置为适当的大小
+                            point.Label = "Min" + result[i].ToString("F2"); // 标签显示点的值
+                            markedMin = true;
+                        }
+
+                        // 根据特定值设置点的样式
+                        if (result[i] == tmpResult.Max() && !markedMax)
+                        {
+                            point.MarkerStyle = MarkerStyle.Circle;
+                            point.MarkerSize = 8; // 设置为适当的大小
+                            point.MarkerColor = Color.Purple;
+                            point.Label = "Max" + result[i].ToString("F2"); // 标签显示点的值
+                            markedMax = true;
+                        }
                     }
                 
                     chart1.Series[0].Points.Add(point);
