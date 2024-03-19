@@ -891,7 +891,7 @@
             this.Name = "Form1";
 
 
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司V1.0.5.20240318";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司V1.0.5.20240319";
 
 
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
