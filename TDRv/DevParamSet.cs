@@ -30,6 +30,9 @@ namespace TDRv
         public bool units_custom_click_flag = false;
         public bool limit_value_click_flag = false;
 
+        public bool image_enable_click_flag = false;
+        public bool image_disable_click_flag = false;
+
         public string last_units = "ohm";
         DataTable tmpDt;
 
@@ -392,7 +395,7 @@ namespace TDRv
                 {
                     initControl(true);
                     ctrIsEnable(true);
-                    tx_p_testSn.Text = (e.RowIndex+1).ToString();
+                
                     tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
                     tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
                     tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
@@ -459,12 +462,14 @@ namespace TDRv
                     }
 
                     string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
-                    if (string.Compare(isSaveImage, "Enable", true) == 0)
+                    if ((string.Compare(isSaveImage, "Enable", true) == 0) && tx_p_savePath.Text.Length != 0)
                     {
+                        image_enable_click_flag = true;
                         radio_p_image_open.Checked = true;
                     }
                     else
                     {
+                        image_disable_click_flag = true;
                         radio_p_image_close.Checked = true;
                     }
 
@@ -490,15 +495,17 @@ namespace TDRv
             //TranToParentForm();
         }
 
-        //选择要保存文件的地址
-        private void btn_p_SavePath_Click(object sender, EventArgs e)
+        private void save_image_path()
         {
             FolderBrowserDialog sOpt = new FolderBrowserDialog();
             sOpt.Description = "请选择文件路径";
-            
+
             DialogResult result = sOpt.ShowDialog();
             if (result == DialogResult.Cancel)
             {
+                tx_p_savePath.Text = "";
+                radio_p_image_close.Checked = true;
+                //dgv_param.Rows[dgv_param.CurrentRow.Index].Cells[21].Value = "Disable";
                 return;
             }
             string folderPath = sOpt.SelectedPath.Trim();
@@ -506,7 +513,14 @@ namespace TDRv
             if (theFolder.Exists)
             {
                 tx_p_savePath.Text = folderPath;
+                //dgv_param.Rows[dgv_param.CurrentRow.Index].Cells[21].Value = "Enable";
             }
+        }
+
+        //选择要保存文件的地址
+        private void btn_p_SavePath_Click(object sender, EventArgs e)
+        {
+            save_image_path();
         }
 
         private bool is_check_limit_value_empty()
@@ -650,7 +664,6 @@ namespace TDRv
         {
             groupBox1.Enabled = isEnable;
             groupBox2.Enabled = isEnable;
-            groupBox3.Enabled = isEnable;
             groupBox4.Enabled = isEnable;
             groupBox5.Enabled = isEnable;
             groupBox6.Enabled = isEnable;
@@ -1000,7 +1013,30 @@ namespace TDRv
 
         private void radio_p_image_close_CheckedChanged(object sender, EventArgs e)
         {
-            tx_p_savePath.Text = "";
+            if (image_disable_click_flag)
+            {
+                image_disable_click_flag = false;
+                return;
+            }
+
+            if (radio_p_image_close.Checked)
+            {
+                tx_p_savePath.Text = "";
+            }
+        }
+
+        private void radio_p_image_open_CheckedChanged(object sender, EventArgs e)
+        {
+            if (image_enable_click_flag)
+            {
+                image_enable_click_flag = false;
+                return;
+            }
+
+            if (radio_p_image_open.Checked)
+            {
+                save_image_path();
+            }
         }
 
         private void tx_limit_offset_TextChanged(object sender, EventArgs e)
@@ -1033,5 +1069,7 @@ namespace TDRv
                 MessageBox.Show("只能输入数字和小数点", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
     }//end class
 }//end namespace
