@@ -25,7 +25,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public static bool isDebugMode = true;   //true 测试模式,falsh生产模式
+        public static bool isDebugMode = false;   //true 测试模式,false生产模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -988,14 +988,40 @@ namespace TDRv
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
         {
-            //删除所有测试数据
-            dgv_CurrentResult.Rows.Clear();
+            // 弹出确认对话框
+            DialogResult result = MessageBox.Show("请确认要删除所有记录吗？\n删除后不可恢复，请谨慎操作！", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            // 根据用户的选择执行不同的操作
+            if (result == DialogResult.OK)
+            {
+                //删除所有测试数据
+                dgv_CurrentResult.Rows.Clear();
+            }
         }
 
         //删除选中的测试结果
         private void tsmi_delselect_Click(object sender, EventArgs e)
         {
+            int rowIndex = dgv_CurrentResult.CurrentRow.Index;
+
+            string tempTime = "";
+            string tempDate = "";
+            string tempFileName = "";
+            string tempDirectoryPath = "";
+
+            //设置要删除的图片文件名
+            tempDate = dgv_CurrentResult.Rows[rowIndex].Cells[9].Value.ToString().Replace("-", "");
+            tempTime = dgv_CurrentResult.Rows[rowIndex].Cells[10].Value.ToString().Replace(":", "").Replace(".", "");
+            tempFileName = tempDate + tempTime + ".png";
+
+            //设置要删除图片的文件目录
+            tempDirectoryPath = dgv_CurrentResult.Rows[rowIndex].Cells[13].Value.ToString() + "\\Image";
+
+            //删除选中行
             dgv_CurrentResult.Rows.Remove(dgv_CurrentResult.CurrentRow);
+
+            //删除选中行数据对应的图片
+            findAndDeleteFile(tempDirectoryPath, tempFileName);
         }
 
         //输出测试报告
@@ -1049,7 +1075,8 @@ namespace TDRv
                 try
                 {
                     //写入列标题    
-                    for (int i = 0; i < dgv.ColumnCount; i++)
+                    //-1是因为多了一列 step
+                    for (int i = 0; i < dgv.ColumnCount-1; i++)
                     {
                         if (i > 0)
                         {
@@ -1064,7 +1091,8 @@ namespace TDRv
                     for (int j = 0; j < dgv.Rows.Count; j++)
                     {
                         string columnValue = "";
-                        for (int k = 0; k < dgv.Columns.Count; k++)
+                        //-1是因为多了一列 step
+                        for (int k = 0; k < dgv.Columns.Count-1; k++)
                         {
                             if (k > 0)
                             {
@@ -1631,7 +1659,7 @@ namespace TDRv
                 dataGridView1.Rows[reTest.layerIndex].Selected = true;
 
                 //调试信息
-                MessageBox.Show($"双击单元格所在行号为：{rowIndex + 1}\n layer行号为：{reTest.layerIndex + 1}\n 流水号为：{reTest.serialNo}\n 图片路径：{reTest.directoryPath}\n 图片名称：{reTest.fileName}");
+                //MessageBox.Show($"双击单元格所在行号为：{rowIndex + 1}\n layer行号为：{reTest.layerIndex + 1}\n 流水号为：{reTest.serialNo}\n 图片路径：{reTest.directoryPath}\n 图片名称：{reTest.fileName}");
                 LoggerHelper.mlog.Debug($"双击单元格所在行号为：{rowIndex + 1}\n layer行号为：{reTest.layerIndex + 1}\n 流水号为：{reTest.serialNo}\n 图片路径：{reTest.directoryPath}\n 图片名称：{reTest.fileName}");
             }
 

@@ -59,13 +59,13 @@ E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.Up2Date
 C:\Work\TDRv\TDRv\bin\Debug\NLog.config
 C:\Work\TDRv\TDRv\bin\Debug\TDRv.exe.config
 C:\Work\TDRv\TDRv\bin\Debug\TDRv.exe
 C:\Work\TDRv\TDRv\bin\Debug\TDRv.pdb
 C:\Work\TDRv\TDRv\bin\Debug\NLog.dll
 C:\Work\TDRv\TDRv\bin\Debug\NLog.xml
-C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.AssemblyReference.cache
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
@@ -76,4 +76,3 @@ C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.exe
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.pdb
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.Up2Date
