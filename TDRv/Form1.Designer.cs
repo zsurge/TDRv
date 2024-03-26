@@ -147,26 +147,26 @@
             this.tsmi_delselect,
             this.tsmi_export});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(233, 118);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 70);
             // 
             // tsmi_delAll
             // 
             this.tsmi_delAll.Name = "tsmi_delAll";
-            this.tsmi_delAll.Size = new System.Drawing.Size(232, 38);
+            this.tsmi_delAll.Size = new System.Drawing.Size(148, 22);
             this.tsmi_delAll.Text = "删除所有数据";
             this.tsmi_delAll.Click += new System.EventHandler(this.tsmi_delAll_Click);
             // 
             // tsmi_delselect
             // 
             this.tsmi_delselect.Name = "tsmi_delselect";
-            this.tsmi_delselect.Size = new System.Drawing.Size(232, 38);
+            this.tsmi_delselect.Size = new System.Drawing.Size(148, 22);
             this.tsmi_delselect.Text = "删除单笔数据";
             this.tsmi_delselect.Click += new System.EventHandler(this.tsmi_delselect_Click);
             // 
             // tsmi_export
             // 
             this.tsmi_export.Name = "tsmi_export";
-            this.tsmi_export.Size = new System.Drawing.Size(232, 38);
+            this.tsmi_export.Size = new System.Drawing.Size(148, 22);
             this.tsmi_export.Text = "输出测试报告";
             this.tsmi_export.Click += new System.EventHandler(this.tsmi_export_Click);
             // 
@@ -189,7 +189,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(1968, 43);
+            this.toolStrip1.Size = new System.Drawing.Size(1924, 39);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -200,7 +200,7 @@
             this.tsb_DevConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevConnect.Name = "tsb_DevConnect";
-            this.tsb_DevConnect.Size = new System.Drawing.Size(179, 37);
+            this.tsb_DevConnect.Size = new System.Drawing.Size(107, 36);
             this.tsb_DevConnect.Text = "仪器设置";
             this.tsb_DevConnect.Click += new System.EventHandler(this.tsb_DevConnect_Click);
             // 
@@ -211,7 +211,7 @@
             this.tsb_DevPOptSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevPOptSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevPOptSet.Name = "tsb_DevPOptSet";
-            this.tsb_DevPOptSet.Size = new System.Drawing.Size(179, 37);
+            this.tsb_DevPOptSet.Size = new System.Drawing.Size(107, 36);
             this.tsb_DevPOptSet.Text = "操作设置";
             this.tsb_DevPOptSet.Click += new System.EventHandler(this.tsb_DevOptSet_Click);
             // 
@@ -222,7 +222,7 @@
             this.tsb_DevParamSet.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_DevParamSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_DevParamSet.Name = "tsb_DevParamSet";
-            this.tsb_DevParamSet.Size = new System.Drawing.Size(180, 37);
+            this.tsb_DevParamSet.Size = new System.Drawing.Size(108, 36);
             this.tsb_DevParamSet.Text = "量测参数";
             this.tsb_DevParamSet.Click += new System.EventHandler(this.tsb_DevParamSet_Click);
             // 
@@ -234,7 +234,7 @@
             this.tsb_GetTestIndex.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_GetTestIndex.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_GetTestIndex.Name = "tsb_GetTestIndex";
-            this.tsb_GetTestIndex.Size = new System.Drawing.Size(179, 37);
+            this.tsb_GetTestIndex.Size = new System.Drawing.Size(107, 36);
             this.tsb_GetTestIndex.Text = "开路定义";
             this.tsb_GetTestIndex.Click += new System.EventHandler(this.tsb_GetTestIndex_Click);
             // 
@@ -246,44 +246,44 @@
             this.tsb_StartTest.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsb_StartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_StartTest.Name = "tsb_StartTest";
-            this.tsb_StartTest.Size = new System.Drawing.Size(115, 37);
+            this.tsb_StartTest.Size = new System.Drawing.Size(75, 36);
             this.tsb_StartTest.Text = "量测";
             this.tsb_StartTest.Click += new System.EventHandler(this.tsb_StartTest_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 43);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(109, 37);
+            this.toolStripLabel1.Size = new System.Drawing.Size(56, 36);
             this.toolStripLabel1.Text = "Panel ID";
             // 
             // tsb_Pnl_ID
             // 
             this.tsb_Pnl_ID.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Pnl_ID.Name = "tsb_Pnl_ID";
-            this.tsb_Pnl_ID.Size = new System.Drawing.Size(200, 43);
+            this.tsb_Pnl_ID.Size = new System.Drawing.Size(200, 39);
             this.tsb_Pnl_ID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tsb_Pnl_ID_KeyPress);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(83, 37);
+            this.toolStripLabel2.Size = new System.Drawing.Size(43, 36);
             this.toolStripLabel2.Text = "Set ID";
             // 
             // tsb_Set_id
             // 
             this.tsb_Set_id.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.tsb_Set_id.Name = "tsb_Set_id";
-            this.tsb_Set_id.Size = new System.Drawing.Size(200, 43);
+            this.tsb_Set_id.Size = new System.Drawing.Size(200, 39);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 43);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
             // tsb_Tran_result
             // 
@@ -291,7 +291,7 @@
             this.tsb_Tran_result.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Tran_result.Image")));
             this.tsb_Tran_result.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Tran_result.Name = "tsb_Tran_result";
-            this.tsb_Tran_result.Size = new System.Drawing.Size(179, 37);
+            this.tsb_Tran_result.Size = new System.Drawing.Size(107, 36);
             this.tsb_Tran_result.Text = "上传报告";
             this.tsb_Tran_result.Click += new System.EventHandler(this.tsb_Tran_result_Click);
             // 
@@ -327,7 +327,7 @@
             this.chart1.Series.Add(series6);
             this.chart1.Series.Add(series7);
             this.chart1.Series.Add(series8);
-            this.chart1.Size = new System.Drawing.Size(1440, 819);
+            this.chart1.Size = new System.Drawing.Size(1403, 687);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -343,17 +343,17 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1956, 342);
+            this.tabControl1.Size = new System.Drawing.Size(1912, 277);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.dgv_CurrentResult);
-            this.tabPage1.Location = new System.Drawing.Point(8, 39);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(6);
-            this.tabPage1.Size = new System.Drawing.Size(1940, 295);
+            this.tabPage1.Size = new System.Drawing.Size(1904, 251);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "目前量测";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -393,17 +393,17 @@
             this.dgv_CurrentResult.RowHeadersWidth = 82;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CurrentResult.Size = new System.Drawing.Size(1940, 312);
+            this.dgv_CurrentResult.Size = new System.Drawing.Size(1904, 268);
             this.dgv_CurrentResult.TabIndex = 0;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dgv_OutPutResult);
-            this.tabPage2.Location = new System.Drawing.Point(8, 39);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(6);
-            this.tabPage2.Size = new System.Drawing.Size(1940, 295);
+            this.tabPage2.Size = new System.Drawing.Size(1904, 251);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "已输出量测";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -440,16 +440,16 @@
             this.dgv_OutPutResult.RowHeadersVisible = false;
             this.dgv_OutPutResult.RowHeadersWidth = 82;
             this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(1940, 312);
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(1904, 268);
             this.dgv_OutPutResult.TabIndex = 1;
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.dgv_HistoryResult);
-            this.tabPage3.Location = new System.Drawing.Point(8, 39);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1940, 295);
+            this.tabPage3.Size = new System.Drawing.Size(1904, 251);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "历史量测";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -488,7 +488,7 @@
             this.dgv_HistoryResult.RowHeadersWidth = 82;
             this.dgv_HistoryResult.RowTemplate.Height = 23;
             this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(1940, 312);
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(1904, 268);
             this.dgv_HistoryResult.TabIndex = 1;
             // 
             // dataGridView1
@@ -513,7 +513,7 @@
             this.dataGridView1.RowHeadersWidth = 82;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(474, 715);
+            this.dataGridView1.Size = new System.Drawing.Size(463, 583);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -557,7 +557,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 43);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 39);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(6);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -569,8 +569,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1968, 1215);
-            this.splitContainer1.SplitterDistance = 825;
+            this.splitContainer1.Size = new System.Drawing.Size(1924, 1022);
+            this.splitContainer1.SplitterDistance = 693;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 5;
             // 
@@ -589,8 +589,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.chart1);
-            this.splitContainer2.Size = new System.Drawing.Size(1968, 825);
-            this.splitContainer2.SplitterDistance = 480;
+            this.splitContainer2.Size = new System.Drawing.Size(1924, 693);
+            this.splitContainer2.SplitterDistance = 469;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -599,10 +599,10 @@
             this.lable_test_result.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lable_test_result.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lable_test_result.Location = new System.Drawing.Point(6, 721);
+            this.lable_test_result.Location = new System.Drawing.Point(6, 589);
             this.lable_test_result.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lable_test_result.Name = "lable_test_result";
-            this.lable_test_result.Size = new System.Drawing.Size(468, 98);
+            this.lable_test_result.Size = new System.Drawing.Size(457, 98);
             this.lable_test_result.TabIndex = 1;
             this.lable_test_result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -613,98 +613,98 @@
             // 
             // cLayer
             // 
-            this.cLayer.HeaderText = "Layer";
+            this.cLayer.HeaderText = "层别";
             this.cLayer.MinimumWidth = 10;
             this.cLayer.Name = "cLayer";
             this.cLayer.ReadOnly = true;
             // 
             // cSPEC
             // 
-            this.cSPEC.HeaderText = "SPEC";
+            this.cSPEC.HeaderText = "规格";
             this.cSPEC.MinimumWidth = 10;
             this.cSPEC.Name = "cSPEC";
             this.cSPEC.ReadOnly = true;
             // 
             // cMaxOffset
             // 
-            this.cMaxOffset.HeaderText = "Up";
+            this.cMaxOffset.HeaderText = "上限";
             this.cMaxOffset.MinimumWidth = 10;
             this.cMaxOffset.Name = "cMaxOffset";
             this.cMaxOffset.ReadOnly = true;
             // 
             // cMinOffset
             // 
-            this.cMinOffset.HeaderText = "Down";
+            this.cMinOffset.HeaderText = "下限";
             this.cMinOffset.MinimumWidth = 10;
             this.cMinOffset.Name = "cMinOffset";
             this.cMinOffset.ReadOnly = true;
             // 
             // cAverage
             // 
-            this.cAverage.HeaderText = "Average";
+            this.cAverage.HeaderText = "平均值";
             this.cAverage.MinimumWidth = 10;
             this.cAverage.Name = "cAverage";
             this.cAverage.ReadOnly = true;
             // 
             // cMax
             // 
-            this.cMax.HeaderText = "Max";
+            this.cMax.HeaderText = "最大值";
             this.cMax.MinimumWidth = 10;
             this.cMax.Name = "cMax";
             this.cMax.ReadOnly = true;
             // 
             // cMin
             // 
-            this.cMin.HeaderText = "Min";
+            this.cMin.HeaderText = "最小值";
             this.cMin.MinimumWidth = 10;
             this.cMin.Name = "cMin";
             this.cMin.ReadOnly = true;
             // 
             // cResult
             // 
-            this.cResult.HeaderText = "Result";
+            this.cResult.HeaderText = "结果判定";
             this.cResult.MinimumWidth = 10;
             this.cResult.Name = "cResult";
             this.cResult.ReadOnly = true;
             // 
             // cSerial
             // 
-            this.cSerial.HeaderText = "Serial";
+            this.cSerial.HeaderText = "序号";
             this.cSerial.MinimumWidth = 10;
             this.cSerial.Name = "cSerial";
             this.cSerial.ReadOnly = true;
             // 
             // cData
             // 
-            this.cData.HeaderText = "Data";
+            this.cData.HeaderText = "日期";
             this.cData.MinimumWidth = 10;
             this.cData.Name = "cData";
             this.cData.ReadOnly = true;
             // 
             // cTime
             // 
-            this.cTime.HeaderText = "Time";
+            this.cTime.HeaderText = "时间";
             this.cTime.MinimumWidth = 10;
             this.cTime.Name = "cTime";
             this.cTime.ReadOnly = true;
             // 
             // cSeDiff
             // 
-            this.cSeDiff.HeaderText = "SE/DIFF";
+            this.cSeDiff.HeaderText = "模式";
             this.cSeDiff.MinimumWidth = 10;
             this.cSeDiff.Name = "cSeDiff";
             this.cSeDiff.ReadOnly = true;
             // 
             // cCurveData
             // 
-            this.cCurveData.HeaderText = "CurveData";
+            this.cCurveData.HeaderText = "日志路径";
             this.cCurveData.MinimumWidth = 10;
             this.cCurveData.Name = "cCurveData";
             this.cCurveData.ReadOnly = true;
             // 
             // cCurveImage
             // 
-            this.cCurveImage.HeaderText = "CurveImage";
+            this.cCurveImage.HeaderText = "图片路径";
             this.cCurveImage.MinimumWidth = 10;
             this.cCurveImage.Name = "cCurveImage";
             this.cCurveImage.ReadOnly = true;
@@ -725,85 +725,85 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Layer";
+            this.dataGridViewTextBoxColumn1.HeaderText = "层别";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
             // dataGridViewTextBoxColumn2
             // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "SPEC";
+            this.dataGridViewTextBoxColumn2.HeaderText = "规格";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
             // dataGridViewTextBoxColumn3
             // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Up";
+            this.dataGridViewTextBoxColumn3.HeaderText = "上限";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // dataGridViewTextBoxColumn4
             // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Down";
+            this.dataGridViewTextBoxColumn4.HeaderText = "下限";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // dataGridViewTextBoxColumn5
             // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Average";
+            this.dataGridViewTextBoxColumn5.HeaderText = "平均值";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             // 
             // dataGridViewTextBoxColumn6
             // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Max";
+            this.dataGridViewTextBoxColumn6.HeaderText = "最大值";
             this.dataGridViewTextBoxColumn6.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
             // dataGridViewTextBoxColumn7
             // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Min";
+            this.dataGridViewTextBoxColumn7.HeaderText = "最小值";
             this.dataGridViewTextBoxColumn7.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             // 
             // dataGridViewTextBoxColumn8
             // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "Result";
+            this.dataGridViewTextBoxColumn8.HeaderText = "结果判定";
             this.dataGridViewTextBoxColumn8.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
             // dataGridViewTextBoxColumn9
             // 
-            this.dataGridViewTextBoxColumn9.HeaderText = "Serial";
+            this.dataGridViewTextBoxColumn9.HeaderText = "序号";
             this.dataGridViewTextBoxColumn9.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
             // dataGridViewTextBoxColumn10
             // 
-            this.dataGridViewTextBoxColumn10.HeaderText = "Data";
+            this.dataGridViewTextBoxColumn10.HeaderText = "日期";
             this.dataGridViewTextBoxColumn10.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             // 
             // dataGridViewTextBoxColumn11
             // 
-            this.dataGridViewTextBoxColumn11.HeaderText = "Time";
+            this.dataGridViewTextBoxColumn11.HeaderText = "时间";
             this.dataGridViewTextBoxColumn11.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             // 
             // dataGridViewTextBoxColumn12
             // 
-            this.dataGridViewTextBoxColumn12.HeaderText = "SE/DIFF";
+            this.dataGridViewTextBoxColumn12.HeaderText = "模式";
             this.dataGridViewTextBoxColumn12.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             // 
             // dataGridViewTextBoxColumn13
             // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "CurveData";
+            this.dataGridViewTextBoxColumn13.HeaderText = "数据路径";
             this.dataGridViewTextBoxColumn13.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             // 
             // dataGridViewTextBoxColumn14
             // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "CurveImage";
+            this.dataGridViewTextBoxColumn14.HeaderText = "图片路径";
             this.dataGridViewTextBoxColumn14.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             // 
@@ -821,85 +821,85 @@
             // 
             // dataGridViewTextBoxColumn15
             // 
-            this.dataGridViewTextBoxColumn15.HeaderText = "Layer";
+            this.dataGridViewTextBoxColumn15.HeaderText = "层别";
             this.dataGridViewTextBoxColumn15.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
             // dataGridViewTextBoxColumn16
             // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "SPEC";
+            this.dataGridViewTextBoxColumn16.HeaderText = "规格";
             this.dataGridViewTextBoxColumn16.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             // 
             // dataGridViewTextBoxColumn17
             // 
-            this.dataGridViewTextBoxColumn17.HeaderText = "Up";
+            this.dataGridViewTextBoxColumn17.HeaderText = "上限";
             this.dataGridViewTextBoxColumn17.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
             // 
             // dataGridViewTextBoxColumn18
             // 
-            this.dataGridViewTextBoxColumn18.HeaderText = "Down";
+            this.dataGridViewTextBoxColumn18.HeaderText = "下限";
             this.dataGridViewTextBoxColumn18.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
             // 
             // dataGridViewTextBoxColumn19
             // 
-            this.dataGridViewTextBoxColumn19.HeaderText = "Average";
+            this.dataGridViewTextBoxColumn19.HeaderText = "平均值";
             this.dataGridViewTextBoxColumn19.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             // 
             // dataGridViewTextBoxColumn20
             // 
-            this.dataGridViewTextBoxColumn20.HeaderText = "Max";
+            this.dataGridViewTextBoxColumn20.HeaderText = "最大值";
             this.dataGridViewTextBoxColumn20.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
             // 
             // dataGridViewTextBoxColumn21
             // 
-            this.dataGridViewTextBoxColumn21.HeaderText = "Min";
+            this.dataGridViewTextBoxColumn21.HeaderText = "最小值";
             this.dataGridViewTextBoxColumn21.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             // 
             // dataGridViewTextBoxColumn22
             // 
-            this.dataGridViewTextBoxColumn22.HeaderText = "Result";
+            this.dataGridViewTextBoxColumn22.HeaderText = "结果判定";
             this.dataGridViewTextBoxColumn22.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
             // 
             // dataGridViewTextBoxColumn23
             // 
-            this.dataGridViewTextBoxColumn23.HeaderText = "Serial";
+            this.dataGridViewTextBoxColumn23.HeaderText = "序号";
             this.dataGridViewTextBoxColumn23.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
             // 
             // dataGridViewTextBoxColumn24
             // 
-            this.dataGridViewTextBoxColumn24.HeaderText = "Data";
+            this.dataGridViewTextBoxColumn24.HeaderText = "日期";
             this.dataGridViewTextBoxColumn24.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
             // 
             // dataGridViewTextBoxColumn25
             // 
-            this.dataGridViewTextBoxColumn25.HeaderText = "Time";
+            this.dataGridViewTextBoxColumn25.HeaderText = "时间";
             this.dataGridViewTextBoxColumn25.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
             // 
             // dataGridViewTextBoxColumn26
             // 
-            this.dataGridViewTextBoxColumn26.HeaderText = "SE/DIFF";
+            this.dataGridViewTextBoxColumn26.HeaderText = "模式";
             this.dataGridViewTextBoxColumn26.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
             // 
             // dataGridViewTextBoxColumn27
             // 
-            this.dataGridViewTextBoxColumn27.HeaderText = "CurveData";
+            this.dataGridViewTextBoxColumn27.HeaderText = "数据路径";
             this.dataGridViewTextBoxColumn27.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
             // 
             // dataGridViewTextBoxColumn28
             // 
-            this.dataGridViewTextBoxColumn28.HeaderText = "CurveImage";
+            this.dataGridViewTextBoxColumn28.HeaderText = "图片路径";
             this.dataGridViewTextBoxColumn28.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
             // 
@@ -918,7 +918,7 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1968, 1258);
+            this.ClientSize = new System.Drawing.Size(1924, 1061);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
