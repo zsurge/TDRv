@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_delAll = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_delselect = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +75,7 @@
             this.cMaxOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMinOffset = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cAverage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cResult = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -91,6 +92,7 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -107,6 +109,7 @@
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -300,34 +303,34 @@
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(6, 0);
             this.chart1.Margin = new System.Windows.Forms.Padding(6);
             this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series6.Legend = "Legend1";
-            series6.Name = "Series2";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series7.Legend = "Legend1";
-            series7.Name = "Series3";
-            series8.ChartArea = "ChartArea1";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series8.Legend = "Legend1";
-            series8.Name = "Series4";
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
-            this.chart1.Series.Add(series7);
-            this.chart1.Series.Add(series8);
-            this.chart1.Size = new System.Drawing.Size(1403, 687);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series10.Legend = "Legend1";
+            series10.Name = "Series2";
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series11.Legend = "Legend1";
+            series11.Name = "Series3";
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series12.Legend = "Legend1";
+            series12.Name = "Series4";
+            this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
+            this.chart1.Series.Add(series11);
+            this.chart1.Series.Add(series12);
+            this.chart1.Size = new System.Drawing.Size(1399, 687);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -343,7 +346,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1912, 277);
+            this.tabControl1.Size = new System.Drawing.Size(1912, 273);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -353,7 +356,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(6);
-            this.tabPage1.Size = new System.Drawing.Size(1904, 251);
+            this.tabPage1.Size = new System.Drawing.Size(1904, 247);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "目前量测";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -373,6 +376,7 @@
             this.cMaxOffset,
             this.cMinOffset,
             this.cAverage,
+            this.Column5,
             this.cMax,
             this.cMin,
             this.cResult,
@@ -393,7 +397,7 @@
             this.dgv_CurrentResult.RowHeadersWidth = 82;
             this.dgv_CurrentResult.RowTemplate.Height = 23;
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_CurrentResult.Size = new System.Drawing.Size(1904, 268);
+            this.dgv_CurrentResult.Size = new System.Drawing.Size(1904, 264);
             this.dgv_CurrentResult.TabIndex = 0;
             // 
             // tabPage2
@@ -403,7 +407,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(6);
-            this.tabPage2.Size = new System.Drawing.Size(1904, 251);
+            this.tabPage2.Size = new System.Drawing.Size(1904, 247);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "已输出量测";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -423,6 +427,7 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4,
             this.dataGridViewTextBoxColumn5,
+            this.Column6,
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8,
@@ -440,7 +445,7 @@
             this.dgv_OutPutResult.RowHeadersVisible = false;
             this.dgv_OutPutResult.RowHeadersWidth = 82;
             this.dgv_OutPutResult.RowTemplate.Height = 23;
-            this.dgv_OutPutResult.Size = new System.Drawing.Size(1904, 268);
+            this.dgv_OutPutResult.Size = new System.Drawing.Size(1904, 264);
             this.dgv_OutPutResult.TabIndex = 1;
             // 
             // tabPage3
@@ -449,7 +454,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1904, 251);
+            this.tabPage3.Size = new System.Drawing.Size(1904, 247);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "历史量测";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -469,6 +474,7 @@
             this.dataGridViewTextBoxColumn17,
             this.dataGridViewTextBoxColumn18,
             this.dataGridViewTextBoxColumn19,
+            this.Column7,
             this.dataGridViewTextBoxColumn20,
             this.dataGridViewTextBoxColumn21,
             this.dataGridViewTextBoxColumn22,
@@ -488,7 +494,7 @@
             this.dgv_HistoryResult.RowHeadersWidth = 82;
             this.dgv_HistoryResult.RowTemplate.Height = 23;
             this.dgv_HistoryResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_HistoryResult.Size = new System.Drawing.Size(1904, 268);
+            this.dgv_HistoryResult.Size = new System.Drawing.Size(1904, 264);
             this.dgv_HistoryResult.TabIndex = 1;
             // 
             // dataGridView1
@@ -646,6 +652,12 @@
             this.cAverage.Name = "cAverage";
             this.cAverage.ReadOnly = true;
             // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "百分比";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
             // cMax
             // 
             this.cMax.HeaderText = "最大值";
@@ -697,7 +709,7 @@
             // 
             // cCurveData
             // 
-            this.cCurveData.HeaderText = "日志路径";
+            this.cCurveData.HeaderText = "数据路径";
             this.cCurveData.MinimumWidth = 10;
             this.cCurveData.Name = "cCurveData";
             this.cCurveData.ReadOnly = true;
@@ -752,6 +764,11 @@
             this.dataGridViewTextBoxColumn5.HeaderText = "平均值";
             this.dataGridViewTextBoxColumn5.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "百分比";
+            this.Column6.Name = "Column6";
             // 
             // dataGridViewTextBoxColumn6
             // 
@@ -848,6 +865,11 @@
             this.dataGridViewTextBoxColumn19.HeaderText = "平均值";
             this.dataGridViewTextBoxColumn19.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "百分比";
+            this.Column7.Name = "Column7";
             // 
             // dataGridViewTextBoxColumn20
             // 
@@ -992,6 +1014,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cMaxOffset;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMinOffset;
         private System.Windows.Forms.DataGridViewTextBoxColumn cAverage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMax;
         private System.Windows.Forms.DataGridViewTextBoxColumn cMin;
         private System.Windows.Forms.DataGridViewTextBoxColumn cResult;
@@ -1008,6 +1031,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
@@ -1024,6 +1048,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;

@@ -1597,7 +1597,7 @@ namespace TDRv
                             {
                                 //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                                 //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
-                                if (k == 10)
+                                if (k == 11)
                                 {
                                     columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
                                 }
@@ -1764,7 +1764,8 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
+                    //chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
+                    chart1.Series[0].LegendText = $"平均值:{tmpResult.Average():F2}[{calc_average_perc(paramList[measIndex.currentIndex].Spec, tmpResult.Average().ToString("F2"))}]";
                     chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
                     chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
                 }
@@ -1816,7 +1817,8 @@ namespace TDRv
                 }
                 else
                 {
-                    avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+                    //avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+                    avg = Convert.ToSingle(Regex.Match(chart1.Series[0].LegendText, @"\d+(\.\d+)?").Value);//设备平均值
                     max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
                     min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
                 }
@@ -1887,12 +1889,12 @@ namespace TDRv
                 if (ret)
                 {
                     SetLableText("PASS", "Green");
-                    _dgv.Rows[index].Cells[7].Value = "PASS";     
+                    _dgv.Rows[index].Cells[8].Value = "PASS";     
                 }
                 else
                 {
                     SetLableText("FAIL", "Red");
-                    _dgv.Rows[index].Cells[7].Value = "FAIL";             
+                    _dgv.Rows[index].Cells[8].Value = "FAIL";             
                 }
 
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
@@ -1918,33 +1920,36 @@ namespace TDRv
                 if (gEmptyFlag)
                 {
                     _dgv.Rows[index].Cells[4].Value = "9999"; //平均值
-                    _dgv.Rows[index].Cells[5].Value = "9999"; //最大值
-                    _dgv.Rows[index].Cells[6].Value = "9999"; //最小值
+                    _dgv.Rows[index].Cells[5].Value = "100%"; //平均值百分比
+                    _dgv.Rows[index].Cells[6].Value = "9999"; //最大值
+                    _dgv.Rows[index].Cells[7].Value = "9999"; //最小值
                 }
                 else
                 {
-                    _dgv.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                    _dgv.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                    _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+                    //string str_average = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "");
+                    string str_average = Regex.Match(chart1.Series[0].LegendText, @"\d+(\.\d+)?").Value;
+                    _dgv.Rows[index].Cells[4].Value = str_average; //平均值
+                    _dgv.Rows[index].Cells[5].Value = calc_average_perc(paramList[measIndex.currentIndex].Spec, str_average); //平均值百分比
+                    _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+                    _dgv.Rows[index].Cells[7].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
                 }
 
-                SendData.max = _dgv.Rows[index].Cells[5].Value.ToString();
-                SendData.min = _dgv.Rows[index].Cells[6].Value.ToString();
+                SendData.max = _dgv.Rows[index].Cells[6].Value.ToString();
+                SendData.min = _dgv.Rows[index].Cells[7].Value.ToString();
                 SendData.average = _dgv.Rows[index].Cells[4].Value.ToString();
-                SendData.result = _dgv.Rows[index].Cells[7].Value.ToString();
+                SendData.result = _dgv.Rows[index].Cells[8].Value.ToString();
 
 
-                _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-                _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
-                _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
-                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-                                                                                                  //
-                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
-                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID      
+                _dgv.Rows[index].Cells[9].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+                _dgv.Rows[index].Cells[10].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
+                _dgv.Rows[index].Cells[11].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
+                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
+                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
+                _dgv.Rows[index].Cells[14].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
+                _dgv.Rows[index].Cells[15].Value = tsb_Pnl_ID.Text; //Panel ID
+                _dgv.Rows[index].Cells[16].Value = tsb_Set_id.Text; //setID     
 
-                SendData.mode = _dgv.Rows[index].Cells[11].Value.ToString();
+                SendData.mode = _dgv.Rows[index].Cells[12].Value.ToString();
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1986,6 +1991,14 @@ namespace TDRv
             }
         }
 
+        public string calc_average_perc(string spec, string average)
+        {
+            float f_spec = Convert.ToSingle(spec);
+            float f_average = Convert.ToSingle(average);
+
+            return $"{(f_average- f_spec) / f_spec:P2}";
+        }
+
         private void writeHistoryRecord(List<string>data, string filePath)
         {
             string fileDir = Path.GetDirectoryName(filePath);
@@ -1999,7 +2012,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "层别," + "规格," + "上限," + "下限," + "平均值," + "最大值," + "最小值," + "结果判定," + "序号," + "日期," + "时间," + "模式," + "数据路径," + "图片路径" + "PanelID" + "SETID";
+                string str = "层别," + "规格," + "上限," + "下限," + "平均值,"+ "百分比," + "最大值," + "最小值," + "结果判定," + "序号," + "日期," + "时间," + "模式," + "数据路径," + "图片路径" + "PanelID" + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
