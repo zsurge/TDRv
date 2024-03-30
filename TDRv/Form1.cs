@@ -1396,7 +1396,7 @@ namespace TDRv
         {
             if(tsb_Pnl_ID.Text.Length == 0)
             {                
-                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
+                CommonFuncs.ShowMsg(eHintInfoType.waring, "整板料号不能为空");
                 return;
             }
 
@@ -1638,7 +1638,7 @@ namespace TDRv
             {
                 if (tsb_Pnl_ID.Text.Length == 0)
                 {                    
-                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空!");
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "整板料号不能为空!");
                     return;
                 }
 
