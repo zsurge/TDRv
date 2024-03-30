@@ -2012,7 +2012,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "层别," + "规格," + "上限," + "下限," + "平均值,"+ "百分比," + "最大值," + "最小值," + "结果判定," + "序号," + "日期," + "时间," + "模式," + "数据路径," + "图片路径" + "PanelID" + "SETID";
+                string str = "层别," + "规格," + "上限," + "下限," + "平均值,"+ "百分比," + "最大值," + "最小值," + "结果判定," + "序号," + "日期," + "时间," + "模式," + "数据路径," + "图片路径" + "整板料号" + "小板料号";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
