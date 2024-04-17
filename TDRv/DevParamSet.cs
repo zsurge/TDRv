@@ -13,18 +13,23 @@ namespace TDRv
 {
     public partial class DevParamSet : Form
     {
-        public DevParamSet(DataTable tmp)
+        //public DevParamSet(DataTable tmp)
+        public DevParamSet(string username)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
-            this.tmpDt = tmp;
+            //this.tmpDt = tmp;
+            if (username == "user")
+            {
+                DisableAllControlsExceptToolStripButton(toolStrip1, "tsb_measure_loadXml");
+            }
         }
 
         public bool clickFlag = false;
 
         public string last_units = "ohm";
 
-        DataTable tmpDt;
+        //DataTable tmpDt;
 
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
         public event ChangeDgvHandler ChangeDgv;  //定义事件
@@ -74,6 +79,38 @@ namespace TDRv
                 ChangeDgv(dgv_param);          
             }
         }
+
+
+        // 在窗体的构造函数或需要禁用控件的地方调用这个方法
+        private void DisableAllControlsExceptToolStripButton(ToolStrip toolStrip, string exceptionButtonName)
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control.Name != toolStrip.Name) // 如果控件不是 ToolStrip
+                {
+                    control.Enabled = false;
+                }
+                else // 如果是 ToolStrip
+                {
+                    foreach (ToolStripItem item in toolStrip.Items)
+                    {
+                        if (item is ToolStripButton button)
+                        {
+                            if (button.Name == exceptionButtonName)
+                            {
+                                button.Enabled = true; // 将指定按钮设置为可用
+                            }
+                            else
+                            {
+                                button.Enabled = false; // 将其他按钮禁用
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 
 
 
@@ -781,7 +818,7 @@ namespace TDRv
                 dgv_param.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
-            dgv_param.DataSource = tmpDt;
+            //dgv_param.DataSource = tmpDt;
 
             optParam.offsetValue = tx_p_yOffset.Text;
 

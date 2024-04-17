@@ -27,7 +27,7 @@ namespace TDRv
         //设置参数设置窗体的表数据
         DataTable gdt;
 
-        public static bool isTest = false;   //true 测试模式,falsh生产模式
+        public static bool isTest = true;   //true 测试模式,falsh生产模式
 
         //获取当前
         public string exPortFilePath = string.Empty;
@@ -102,18 +102,23 @@ namespace TDRv
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-            //{
-            //    optStatus.isConnect = false;
-            //    optStatus.isGetIndex = false;
-            //    optStatus.isLoadXml = false;
-            //    tsb_DevPOptSet.Enabled = false;
-            //    return;
-            //}
+            //DevParamSet devParamSet = new DevParamSet(gdt);
+            //devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
+            //devParamSet.Show();
 
-            DevParamSet devParamSet = new DevParamSet(gdt);
+            // 创建并显示登录窗体
+            LoginConfig loginForm = new LoginConfig();
+            loginForm.LoginSuccess += LoginForm_LoginSuccess;
+            loginForm.ShowDialog();
+        }
+
+        private void LoginForm_LoginSuccess(object sender, LoginConfig.LoginEventArgs e)
+        {
+            // 登录成功后，打开子窗体
+            DevParamSet devParamSet = new DevParamSet(e.Username);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
-            devParamSet.Show();
+            devParamSet.ShowDialog();
+            devParamSet.Activate(); // 设置子窗体为当前活动窗体
         }
 
         //子窗体传回配方参数

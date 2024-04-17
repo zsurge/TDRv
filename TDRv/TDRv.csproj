@@ -108,6 +108,12 @@
     <Compile Include="ini.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="LoggerHelper.cs" />
+    <Compile Include="LoginConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginConfig.Designer.cs">
+      <DependentUpon>LoginConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="MeasPosition.CS" />
     <Compile Include="optStatus.cs" />
     <Compile Include="Program.cs" />
@@ -125,6 +131,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginConfig.resx">
+      <DependentUpon>LoginConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
