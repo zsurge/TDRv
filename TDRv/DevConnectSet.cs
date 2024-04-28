@@ -579,6 +579,30 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                //SP83223005 测试样机 2024.05.07
+                else if (sn.Contains("SP83223005")) 
+                {
+
+                    if (202405071400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else if (sn.Contains("MY59100175")) //add 2021.11.22 测试样机使用
                 {
 
