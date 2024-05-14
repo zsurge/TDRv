@@ -1245,8 +1245,8 @@ namespace TDRv
                 chart1.ChartAreas[0].AxisX.StripLines.Clear();
                 chart1.ChartAreas[0].AxisY.StripLines.Clear();
 
-                xbegin = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100; //有效区起始位置
-                xend = result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;     //有效区结束位置
+                xbegin = (int)Math.Floor(result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100); //有效区起始位置
+                xend = (int)Math.Ceiling(result.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100);     //有效区结束位置
 
                 //LoggerHelper.mlog.Debug("result total =" + result.Count.ToString() + "; valid begin = " + xbegin.ToString() + "; valid end = " + xend.ToString() + "\r\n");
 
