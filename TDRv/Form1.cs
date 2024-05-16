@@ -1274,10 +1274,16 @@ namespace TDRv
                 //求最大值及最小值
                 if (tmpResult.Count != 0)
                 {
+                    //if (tmpResult.Count >= 10)
+                    //{
                     //设置网格间距
                     chart1.ChartAreas[0].AxisX.Interval = (float)result.Count / 10;//X轴间距
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
+                    //}
+
+
+
 
                     chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
                     chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
