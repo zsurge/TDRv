@@ -1306,6 +1306,9 @@ namespace TDRv
                 {
                     chart1.Series[0].Points.AddXY(i, result[i]);
                 }
+
+                DataPoint extraPoint = new DataPoint(result.Count, result[result.Count - 1]);
+                chart1.Series[0].Points.Add(extraPoint);
             }
         }
 
