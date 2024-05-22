@@ -148,7 +148,7 @@ namespace TDRv
                 else if (sn.Contains("MY59400238")) //参展样机，一个月 add 2024.03.14
                 {
 
-                    if (202405171400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202407171400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -306,10 +306,10 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59202618"))
+                else if (sn.Contains("MY59202618")) //modify 2024.05.22
                 {
 
-                    if (202404181400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -1009,7 +1009,7 @@ namespace TDRv
                 //add 2022.04.19
                 else if (sn.Contains("MY54706016"))
                 {
-                    if (202406141400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
