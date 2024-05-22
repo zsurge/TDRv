@@ -787,6 +787,50 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                if (sn.Contains("MY54706251")) //add 2024.5.22
+                {
+                    //已付款
+                    if (209903011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                if (sn.Contains("MY54706247")) //add 2024.05.22
+                {
+                    //已付款
+                    if (209903011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 //2023.08.15  delay2099 12 30
                 else if (sn.Contains("MY54100391"))
                 {
