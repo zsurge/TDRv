@@ -1590,17 +1590,17 @@ namespace TDRv
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
+                    //光标在最后一行
+                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
+                }
+                else
+                {
                     //只有最后一个走完，流水才++
                     if (measIndex.currentIndex == paramList.Count - 1)
                     {
                         gSerialInc++;
                     }
 
-                    //光标在最后一行
-                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
-                }
-                else
-                {
                     List<string> historyRecord = new List<string>();
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
