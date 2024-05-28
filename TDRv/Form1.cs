@@ -25,7 +25,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public static bool isDebugMode = false;   //true 测试模式,false生产模式
+        public static bool isDebugMode = true;   //true 测试模式,false生产模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -1481,17 +1481,17 @@ namespace TDRv
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
+                    //光标在最后一行
+                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
+                }
+                else
+                {
                     //只有最后一个走完，流水才++
                     if (measIndex.currentIndex == paramList.Count - 1)
                     {
                         gSerialInc++;
                     }
 
-                    //光标在最后一行
-                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
-                }
-                else
-                {
                     List<string> historyRecord = new List<string>();
                     //这里要写历史记录       
                     //减1是因为多了一列step，未显示，也不需要写入日志 modify 2024.03.23
