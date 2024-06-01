@@ -53,7 +53,6 @@ E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.pdb
 E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.dll
 E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.xml
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.AssemblyReference.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.SuggestedBindingRedirects.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevConnectSet.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevOptSet.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevParamSet.resources
@@ -61,6 +60,6 @@ E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.Form1.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.Properties.Resources.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.GenerateResource.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.CoreCompileInputs.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.CopyComplete
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.Up2Date
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.exe
 E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.pdb
