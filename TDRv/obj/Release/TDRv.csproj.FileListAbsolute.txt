@@ -52,7 +52,6 @@ C:\Work\TDRv\TDRv\bin\Release\TDRv.exe
 C:\Work\TDRv\TDRv\bin\Release\TDRv.pdb
 C:\Work\TDRv\TDRv\bin\Release\NLog.dll
 C:\Work\TDRv\TDRv\bin\Release\NLog.xml
-C:\Work\TDRv\TDRv\obj\Release\TDRv.csproj.AssemblyReference.cache
 C:\Work\TDRv\TDRv\obj\Release\TDRv.DevConnectSet.resources
 C:\Work\TDRv\TDRv\obj\Release\TDRv.DevOptSet.resources
 C:\Work\TDRv\TDRv\obj\Release\TDRv.DevParamSet.resources
