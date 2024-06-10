@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,6 +27,13 @@ namespace TDRv
 
         //设置参数设置窗体的表数据
         DataTable gdt;
+
+        public static bool isDebugMode = true;   //true 测试模式,false生产模式
+
+        private bool isSelecting = false; // 标识是否正在进行选择操作
+        private Point selectionStartPoint; // 记录选择操作的起点
+        private Rectangle selectionRectangle = new Rectangle(); // 选择矩形
+        private List<DataPoint> originalDataPoints; // 存储原始数据点
 
         //获取当前
         public string exPortFilePath = string.Empty;
@@ -430,6 +438,14 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
+            if (isDebugMode)
+            {
+                MeasPosition.isOpen = true;
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+                return;
+            }
+
             if (isExecuteIndex)
             {
                 isExecuteIndex = false;
@@ -648,7 +664,10 @@ namespace TDRv
                 MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
 
-
+            if (isDebugMode)
+            {
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+            }
 
             return result;
         }
@@ -1090,21 +1109,45 @@ namespace TDRv
 
                     SetLableText("", "Control");
 
-                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                    if (!isDebugMode)
                     {
-                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                    {
-                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                    {
-                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                        {
+                            E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        }
+                        else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                        {
+                            E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                        }
+                        else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                        {
+                            E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        }
                     }
 
                     //量测并生成图表                    
                     List<float> disResult = packetMaesData(result, index, channel);
+
+                    if (isDebugMode)
+                    {
+                        if (paramList[measIndex.currentIndex].Mode.Contains("SingleEnded"))
+                        {
+                            string fileName = "50.csv";
+                            string currentDirectory = Directory.GetCurrentDirectory();
+                            string filePath = Path.Combine(currentDirectory, fileName);
+
+                            disResult = ReadFirstColumn(filePath);
+                        }
+                        else
+                        {
+                            string fileName = "100.csv";
+                            string currentDirectory = Directory.GetCurrentDirectory();
+                            string filePath = Path.Combine(currentDirectory, fileName);
+                            disResult = ReadFirstColumn(filePath);
+                        }
+
+                    }
+
 
                     DisplayChartValue(chart1, disResult);
 
@@ -1160,6 +1203,31 @@ namespace TDRv
          
         }
 
+        private List<float> ReadFirstColumn(string filePath)
+        {
+            List<float> values = new List<float>();
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    string[] columns = line.Split(',');
+
+                    // 将第一列的数据解析为float类型并添加到列表中
+                    if (columns.Length > 0)
+                    {
+                        float value;
+                        if (float.TryParse(columns[0], NumberStyles.Float, CultureInfo.InvariantCulture, out value))
+                        {
+                            values.Add(value);
+                        }
+                    }
+                }
+            }
+
+            return values;
+        }
         private void tsmi_delAll_Click(object sender, EventArgs e)
         {
             //删除所有测试数据
@@ -1439,6 +1507,142 @@ namespace TDRv
                 for (int i = 0; i < result.Count; i++)
                 {
                     chart1.Series[0].Points.AddXY(i, result[i]);
+                }
+
+                originalDataPoints = new List<DataPoint>();  // 初始化原始数据点列表
+                foreach (var point in chart1.Series[0].Points)  // 将数据系列中的数据点复制到原始数据点列表
+                {
+                    originalDataPoints.Add(point);
+                }
+
+            }
+        }
+
+        delegate void DisplayNewSeriesDelegate(Chart _chart, List<DataPoint> newSeries);
+        public void DisplayNewSeries(Chart _chart, List<DataPoint> newSeries)
+        {
+            if (_chart.InvokeRequired)
+            {
+                DisplayChartDelegate d = new DisplayChartDelegate(DisplayChartValue);
+                this.Invoke(d, new object[] { _chart, newSeries });
+            }
+            else
+            {
+                int xbegin = 0;
+                int xend = 0;
+                float yhigh = 0.0f;
+                float ylow = 0.0f;
+                int selectIndex = 0;
+
+                if (measIndex.currentIndex == 0)
+                {
+                    selectIndex = measIndex.total-1;
+                }
+                else
+                {
+                    selectIndex = measIndex.currentIndex - 1;
+                }
+
+
+                // 获取选择点的最小和最大X值
+                var minX = newSeries.Min(p => p.XValue);
+                var maxX = newSeries.Max(p => p.XValue);
+
+
+                foreach (var series in chart1.Series)
+                {
+                    series.Points.Clear();
+                }
+
+                //xbegin = newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_Begin) / 100; //有效区起始位置
+                //xend = newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_End) / 100;     //有效区结束位置
+
+                xbegin = (int)Math.Floor(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_Begin) / 100); //有效区起始位置
+                xend = (int)Math.Ceiling(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_End) / 100);     //有效区结束位置
+
+                if (string.Compare(paramList[selectIndex].ImpedanceLimit_Unit, "%") == 0)
+                {
+                    yhigh = Convert.ToSingle(paramList[selectIndex].Spec) * (1 + (Convert.ToSingle(paramList[selectIndex].Upper_limit) / 100)); //量测值上限
+                    ylow = Convert.ToSingle(paramList[selectIndex].Spec) * (1 + (Convert.ToSingle(paramList[selectIndex].Low_limit) / 100));//量测值下限
+                }
+                else
+                {
+                    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
+                    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    yhigh = Convert.ToSingle(paramList[selectIndex].Upper_limit);
+                    ylow = Convert.ToSingle(paramList[selectIndex].Low_limit);
+
+                }
+
+                if (xend - xbegin < 3)
+                {
+                    //initChart();
+                    gEmptyFlag = true;
+                    return;
+                }
+                else
+                {
+                    gEmptyFlag = false;
+                }
+
+                //计算有效区域起始结束位置 
+                chart1.ChartAreas[0].AxisY.Interval = paramList[selectIndex].Open_hreshold / 5; //Y轴间距
+                chart1.ChartAreas[0].AxisY.Maximum = paramList[selectIndex].Open_hreshold;//设置Y坐标最大值,开路位置
+                chart1.ChartAreas[0].AxisY.Minimum = 0;
+
+                //生成上半位有效区域
+                chart1.Series[1].Points.AddXY(newSeries[xbegin].XValue, paramList[selectIndex].Open_hreshold);
+                chart1.Series[1].Points.AddXY(newSeries[xbegin].XValue, yhigh);
+                chart1.Series[1].Points.AddXY(newSeries[xend].XValue, yhigh);
+                chart1.Series[1].Points.AddXY(newSeries[xend].XValue, paramList[selectIndex].Open_hreshold);
+
+                //生成下半部有效区域
+                chart1.Series[2].Points.AddXY(newSeries[xbegin].XValue, 0);
+                chart1.Series[2].Points.AddXY(newSeries[xbegin].XValue, ylow);
+                chart1.Series[2].Points.AddXY(newSeries[xend].XValue, ylow);
+                chart1.Series[2].Points.AddXY(newSeries[xend].XValue, 0);
+
+                //获取有效区域的LIST
+                List<DataPoint> tmpResult = newSeries.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
+
+
+                //求最大值及最小值
+                if (tmpResult.Count != 0)
+                {
+                    //设置网格间距
+                    chart1.ChartAreas[0].AxisX.Interval = (maxX - minX) / 10.0;//X轴间距
+                    chart1.ChartAreas[0].AxisX.Maximum = maxX; //设置X坐标最大值
+                    chart1.ChartAreas[0].AxisX.Minimum = minX;//设置X坐标最小值
+
+
+                    ////设置网格间距
+                    //chart1.ChartAreas[0].AxisX.Interval = (float)newSeries.Count / 10;//X轴间距
+                    //chart1.ChartAreas[0].AxisX.Maximum = (float)newSeries.Count; //设置X坐标最大值
+                    //chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
+
+                    //chart1.Series[0].LegendText = "平均值:" + newSeries.Average().ToString("F2");
+                    //chart1.Series[1].LegendText = "最大值:" + newSeries.Max().ToString("F2");
+                    //chart1.Series[2].LegendText = "最小值:" + newSeries.Min().ToString("F2");
+                }
+                else
+                {
+                    //设置默认网格间距
+                    chart1.ChartAreas[0].AxisX.Interval = 250;//X轴间距
+                    chart1.ChartAreas[0].AxisX.Maximum = 2500; //设置X坐标最大值
+                    chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
+
+                    chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
+                    chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
+                    chart1.ChartAreas[0].AxisY.Minimum = 0;
+                }
+
+                //生成测试数据曲线
+                foreach (var point in newSeries)
+                {
+                    chart1.Series[0].Points.AddXY(point.XValue, point.YValues[0]);
                 }
             }
         }
@@ -1737,6 +1941,124 @@ namespace TDRv
                     //差分开路定义
                     E5071C.viClear(CGloabal.g_curInstrument.nHandle);
                     E5071C.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+            }
+        }
+
+        private void chart1_MouseDown(object sender, MouseEventArgs e)
+        {
+            //在鼠标左键按下时记录起始点，并开始选择操作
+            if (e.Button == MouseButtons.Left)
+            {
+                // 开始选择操作
+                isSelecting = true;
+                selectionStartPoint = e.Location; // 记录选择起点
+                selectionRectangle = new Rectangle(e.X, e.Y, 0, 0); // 初始化选择矩形
+                chart1.Invalidate(); // 触发重绘
+            }
+        }
+
+        //在鼠标移动时更新选择矩形的大小并重新绘制Chart
+        private void chart1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isSelecting)
+            {
+                // 更新选择矩形的大小和位置
+                selectionRectangle = new Rectangle(
+                    Math.Min(selectionStartPoint.X, e.X),
+                    Math.Min(selectionStartPoint.Y, e.Y),
+                    Math.Abs(selectionStartPoint.X - e.X),
+                    Math.Abs(selectionStartPoint.Y - e.Y)
+                );
+                chart1.Invalidate(); // 触发重绘
+            }
+        }
+
+        //在鼠标松开时完成选择，将选取的数据点重新绘制到图表中
+        private void chart1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isSelecting)
+            {
+                // 结束选择操作
+                isSelecting = false;
+                SelectDataPoints(); // 处理选择的数据点
+                selectionRectangle = new Rectangle(); // 清空选择矩形
+                chart1.Invalidate(); // 触发重绘
+            }
+        }
+
+        //将选择矩形内的数据点添加到一个新的数据系列中，并显示在图表上
+        private void SelectDataPoints()
+        {
+            var selectedPoints = new List<DataPoint>();
+            // 遍历原始数据点，检查哪些点在选择矩形内
+            foreach (var point in originalDataPoints)
+            {
+                var pointXPixel = chart1.ChartAreas[0].AxisX.ValueToPixelPosition(point.XValue);
+                var pointYPixel = chart1.ChartAreas[0].AxisY.ValueToPixelPosition(point.YValues[0]);
+                if (selectionRectangle.Contains(new Point((int)pointXPixel, (int)pointYPixel)))
+                {
+                    selectedPoints.Add(point);
+                }
+            }
+
+            if (selectedPoints.Count > 0)
+            {
+                //// 获取选择点的最小和最大X值
+                //var minX = selectedPoints.Min(p => p.XValue);
+                //var maxX = selectedPoints.Max(p => p.XValue);
+
+                //var newSeries = new Series
+                //{
+                //    Name = "Series1",
+                //    Color = System.Drawing.Color.Yellow,
+                //    ChartType = SeriesChartType.Spline,
+                //    BorderWidth = 2
+                //};
+
+                //// 将选中的点添加到新的数据系列中
+                //foreach (var point in selectedPoints)
+                //{
+                //    newSeries.Points.Add(point);
+                //}
+
+                //// 清空图表的现有数据系列并添加新系列
+                //chart1.Series.Clear();
+                //chart1.Series.Add(newSeries);
+
+                DisplayNewSeries(chart1, selectedPoints);
+
+                //// 清空 chart1.Series[0] 的数据点
+                //foreach (var series in chart1.Series)
+                //{
+                //    series.Points.Clear();
+                //}
+
+                //// 使用 AddXY 方法将选中的点添加到 chart1.Series[0] 中
+                //foreach (var point in selectedPoints)
+                //{
+                //    chart1.Series[0].Points.AddXY(point.XValue, point.YValues[0]);
+                //}
+
+
+                //// 设置AxisX的属性
+                //var axisX = chart1.ChartAreas[0].AxisX;
+                //axisX.Minimum = minX; // 设置X轴最小值
+                //axisX.Maximum = maxX; // 设置X轴最大值
+                //axisX.Interval = (maxX - minX) / 10.0; // 设置X轴间隔，将其分成10份
+            }
+        }
+
+
+        //在Chart控件上绘制选择矩形
+        private void chart1_Paint(object sender, PaintEventArgs e)
+        {
+            if (isSelecting)
+            {
+                // 绘制选择矩形
+                using (Pen pen = new Pen(Color.Red, 2))
+                {
+                    e.Graphics.DrawRectangle(pen, selectionRectangle);
                 }
             }
         }

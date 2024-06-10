@@ -38,6 +38,13 @@ namespace TDRv
 
             string NowDate = DateTime.Now.ToString("yyyyMMdd");
 
+            if (Form1.isDebugMode)
+            {
+                optStatus.isConnect = true;
+                combDevString.BackColor = Color.Green;
+                return;
+            }
+
 
             if (combDevType.Text.Contains("E5080B") || combDevType.Text.Contains("PNA"))
             {

@@ -50,7 +50,6 @@ E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.pdb
 E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.dll
 E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.xml
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.AssemblyReference.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.SuggestedBindingRedirects.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
@@ -58,7 +57,6 @@ E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.Form1.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.Properties.Resources.resources
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
 C:\Work\TDRv\TDRv\bin\Debug\NLog.config
@@ -78,3 +76,4 @@ C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.exe
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.pdb
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.Up2Date
