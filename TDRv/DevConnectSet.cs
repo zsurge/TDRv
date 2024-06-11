@@ -51,6 +51,7 @@ namespace TDRv
                 int ret = E5080B.Open(CGloabal.g_curInstrument.adress, ref CGloabal.g_curInstrument.nHandle);
 
                 E5080B.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
+                LoggerHelper.mlog.Debug("SN = " + sn);
 
                 if (sn.Contains("MY59101265") || sn.Contains("MY59101017") || sn.Contains("MY60213234"))
                 {
@@ -124,7 +125,7 @@ namespace TDRv
                 else if (sn.Contains("MY59202434"))
                 {
 
-                    if (202307301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -144,10 +145,171 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59202618"))
+                else if (sn.Contains("MY59400238")) //参展样机，一个月 add 2024.03.14
                 {
 
-                    if (202308311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202407171400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59101296"))
+                {
+
+                    if (209912311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY61100183"))
+                {
+
+                    if (202402201400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59100527"))
+                {
+
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY63057096")) //add 2023.09.09
+                {
+
+                    if (202408041400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59400117")) //add 2024.01.30
+                {
+
+                    if (202404301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59203255")) //2024.02.04 修改到永久版
+                {
+
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY59202618")) //modify 2024.05.22
+                {
+
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -170,7 +332,7 @@ namespace TDRv
                 else if (sn.Contains("MY59202852"))
                 {
 
-                    if (202308311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -258,7 +420,7 @@ namespace TDRv
                 else if (sn.Contains("MY59101203")) //add 2022.05.27 临时增加测试使用
                 {
 
-                    if (202306301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202307271400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -417,10 +579,11 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY59203255")) //add 2021.11.22 测试样机使用
+                //SP83223005 测试样机 2024.05.07
+                else if (sn.Contains("SP83223005")) 
                 {
 
-                    if (202308101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202405071400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -440,16 +603,79 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                else if (sn.Contains("MY58100275")) //add 2023.07.20
+                else if (sn.Contains("MY59100175")) //add 2021.11.22 测试样机使用
                 {
 
-                    if (202308201400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202201221400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
                         return;
                     }
 
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY63057093")) //add 2023.09.26 到永久
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("US63055408")) //add 2024.01.23 到永久
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("US63055442")) //add 2024.04.24 到永久
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
 
                     if (ret != 0)
                     {
@@ -467,7 +693,7 @@ namespace TDRv
                 else if (sn.Contains("MY63056301")) //add 2023.04.02
                 {
 
-                    if (202307021400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (202405071400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -510,6 +736,8 @@ namespace TDRv
 
                 E5063A.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
 
+                LoggerHelper.mlog.Debug("SN = " + sn);
+
                 E5063A.GetThreePortIdentifier(CGloabal.g_curInstrument.nHandle);
 
                 E5063A.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
@@ -537,10 +765,76 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
-                //add 2023.03.12-2023.05.12  delay2023.06.12
+                if (sn.Contains("MY54806639")) //add 2024.04.19
+                {
+                    //已付款
+                    if (209903011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                if (sn.Contains("MY54706251")) //add 2024.5.22
+                {
+                    //已付款
+                    if (209903011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                if (sn.Contains("MY54706247")) //add 2024.05.22
+                {
+                    //已付款
+                    if (209903011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                //2023.08.15  delay2099 12 30
                 else if (sn.Contains("MY54100391"))
                 {
-                    if (202307141400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -583,6 +877,27 @@ namespace TDRv
                 //add 2022.01.15
                 //modify 2022.10.21 delay 2022.12.20
                 else if (sn.Contains("MY54705656"))
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY54504144")) //add 2023.10.16
                 {
                     if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
@@ -694,7 +1009,7 @@ namespace TDRv
                 //add 2022.04.19
                 else if (sn.Contains("MY54706016"))
                 {
-                    if (202308311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -714,9 +1029,9 @@ namespace TDRv
                     }
                 }
                 //add 2022.07.25 modify 2022.10.25,delay 2023.01.25 delay 2023.05.28 2023.01.25 delay 2023.06.28 
-                else if (sn.Contains("MY54705930") )
+                else if (sn.Contains("MY54705930") ) //2023.07.06 add to 2099
                 {
-                    if (202306281400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -756,10 +1071,52 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                else if (sn.Contains("MY54706013"))
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 //add 2022.10.21 永久
                 else if (sn.Contains("MY54706014"))
                 {
                     if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY54706611"))
+                {
+                    if (202409041400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -817,6 +1174,7 @@ namespace TDRv
 
                 int ret = E5071C.Open(CGloabal.g_curInstrument.adress, ref CGloabal.g_curInstrument.nHandle);
                 E5071C.GetInstrumentIdentifier(CGloabal.g_curInstrument.nHandle, out sn);
+                LoggerHelper.mlog.Debug("SN = " + sn);
                 E5071C.ClearAllErrorQueue(CGloabal.g_curInstrument.nHandle);
                 E5071C.setAttribute(CGloabal.g_curInstrument.nHandle);
 
@@ -843,9 +1201,158 @@ namespace TDRv
                         combDevString.BackColor = Color.Green;
                     }
                 }
+                if (sn.Contains("MY46733941")) //龙宇，add 2024.02.28 30天
+                {
+
+                    if (202407041400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
                 else if (sn.Contains("MY46524686")) //add 2022.05.11 样机 三个月 09.01
                 {
                     if (202209011400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY47002573")) //add 2022.05.11 样机 三个月 09.01
+                {
+                    if (202402101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY47002760")) //add 2023.12.17 样机 2个月 02.17
+                {
+                    if (202402171400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY47003740")) //add 2023.12.12 样机 三个月2024.05.12
+                {
+                    if (202406101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY47100345")) //add 2024.02.28 三个月2024.05.28
+                {
+                    if (202406301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY47002764")) //20240514 modify 2099
+                {
+                    if (209912301400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY47002948")) //add 20240210
+                {
+                    if (202406121400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -909,7 +1416,7 @@ namespace TDRv
                 }
                 else if (sn.Contains("MY47003065")) //
                 {
-                    if (202308161400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    if (209912311400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
@@ -1057,6 +1564,27 @@ namespace TDRv
                 else if (sn.Contains("MY46103317")) //add 2022.03.29 样机 到06.10
                 {
                     if (202206101400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        return;
+                    }
+
+                    if (ret != 0)
+                    {
+                        optStatus.isConnect = false;
+                        combDevString.BackColor = Color.Red;
+                        MessageBox.Show("error!");
+                    }
+                    else
+                    {
+                        optStatus.isConnect = true;
+                        combDevString.BackColor = Color.Green;
+                    }
+                }
+                else if (sn.Contains("MY46524427")) //add 2022.09.25 样机 到09.29
+                {
+                    if (202309291400 - Convert.ToInt64(DateTime.Now.ToString("yyyyMMddHHmm")) <= 0)
                     {
                         optStatus.isConnect = false;
                         combDevString.BackColor = Color.Red;
