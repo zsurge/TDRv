@@ -33,7 +33,7 @@ namespace TDRv
         public string last_units = "ohm";
         DataTable tmpDt;
 
-        public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
+        public delegate void ChangeDgvHandler(DataGridView dgv,string xmlFilePath);  //定义委托
         public event ChangeDgvHandler ChangeDgv;  //定义事件
 
         public static string xmlFilePath = string.Empty;
@@ -81,8 +81,9 @@ namespace TDRv
         private void TranToParentForm()
         {
             if (ChangeDgv != null)
-            {                
-                ChangeDgv(dgv_param);          
+            {
+                string filePath = xmlFilePath;
+                ChangeDgv(dgv_param, filePath);          
             }
         }
 

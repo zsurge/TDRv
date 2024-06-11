@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml.Linq;
 using TDRv.Driver;
 
 namespace TDRv
@@ -36,7 +37,7 @@ namespace TDRv
         private List<DataPoint> originalDataPoints; // 存储原始数据点
 
         //获取当前
-        public string exPortFilePath = string.Empty;
+        public string xmlFilePath = string.Empty;
 
         //差分
         public const int DIFFERENCE = 1;
@@ -123,7 +124,7 @@ namespace TDRv
         }
 
         //子窗体传回配方参数
-        public void Change_DataGridView(DataGridView dt)
+        public void Change_DataGridView(DataGridView dt, string filePath)
         {
             if (dgv_CurrentResult.Rows.Count > 0)
             {
@@ -180,6 +181,8 @@ namespace TDRv
             {
                 tsb_XmlFileName.Text = dt.Tag.ToString();
             }
+
+            xmlFilePath = filePath;
 
             //读取配方中的数据
             GetIndexStart(dt);            
@@ -297,6 +300,7 @@ namespace TDRv
                 tr.Open_hreshold = int.Parse(dt.Rows[i].Cells["OpenThreshold"].Value.ToString()); //开路位置
                 tr.ImpedanceLimit_Unit = dt.Rows[i].Cells["ImpedanceLimitUnit"].Value.ToString(); //单位
                 tr.Offset = Convert.ToSingle(dt.Rows[i].Cells["CalibrateOffset"].Value.ToString());
+                tr.Step = int.Parse(dt.Rows[i].Cells["TestStep"].Value.ToString());
                 paramList.Add(tr);
             }
         }
@@ -1557,27 +1561,17 @@ namespace TDRv
                 //xbegin = newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_Begin) / 100; //有效区起始位置
                 //xend = newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_End) / 100;     //有效区结束位置
 
-                xbegin = (int)Math.Floor(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_Begin) / 100); //有效区起始位置
-                xend = (int)Math.Ceiling(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_End) / 100);     //有效区结束位置
+                //xbegin = (int)Math.Floor(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_Begin) / 100); //有效区起始位置
+                //xend = (int)Math.Ceiling(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_End) / 100);     //有效区结束位置
 
-                if (string.Compare(paramList[selectIndex].ImpedanceLimit_Unit, "%") == 0)
-                {
-                    yhigh = Convert.ToSingle(paramList[selectIndex].Spec) * (1 + (Convert.ToSingle(paramList[selectIndex].Upper_limit) / 100)); //量测值上限
-                    ylow = Convert.ToSingle(paramList[selectIndex].Spec) * (1 + (Convert.ToSingle(paramList[selectIndex].Low_limit) / 100));//量测值下限
-                }
-                else
-                {
-                    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
-                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
-                    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
-                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    yhigh = Convert.ToSingle(paramList[selectIndex].Upper_limit);
-                    ylow = Convert.ToSingle(paramList[selectIndex].Low_limit);
+                xbegin = (int)Math.Ceiling(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_Begin) / 100); //有效区起始位置
+                xend = (int)Math.Floor(newSeries.Count * Convert.ToSingle(paramList[selectIndex].Valid_End) / 100);     //有效区结束位置
 
-                }
+                //计算所取到数据在整个数据中的百分比
+                double newBegin = newSeries[xbegin].XValue / originalDataPoints.Count * 100;
+                double newEnd  = newSeries[xend].XValue / originalDataPoints.Count * 100;
 
-                if (xend - xbegin < 3)
+                if (xend - xbegin < 2)
                 {
                     //initChart();
                     gEmptyFlag = true;
@@ -1587,6 +1581,27 @@ namespace TDRv
                 {
                     gEmptyFlag = false;
                 }
+
+                //修改内存中LIMIT的值
+                paramList[selectIndex].Valid_Begin = newBegin.ToString("F1");
+                paramList[selectIndex].Valid_End = newEnd.ToString("F1");
+
+                UpdateTestStepThresholds(xmlFilePath, paramList[selectIndex].Step, paramList[selectIndex].Valid_Begin, paramList[selectIndex].Valid_End);
+
+
+
+                if (string.Compare(paramList[selectIndex].ImpedanceLimit_Unit, "%") == 0)
+                {
+                    yhigh = Convert.ToSingle(paramList[selectIndex].Spec) * (1 + (Convert.ToSingle(paramList[selectIndex].Upper_limit) / 100)); //量测值上限
+                    ylow = Convert.ToSingle(paramList[selectIndex].Spec) * (1 + (Convert.ToSingle(paramList[selectIndex].Low_limit) / 100));//量测值下限
+                }
+                else
+                {
+                    yhigh = Convert.ToSingle(paramList[selectIndex].Upper_limit);
+                    ylow = Convert.ToSingle(paramList[selectIndex].Low_limit);
+                }
+
+
 
                 //计算有效区域起始结束位置 
                 chart1.ChartAreas[0].AxisY.Interval = paramList[selectIndex].Open_hreshold / 5; //Y轴间距
@@ -1613,9 +1628,13 @@ namespace TDRv
                 if (tmpResult.Count != 0)
                 {
                     //设置网格间距
-                    chart1.ChartAreas[0].AxisX.Interval = (maxX - minX) / 10.0;//X轴间距
-                    chart1.ChartAreas[0].AxisX.Maximum = maxX; //设置X坐标最大值
-                    chart1.ChartAreas[0].AxisX.Minimum = minX;//设置X坐标最小值
+                    //chart1.ChartAreas[0].AxisX.Interval = (maxX - minX) / 10.0;//X轴间距
+                    //chart1.ChartAreas[0].AxisX.Maximum = maxX; //设置X坐标最大值
+                    //chart1.ChartAreas[0].AxisX.Minimum = minX;//设置X坐标最小值
+
+                    chart1.ChartAreas[0].AxisX.Interval = (float)originalDataPoints.Count / 10;//X轴间距
+                    chart1.ChartAreas[0].AxisX.Maximum = (float)originalDataPoints.Count; //设置X坐标最大值
+                    chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
 
                     ////设置网格间距
@@ -1640,7 +1659,7 @@ namespace TDRv
                 }
 
                 //生成测试数据曲线
-                foreach (var point in newSeries)
+                foreach (var point in originalDataPoints)
                 {
                     chart1.Series[0].Points.AddXY(point.XValue, point.YValues[0]);
                 }
@@ -2062,6 +2081,58 @@ namespace TDRv
                 }
             }
         }
+
+        public void UpdateTestStepThresholds(string filePath, int testStep, string newTestFromThresholdValue, string newTestToThresholdValue)
+        {
+            try
+            {
+                // 加载XML文件
+                XDocument xmlDoc = XDocument.Load(filePath);
+
+                // 查找指定TestStep的元素
+                var testStepElement = xmlDoc.Descendants("Table1")
+                                            .Where(table => (int)table.Element("TestStep") == testStep)
+                                            .FirstOrDefault();
+
+                if (testStepElement != null)
+                {
+                    // 查找并替换TestFromThreshold的值
+                    var testFromThresholdElement = testStepElement.Element("TestFromThreshold");
+                    if (testFromThresholdElement != null)
+                    {
+                        testFromThresholdElement.Value = newTestFromThresholdValue;
+                    }
+                    else
+                    {
+                        LoggerHelper.mlog.Error($"TestFromThreshold element not found for TestStep {testStep}.");
+                    }
+
+                    // 查找并替换TestToThreshold的值
+                    var testToThresholdElement = testStepElement.Element("TestToThreshold");
+                    if (testToThresholdElement != null)
+                    {
+                        testToThresholdElement.Value = newTestToThresholdValue;
+                    }
+                    else
+                    {
+                        LoggerHelper.mlog.Error($"TestToThreshold element not found for TestStep {testStep}.");
+                    }
+
+                    // 将修改后的XML文档保存回原文件
+                    xmlDoc.Save(filePath);
+                    LoggerHelper.mlog.Trace($"TestFromThreshold and TestToThreshold for TestStep {testStep} have been updated.");
+                }
+                else
+                {
+                    LoggerHelper.mlog.Error($"TestStep {testStep} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.mlog.Error($"An error occurred: {ex.Message}");
+            }
+        }
+
     }//end form
 
     public class MeasIndex

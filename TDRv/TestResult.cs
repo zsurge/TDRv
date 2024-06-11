@@ -30,6 +30,13 @@ namespace TDRv
         private int devmode = 0;        //为区分当前测试模式是单端还是差分
         private int total_item = 0;   //当前配方的总的条数
         private int open_threshold = 0;  //开路位置
+        private int step = 0; //操作步骤
+
+        public int Step
+        {
+            get { return step; }
+            set { step = value; }
+        }
 
         public string Layer
         {
