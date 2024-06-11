@@ -36,25 +36,38 @@ namespace TDRv
         //单端
         public const int SINGLE = 2;
 
+        //E5080B设备类型
+        public static int gDevType = 0;
+
         public const int CURRENT_RECORD = 100;
         public const int HISTORY_RECORD = 999;
 
         //流水
-        public int gSerialInc = 0;
-
-        E5080B analyzer = new E5080B();
+        public int gSerialInc = 0;        
 
         private bool gEmptyFlag = true; //标志是否有空的待测物
         public static int gTestResultValue = 0;
 
         public static string logFileName = string.Empty;
-     
+
+        public static bool isExecuteComplete = true;
+        public static bool isExecuteIndex = true;
+
+
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
 
+        //测试数据目录，该目录下有子目录
+        public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
+        public string configDir = Environment.CurrentDirectory + "\\Config";
+        public string autoSaveDir = Environment.CurrentDirectory + "\\AutoSave";
+        public string historyDir = Environment.CurrentDirectory + "\\MeasureData\\History";
+        public string imageDir = Environment.CurrentDirectory + "\\AutoSave\\Image";
+        public string CurveDir = Environment.CurrentDirectory + "\\AutoSave\\Curve";
+        public string reportDir = Environment.CurrentDirectory + "\\MeasureData\\Report";
 
         private void tsb_DevConnect_Click(object sender, EventArgs e)
         {
@@ -66,29 +79,35 @@ namespace TDRv
 
         private void tsb_DevOptSet_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-            {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_DevPOptSet.Enabled = false;
-                return;
-            }
+            //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            //{
+            //    optStatus.isConnect = false;
+            //    optStatus.isGetIndex = false;
+            //    optStatus.isLoadXml = false;
+            //    tsb_DevPOptSet.Enabled = false;
+            //    return;
+            //}
 
             DevOptSet devOptSet = new DevOptSet();
+            devOptSet.ChangeSn += new DevOptSet.ChangeSnHandler(update_sn_begin);
             devOptSet.Show();
+        }
+
+        public void update_sn_begin(string sn)
+        {
+            gSerialInc = Convert.ToInt32(sn);
         }
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-            {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_DevPOptSet.Enabled = false;
-                return;
-            }
+            //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            //{
+            //    optStatus.isConnect = false;
+            //    optStatus.isGetIndex = false;
+            //    optStatus.isLoadXml = false;
+            //    tsb_DevPOptSet.Enabled = false;
+            //    return;
+            //}
 
             DevParamSet devParamSet = new DevParamSet(gdt);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
@@ -129,9 +148,9 @@ namespace TDRv
 
             //开路位置清空
             MeasPosition.tdd11IndexValue = 0;
-            MeasPosition.tdd11start = 0;
+            MeasPosition.tdd11start = 0.0f;
             MeasPosition.tdd22IndexValue = 0;
-            MeasPosition.tdd22start = 0;
+            MeasPosition.tdd22start = 0.0f;
 
             //记录索引清零
             measIndex.total = 0;
@@ -171,6 +190,13 @@ namespace TDRv
                 tsb_GetTestIndex.Enabled = true;
                 CommonFuncs.ShowMsg(eHintInfoType.hint, "请执行开路定义");
             }
+
+            //禁止删除行
+            dataGridView1.AllowUserToDeleteRows = false;
+
+            //设置为可读
+            dataGridView1.ReadOnly = true;
+            isExecuteIndex = true;
         }
 
 
@@ -220,14 +246,14 @@ namespace TDRv
 
                 if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "Differential") == 0 && diff) //差分
                 {
-                    MeasPosition.tdd11start = Convert.ToInt32(dt.Rows[i].Cells[14].Value);
+                    MeasPosition.tdd11start = Convert.ToSingle(dt.Rows[i].Cells[14].Value);
                     diff = false;
                     tr.DevMode = DIFFERENCE;
                 }
 
                 if (string.Compare(dt.Rows[i].Cells[10].Value.ToString(), "SingleEnded") == 0 && single) //单端
                 {
-                    MeasPosition.tdd22start = Convert.ToInt32(dt.Rows[i].Cells[14].Value);
+                    MeasPosition.tdd22start = Convert.ToSingle(dt.Rows[i].Cells[14].Value);
                     single = false;
                     tr.DevMode = SINGLE;
                 }
@@ -292,13 +318,58 @@ namespace TDRv
             }
         }
 
+        //建立默认文件夹
+        public void CreateDefaultDir()
+        {
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            if (!Directory.Exists(historyDir))
+            {
+                Directory.CreateDirectory(historyDir);
+            }
+
+            if (!Directory.Exists(reportDir))
+            {
+                Directory.CreateDirectory(reportDir);
+            }
+
+            if (!Directory.Exists(configDir))
+            {
+                Directory.CreateDirectory(configDir);
+            }
+
+            if (!Directory.Exists(autoSaveDir))
+            {
+                Directory.CreateDirectory(autoSaveDir);
+            }
+
+            if (!Directory.Exists(imageDir))
+            {
+                Directory.CreateDirectory(imageDir);
+            }
+
+            if (!Directory.Exists(CurveDir))
+            {
+                Directory.CreateDirectory(CurveDir);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
+            //this.WindowState = FormWindowState.Maximized;
+            //创建默认文件夹
+            CreateDefaultDir();
+            //获取当前测试模式
             ReadTestMode();
             //获取序列号起始值
             gSerialInc =  Convert.ToInt32(optParam.snBegin);
           
+            //初始化折线图
             initChart();
+
+        
 
             //禁止列排序
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
@@ -359,192 +430,155 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (isExecuteIndex)
             {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_GetTestIndex.Enabled = false;
-                return;
-            }
+                isExecuteIndex = false;
 
-            List<float> tmpDiffMeasData = new List<float>();
-            List<float> tmpSingleMeasData = new List<float>();
-            string result = string.Empty;
-            
-            if (dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("请先装载配方");
-                return;
-            }
+                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                //{
+                //    optStatus.isConnect = false;
+                //    optStatus.isGetIndex = false;
+                //    optStatus.isLoadXml = false;
+                //    tsb_GetTestIndex.Enabled = false;
+                //    return;
+                //}
 
-            if (!optStatus.isConnect)
-            {
-                MessageBox.Show("请先连接设备");
-                return;
-            }
+                List<float> tmpDiffMeasData = new List<float>();
+                List<float> tmpSingleMeasData = new List<float>();
+                string result = string.Empty;
+                string result2 = string.Empty;
 
-            //差分开路定义
-            E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle,DIFFERENCE,out result);
-
-            //这里需要处理win1_tr1的数据
-            tmpSingleMeasData = packetMaesData(result, 0, 0);
-            string[] tdd11_array = result.Split(new char[] { ',' });
-            result = string.Empty;
-
-            if (tdd11_array.Length < 200)
-            {
-                MessageBox.Show("获取差分开路定义失败");
-            }
-
-            //查找tdd11单端的索引值
-            for (int i = 0; i < tdd11_array.Length; i++)
-            {
-                //logger.Trace(tdd22_array[i]);
-                if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                if (dataGridView1.Rows.Count == 0)
                 {
-                    MeasPosition.tdd11IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
+                    MessageBox.Show("请先装载配方");
+                    return;
                 }
-            }
 
-            //单端开路定义
-            result = string.Empty;
-            E5080B.getStartIndex(CGloabal.g_InstrE5080BModule.nHandle, SINGLE, out result);
-
-            tmpDiffMeasData = packetMaesData(result, 0, 0);
-            string[] tdd22_array = result.Split(new char[] { ',' });
-
-            //查找tdd22单端的索引值
-            for (int i = 0; i < tdd22_array.Length; i++)
-            {                
-                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                if (!optStatus.isConnect)
                 {
-                    MeasPosition.tdd22IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
+                    MessageBox.Show("请先连接设备");
+                    return;
                 }
-            }
 
-            MeasPosition.isOpen = true;
-            optStatus.isGetIndex = true;
-            tsb_StartTest.Enabled = true;
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    string strDevType = INI.GetValueFromIniFile("Instrument", "NA");
+                    if (strDevType.Equals("E5080B 2-port"))
+                    {
+                        gDevType = 2;
+                    }
+                    else
+                    {
+                        gDevType = 0;
+                    }
 
-            CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
+                    //差分开路定义
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, gDevType, out result);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    //E5063A.getStartIndex(CGloabal.g_curInstrument.nHandle, out result, out result2);
+
+                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, DIFFERENCE, out result);
+
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    string strDevType = INI.GetValueFromIniFile("Instrument", "NA");
+                    if (strDevType.Equals("E5071C 2-port"))
+                    {
+                        gDevType = 2;
+                    }
+                    else
+                    {
+                        gDevType = 0;
+                    }
+                    //差分开路定义
+                    E5071C.getStartIndex(CGloabal.g_curInstrument.nHandle, DIFFERENCE, gDevType, out result);
+                }
+                //LoggerHelper.mlog.Debug("DIFF RESULT = " + result);
+                //这里需要处理win1_tr1的数据
+                tmpDiffMeasData = packetMaesData(result, 0, 0);
+                string[] tdd11_array = result.Split(new char[] { ',' });
+                result = string.Empty;
+
+                if (tdd11_array.Length < 200)
+                {
+                    MessageBox.Show("获取差分开路定义失败");
+                }
+
+                //查找tdd11差分的索引值
+                for (int i = 0; i < tdd11_array.Length; i++)
+                {
+                    //logger.Trace(tdd22_array[i]);
+                    if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
+                    {
+                        if (i == 0)
+                        {
+                            MeasPosition.tdd11IndexValue = 0;
+                        }
+                        else
+                        {
+                            MeasPosition.tdd11IndexValue = i - 1;
+                        }
+                        //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        LoggerHelper.mlog.Debug("差分开路位置：" + MeasPosition.tdd11IndexValue.ToString());
+                        break;
+                    }
+                }
+
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    //单端开路定义
+                    result2 = string.Empty;
+                    E5080B.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, gDevType,out result2);
+                    tmpSingleMeasData = packetMaesData(result2, 0, 0);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    //单端开路定义
+                    result2 = string.Empty;
+                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, SINGLE, out result2);
+                    tmpSingleMeasData = packetMaesData(result2, 0, 0);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    //单端开路定义
+                    result2 = string.Empty;
+                    E5071C.getStartIndex(CGloabal.g_curInstrument.nHandle, SINGLE, gDevType, out result2);
+                    tmpSingleMeasData = packetMaesData(result2, 0, 0);
+                }
+
+                //LoggerHelper.mlog.Debug("SINGLE RESULT = " + result2);
+                string[] tdd22_array = result2.Split(new char[] { ',' });
+
+                //查找tdd22单端的索引值
+                for (int i = 0; i < tdd22_array.Length; i++)
+                {
+                    if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
+                    {   
+                        if (i == 0)
+                        {
+                            MeasPosition.tdd22IndexValue = 0;
+                        }
+                        else
+                        {
+                            MeasPosition.tdd22IndexValue = i - 1;
+                        }
+
+                        //这里需要将开路定义后的索引写入到配方的XML文件中去
+                        LoggerHelper.mlog.Debug("单端开路位置：" + MeasPosition.tdd22IndexValue.ToString());
+                        break;
+                    }
+                }
+
+                MeasPosition.isOpen = true;
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+
+                CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
+            }            
         }
-
-
-
-/*
-        //开路定义
-        private void tsb_GetTestIndex_Click(object sender, EventArgs e)
-        {
-            List<float> tmpDiffMeasData = new List<float>();
-            List<float> tmpSingleMeasData = new List<float>();
-            string result = string.Empty;
-
-            if (dataGridView1.Rows.Count == 0)
-            {
-                MessageBox.Show("请先装载配方");
-                return;
-            }
-
-            if (!optStatus.isConnect)
-            {
-                MessageBox.Show("请先连接设备");
-                return;
-            }
-
-            //string cmd2 = "FORM:DATA ASCII";
-            //analyzer.ExecuteCmd(cmd2);
-
-            //string cmd3 = "MMEM:STOR:TRAC:FORM:SNP MA";
-            //analyzer.ExecuteCmd(cmd3);
-
-            string cmd4 = "CALCulate:PARameter:CAT?";
-            analyzer.QueryCommand(cmd4, out result, 256);
-
-            string cmd5 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
-            analyzer.ExecuteCmd(cmd5);
-
-            string cmd6 = ":CALCulate1:TRANsform:TIME:STOP 9.5E-9";
-            analyzer.ExecuteCmd(cmd6);
-
-            string cmd7 = ":SENSe1:SWEep:POINts?";
-            analyzer.QueryCommand(cmd7, out result, 256);
-
-            string cmd8 = ":CALCulate1:TRANsform:TIME:STARt?";
-            analyzer.QueryCommand(cmd8, out result, 256);
-
-            string cmd9 = ":CALCulate1:TRANsform:TIME:STOP?";
-            analyzer.QueryCommand(cmd9, out result, 256);
-
-            string cmd10 = ":INITiate1:CONTinuous ON";
-            analyzer.ExecuteCmd(cmd10);
-
-            string cmd11 = ":CALC:PAR:SEL \"win1_tr2\"";
-            analyzer.ExecuteCmd(cmd11);
-            analyzer.viClear();
-
-            result = string.Empty;
-            string cmd12 = ":CALCulate1:DATA? FDATa";
-            analyzer.QueryCommand(cmd12, out result, 200000);
-
-            tmpSingleMeasData = packetMaesData(result, 0, 0);
-            string[] tdd22_array = result.Split(new char[] { ',' });
-            result = string.Empty;
-
-            if (tdd22_array.Length < 200)
-            {
-                MessageBox.Show("获取差分开路定义失败");
-            }
-
-            //查找tdd22单端的索引值
-            for (int i = 0; i < tdd22_array.Length; i++)
-            {
-                //logger.Trace(tdd22_array[i]);
-                if (Convert.ToSingle(tdd22_array[i]) >= Convert.ToSingle(MeasPosition.tdd22start))
-                {            
-                    MeasPosition.tdd22IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
-                }
-            }
-
-            System.Threading.Thread.Sleep(200);
-
-            string cmd13 = ":CALC:PAR:SEL \"win1_tr1\"";
-            analyzer.ExecuteCmd(cmd13);
-            analyzer.viClear();
-
-            result = string.Empty;
-            string cmd14 = ":CALCulate1:DATA? FDATa";
-            analyzer.QueryCommand(cmd14, out result, 200000);
-            tmpDiffMeasData = packetMaesData(result, 0, 0);
-            string[] tdd11_array = result.Split(new char[] { ',' });
-
-            //查找tdd11差分的索引值
-            for (int i = 0; i < tdd11_array.Length; i++)
-            {
-                //logger.Info(tdd11_array[i]);
-                if (Convert.ToSingle(tdd11_array[i]) >= Convert.ToSingle(MeasPosition.tdd11start))
-                {
-                    MeasPosition.tdd11IndexValue = i - 1;
-                    //这里需要将开路定义后的索引写入到配方的XML文件中去
-                    break;
-                }
-            }
-
-            result = string.Empty;
-
-            MeasPosition.isOpen = true;
-            optStatus.isGetIndex = true;
- 
-            CreateInitMeasChart(tmpDiffMeasData, tmpSingleMeasData);
-        }
-*/
-
 
 
         /// <summary>
@@ -561,51 +595,60 @@ namespace TDRv
             float tmp = 0;
             int i = 0;
 
+            try
+            {
+                if (mode == DIFFERENCE) //差分模式
+                {
+                    for (i = index; i < tmpArray.Length; i++)
+                    {
+                        tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
+                        if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
+                        {
+                            //LoggerHelper.mlog.Trace(tmpArray[i]+"\r\n");
+                            result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else if (mode == SINGLE)//单端模式
+                {
+                    for (i = index; i < tmpArray.Length; i++)
+                    {
+                        tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
+                        if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
+                        {
+                            result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    //开路定义模式，返回所有数据
+                    for (i = 0; i < tmpArray.Length; i++)
+                    {
+                        //logger.Trace(tmpArray[i]);
+                        //LoggerHelper.mlog.Debug(tmpArray[i]);
+                        tmp = Convert.ToSingle(tmpArray[i]);
+                        result.Add(Convert.ToSingle(tmp.ToString("#0.00")));
+                    }
+                }
 
-            if (mode == DIFFERENCE) //差分模式
-            {
-                for (i = index; i < tmpArray.Length; i++)
-                {
-                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd11start))
-                    {
-                        //logger.Error(tmpArray[i]);
-                        result.Add(tmp);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                SaveDataToCSVFile(result, logFileName);                
             }
-            else if (mode == SINGLE)//单端模式
+            catch (Exception ex)
             {
-                for (i = index; i < tmpArray.Length; i++)
-                {
-                    tmp = Convert.ToSingle(tmpArray[i]) + paramList[measIndex.currentIndex].Offset;
-                    if (tmp < Convert.ToSingle(MeasPosition.tdd22start))
-                    {
-                        result.Add(tmp);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                //开路定义模式，返回所有数据
-                for (i = 0; i < tmpArray.Length; i++)
-                {
-                    //logger.Trace(tmpArray[i]);
-                    tmp = Convert.ToSingle(tmpArray[i]);
-                    result.Add(tmp);
-                }
+                MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
 
-            logFileName = DateTime.Now.ToString("yyyyMMddhh:mm:ss.ff");
-            SaveDataToCSVFile(result, logFileName);
+
 
             return result;
         }
@@ -655,39 +698,20 @@ namespace TDRv
             }
 
             //生成测试数据曲线
-            for (int i = 0; i < measDiffData.Count; i++)
+            for (int i = 0; i < measDiffData.Count-1; i++)
             {
                 chart1.Series[0].Points.AddXY(i, measDiffData[i]);
             }
 
-            for (int i = 0; i < measSingleData.Count; i++)
+            for (int i = 0; i < measSingleData.Count-1; i++)
             {
                 chart1.Series[3].Points.AddXY(i, measSingleData[i]);
             }
+
+            isExecuteIndex = true;
+            isExecuteComplete = true;
         }
 
-
-        //获取类的属性集合（以便生成CSV文件的所有Column标题）：
-        //private PropertyInfo[] GetPropertyInfoArray()
-        //{
-        //    PropertyInfo[] props = null;
-        //    try
-        //    {
-        //        Type type = typeof(float);
-        //        object obj = Activator.CreateInstance(type);
-        //        props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-        //    }
-        //    catch (Exception ex)
-        //    { }
-        //    return props;
-        //}
-
-        /// <summary>
-        /// Save the List data to CSV file
-        /// </summary>
-        /// <param name="studentList">data source</param>
-        /// <param name="filePath">file path</param>
-        /// <returns>success flag</returns>
         private bool SaveDataToCSVFile(List<float> measData, string fileName)
         {
             bool successFlag = true;
@@ -697,25 +721,17 @@ namespace TDRv
             StreamWriter sw = null;
             //PropertyInfo[] props = GetPropertyInfoArray();
 
-            string fileDir = Environment.CurrentDirectory + "\\MeasureData";
 
-            if (!Directory.Exists(fileDir))
+            if (!Directory.Exists(CurveDir))
             {
-                Directory.CreateDirectory(fileDir);
+                Directory.CreateDirectory(CurveDir);
             }
 
-            string spath = fileDir +"\\"+ fileName.Replace(":","").Replace(".","")+".csv";
+            string spath = CurveDir + "\\"+ fileName.Replace(":","").Replace(".","")+".csv";
 
             try
             {
                 sw = new StreamWriter(spath);
-                //for (int i = 0; i < props.Length; i++)
-                //{
-                //    strColumn.Append(props[i].Name);
-                //    strColumn.Append(",");
-                //}
-                //strColumn.Remove(strColumn.Length - 1, 1);
-                //sw.WriteLine(strColumn);    //write the column name
 
                 for (int i = 0; i < measData.Count; i++)
                 {
@@ -766,7 +782,7 @@ namespace TDRv
             yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100));
             ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));
 
-            if (xend - xbegin < 10)
+            if (xend - xbegin < 3)
             {
                 //initChart();
                 gEmptyFlag = true;
@@ -830,28 +846,7 @@ namespace TDRv
         }
 
 
-        private void startMeasuration(int channel)
-        {
-            string result = string.Empty;
-            int index = 0;
 
-
-            if (channel == SINGLE)
-            {
-                index = MeasPosition.tdd22IndexValue;
-            }
-            else
-            {
-                index = MeasPosition.tdd11IndexValue;  
-            }
-
-
-            E5080B.measuration(CGloabal.g_InstrE5080BModule.nHandle, channel, out result);
-
-            //获取要生成报表的数据
-            CreateMeasChart(packetMaesData(result, index, channel));
-
-        }
 
         /// <summary>
         /// 字符串转浮点型数据
@@ -998,7 +993,7 @@ namespace TDRv
 
             this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
             this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
@@ -1026,7 +1021,7 @@ namespace TDRv
 
             this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
             this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("hh:mm:ss");     //时间
+            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
             this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
             this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
             this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
@@ -1047,16 +1042,27 @@ namespace TDRv
 
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
-            if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+            if (tsb_Pnl_ID.Text.Length == 0)
             {
-                optStatus.isConnect = false;
-                optStatus.isGetIndex = false;
-                optStatus.isLoadXml = false;
-                tsb_StartTest.Enabled = false;
+                CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空");
                 return;
             }
 
-            toDoWork();
+            if (isExecuteComplete)
+            {
+                isExecuteComplete = false;
+                
+                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                //{
+                //    optStatus.isConnect = false;
+                //    optStatus.isGetIndex = false;
+                //    optStatus.isLoadXml = false;
+                //    tsb_StartTest.Enabled = false;
+                //    return;
+                //}
+
+                toDoWork();
+            }
         }
 
         public void toDoWork()
@@ -1084,10 +1090,20 @@ namespace TDRv
 
                     SetLableText("", "Control");
 
-                    E5080B.measuration(CGloabal.g_InstrE5080BModule.nHandle, channel, out result);
+                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                    {
+                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                    {
+                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                    {
+                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                    }
 
-                    //量测并生成图表
-                    //startMeasuration(paramList[measIndex.currentIndex].DevMode);
+                    //量测并生成图表                    
                     List<float> disResult = packetMaesData(result, index, channel);
 
                     DisplayChartValue(chart1, disResult);
@@ -1117,8 +1133,8 @@ namespace TDRv
                     //高亮显示相应测试配方的那一行            
                     //dataGridView1.CurrentCell = dataGridView1.Rows[measIndex.currentIndex].Cells[0];
                     reFreshDatagridview(dataGridView1);
+                    isExecuteComplete = true;
 
-                    //CaptureScreen(paramList[measIndex.currentIndex].Curve_image);
                 }
                 else
                 {                    
@@ -1133,13 +1149,15 @@ namespace TDRv
                 return;
             }
 
-            if(paramList[measIndex.currentIndex].Curve_image.Length != 0)
+            if(paramList[0].Curve_image.Length > 3)
             {
                 task1.ContinueWith((Task) =>
                 {
-                    CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image);
+                   
+                    CaptureScreenChart(chart1, paramList[0].Curve_image);
                 });
-            }
+            }            
+         
         }
 
         private void tsmi_delAll_Click(object sender, EventArgs e)
@@ -1188,12 +1206,13 @@ namespace TDRv
         {
             string defName = INI.GetValueFromIniFile("TDR", "ExportFile"); ;
             SaveFileDialog dlg = new SaveFileDialog();
+            dlg.InitialDirectory = reportDir;
             dlg.Filter = "Execl files (*.csv)|*.csv";
             dlg.FilterIndex = 0;
             dlg.RestoreDirectory = true;
             dlg.CreatePrompt = true;
             dlg.Title = "保存为csv文件";    
-            dlg.FileName = Path.GetFileNameWithoutExtension(defName);            
+            dlg.FileName = reportDir + "\\" + Path.GetFileNameWithoutExtension(defName);            
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -1233,19 +1252,28 @@ namespace TDRv
                             }
                             else
                             {
-                                columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                                //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                                //columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                                if (k == 10)
+                                {
+                                    columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim() + "\t";
+                                }
+                                else
+                                {
+                                    columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                                }
                             }
                         }
                         sw.WriteLine(columnValue);
                     }
                     sw.Close();
-                    myStream.Close();
-                    MessageBox.Show("导出报告成功！");
+                    myStream.Close();                    
+                    CommonFuncs.ShowMsg(eHintInfoType.hint, "导出报告成功!");
                     return true;
                 }
                 catch (Exception e)
-                {
-                    MessageBox.Show("导出报告失败！");
+                {                    
+                    CommonFuncs.ShowMsg(eHintInfoType.error, "导出报告失败!");
                     return false;
                 }
                 finally
@@ -1255,8 +1283,8 @@ namespace TDRv
                 }
             }
             else
-            {
-                MessageBox.Show("取消导出报告操作!");
+            {                
+                CommonFuncs.ShowMsg(eHintInfoType.hint, "取消导出报告操作!");
                 return false;
             }
         }
@@ -1264,20 +1292,29 @@ namespace TDRv
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
-            {          
-                if (optParam.keyMode == 1)
+            {
+                if (tsb_Pnl_ID.Text.Length == 0)
                 {
-                    if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                    CommonFuncs.ShowMsg(eHintInfoType.waring, "panel id 不能为空!");
+                    return;
+                }
+                if (isExecuteComplete)
+                {
+                    isExecuteComplete = false;                    
+
+                    if (optParam.keyMode == 1)
                     {
-                        optStatus.isConnect = false;
-                        optStatus.isGetIndex = false;
-                        optStatus.isLoadXml = false;
-                        return;
+                        //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
+                        //{
+                        //    optStatus.isConnect = false;
+                        //    optStatus.isGetIndex = false;
+                        //    optStatus.isLoadXml = false;
+                        //    return;
+                        //}
+                        toDoWork();
                     }
-                    toDoWork();
                 }
             }
-
         }
 
         //鼠标点击单元框选，更改测试次序,同时对比LIMIT里，需要对比相应的LIMIT
@@ -1311,10 +1348,10 @@ namespace TDRv
             }
             else
             {
-                float xbegin = 0;
-                float xend = 0;
-                float yhigh = 0;
-                float ylow = 0;
+                float xbegin = 0.0f;
+                float xend = 0.0f;
+                float yhigh = 0.0f;
+                float ylow = 0.0f;
 
 
                 foreach (var series in chart1.Series)
@@ -1332,13 +1369,17 @@ namespace TDRv
                 }
                 else
                 {
-                    float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
-                    float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
-                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
-                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float yhigh_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec))/100;
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    //yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + yhigh_offset); //量测值上限
+                    //ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 - ylow_offset);//量测值下限
+                    //float ylow_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit))/100;
+                    yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                    ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
+
                 }
 
-                if (xend - xbegin < 10)
+                if (xend - xbegin < 3)
                 {
                     //initChart();
                     gEmptyFlag = true;
@@ -1378,9 +1419,9 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString();
-                    chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
-                    chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
+                    chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
+                    chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
+                    chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
                 }
                 else
                 {
@@ -1415,12 +1456,12 @@ namespace TDRv
             else
             {         
                 bool ret = false;
-                float avg = 0;
-                float max = 0;
-                float min = 0;
+                float avg = 0.0f;
+                float max = 0.0f;
+                float min = 0.0f;
 
-                float lowLimit = 0;
-                float hiLimit = 0;
+                float lowLimit = 0.0f;
+                float hiLimit = 0.0f;
 
                 if (gEmptyFlag)
                 {
@@ -1445,12 +1486,14 @@ namespace TDRv
                 }
                 else
                 {
-                    float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
-                    float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
-                    hiLimit = stdValue * (1 + hi_offset);
-                    lowLimit = stdValue * (1 - low_offset);
+                    //float hi_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) - Convert.ToSingle(paramList[measIndex.currentIndex].Spec)) / 100;
+                    //float low_offset = (Convert.ToSingle(paramList[measIndex.currentIndex].Spec) - Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit)) / 100;
+                    //hiLimit = stdValue * (1 + hi_offset);
+                    //lowLimit = stdValue * (1 - low_offset);
+                    hiLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit);
+                    lowLimit = Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit);
                 }
-                
+
 
                 //这里判定是以点的方式还是以平均值的方式来判定结果
                 if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
@@ -1542,9 +1585,15 @@ namespace TDRv
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
                 _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
-
+                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
+                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
 
                 if (flag == CURRENT_RECORD) //当前量测
+                {
+                    //光标在最后一行
+                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
+                }
+                else
                 {
                     //只有最后一个走完，流水才++
                     if (measIndex.currentIndex == paramList.Count - 1)
@@ -1552,16 +1601,18 @@ namespace TDRv
                         gSerialInc++;
                     }
 
-                    //光标在最后一行
-                    _dgv.CurrentCell = _dgv.Rows[_dgv.Rows.Count - 1].Cells[0];               
-                }
-                else
-                {
                     List<string> historyRecord = new List<string>();
                     //这里要写历史记录       
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
                     {
-                        historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
+                        if (j == 10)
+                        {
+                            historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
+                        }
+                        else
+                        {
+                            historyRecord.Add(_dgv.Rows[index].Cells[j].Value.ToString());
+                        }
                     }
                     string defName = INI.GetValueFromIniFile("TDR", "HistoryFile"); 
                     writeHistoryRecord(historyRecord, defName);
@@ -1583,7 +1634,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage";
+                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
@@ -1634,32 +1685,61 @@ namespace TDRv
             }
             else
             {
-                string fileDir = path + "\\Image";
-
-                if (!Directory.Exists(fileDir))
+                try
                 {
-                    Directory.CreateDirectory(fileDir);
+                    string fileDir = path + "\\Image";
+
+                    if (!Directory.Exists(fileDir))
+                    {
+                        Directory.CreateDirectory(fileDir);
+                    }
+
+                    Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
+                    Point ScreenP = this.PointToScreen(FrmP);
+                    int x = splitContainer2.SplitterDistance + ScreenP.X;
+                    int y = ScreenP.Y;
+
+                    //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+                    Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
+                    Graphics g = Graphics.FromImage(bit);
+                    g.CompositingQuality = CompositingQuality.HighSpeed;//质量设为最高
+                                                                        //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+                    g.CopyFromScreen(x, y, 0, 0, _chart.Size);//只保存某个控件
+                                                              //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
+
+                    bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
+                                                                                                      //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
                 }
-
-                Point FrmP = new Point(splitContainer1.Left, splitContainer1.Top);
-                Point ScreenP = this.PointToScreen(FrmP);
-                int x = splitContainer2.SplitterDistance + ScreenP.X;
-                int y = ScreenP.Y;
-
-                //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
-                Bitmap bit = new Bitmap(_chart.Width, _chart.Height);//实例化一个和窗体一样大的bitmap
-                Graphics g = Graphics.FromImage(bit);
-                g.CompositingQuality = CompositingQuality.HighSpeed;//质量设为最高
-                //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
-                g.CopyFromScreen(x,y,0,0, _chart.Size);//只保存某个控件
-                //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
-                
-                bit.Save(fileDir + "\\" + logFileName.Replace(":", "").Replace(".", "") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好    
-               //bit.Save(fileDir + "\\" + logFileName.Replace('.','-') + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好   
+                catch (Exception ex)
+                {
+                    MessageBox.Show("日志文件路径错误，请重新设置\r\n", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (CGloabal.g_curInstrument != null)
+            {
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    //清空
+                    E5080B.viClear(CGloabal.g_curInstrument.nHandle);
+                    E5080B.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    E5063A.viClear(CGloabal.g_curInstrument.nHandle);
+                    E5063A.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    //差分开路定义
+                    E5071C.viClear(CGloabal.g_curInstrument.nHandle);
+                    E5071C.viClose(CGloabal.g_curInstrument.nHandle);
+                }
+            }
+        }
     }//end form
 
     public class MeasIndex

@@ -23,13 +23,13 @@ namespace TDRv.Driver
             {
                 return viError;
             }
-
+            
             viError = visa32.viOpen(resourceMgr, resourceName, visa32.VI_NO_LOCK, visa32.VI_TMO_IMMEDIATE, out nHandle);
             if (viError != visa32.VI_SUCCESS)
             {
                 return viError;
             }
-
+            
             StringBuilder attr = new StringBuilder();
             viError = visa32.viGetAttribute(nHandle, visa32.VI_ATTR_RSRC_CLASS, attr);
             viError = visa32.viSetAttribute(nHandle, visa32.VI_ATTR_TERMCHAR_EN, visa32.VI_TRUE);
@@ -184,31 +184,51 @@ namespace TDRv.Driver
             return errorno;
         }
 
-        public static int measuration(int nInstrumentHandle,int channel, out string msg)
+        public static int measuration(int nInstrumentHandle,int channel, int devType, out string msg)
         {
             int viError;
             int count;
-
+            byte[] ret = new byte[200000];
             byte[] result = new byte[256];
             string response = string.Empty;
-            string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
+            string cmd0,cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
+
+            Array.Clear(ret, 0, 200000);
+            cmd0 = "CALC:PAR:CAT?";
+            visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd0 + "\n"), cmd0.Length, out count);
+            visa32.viRead(nInstrumentHandle, ret, 200000, out count);
 
             if (channel == 1)
             {
-                cmd1 = ":CALC:PAR:SEL \"win1_tr1\"";                
+                if (devType == 2)
+                {
+                    cmd1 = "CALC:PAR:MNUM 1";
+                }
+                else
+                {
+                    cmd1 = "CALC:PAR:SEL \"win1_tr1\"";        //差分
+                }  
             }
             else
             {
-                cmd1 = ":CALC:PAR:SEL \"win1_tr2\"";
+                if (devType == 2)
+                {
+                    //cmd1 = "CALC:PAR:SEL \"win2_tr1\"";        //单端
+                    cmd1 = "CALC:PAR:MNUM 2";
+                }
+                else
+                {
+                    cmd1 = "CALC:PAR:SEL \"win1_tr2\"";        //单端
+                }
             }
             
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd1 + "\n"), cmd1.Length, out count);
 
 
-            cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
-            viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd2 + "\n"), cmd2.Length, out count);
-            viError = visa32.viRead(nInstrumentHandle, result, 256, out count);
-            response = Encoding.ASCII.GetString(result, 0, count); 
+            //cmd2 = ":CALCulate1:TRANsform:TIME:STARt?";
+            //viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd2 + "\n"), cmd2.Length, out count);
+            //viError = visa32.viRead(nInstrumentHandle, result, 256, out count);
+            //response = Encoding.ASCII.GetString(result, 0, count); 
 
             cmd3 = "DISPlay:ENABle ON";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd3 + "\n"), cmd3.Length, out count);
@@ -222,8 +242,8 @@ namespace TDRv.Driver
             visa32.viClear(nInstrumentHandle);
 
 
-            byte[] ret = new byte[200000];
-            cmd6 = ":CALCulate1:DATA? FDATa";
+            Array.Clear(ret, 0, 200000);
+            cmd6 = ":CALC1:DATA? FDATa";
             viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(cmd6 + "\n"), cmd6.Length, out count);
             viError = visa32.viRead(nInstrumentHandle, ret, 200000, out count);
             msg = Encoding.ASCII.GetString(ret, 0, count);
@@ -233,10 +253,11 @@ namespace TDRv.Driver
 
 
 
-        public static int getStartIndex(int nInstrumentHandle, int channel, out string msg)
+        public static int getStartIndex(int nInstrumentHandle, int channel,int devType, out string msg)
         {
             int viError,count;
             byte[] result = new byte[256];
+            byte[] ret = new byte[200000];
 
             string str1 = ":CALCulate1:TRANsform:TIME:STARt -5E-10";
             
@@ -248,21 +269,37 @@ namespace TDRv.Driver
 
             string str3 = "CALC1:X?";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str3 + "\n"), str3.Length, out count);
-            visa32.viRead(nInstrumentHandle, result, 256, out count);
-            //msg = Encoding.ASCII.GetString(result, 0, count);
+            visa32.viRead(nInstrumentHandle, ret, 200000, out count);
 
+            Array.Clear(ret, 0, 200000);
             string str4 = "CALC:PAR:CAT?";
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str4 + "\n"), str4.Length, out count);
-            visa32.viRead(nInstrumentHandle, result, 256, out count);
+            visa32.viRead(nInstrumentHandle, ret, 200000, out count);
 
             string str5 = string.Empty;
             if (channel == 1)
             {
-                str5 = ":CALC:PAR:SEL \"win1_tr1\"";
+                if (devType == 2)
+                {
+                    str5 = "CALC:PAR:MNUM 1";
+                }
+                else
+                {
+                    str5 = "CALC:PAR:SEL \"win1_tr1\"";//差分   
+                }
+                
             }
             else
             {
-                str5 = ":CALC:PAR:SEL \"win1_tr2\"";
+                if (devType == 2)
+                {
+                    //str5 = "CALC:PAR:SEL \"win2_tr1\"";//单端
+                    str5 = "CALC:PAR:MNUM 2";
+                }
+                else
+                {
+                    str5 = "CALC:PAR:SEL \"win1_tr2\"";//单端
+                }                
             }
 
             visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str5 + "\n"), str5.Length, out count);
@@ -280,7 +317,8 @@ namespace TDRv.Driver
 
             string str10 = ":CALCulate1:DATA? FDATa";
 
-            byte[] ret = new byte[200000];
+            //byte[] ret = new byte[200000];
+            Array.Clear(ret, 0, 200000);
             viError = visa32.viWrite(nInstrumentHandle, Encoding.ASCII.GetBytes(str10 + "\n"), str10.Length, out count);
             viError = visa32.viRead(nInstrumentHandle, ret, 200000, out count);
             msg = Encoding.ASCII.GetString(ret, 0, count);

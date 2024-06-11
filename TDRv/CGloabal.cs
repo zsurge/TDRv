@@ -28,6 +28,9 @@ namespace TDRv
 
         //定义五个仪器的对象
         public static InstrMentsParas g_InstrE5080BModule = new InstrMentsParas("E5080B");
+        public static InstrMentsParas g_InstrE5063AModule = new InstrMentsParas("E5063A");
+        public static InstrMentsParas g_InstrE5071CModule = new InstrMentsParas("E5071C");
+
         public static InstrMentsParas g_curInstrument; //表征当前正在操作的仪器
         public static int g_nSimulteFlag = 0;  //整机模拟状态标示 false,真实状态；true，模拟状态
         public static string strExecuteBeginDir;

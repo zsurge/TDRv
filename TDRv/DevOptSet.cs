@@ -18,8 +18,11 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public string historyFile = Environment.CurrentDirectory + "\\record\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
-        public string exportFile = Environment.CurrentDirectory + "\\record\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
+        public delegate void ChangeSnHandler(string sn);  //定义委托
+        public event ChangeSnHandler ChangeSn;  //定义事件
+
+        public string historyFile = Environment.CurrentDirectory + "\\MeasureData\\History\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_History.csv";
+        public string exportFile = Environment.CurrentDirectory + "\\MeasureData\\Report\\" + "TDR_" + DateTime.Now.ToString("yyyyMMdd") + "_Export.csv";
 
         private void DevOptSet_Load(object sender, EventArgs e)
         {
@@ -27,6 +30,30 @@ namespace TDRv
             tx_sn_begin.Text = INI.GetValueFromIniFile("TDR", "SerialNumber");
             tx_history_report.Text = INI.GetValueFromIniFile("TDR", "HistoryFile");
             tx_export_report.Text = INI.GetValueFromIniFile("TDR", "ExportFile");
+
+            if(tx_sn_prefix.Text.Length == 0)
+            {
+                tx_sn_prefix.Text = "SN";
+                INI.WriteValueToIniFile("TDR", "SN_Head", "SN");
+            }
+
+            if (tx_sn_begin.Text.Length == 0)
+            {
+                tx_sn_begin.Text = "0001";
+                INI.WriteValueToIniFile("TDR", "SerialNumber", "0001");
+            }
+
+            if (tx_history_report.Text.Length == 0)
+            {
+                tx_history_report.Text = "TDR_HistoryFile.CSV";
+                INI.WriteValueToIniFile("TDR", "HistoryFile", "TDR_HistoryFile.CSV");
+            }
+
+            if (tx_export_report.Text.Length == 0)
+            {
+                tx_export_report.Text = "SN";
+                INI.WriteValueToIniFile("TDR", "ExportFile", "TDR_Export_report.CSV");
+            }
 
             optParam.snPrefix = tx_sn_prefix.Text;
             optParam.snBegin = tx_sn_begin.Text;
@@ -76,8 +103,14 @@ namespace TDRv
                 optParam.exportMode = 2;
                 radio_sn_auto.Checked = true;
             }
+        }
 
-
+        public void OnSnChanged()
+        {
+            if (ChangeSn != null)
+            {
+                ChangeSn(optParam.snBegin); /* 事件被触发 */
+            }
         }
 
         private void btn_opt_ok_Click(object sender, EventArgs e)
@@ -160,6 +193,8 @@ namespace TDRv
 
                 INI.WriteValueToIniFile("TDR", "ExportFile", tx_export_report.Text);
             }
+
+            OnSnChanged();
 
             this.Close();
         }

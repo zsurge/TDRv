@@ -20,7 +20,8 @@ namespace TDRv
         public string InputChannel { get; set; } = "1";
         public string InputMode { get; set; } = "SingleEnded";
         public string TestMethod { get; set; } = "Enable";
-        public string TestFromThreshold { get; set; } = "50";
+        //public string TestFromThreshold { get; set; } = "50";
+        public string TestFromThreshold { get; set; } = "30";
         public string TestToThreshold { get; set; } = "70";
         public string OpenThreshold { get; set; } = "125";
         public string TraceStartPosition { get; set; } = "0";

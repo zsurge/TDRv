@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,6 +23,14 @@ namespace TDRv
 
         public bool clickFlag = false;
 
+        public bool single_click_flag = false;
+        public bool diff_click_flag = false;
+        public bool units_percent_click_flag = false;
+        public bool units_ohm_click_flag = false;
+        public bool units_custom_click_flag = false;
+        public bool limit_value_click_flag = false;
+
+        public string last_units = "ohm";
         DataTable tmpDt;
 
         public delegate void ChangeDgvHandler(DataGridView dgv);  //定义委托
@@ -29,6 +38,13 @@ namespace TDRv
 
         public static string xmlFilePath = string.Empty;
         public int selectionIdx = 0;
+
+        // private Regex _regex = new Regex("^[0-9]*\\.?[0-9]+$");
+        //private Regex regex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$|\bBackspace\b");
+        private string allowedCharsPattern = @"[0-9\b\.\,]";
+
+        //添加是否存储XML标志位，TRUE= 已保存；FALSE = 未保存；
+        public bool isSaveXml  = true;
 
         private static string sPath = Directory.GetCurrentDirectory() + "\\Impedance_Config.ini";
         IniFile optIni = new IniFile(sPath);
@@ -41,17 +57,25 @@ namespace TDRv
         /// <param name="filePath">XML文件路径</param>
         private void getXmlInfo(string filePath)
         {
-            DataSet myds = new DataSet();
-            if (filePath.Length != 0)
+            try
             {
-                myds.ReadXml(filePath);
-                dgv_param.DataSource = myds.Tables[0];
-                dgv_param.Tag = Path.GetFileNameWithoutExtension(filePath);
+                DataSet myds = new DataSet();
+                if (filePath.Length != 0)
+                {
+                    myds.ReadXml(filePath);
+                    dgv_param.DataSource = myds.Tables[0];
+                    dgv_param.Tag = Path.GetFileNameWithoutExtension(filePath);
+                }
+                else
+                {
+                    MessageBox.Show("未正确装载配方文件");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("未正确装载配方文件");
+                MessageBox.Show("配方文件格式错误\r\n" + ex.ToString(), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void TranToParentForm()
@@ -71,12 +95,13 @@ namespace TDRv
             //设置对话框标题
             pOpenFileDialog.Title = "载入XML文件";
             pOpenFileDialog.Filter = "XML文件|*.xml";
-            pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            pOpenFileDialog.InitialDirectory = Environment.CurrentDirectory + "\\Config";
             //监测文件是否存在
             pOpenFileDialog.CheckFileExists = true;
             if (pOpenFileDialog.ShowDialog() == DialogResult.OK)  //如果点击的是打开文件
             {
                 xmlFilePath = pOpenFileDialog.FileName;  //获取全路径文件名     
+             
                 getXmlInfo(xmlFilePath);               
             }
         }
@@ -84,6 +109,10 @@ namespace TDRv
         //新建一个新的配置文件
         private void tsb_create_xml_Click(object sender, EventArgs e)
         {
+            isSaveXml = false;
+
+            ctrIsEnable(true);
+
             if (dgv_param.DataSource == null)
             {
                 //清空参数表格            
@@ -148,17 +177,24 @@ namespace TDRv
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "保存XML文件";
-            sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
             sfd.Filter = "XML文件|*.xml";
+
+
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+
+                if (File.Exists(sfd.FileName))
+                    File.Delete(sfd.FileName);
+
                 DataTable dT = GetDataTableFromDGV(dgv_param);
                 DataSet dS = new DataSet();
                 dS.Tables.Add(dT);
                 dS.WriteXml(File.OpenWrite(sfd.FileName));
                 dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
                 xmlFilePath = sfd.FileName;
+                isSaveXml = true;
             }
 
         }
@@ -166,6 +202,7 @@ namespace TDRv
         //新增或者是新添加一行
         private void CreateOrAddRow()
         {
+            isSaveXml = false;
             if (dgv_param.Rows.Count == 0) 
             {
                 if (dgv_param.DataSource == null)
@@ -274,17 +311,22 @@ namespace TDRv
         //增加一行
         private void tsb_add_param_Click(object sender, EventArgs e)
         {
+            ctrIsEnable(true);
             CreateOrAddRow();
         }
 
         //复制选中行
         private void tsb_copy_param_Click(object sender, EventArgs e)
         {
-            if(dgv_param.Rows.Count == 0)
+            isSaveXml = false;
+
+            if (dgv_param.Rows.Count == 0)
             {
                 MessageBox.Show("请先新建一条配方");
                 return;
             }
+
+            ctrIsEnable(true);
 
             if (dgv_param.DataSource == null)
             {
@@ -328,6 +370,9 @@ namespace TDRv
         //删除选中行
         private void tsb_del_param_Click(object sender, EventArgs e)
         {
+            isSaveXml = false;
+            ctrIsEnable(true);
+
             if (dgv_param.Rows.Count > 0)
             {
                 dgv_param.Rows.Remove(dgv_param.CurrentRow);                
@@ -341,80 +386,102 @@ namespace TDRv
 
         private void dgv_param_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1)
+            try
             {
-                initControl(true);
-                tx_p_testSn.Text = (e.RowIndex+1).ToString();
-                tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
-                tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
-                tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
-                tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
-                tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
-                tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
+                if (e.RowIndex > -1)
+                {
+                    initControl(true);
+                    ctrIsEnable(true);
+                    tx_p_testSn.Text = (e.RowIndex+1).ToString();
+                    tx_p_Description.Text = dgv_param.Rows[e.RowIndex].Cells["Description"].Value.ToString();
+                    tx_p_Layer.Text = dgv_param.Rows[e.RowIndex].Cells["Layer"].Value.ToString();
+                    tx_p_Remark.Text = dgv_param.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
+                    tx_p_TargetValue.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceDefine"].Value.ToString();
+                    tx_p_lowLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitLower"].Value.ToString();
+                    tx_p_highLimit.Text = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUpper"].Value.ToString();
 
-                string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
+                    limit_value_click_flag = true;
 
-                clickFlag = true;
-                if (string.Compare(units, "ohms", true) == 0)
-                {
-                    radio_units_ohm.Checked = true;
-                    lab_highlimit_unit.Text = "欧姆";
-                    lab_lowlimit_unit.Text  = "欧姆";
-                }
-                else
-                {
-                    radio_units_percent.Checked = true;
-                    lab_highlimit_unit.Text = "%";
-                    lab_lowlimit_unit.Text = "%";
-                }
+                    string units = dgv_param.Rows[e.RowIndex].Cells["ImpedanceLimitUnit"].Value.ToString();
 
-                string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
-                if (string.Compare(testMode, "Differential", true) == 0)
-                {
-                    radio_p_diff.Checked = true;
-                }
-                else
-                {
-                    radio_p_single.Checked = true;
-                }
+                        //clickFlag = true;
+
+                    if (string.Compare(units, "%", true) == 0)
+                    {
+                        last_units = "%";
+                        units_percent_click_flag = true;
+                        radio_units_percent.Checked = true;
+                        lab_highlimit_unit.Text = "%";
+                        lab_lowlimit_unit.Text = "%";
+                        lab_offsetlimit_unit.Text = "ohm";
+                        tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text)*float.Parse(tx_p_TargetValue.Text)/100).ToString();   
+                    }
+                    else
+                    {
+                        last_units = "ohm";
+                        units_ohm_click_flag = true;
+                        radio_units_ohm.Checked = true;
+                        lab_highlimit_unit.Text = "ohm";
+                        lab_lowlimit_unit.Text = "ohm";
+                        lab_offsetlimit_unit.Text = "ohm";
+                        tx_limit_offset.Text = Math.Abs(Math.Round((float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)),2)).ToString();
+                    }
+
+
+                    string testMode = dgv_param.Rows[e.RowIndex].Cells["InputMode"].Value.ToString();
+                    if (string.Compare(testMode, "Differential", true) == 0)
+                    {
+                        diff_click_flag = true;
+                        radio_p_diff.Checked = true;
+                    }
+                    else
+                    {
+                        single_click_flag = true;
+                        radio_p_single.Checked = true;
+                    }
                 
 
-                tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
-                tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
-                tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
-                tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
-                tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
+                    tx_p_begin.Text = dgv_param.Rows[e.RowIndex].Cells["TestFromThreshold"].Value.ToString();
+                    tx_p_end.Text = dgv_param.Rows[e.RowIndex].Cells["TestToThreshold"].Value.ToString();
+                    tx_p_Index.Text = dgv_param.Rows[e.RowIndex].Cells["OpenThreshold"].Value.ToString();
+                    tx_p_yOffset.Text = dgv_param.Rows[e.RowIndex].Cells["CalibrateOffset"].Value.ToString();
+                    tx_p_savePath.Text = dgv_param.Rows[e.RowIndex].Cells["RecordPath"].Value.ToString();
 
 
-                string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
-                if (string.Compare(isSaveCsv, "Enable", true) == 0)
-                {
-                    radio_p_data_open.Checked = true;
-                }
-                else
-                {
-                    radio_p_data_close.Checked = true;
-                }
+                    string isSaveCsv = dgv_param.Rows[e.RowIndex].Cells["SaveCurve"].Value.ToString();
+                    if (string.Compare(isSaveCsv, "Enable", true) == 0)
+                    {
+                        radio_p_data_open.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_data_close.Checked = true;
+                    }
 
-                string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
-                if (string.Compare(isSaveImage, "Enable", true) == 0)
-                {
-                    radio_p_image_open.Checked = true;
-                }
-                else
-                {
-                    radio_p_image_close.Checked = true;
-                }
+                    string isSaveImage = dgv_param.Rows[e.RowIndex].Cells["SaveImage"].Value.ToString();
+                    if (string.Compare(isSaveImage, "Enable", true) == 0)
+                    {
+                        radio_p_image_open.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_image_close.Checked = true;
+                    }
 
-                string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
-                if (string.Compare(judgMode, "DataPoints", true) == 0)
-                {
-                    radio_p_tag_point.Checked = true;
+                    string judgMode = dgv_param.Rows[e.RowIndex].Cells["DataPointCheck"].Value.ToString();
+                    if (string.Compare(judgMode, "DataPoints", true) == 0)
+                    {
+                        radio_p_tag_point.Checked = true;
+                    }
+                    else
+                    {
+                        radio_p_tag_avg.Checked = true;
+                    }             
                 }
-                else
-                {
-                    radio_p_tag_avg.Checked = true;
-                }             
+            }
+            catch (IOException ex)
+            {
+                    MessageBox.Show(ex.Message);
             }
         }
 
@@ -442,55 +509,160 @@ namespace TDRv
             }
         }
 
+        private bool is_check_limit_value_empty()
+        {
+            if (tx_p_TargetValue.Text.Length == 0 || tx_p_highLimit.Text.Length==0 || tx_p_lowLimit.Text.Length == 0)
+                return true;
+
+            return false;
+        }
+
         private void radio_units_ohm_CheckedChanged(object sender, EventArgs e)
         {
+            if (units_ohm_click_flag)
+            {
+                units_ohm_click_flag = false;
+                return;
+            }
+
             if (radio_units_ohm.Checked)
             {
        
-                lab_highlimit_unit.Text = "欧姆";
-                lab_lowlimit_unit.Text = "欧姆";
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
 
-                if (clickFlag)
+                if (is_check_limit_value_empty())
                 {
-                    clickFlag = false;
+                    MessageBox.Show("limit值不能为空", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
-
-                tx_p_lowLimit.Text = ((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                if (string.Compare(last_units, "%", true) == 0)
+                {
+                    last_units = "ohm";
+                    tx_p_highLimit.Text = Math.Round(((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)),2).ToString();
+                    tx_p_lowLimit.Text = Math.Round(((1-Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100 ) * Convert.ToSingle(tx_p_TargetValue.Text)),2).ToString();
+                    tx_limit_offset.Text = Math.Abs(Math.Round((float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)),2)).ToString();
+                }
          
             }
         }
 
         private void radio_units_percent_CheckedChanged(object sender, EventArgs e)
         {
+
+            if (units_percent_click_flag)
+            {
+                units_percent_click_flag = false;
+                return;
+            }
+
             if (radio_units_percent.Checked)
             {     
                 lab_highlimit_unit.Text = "%";
                 lab_lowlimit_unit.Text = "%";
 
-                if (clickFlag)
+                if (is_check_limit_value_empty())
                 {
-                    clickFlag = false;
+                    MessageBox.Show("limit值不能为空", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();
-                tx_p_lowLimit.Text = ((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100).ToString();               
-             
+                if (string.Compare(last_units, "ohm", true) == 0)
+                {
+                    last_units = "%";
+                    tx_p_highLimit.Text = Math.Round(((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100),2).ToString();
+                    tx_p_lowLimit.Text = Math.Round(((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100),2).ToString();
+                    tx_limit_offset.Text = Math.Round((float.Parse(tx_p_highLimit.Text) * float.Parse(tx_p_TargetValue.Text) / 100), 2).ToString();
+                }
+            }
+        }
+
+        private void radio_units_custom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (units_custom_click_flag)
+            {
+                units_custom_click_flag = false;
+                return;
+            }
+
+            if (radio_units_custom.Checked)
+            {
+                tx_limit_offset.Enabled = true;
+                lab_highlimit_unit.Text = "ohm";
+                lab_lowlimit_unit.Text = "ohm";
+                lab_offsetlimit_unit.Text = "ohm";
+                last_units = "ohm";
+
+                tx_limit_offset.Text = String.Empty;
+                tx_p_highLimit.Text = String.Empty;
+                tx_p_lowLimit.Text = String.Empty;
+
+
+                //if (string.Compare(last_units, "%", true) == 0)
+                //{
+                //    last_units = "ohm";
+                //    tx_p_highLimit.Text = ((Convert.ToSingle(tx_p_highLimit.Text) / 100 + 1) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                //    tx_p_lowLimit.Text = ((1 - Math.Abs(Convert.ToSingle(tx_p_lowLimit.Text)) / 100) * Convert.ToSingle(tx_p_TargetValue.Text)).ToString();
+                //    tx_limit_offset.Text = (float.Parse(tx_p_highLimit.Text) - float.Parse(tx_p_TargetValue.Text)).ToString();
+                //}
+
             }
         }
 
         private void DevParamSet_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (isSaveXml == false)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Title = "保存XML文件";
+                sfd.InitialDirectory = Environment.CurrentDirectory + "\\Config";
+                sfd.Filter = "XML文件|*.xml";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    DataTable dT = GetDataTableFromDGV(dgv_param);
+                    DataSet dS = new DataSet();
+                    dS.Tables.Add(dT);
+                    dS.WriteXml(File.OpenWrite(sfd.FileName));
+                    dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
+                    xmlFilePath = sfd.FileName;
+                    isSaveXml = true;
+                }
+                else
+                {
+                    DataTable dT = GetDataTableFromDGV(dgv_param);
+                    DataSet dS = new DataSet();
+                    dS.Tables.Add(dT);
+                    sfd.FileName = Environment.CurrentDirectory + "\\Config\\_temp.xml";
+                    dS.WriteXml(File.OpenWrite(sfd.FileName));
+                    dgv_param.Tag = Path.GetFileNameWithoutExtension(sfd.FileName);
+                    xmlFilePath = sfd.FileName;
+                    return;
+                }
+            }
+
             TranToParentForm();
             save_xmlfilename_config();
+        }
+
+        public void ctrIsEnable(bool isEnable)
+        {
+            groupBox1.Enabled = isEnable;
+            groupBox2.Enabled = isEnable;
+            groupBox3.Enabled = isEnable;
+            groupBox4.Enabled = isEnable;
+            groupBox5.Enabled = isEnable;
+            groupBox6.Enabled = isEnable;
+            groupBox7.Enabled = isEnable;
         }
 
         private void btn_update_Click(object sender, EventArgs e)
         {
             int index = dgv_param.CurrentRow.Index;
+
+
+            ctrIsEnable(false);
 
             this.dgv_param.Rows[index].Cells[0].Value = dp.Id;
             this.dgv_param.Rows[index].Cells[1].Value = index+1;            
@@ -508,6 +680,11 @@ namespace TDRv
             if (radio_units_percent.Checked)
             {
                 this.dgv_param.Rows[index].Cells[8].Value = "%";
+            }
+
+            if (radio_units_custom.Checked)
+            {
+                this.dgv_param.Rows[index].Cells[8].Value = "ohms";
             }
 
             this.dgv_param.Rows[index].Cells[9].Value = dp.InputChannel;
@@ -572,6 +749,8 @@ namespace TDRv
             btn_update.Enabled = en_disable;
             radio_units_ohm.Enabled = en_disable;
             radio_units_percent.Enabled = en_disable;
+            radio_units_custom.Enabled = en_disable;
+            tx_limit_offset.Enabled = false;
         }
 
         private void DevParamSet_Load(object sender, EventArgs e)
@@ -664,13 +843,16 @@ namespace TDRv
 
         private void radio_p_single_CheckedChanged(object sender, EventArgs e)
         {
+            if (single_click_flag)
+            {
+                single_click_flag = false;
+                return;
+            }
+
+
             if (radio_p_single.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                limit_value_click_flag = true;
 
                 tx_p_Description.Text = "50";
                 tx_p_Index.Text = "125";
@@ -680,25 +862,38 @@ namespace TDRv
                 {
                     tx_p_highLimit.Text = "55";
                     tx_p_lowLimit.Text = "45";
+                    tx_limit_offset.Text = "5";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
                 else
                 {
                     tx_p_highLimit.Text = "10";
                     tx_p_lowLimit.Text = "-10";
+                    tx_limit_offset.Text = "5";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
+
 
             }
         }
 
         private void radio_p_diff_CheckedChanged(object sender, EventArgs e)
         {
+            //public bool single_click_flag = false;
+            //public bool diff_click_flag = false;
+            //public bool units_percent_click_flag = false;
+            //public bool units_ohm_click_flag = false;
+            //public bool units_custom_click_flag = false;
+
+            if (diff_click_flag)
+            {
+                diff_click_flag = false;
+                return;
+            }
+
             if (radio_p_diff.Checked)
             {
-                if (clickFlag)
-                {
-                    clickFlag = false;
-                    return;
-                }
+                limit_value_click_flag = true;
 
                 tx_p_Description.Text = "100";
                 tx_p_Index.Text = "200";
@@ -707,14 +902,20 @@ namespace TDRv
                 {
                     tx_p_highLimit.Text = "110";
                     tx_p_lowLimit.Text = "90";
+                    tx_limit_offset.Text = "10";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
                 else
                 {
                     tx_p_highLimit.Text = "10";
                     tx_p_lowLimit.Text = "-10";
+                    tx_limit_offset.Text = "10";
+                    lab_offsetlimit_unit.Text = "ohm";
                 }
             }
         }
+
+
 
         private void tx_p_yOffset_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -776,8 +977,8 @@ namespace TDRv
 
         private void save_xmlfilename_config()
         {
-            string historyFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
-            string exportFile_bypro = Environment.CurrentDirectory + "\\Record\\" ;
+            string historyFile_bypro = Environment.CurrentDirectory + "\\MeasureData\\History\\";
+            string exportFile_bypro = Environment.CurrentDirectory + "\\MeasureData\\History\\";
 
             if (xmlFilePath == null)
             {
@@ -797,6 +998,40 @@ namespace TDRv
           
         }
 
+        private void radio_p_image_close_CheckedChanged(object sender, EventArgs e)
+        {
+            tx_p_savePath.Text = "";
+        }
 
+        private void tx_limit_offset_TextChanged(object sender, EventArgs e)
+        {
+            if (tx_limit_offset.Text.Length > 0)
+            {
+
+                if (limit_value_click_flag)
+                {
+                    limit_value_click_flag = false;
+                    return;
+                }
+                tx_p_highLimit.Text = (float.Parse(tx_p_TargetValue.Text) + float.Parse(tx_limit_offset.Text)).ToString();
+                tx_p_lowLimit.Text = (float.Parse(tx_p_TargetValue.Text) - float.Parse(tx_limit_offset.Text)).ToString();
+
+
+                //tx_p_highLimit.Text = Math.Round(((Convert.ToSingle(tx_p_highLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100), 2).ToString();
+                //tx_p_lowLimit.Text = Math.Round(((Convert.ToSingle(tx_p_lowLimit.Text) / Convert.ToSingle(tx_p_TargetValue.Text) - 1) * 100), 2).ToString();
+
+
+            }
+        }
+
+        private void tx_limit_offset_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if (!regex.IsMatch(e.KeyChar.ToString()))
+            if (!Regex.IsMatch(e.KeyChar.ToString(), allowedCharsPattern))
+            {
+                e.Handled = true;
+                MessageBox.Show("只能输入数字和小数点", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }//end class
 }//end namespace

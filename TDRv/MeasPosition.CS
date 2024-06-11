@@ -17,8 +17,8 @@ namespace TDRv
         //单端
         private static int tdd2Indexvalue = 0;
 
-        private static int tdd1startPosition = 0;
-        private static int tdd2startPosition = 0;
+        private static float tdd1startPosition = 0;
+        private static float tdd2startPosition = 0;
 
         public static bool isOpen
         {
@@ -41,14 +41,14 @@ namespace TDRv
         }
 
         //差分
-        public static int tdd11start
+        public static float tdd11start
         {
             get { return tdd1startPosition; }
             set { tdd1startPosition = value; }
         }
 
         //单端
-        public static int tdd22start
+        public static float tdd22start
         {
             get { return tdd2startPosition; }
             set { tdd2startPosition = value; }
