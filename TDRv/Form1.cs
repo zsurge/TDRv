@@ -25,7 +25,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public static bool isDebugMode = true;   //true 测试模式,false生产模式
+        public static bool isDebugMode = false;   //true 测试模式,false生产模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
