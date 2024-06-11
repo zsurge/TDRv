@@ -72,6 +72,7 @@
             this.cCurveImage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPanel_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cSet_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dgv_OutPutResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -90,9 +91,11 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgv_HistoryResult = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -304,6 +307,7 @@
             series3.Name = "Series3";
             series4.ChartArea = "ChartArea1";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.IsVisibleInLegend = false;
             series4.Legend = "Legend1";
             series4.Name = "Series4";
             this.chart1.Series.Add(series1);
@@ -364,7 +368,8 @@
             this.cCurveData,
             this.cCurveImage,
             this.cPanel_ID,
-            this.cSet_ID});
+            this.cSet_ID,
+            this.cStep});
             this.dgv_CurrentResult.ContextMenuStrip = this.contextMenuStrip1;
             this.dgv_CurrentResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_CurrentResult.Name = "dgv_CurrentResult";
@@ -375,6 +380,7 @@
             this.dgv_CurrentResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_CurrentResult.Size = new System.Drawing.Size(1620, 290);
             this.dgv_CurrentResult.TabIndex = 0;
+            this.dgv_CurrentResult.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CurrentResult_CellContentDoubleClick);
             // 
             // cLayer
             // 
@@ -488,6 +494,14 @@
             this.cSet_ID.Name = "cSet_ID";
             this.cSet_ID.ReadOnly = true;
             // 
+            // cStep
+            // 
+            this.cStep.HeaderText = "Step";
+            this.cStep.MinimumWidth = 8;
+            this.cStep.Name = "cStep";
+            this.cStep.ReadOnly = true;
+            this.cStep.Visible = false;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dgv_OutPutResult);
@@ -524,7 +538,8 @@
             this.dataGridViewTextBoxColumn13,
             this.dataGridViewTextBoxColumn14,
             this.Column1,
-            this.Column2});
+            this.Column2,
+            this.Column5});
             this.dgv_OutPutResult.Location = new System.Drawing.Point(0, 3);
             this.dgv_OutPutResult.Name = "dgv_OutPutResult";
             this.dgv_OutPutResult.RowHeadersVisible = false;
@@ -629,6 +644,13 @@
             this.Column2.MinimumWidth = 8;
             this.Column2.Name = "Column2";
             // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Step";
+            this.Column5.MinimumWidth = 8;
+            this.Column5.Name = "Column5";
+            this.Column5.Visible = false;
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.dgv_HistoryResult);
@@ -650,6 +672,7 @@
             this.dgv_HistoryResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_HistoryResult.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn15,
+            this.Column6,
             this.dataGridViewTextBoxColumn16,
             this.dataGridViewTextBoxColumn17,
             this.dataGridViewTextBoxColumn18,
@@ -680,6 +703,13 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Layer";
             this.dataGridViewTextBoxColumn15.MinimumWidth = 10;
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Step";
+            this.Column6.MinimumWidth = 8;
+            this.Column6.Name = "Column6";
+            this.Column6.Visible = false;
             // 
             // dataGridViewTextBoxColumn16
             // 
@@ -889,7 +919,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司V1.0.5.20240605";
+            this.Text = "TDR Automatic Test System 泰仕捷科技有限公司V2.0.1.20240611";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
@@ -943,20 +973,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mStep;
         private System.Windows.Forms.DataGridViewTextBoxColumn mDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn mLayer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridView dgv_HistoryResult;
         private System.Windows.Forms.ToolStripLabel tsb_XmlFileName;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -981,9 +997,26 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cCurveImage;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPanel_ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn cSet_ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cStep;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;

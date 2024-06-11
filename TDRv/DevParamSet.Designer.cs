@@ -70,8 +70,6 @@
             this.tx_p_Layer = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.tx_p_testSn = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.radio_p_image_close = new System.Windows.Forms.RadioButton();
@@ -81,10 +79,8 @@
             this.radio_p_data_open = new System.Windows.Forms.RadioButton();
             this.btn_p_SavePath = new System.Windows.Forms.Button();
             this.tx_p_savePath = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.radio_p_diff = new System.Windows.Forms.RadioButton();
             this.radio_p_single = new System.Windows.Forms.RadioButton();
-            this.label5 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -125,6 +121,7 @@
             this.radio_p_tag_avg = new System.Windows.Forms.RadioButton();
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_cancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_param)).BeginInit();
@@ -132,7 +129,6 @@
             this.groupBox2.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -530,13 +526,14 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radio_p_diff);
+            this.groupBox1.Controls.Add(this.radio_p_single);
             this.groupBox1.Controls.Add(this.tx_p_Description);
             this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.tx_p_Remark);
             this.groupBox1.Controls.Add(this.tx_p_Layer);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tx_p_testSn);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(0, 241);
             this.groupBox1.Name = "groupBox1";
@@ -593,23 +590,6 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "层";
             // 
-            // tx_p_testSn
-            // 
-            this.tx_p_testSn.Location = new System.Drawing.Point(71, 23);
-            this.tx_p_testSn.Name = "tx_p_testSn";
-            this.tx_p_testSn.ReadOnly = true;
-            this.tx_p_testSn.Size = new System.Drawing.Size(100, 21);
-            this.tx_p_testSn.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "测试编号";
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox9);
@@ -627,9 +607,9 @@
             // 
             this.groupBox9.Controls.Add(this.radio_p_image_close);
             this.groupBox9.Controls.Add(this.radio_p_image_open);
-            this.groupBox9.Location = new System.Drawing.Point(167, 47);
+            this.groupBox9.Location = new System.Drawing.Point(174, 21);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(155, 52);
+            this.groupBox9.Size = new System.Drawing.Size(155, 43);
             this.groupBox9.TabIndex = 3;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "储存图像";
@@ -638,7 +618,7 @@
             // 
             this.radio_p_image_close.AutoSize = true;
             this.radio_p_image_close.Checked = true;
-            this.radio_p_image_close.Location = new System.Drawing.Point(80, 25);
+            this.radio_p_image_close.Location = new System.Drawing.Point(80, 20);
             this.radio_p_image_close.Name = "radio_p_image_close";
             this.radio_p_image_close.Size = new System.Drawing.Size(47, 16);
             this.radio_p_image_close.TabIndex = 3;
@@ -650,20 +630,21 @@
             // radio_p_image_open
             // 
             this.radio_p_image_open.AutoSize = true;
-            this.radio_p_image_open.Location = new System.Drawing.Point(16, 25);
+            this.radio_p_image_open.Location = new System.Drawing.Point(16, 20);
             this.radio_p_image_open.Name = "radio_p_image_open";
             this.radio_p_image_open.Size = new System.Drawing.Size(47, 16);
             this.radio_p_image_open.TabIndex = 2;
             this.radio_p_image_open.Text = "开启";
             this.radio_p_image_open.UseVisualStyleBackColor = true;
+            this.radio_p_image_open.CheckedChanged += new System.EventHandler(this.radio_p_image_open_CheckedChanged);
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.radio_p_data_close);
             this.groupBox8.Controls.Add(this.radio_p_data_open);
-            this.groupBox8.Location = new System.Drawing.Point(6, 47);
+            this.groupBox8.Location = new System.Drawing.Point(13, 21);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(155, 52);
+            this.groupBox8.Size = new System.Drawing.Size(155, 43);
             this.groupBox8.TabIndex = 2;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "储存数据";
@@ -671,7 +652,7 @@
             // radio_p_data_close
             // 
             this.radio_p_data_close.AutoSize = true;
-            this.radio_p_data_close.Location = new System.Drawing.Point(83, 25);
+            this.radio_p_data_close.Location = new System.Drawing.Point(83, 20);
             this.radio_p_data_close.Name = "radio_p_data_close";
             this.radio_p_data_close.Size = new System.Drawing.Size(47, 16);
             this.radio_p_data_close.TabIndex = 1;
@@ -682,7 +663,7 @@
             // 
             this.radio_p_data_open.AutoSize = true;
             this.radio_p_data_open.Checked = true;
-            this.radio_p_data_open.Location = new System.Drawing.Point(12, 25);
+            this.radio_p_data_open.Location = new System.Drawing.Point(12, 20);
             this.radio_p_data_open.Name = "radio_p_data_open";
             this.radio_p_data_open.Size = new System.Drawing.Size(47, 16);
             this.radio_p_data_open.TabIndex = 0;
@@ -692,7 +673,7 @@
             // 
             // btn_p_SavePath
             // 
-            this.btn_p_SavePath.Location = new System.Drawing.Point(268, 18);
+            this.btn_p_SavePath.Location = new System.Drawing.Point(281, 70);
             this.btn_p_SavePath.Name = "btn_p_SavePath";
             this.btn_p_SavePath.Size = new System.Drawing.Size(48, 23);
             this.btn_p_SavePath.TabIndex = 1;
@@ -702,28 +683,16 @@
             // 
             // tx_p_savePath
             // 
-            this.tx_p_savePath.Location = new System.Drawing.Point(6, 20);
+            this.tx_p_savePath.Location = new System.Drawing.Point(14, 72);
             this.tx_p_savePath.Name = "tx_p_savePath";
-            this.tx_p_savePath.Size = new System.Drawing.Size(256, 21);
+            this.tx_p_savePath.Size = new System.Drawing.Size(261, 21);
             this.tx_p_savePath.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.radio_p_diff);
-            this.groupBox3.Controls.Add(this.radio_p_single);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(353, 345);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(231, 46);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "量测通道";
             // 
             // radio_p_diff
             // 
             this.radio_p_diff.AutoSize = true;
             this.radio_p_diff.Checked = true;
-            this.radio_p_diff.Location = new System.Drawing.Point(170, 21);
+            this.radio_p_diff.Location = new System.Drawing.Point(152, 24);
             this.radio_p_diff.Name = "radio_p_diff";
             this.radio_p_diff.Size = new System.Drawing.Size(47, 16);
             this.radio_p_diff.TabIndex = 8;
@@ -735,22 +704,13 @@
             // radio_p_single
             // 
             this.radio_p_single.AutoSize = true;
-            this.radio_p_single.Location = new System.Drawing.Point(93, 21);
+            this.radio_p_single.Location = new System.Drawing.Point(75, 24);
             this.radio_p_single.Name = "radio_p_single";
             this.radio_p_single.Size = new System.Drawing.Size(47, 16);
             this.radio_p_single.TabIndex = 2;
             this.radio_p_single.Text = "单端";
             this.radio_p_single.UseVisualStyleBackColor = true;
             this.radio_p_single.CheckedChanged += new System.EventHandler(this.radio_p_single_CheckedChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "测试模式";
             // 
             // groupBox4
             // 
@@ -765,7 +725,7 @@
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Location = new System.Drawing.Point(353, 241);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(231, 98);
+            this.groupBox4.Size = new System.Drawing.Size(231, 121);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "X轴量测范围";
@@ -774,7 +734,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(165, 74);
+            this.label11.Location = new System.Drawing.Point(180, 95);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(15, 16);
             this.label11.TabIndex = 15;
@@ -784,7 +744,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(166, 49);
+            this.label10.Location = new System.Drawing.Point(180, 60);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(15, 16);
             this.label10.TabIndex = 14;
@@ -793,7 +753,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(166, 22);
+            this.label9.Location = new System.Drawing.Point(166, 27);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 12);
             this.label9.TabIndex = 13;
@@ -801,7 +761,7 @@
             // 
             // tx_p_end
             // 
-            this.tx_p_end.Location = new System.Drawing.Point(74, 71);
+            this.tx_p_end.Location = new System.Drawing.Point(74, 93);
             this.tx_p_end.Name = "tx_p_end";
             this.tx_p_end.Size = new System.Drawing.Size(86, 21);
             this.tx_p_end.TabIndex = 12;
@@ -809,7 +769,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(15, 75);
+            this.label8.Location = new System.Drawing.Point(15, 97);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 11;
@@ -817,7 +777,7 @@
             // 
             // tx_p_begin
             // 
-            this.tx_p_begin.Location = new System.Drawing.Point(74, 45);
+            this.tx_p_begin.Location = new System.Drawing.Point(74, 58);
             this.tx_p_begin.Name = "tx_p_begin";
             this.tx_p_begin.Size = new System.Drawing.Size(86, 21);
             this.tx_p_begin.TabIndex = 10;
@@ -825,7 +785,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 49);
+            this.label7.Location = new System.Drawing.Point(15, 62);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 9;
@@ -833,7 +793,7 @@
             // 
             // tx_p_Index
             // 
-            this.tx_p_Index.Location = new System.Drawing.Point(74, 18);
+            this.tx_p_Index.Location = new System.Drawing.Point(74, 23);
             this.tx_p_Index.Name = "tx_p_Index";
             this.tx_p_Index.Size = new System.Drawing.Size(86, 21);
             this.tx_p_Index.TabIndex = 8;
@@ -841,7 +801,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 22);
+            this.label6.Location = new System.Drawing.Point(15, 27);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 7;
@@ -1055,9 +1015,9 @@
             this.groupBox6.Controls.Add(this.label20);
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.tx_p_yOffset);
-            this.groupBox6.Location = new System.Drawing.Point(353, 442);
+            this.groupBox6.Location = new System.Drawing.Point(353, 429);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(231, 46);
+            this.groupBox6.Size = new System.Drawing.Size(231, 59);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Y轴 自定补偿";
@@ -1065,7 +1025,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(152, 21);
+            this.label2.Location = new System.Drawing.Point(166, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 2;
@@ -1082,7 +1042,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(17, 21);
+            this.label19.Location = new System.Drawing.Point(15, 26);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(41, 12);
             this.label19.TabIndex = 16;
@@ -1090,9 +1050,9 @@
             // 
             // tx_p_yOffset
             // 
-            this.tx_p_yOffset.Location = new System.Drawing.Point(76, 17);
+            this.tx_p_yOffset.Location = new System.Drawing.Point(74, 22);
             this.tx_p_yOffset.Name = "tx_p_yOffset";
-            this.tx_p_yOffset.Size = new System.Drawing.Size(70, 21);
+            this.tx_p_yOffset.Size = new System.Drawing.Size(86, 21);
             this.tx_p_yOffset.TabIndex = 5;
             this.tx_p_yOffset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tx_p_yOffset_KeyPress);
             // 
@@ -1100,9 +1060,9 @@
             // 
             this.groupBox7.Controls.Add(this.radio_p_tag_point);
             this.groupBox7.Controls.Add(this.radio_p_tag_avg);
-            this.groupBox7.Location = new System.Drawing.Point(353, 397);
+            this.groupBox7.Location = new System.Drawing.Point(353, 366);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(231, 39);
+            this.groupBox7.Size = new System.Drawing.Size(231, 59);
             this.groupBox7.TabIndex = 6;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "待测物判定";
@@ -1111,7 +1071,7 @@
             // 
             this.radio_p_tag_point.AutoSize = true;
             this.radio_p_tag_point.Checked = true;
-            this.radio_p_tag_point.Location = new System.Drawing.Point(168, 17);
+            this.radio_p_tag_point.Location = new System.Drawing.Point(133, 27);
             this.radio_p_tag_point.Name = "radio_p_tag_point";
             this.radio_p_tag_point.Size = new System.Drawing.Size(47, 16);
             this.radio_p_tag_point.TabIndex = 5;
@@ -1122,7 +1082,7 @@
             // radio_p_tag_avg
             // 
             this.radio_p_tag_avg.AutoSize = true;
-            this.radio_p_tag_avg.Location = new System.Drawing.Point(17, 17);
+            this.radio_p_tag_avg.Location = new System.Drawing.Point(41, 27);
             this.radio_p_tag_avg.Name = "radio_p_tag_avg";
             this.radio_p_tag_avg.Size = new System.Drawing.Size(59, 16);
             this.radio_p_tag_avg.TabIndex = 4;
@@ -1149,6 +1109,15 @@
             this.btn_cancel.UseVisualStyleBackColor = true;
             this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "量测模式";
+            // 
             // DevParamSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1163,7 +1132,6 @@
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
@@ -1185,8 +1153,6 @@
             this.groupBox9.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -1213,7 +1179,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox6;
@@ -1224,8 +1189,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tx_p_testSn;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.RadioButton radio_p_image_close;
         private System.Windows.Forms.RadioButton radio_p_image_open;
@@ -1236,7 +1199,6 @@
         private System.Windows.Forms.TextBox tx_p_savePath;
         private System.Windows.Forms.RadioButton radio_p_diff;
         private System.Windows.Forms.RadioButton radio_p_single;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
@@ -1298,5 +1260,6 @@
         private System.Windows.Forms.Label lab_offsetlimit_unit;
         private System.Windows.Forms.TextBox tx_limit_offset;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label1;
     }
 }

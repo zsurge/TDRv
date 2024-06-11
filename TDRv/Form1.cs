@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog.Fluent;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +24,8 @@ namespace TDRv
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
+
+        public static bool isDebugMode = false;   //true 测试模式,false生产模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -59,6 +62,9 @@ namespace TDRv
 
         //记录已测试到第几层
         MeasIndex measIndex = new MeasIndex();
+
+        //复测标志 add 2024.03.23
+        ReTest reTest = new ReTest();
 
         //测试数据目录，该目录下有子目录
         public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
@@ -394,7 +400,7 @@ namespace TDRv
             chart1.Series[0].LegendText = "TDR Curve";
             chart1.Series[1].LegendText = "limit";
             chart1.Series[2].LegendText = "limit";
-            chart1.Series[3].LegendText = "100";
+            //chart1.Series[3].LegendText = "100";
             chart1.Series[0].ChartType = SeriesChartType.Spline;
             chart1.Series[0].BorderWidth = 2;
             chart1.Series[1].BorderWidth = 2;
@@ -430,6 +436,14 @@ namespace TDRv
 
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
+            if (isDebugMode)
+            {
+                MeasPosition.isOpen = true;
+                optStatus.isGetIndex = true;
+                tsb_StartTest.Enabled = true;
+                return;
+            }
+
             if (isExecuteIndex)
             {
                 isExecuteIndex = false;
@@ -648,7 +662,10 @@ namespace TDRv
                 MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
 
-
+            if (isDebugMode)
+            {
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+            }
 
             return result;
         }
@@ -683,7 +700,7 @@ namespace TDRv
                 chart1.Series[0].LegendText = "diff";
                 chart1.Series[1].LegendText = "limit";
                 chart1.Series[2].LegendText = "limit";
-                chart1.Series[3].LegendText = "single";
+                //chart1.Series[3].LegendText = "single";
             }
             else
             {
@@ -756,98 +773,6 @@ namespace TDRv
         }
 
 
-
-
-
-        /// <summary>
-        /// 创建量测时的图表
-        /// </summary>
-        /// <param name="measData">量测试的数据</param>
-        /// <param name="channel">单端OR差分</param>
-        private void CreateMeasChart(List<float> measData)
-        {
-            float xbegin = 0;
-            float xend = 0;
-            float yhigh = 0;
-            float ylow = 0;
-
-
-            foreach (var series in chart1.Series)
-            {
-                series.Points.Clear();
-            }
-
-            xbegin = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_Begin) / 100;
-            xend = measData.Count * Convert.ToSingle(paramList[measIndex.currentIndex].Valid_End) / 100;
-            yhigh = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Upper_limit) / 100));
-            ylow = Convert.ToSingle(paramList[measIndex.currentIndex].Spec) * (1 + (Convert.ToSingle(paramList[measIndex.currentIndex].Low_limit) / 100));
-
-            if (xend - xbegin < 3)
-            {
-                //initChart();
-                gEmptyFlag = true;
-                return;
-            }
-            else
-            {
-                gEmptyFlag = false;
-            }
-
-            //计算有效区域起始结束位置 
-            chart1.ChartAreas[0].AxisY.Interval = paramList[measIndex.currentIndex].Open_hreshold / 5; //Y轴间距
-            chart1.ChartAreas[0].AxisY.Maximum = paramList[measIndex.currentIndex].Open_hreshold;//设置Y坐标最大值
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
-
-            //生成上半位有效区域
-            chart1.Series[1].Points.AddXY(xbegin, paramList[measIndex.currentIndex].Open_hreshold);
-            chart1.Series[1].Points.AddXY(xbegin, yhigh);
-            chart1.Series[1].Points.AddXY(xend, yhigh);
-            chart1.Series[1].Points.AddXY(xend, paramList[measIndex.currentIndex].Open_hreshold);
-
-            //生成下半部有效区域
-            chart1.Series[2].Points.AddXY(xbegin, 0);
-            chart1.Series[2].Points.AddXY(xbegin, ylow);
-            chart1.Series[2].Points.AddXY(xend, ylow);
-            chart1.Series[2].Points.AddXY(xend, 0);
-
-            //获取有效区域的LIST
-            List<float> tmpResult = measData.Skip((int)xbegin).Take((int)(xend - xbegin)).ToList();
-
-
-            //求最大值及最小值
-            if (tmpResult.Count != 0)            
-            {
-                //设置网格间距
-                chart1.ChartAreas[0].AxisX.Interval = (float)measData.Count / 10;//X轴间距
-                chart1.ChartAreas[0].AxisX.Maximum = (float)measData.Count; //设置X坐标最大值
-                chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
-
-                chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString();
-                chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString();
-                chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString();
-            }
-            else
-            {
-                //设置默认网格间距
-                chart1.ChartAreas[0].AxisX.Interval = 250;//X轴间距
-                chart1.ChartAreas[0].AxisX.Maximum = 2500; //设置X坐标最大值
-                chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
-
-                chart1.ChartAreas[0].AxisY.Interval = 25;//Y轴间距
-                chart1.ChartAreas[0].AxisY.Maximum = 250;//设置Y坐标最大值
-                chart1.ChartAreas[0].AxisY.Minimum = 0;
-            }
-
-            //生成测试数据曲线
-            for (int i = 0; i < measData.Count; i++)
-            {
-                chart1.Series[0].Points.AddXY(i, measData[i]);
-            }
-        }
-
-
-
-
         /// <summary>
         /// 字符串转浮点型数据
         /// </summary>
@@ -887,159 +812,6 @@ namespace TDRv
             }
         }
 
-
-        /// <summary>
-        /// 更新测试结果到datagridview中去
-        /// </summary>
-        /// <param name="channel">这个好像不需要？</param>
-        private bool upgradeTestResult(int channel)
-        {
-            bool ret = false;
-            float avg = 0;
-            float max = 0;
-            float min = 0;
-
-            if (gEmptyFlag)
-            {
-                avg = 9999;
-                max = 9999;
-                min = 9999;
-            }
-            else
-            {
-                avg = StrToFloat(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                max = StrToFloat(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                min = StrToFloat(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
-            }
-
-
-            float stdValue = StrToFloat(paramList[measIndex.currentIndex].Spec); //标准值
-            float loLimite = StrToFloat(paramList[measIndex.currentIndex].Low_limit); //下限
-            float hiLimite = StrToFloat(paramList[measIndex.currentIndex].Upper_limit); //上限
-
-            float stdLowValue = stdValue * ((100 + loLimite) / 100);
-            float stdHiValue = stdValue * ((100 + hiLimite) / 100);
-
-
-            //这里判定是以点的方式还是以平均值的方式来判定结果
-            if (string.Compare(paramList[measIndex.currentIndex].Std, "AverageValue") == 0) //平均值的判定
-            {
-                if (avg > stdLowValue && avg < stdHiValue)
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-            else //以点的形式去判定
-            {
-                if (((max < stdHiValue) && (max > stdLowValue)) && ((min < stdHiValue) && (min > stdLowValue)))
-                {
-                    ret = true;
-                }
-                else
-                {
-                    ret = false;
-                }
-            }
-
-            //这里需要添加对比
-            if (ret == false)
-            {    
-                //仅记录通过时进行下一笔，不通过时，一直当前笔，并不记录
-                if (optParam.testMode == 4)
-                {                   
-                    return ret;
-                }
-                
-            }
-
-            int index = this.dgv_CurrentResult.Rows.Add();
-            int history_index = this.dgv_HistoryResult.Rows.Add();
-            if (ret)
-            {
-                SetLableText("PASS", "Green");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "PASS";     
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "PASS";
-            }
-            else
-            {
-                SetLableText("FAIL", "Red");
-                this.dgv_CurrentResult.Rows[index].Cells[7].Value = "FAIL";
-                this.dgv_HistoryResult.Rows[history_index].Cells[7].Value = "FAIL";
-            }
-
-            
-            //目前量测
-            this.dgv_CurrentResult.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_CurrentResult.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_CurrentResult.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_CurrentResult.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = "∞"; //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = "∞"; //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = "∞"; //最小值
-            }
-            else
-            {
-                this.dgv_CurrentResult.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_CurrentResult.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_CurrentResult.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
-            }
-
-            this.dgv_CurrentResult.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_CurrentResult.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_CurrentResult.Rows[index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_CurrentResult.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_CurrentResult.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_CurrentResult.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-
-            //历史量测
-            this.dgv_HistoryResult.Rows[history_index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
-            this.dgv_HistoryResult.Rows[history_index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-            this.dgv_HistoryResult.Rows[history_index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit;  //最大上限比例 
-            this.dgv_HistoryResult.Rows[history_index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit;    //最小下限比例
-
-            if (gEmptyFlag)
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = "9999"; //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = "9999"; //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = "9999"; //最小值
-            }
-            else
-            {
-                this.dgv_HistoryResult.Rows[history_index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                this.dgv_HistoryResult.Rows[history_index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                this.dgv_HistoryResult.Rows[history_index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值
-            }
-
-
-            this.dgv_HistoryResult.Rows[history_index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
-            this.dgv_HistoryResult.Rows[history_index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期    
-            this.dgv_HistoryResult.Rows[history_index].Cells[10].Value = DateTime.Now.ToString("HH:mm:ss");     //时间
-            this.dgv_HistoryResult.Rows[history_index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-            this.dgv_HistoryResult.Rows[history_index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-            this.dgv_HistoryResult.Rows[history_index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址
-
-            //只有最后一个走完，流水才++
-            if (measIndex.currentIndex == paramList.Count - 1)
-            {
-                gSerialInc++;
-            }
-
-            //光标在最后一行
-            dgv_CurrentResult.CurrentCell = dgv_CurrentResult.Rows[this.dgv_CurrentResult.Rows.Count - 1].Cells[0];
-
-            return ret;
-        }
-
-        
-
         private void tsb_StartTest_Click(object sender, EventArgs e)
         {
             if (tsb_Pnl_ID.Text.Length == 0)
@@ -1077,6 +849,12 @@ namespace TDRv
                     string result = string.Empty;
                     int index = 0;
 
+                    //复测时，使用复测的layer索引
+                    if (reTest.reTestFlag)
+                    {
+                        measIndex.currentIndex = reTest.layerIndex;
+                    }
+
                     int channel = paramList[measIndex.currentIndex].DevMode;
 
                     if (channel == SINGLE)
@@ -1090,17 +868,20 @@ namespace TDRv
 
                     SetLableText("", "Control");
 
-                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                    if (!isDebugMode)
                     {
-                        E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                    {
-                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                    {
-                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                        {
+                            E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        }
+                        else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                        {
+                            E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                        }
+                        else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                        {
+                            E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                        }
                     }
 
                     //量测并生成图表                    
@@ -1111,6 +892,14 @@ namespace TDRv
                     //更新测试数据到主界面测试结果中
                     CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
                     CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+
+                    if (reTest.reTestFlag)
+                    {
+                        findAndDeleteFile(reTest.directoryPath,reTest.fileName);
+                    }
+
+                    //清除复测数据 add 2024.03.23
+                    reTest.clsData();
 
                     if (optParam.testMode == 3)
                     {
@@ -1153,23 +942,86 @@ namespace TDRv
             {
                 task1.ContinueWith((Task) =>
                 {
-                   
+                    
                     CaptureScreenChart(chart1, paramList[0].Curve_image);
                 });
             }            
          
         }
 
+        //获取复测记录的索引值
+        //设置layer层别
+        //区分是测试数据，并将测试数据改写到当前测试记录和历史测试记录中去
+        //同时删除已保存的截图文件并重新生成
+
+        public void findAndDeleteFile(string directoryPath, string fileName)
+        {
+            try
+            {
+                // 拼接完整的文件路径
+                string filePath = Path.Combine(directoryPath, fileName);
+
+                // 检查文件是否存在
+                if (File.Exists(filePath))
+                {
+                    // 如果文件存在，删除文件
+                    File.Delete(filePath);
+                    //MessageBox.Show($"{fileName} 已被成功删除。");
+                    LoggerHelper.mlog.Debug($"{fileName} 已被成功删除");
+
+                }
+                else
+                {
+                    // 如果文件不存在，输出消息
+                    //MessageBox.Show($"未找到 {fileName}。");
+                    LoggerHelper.mlog.Debug($"未找到 {fileName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 处理可能发生的任何异常
+                MessageBox.Show($"发生错误: {ex.Message}");
+                LoggerHelper.mlog.Debug($"发生错误: {ex.Message}");
+            }
+        }
+
+
         private void tsmi_delAll_Click(object sender, EventArgs e)
         {
-            //删除所有测试数据
-            dgv_CurrentResult.Rows.Clear();
+            // 弹出确认对话框
+            DialogResult result = MessageBox.Show("请确认要删除所有记录吗？\n删除后不可恢复，请谨慎操作！", "确认", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            // 根据用户的选择执行不同的操作
+            if (result == DialogResult.OK)
+            {
+                //删除所有测试数据
+                dgv_CurrentResult.Rows.Clear();
+            }
         }
 
         //删除选中的测试结果
         private void tsmi_delselect_Click(object sender, EventArgs e)
         {
+            int rowIndex = dgv_CurrentResult.CurrentRow.Index;
+
+            string tempTime = "";
+            string tempDate = "";
+            string tempFileName = "";
+            string tempDirectoryPath = "";
+
+            //设置要删除的图片文件名
+            tempDate = dgv_CurrentResult.Rows[rowIndex].Cells[9].Value.ToString().Replace("-", "");
+            tempTime = dgv_CurrentResult.Rows[rowIndex].Cells[10].Value.ToString().Replace(":", "").Replace(".", "");
+            tempFileName = tempDate + tempTime + ".png";
+
+            //设置要删除图片的文件目录
+            tempDirectoryPath = dgv_CurrentResult.Rows[rowIndex].Cells[13].Value.ToString() + "\\Image";
+
+            //删除选中行
             dgv_CurrentResult.Rows.Remove(dgv_CurrentResult.CurrentRow);
+
+            //删除选中行数据对应的图片
+            findAndDeleteFile(tempDirectoryPath, tempFileName);
         }
 
         //输出测试报告
@@ -1223,7 +1075,8 @@ namespace TDRv
                 try
                 {
                     //写入列标题    
-                    for (int i = 0; i < dgv.ColumnCount; i++)
+                    //-1是因为多了一列 step
+                    for (int i = 0; i < dgv.ColumnCount-1; i++)
                     {
                         if (i > 0)
                         {
@@ -1238,7 +1091,8 @@ namespace TDRv
                     for (int j = 0; j < dgv.Rows.Count; j++)
                     {
                         string columnValue = "";
-                        for (int k = 0; k < dgv.Columns.Count; k++)
+                        //-1是因为多了一列 step
+                        for (int k = 0; k < dgv.Columns.Count-1; k++)
                         {
                             if (k > 0)
                             {
@@ -1326,17 +1180,7 @@ namespace TDRv
             }
         }
 
-        //截图
-        private void CaptureScreen(string path)  //导出数据（截图表格部分）
-        {
-            Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
-            Graphics g = Graphics.FromImage(bit);
-            g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
-            //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
-            g.CopyFromScreen(chart1.PointToScreen(Point.Empty), Point.Empty, chart1.Size);//只保存某个控件
-            //g.CopyFromScreen(tabPage1.PointToScreen(Point.Empty), Point.Empty, tabPage1.Size);//只保存某个控件
-            bit.Save(path + DateTime.Now.ToString("yyyyMMddHHmmss") + ".png");//默认保存格式为PNG，保存成jpg格式质量不是很好  
-        }
+
 
         delegate void DisplayChartDelegate(Chart _chart, List<float> result);
         public void DisplayChartValue(Chart _chart, List<float> result)
@@ -1390,8 +1234,24 @@ namespace TDRv
                     gEmptyFlag = false;
                 }
 
+
+
+                // 设置Y轴主要网格线间隔（每25一个网格线）
+                chart1.ChartAreas[0].AxisY.MajorGrid.Interval = 25;
+
+                // 自定义Y轴标签
+                for (int i = 0; i <= paramList[measIndex.currentIndex].Open_hreshold; i += 25)
+                {
+                    CustomLabel customLabel = new CustomLabel();
+                    customLabel.FromPosition = i - 12.5; // 使标签居中显示
+                    customLabel.ToPosition = i + 12.5;
+                    customLabel.Text = i.ToString();
+                    chart1.ChartAreas[0].AxisY.CustomLabels.Add(customLabel);
+                }
+
+
                 //计算有效区域起始结束位置 
-                chart1.ChartAreas[0].AxisY.Interval = paramList[measIndex.currentIndex].Open_hreshold / 5; //Y轴间距
+                chart1.ChartAreas[0].AxisY.Interval = 5; //Y轴间距
                 chart1.ChartAreas[0].AxisY.Maximum = paramList[measIndex.currentIndex].Open_hreshold;//设置Y坐标最大值,开路位置
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
 
@@ -1414,10 +1274,16 @@ namespace TDRv
                 //求最大值及最小值
                 if (tmpResult.Count != 0)
                 {
+                    //if (tmpResult.Count >= 10)
+                    //{
                     //设置网格间距
                     chart1.ChartAreas[0].AxisX.Interval = (float)result.Count / 10;//X轴间距
                     chart1.ChartAreas[0].AxisX.Maximum = (float)result.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
+                    //}
+
+
+
 
                     chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
                     chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
@@ -1440,6 +1306,9 @@ namespace TDRv
                 {
                     chart1.Series[0].Points.AddXY(i, result[i]);
                 }
+
+                DataPoint extraPoint = new DataPoint(result.Count, result[result.Count - 1]);
+                chart1.Series[0].Points.Add(extraPoint);
             }
         }
 
@@ -1454,7 +1323,9 @@ namespace TDRv
                 this.Invoke(d, new object[] { _dgv, channel ,flag});
             }
             else
-            {         
+            {
+                int index = 0;
+
                 bool ret = false;
                 float avg = 0.0f;
                 float max = 0.0f;
@@ -1475,6 +1346,7 @@ namespace TDRv
                     max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
                     min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
                 }
+
 
 
                 float stdValue = Convert.ToSingle(paramList[measIndex.currentIndex].Spec); //标准值
@@ -1538,7 +1410,17 @@ namespace TDRv
                     return;
                 }
 
-                int index = _dgv.Rows.Add();                
+                if (reTest.reTestFlag)
+                {
+                    index = reTest.recordIndex;
+                }
+                else
+                {
+                    index = _dgv.Rows.Add();
+                }
+
+                
+                
                 if (ret)
                 {
                     SetLableText("PASS", "Green");
@@ -1579,7 +1461,15 @@ namespace TDRv
                     _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
                 }
 
-                _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+                if (reTest.reTestFlag)
+                {
+                    _dgv.Rows[index].Cells[8].Value = reTest.serialNo; //流水号
+                }
+                else
+                {
+                    _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+                }
+
                 _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
                 _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
                 _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
@@ -1587,6 +1477,7 @@ namespace TDRv
                 _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
                 _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
                 _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
+                _dgv.Rows[index].Cells[16].Value = measIndex.currentIndex; //setp  这一列不需要写入到日志中去 
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1603,7 +1494,8 @@ namespace TDRv
 
                     List<string> historyRecord = new List<string>();
                     //这里要写历史记录       
-                    for (int j = 0; j < _dgv.Rows[index].Cells.Count; j++)
+                    //减1是因为多了一列step，未显示，也不需要写入日志 modify 2024.03.23
+                    for (int j = 0; j < _dgv.Rows[index].Cells.Count-1; j++)
                     {
                         if (j == 10)
                         {
@@ -1638,7 +1530,9 @@ namespace TDRv
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
-                for (int i = 0; i < data.Count; i++)
+
+                //减1是因为多了一列step，未显示，也不需要写入日志  modify 2024.03.23
+                for (int i = 0; i < data.Count-1; i++)
                 {
                     strline += (data[i] + ",");
                 }
@@ -1651,7 +1545,8 @@ namespace TDRv
                 //存在
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
                 string strline = string.Empty;
-                for (int i = 0; i < data.Count; i++)
+                //减1是因为多了一列step，未显示，也不需要写入日志  modify 2024.03.23
+                for (int i = 0; i < data.Count-1; i++)
                 {
                     strline += (data[i]+",");
                 }
@@ -1740,7 +1635,67 @@ namespace TDRv
                 }
             }
         }
+
+        private void dgv_CurrentResult_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // 获取双击的单元格所在的行号
+            int rowIndex = e.RowIndex;
+            string tempTime = "";
+            string tempDate = "";
+
+
+            // 检查行号是否有效（大于等于0，防止双击列标题等情况）
+            if (rowIndex >= 0)
+            {
+                //设置状态为复测
+                reTest.reTestFlag = true;
+                //设置复测的记录索引 
+                reTest.recordIndex = rowIndex;
+                //设置复测的layer索引
+                reTest.layerIndex = int.Parse(dgv_CurrentResult.Rows[rowIndex].Cells[16].Value.ToString());
+                //设置复测的流水号
+                reTest.serialNo = dgv_CurrentResult.Rows[rowIndex].Cells[8].Value.ToString();
+
+                //设置要删除的图片文件名
+                tempDate = dgv_CurrentResult.Rows[rowIndex].Cells[9].Value.ToString().Replace("-","");
+                tempTime = dgv_CurrentResult.Rows[rowIndex].Cells[10].Value.ToString().Replace(":", "").Replace(".","");
+                reTest.fileName = tempDate+ tempTime+".png";
+
+                //设置要删除图片的文件目录
+                reTest.directoryPath = dgv_CurrentResult.Rows[rowIndex].Cells[13].Value.ToString() + "\\Image";
+
+                //设置layer索引为选中状态
+                dataGridView1.Rows[reTest.layerIndex].Selected = true;
+
+                //调试信息
+                //MessageBox.Show($"双击单元格所在行号为：{rowIndex + 1}\n layer行号为：{reTest.layerIndex + 1}\n 流水号为：{reTest.serialNo}\n 图片路径：{reTest.directoryPath}\n 图片名称：{reTest.fileName}");
+                LoggerHelper.mlog.Debug($"双击单元格所在行号为：{rowIndex + 1}\n layer行号为：{reTest.layerIndex + 1}\n 流水号为：{reTest.serialNo}\n 图片路径：{reTest.directoryPath}\n 图片名称：{reTest.fileName}");
+            }
+
+        }
     }//end form
+
+    public class ReTest
+    {
+        public int recordIndex { get; set; } = 0;
+        public int layerIndex { get; set; } = 0;
+
+        public string serialNo { get; set; } = "";
+        public string directoryPath { get; set; } = "";
+        public string fileName { get; set; } = "";
+        public bool reTestFlag { get; set; } = false;
+
+
+        public void clsData()
+        {
+            recordIndex = 0;
+            layerIndex = 0;
+            serialNo = "";
+            directoryPath = "";
+            fileName = "";
+            reTestFlag = false;
+        }
+    }
 
     public class MeasIndex
     {
