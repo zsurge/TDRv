@@ -29,23 +29,6 @@ H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.CoreCompileInputs.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.CopyComplete
 H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.pdb
-E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.config
-E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.exe.config
-E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.exe
-E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.pdb
-E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.dll
-E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.xml
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.AssemblyReference.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevConnectSet.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevOptSet.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevParamSet.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.Form1.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.Properties.Resources.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.GenerateResource.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.CoreCompileInputs.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.Up2Date
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.exe
-E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.pdb
 C:\Work\TDRv\TDRv\bin\Release\NLog.config
 C:\Work\TDRv\TDRv\bin\Release\TDRv.exe.config
 C:\Work\TDRv\TDRv\bin\Release\TDRv.exe
@@ -63,3 +46,20 @@ C:\Work\TDRv\TDRv\obj\Release\TDRv.csproj.CopyComplete
 C:\Work\TDRv\TDRv\obj\Release\TDRv.exe
 C:\Work\TDRv\TDRv\obj\Release\TDRv.pdb
 C:\Work\TDRv\TDRv\obj\Release\TDRv.csproj.AssemblyReference.cache
+E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.config
+E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.exe.config
+E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.exe
+E:\TSJ PRO\TDRv\TDRv\bin\Release\TDRv.pdb
+E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.dll
+E:\TSJ PRO\TDRv\TDRv\bin\Release\NLog.xml
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.AssemblyReference.cache
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevConnectSet.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevOptSet.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.DevParamSet.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.Form1.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.Properties.Resources.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.GenerateResource.cache
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.CoreCompileInputs.cache
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.csproj.Up2Date
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.exe
+E:\TSJ PRO\TDRv\TDRv\obj\Release\TDRv.pdb
