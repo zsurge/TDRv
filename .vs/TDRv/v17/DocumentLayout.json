@@ -7,16 +7,20 @@
       "RelativeMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|solutionrelative:tdrv\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|E:\\TSJ PRO\\TDRv\\tdrv\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|e:\\tsj pro\\tdrv\\tdrv\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|solutionrelative:tdrv\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|E:\\TSJ PRO\\TDRv\\tdrv\\devconnectset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|solutionrelative:tdrv\\devconnectset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|e:\\tsj pro\\tdrv\\tdrv\\devparamset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|solutionrelative:tdrv\\devparamset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|E:\\TSJ PRO\\TDRv\\tdrv\\devconnectset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|solutionrelative:tdrv\\devconnectset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|E:\\TSJ PRO\\TDRv\\tdrv\\devconnectset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ACF568EA-15BE-4E2D-81A6-BA54C9230C30}|TDRv\\TDRv.csproj|solutionrelative:tdrv\\devconnectset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +30,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DevParamSet.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "E:\\TSJ PRO\\TDRv\\TDRv\\DevParamSet.cs",
+              "RelativeDocumentMoniker": "TDRv\\DevParamSet.cs",
+              "ToolTip": "E:\\TSJ PRO\\TDRv\\TDRv\\DevParamSet.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "TDRv\\DevParamSet.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T13:40:43.402Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [\u8BBE\u8BA1]",
+              "DocumentMoniker": "E:\\TSJ PRO\\TDRv\\TDRv\\Form1.cs",
+              "RelativeDocumentMoniker": "TDRv\\Form1.cs",
+              "ToolTip": "E:\\TSJ PRO\\TDRv\\TDRv\\Form1.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "TDRv\\Form1.cs [\u8BBE\u8BA1]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-13T13:15:59.7Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -36,14 +64,14 @@
               "RelativeDocumentMoniker": "TDRv\\Form1.cs",
               "ToolTip": "E:\\TSJ PRO\\TDRv\\TDRv\\Form1.cs",
               "RelativeToolTip": "TDRv\\Form1.cs",
-              "ViewState": "AQIAAC4AAAAAAAAAAAAQwEEAAAAAAAAA",
+              "ViewState": "AQIAABAAAAAAAAAAAAAqwCkAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-12T12:45:42.773Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "DevConnectSet.cs",
               "DocumentMoniker": "E:\\TSJ PRO\\TDRv\\TDRv\\DevConnectSet.cs",
               "RelativeDocumentMoniker": "TDRv\\DevConnectSet.cs",
@@ -64,18 +92,6 @@
               "RelativeToolTip": "TDRv\\DevConnectSet.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-10T10:00:35.852Z",
-              "EditorCaption": " [\u8BBE\u8BA1]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form1.cs [\u8BBE\u8BA1]",
-              "DocumentMoniker": "E:\\TSJ PRO\\TDRv\\TDRv\\Form1.cs",
-              "RelativeDocumentMoniker": "TDRv\\Form1.cs",
-              "ToolTip": "E:\\TSJ PRO\\TDRv\\TDRv\\Form1.cs [\u8BBE\u8BA1]",
-              "RelativeToolTip": "TDRv\\Form1.cs [\u8BBE\u8BA1]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-09T01:08:31.285Z",
               "EditorCaption": " [\u8BBE\u8BA1]"
             }
           ]

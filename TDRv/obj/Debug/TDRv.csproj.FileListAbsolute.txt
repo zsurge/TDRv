@@ -43,23 +43,6 @@ H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
 H:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
-E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.config
-E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe.config
-E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe
-E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.pdb
-E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.dll
-E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.xml
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.AssemblyReference.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.Form1.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.Properties.Resources.resources
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb
-E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.Up2Date
 C:\Work\TDRv\TDRv\bin\Debug\NLog.config
 C:\Work\TDRv\TDRv\bin\Debug\TDRv.exe.config
 C:\Work\TDRv\TDRv\bin\Debug\TDRv.exe
@@ -76,3 +59,20 @@ C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.csproj.CopyComplete
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.exe
 C:\Work\TDRv\TDRv\obj\Debug\TDRv.pdb
+E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.config
+E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe.config
+E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.exe
+E:\TSJ PRO\TDRv\TDRv\bin\Debug\TDRv.pdb
+E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.dll
+E:\TSJ PRO\TDRv\TDRv\bin\Debug\NLog.xml
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.AssemblyReference.cache
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevConnectSet.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevOptSet.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.DevParamSet.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.Form1.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.Properties.Resources.resources
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.GenerateResource.cache
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.CoreCompileInputs.cache
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.csproj.Up2Date
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.exe
+E:\TSJ PRO\TDRv\TDRv\obj\Debug\TDRv.pdb

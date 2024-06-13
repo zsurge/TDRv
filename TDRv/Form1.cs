@@ -27,7 +27,7 @@ namespace TDRv
             this.StartPosition = FormStartPosition.CenterScreen;//设置form1的开始位置为屏幕的中央
         }
 
-        public static bool isDebugMode = true;   //true 测试模式,false生产模式
+        public static bool isDebugMode = false;   //true 测试模式,false生产模式
 
         //设置参数设置窗体的表数据
         DataTable gdt;
@@ -1429,6 +1429,7 @@ namespace TDRv
                 {
                     //initChart();
                     gEmptyFlag = true;
+                    MessageBox.Show("未选到数据，请重新选择");
                     return;
                 }
                 else
@@ -1632,12 +1633,12 @@ namespace TDRv
                 if (ret)
                 {
                     SetLableText("PASS", "Green");
-                    _dgv.Rows[index].Cells[7].Value = "PASS";     
+                    _dgv.Rows[index].Cells[9].Value = "PASS";     
                 }
                 else
                 {
                     SetLableText("FAIL", "Red");
-                    _dgv.Rows[index].Cells[7].Value = "FAIL";             
+                    _dgv.Rows[index].Cells[9].Value = "FAIL";             
                 }
 
                 string strUnit = paramList[measIndex.currentIndex].ImpedanceLimit_Unit;
@@ -1653,39 +1654,42 @@ namespace TDRv
                 //目前量测
                 _dgv.Rows[index].Cells[0].Value = paramList[measIndex.currentIndex].Layer;  //layer
                 _dgv.Rows[index].Cells[1].Value = paramList[measIndex.currentIndex].Spec;     //标准值
-                _dgv.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Upper_limit + strUnit;  //最大上限比例 
-                _dgv.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Low_limit + strUnit;    //最小下限比例
+                _dgv.Rows[index].Cells[2].Value = paramList[measIndex.currentIndex].Valid_Begin + "%";  //起始位置
+                _dgv.Rows[index].Cells[3].Value = paramList[measIndex.currentIndex].Valid_End + "%";    //结束位置
+
+                _dgv.Rows[index].Cells[4].Value = paramList[measIndex.currentIndex].Upper_limit + strUnit;  //最大上限比例 
+                _dgv.Rows[index].Cells[5].Value = paramList[measIndex.currentIndex].Low_limit + strUnit;    //最小下限比例
 
                 if (gEmptyFlag)
                 {
-                    _dgv.Rows[index].Cells[4].Value = "9999"; //平均值
-                    _dgv.Rows[index].Cells[5].Value = "9999"; //最大值
-                    _dgv.Rows[index].Cells[6].Value = "9999"; //最小值
+                    _dgv.Rows[index].Cells[6].Value = "9999"; //平均值
+                    _dgv.Rows[index].Cells[7].Value = "9999"; //最大值
+                    _dgv.Rows[index].Cells[8].Value = "9999"; //最小值
                 }
                 else
                 {
-                    _dgv.Rows[index].Cells[4].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
-                    _dgv.Rows[index].Cells[5].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
-                    _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
+                    _dgv.Rows[index].Cells[6].Value = Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", ""); //平均值
+                    _dgv.Rows[index].Cells[7].Value = Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", ""); //最大值
+                    _dgv.Rows[index].Cells[8].Value = Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", ""); //最小值             
                 }
 
                 if (reTest.reTestFlag)
                 {
-                    _dgv.Rows[index].Cells[8].Value = reTest.serialNo; //流水号
+                    _dgv.Rows[index].Cells[10].Value = reTest.serialNo; //流水号
                 }
                 else
                 {
-                    _dgv.Rows[index].Cells[8].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
+                    _dgv.Rows[index].Cells[10].Value = optParam.snPrefix + (gSerialInc).ToString().PadLeft(6, '0'); //流水号
                 }
 
-                _dgv.Rows[index].Cells[9].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
-                _dgv.Rows[index].Cells[10].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
-                _dgv.Rows[index].Cells[11].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
-                _dgv.Rows[index].Cells[12].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
-                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
-                _dgv.Rows[index].Cells[14].Value = tsb_Pnl_ID.Text; //Panel ID
-                _dgv.Rows[index].Cells[15].Value = tsb_Set_id.Text; //setID     
-                _dgv.Rows[index].Cells[16].Value = measIndex.currentIndex; //setp  这一列不需要写入到日志中去 
+                _dgv.Rows[index].Cells[11].Value = DateTime.Now.ToString("yyyy-MM-dd");    //日期 
+                _dgv.Rows[index].Cells[12].Value = logFileName.Substring(8, logFileName.Length - 8);     //时间
+                _dgv.Rows[index].Cells[13].Value = paramList[measIndex.currentIndex].Mode;    //当前模式，单端or差分
+                _dgv.Rows[index].Cells[14].Value = paramList[measIndex.currentIndex].Curve_data; //记录存放地址
+                _dgv.Rows[index].Cells[15].Value = paramList[measIndex.currentIndex].Curve_image; //截图存放地址           
+                _dgv.Rows[index].Cells[16].Value = tsb_Pnl_ID.Text; //Panel ID
+                _dgv.Rows[index].Cells[17].Value = tsb_Set_id.Text; //setID     
+                _dgv.Rows[index].Cells[18].Value = measIndex.currentIndex; //setp  这一列不需要写入到日志中去 
 
                 if (flag == CURRENT_RECORD) //当前量测
                 {
@@ -1705,7 +1709,7 @@ namespace TDRv
                     //减1是因为多了一列step，未显示，也不需要写入日志 modify 2024.03.23
                     for (int j = 0; j < _dgv.Rows[index].Cells.Count-1; j++)
                     {
-                        if (j == 10)
+                        if (j == 12)
                         {
                             historyRecord.Add(" " + _dgv.Rows[index].Cells[j].Value.ToString());
                         }
@@ -1734,7 +1738,7 @@ namespace TDRv
             {
                 //不存在 
                 StreamWriter fileWriter = new StreamWriter(filePath, true, Encoding.Default);
-                string str = "Layer," + "SPEC," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
+                string str = "Layer," + "SPEC," + "Start," + "End," + "Up," + "Down," + "Average," + "Max," + "Min," + "Result," + "Serial," + "Data," + "Time," + "SE/DIFF," + "CurveData," + "CurveImage," + "PanelID," + "SETID";
                 fileWriter.WriteLine(str);
 
                 string strline = string.Empty;
@@ -1860,17 +1864,17 @@ namespace TDRv
                 //设置复测的记录索引 
                 reTest.recordIndex = rowIndex;
                 //设置复测的layer索引
-                reTest.layerIndex = int.Parse(dgv_CurrentResult.Rows[rowIndex].Cells[16].Value.ToString());
+                reTest.layerIndex = int.Parse(dgv_CurrentResult.Rows[rowIndex].Cells[18].Value.ToString());
                 //设置复测的流水号
-                reTest.serialNo = dgv_CurrentResult.Rows[rowIndex].Cells[8].Value.ToString();
+                reTest.serialNo = dgv_CurrentResult.Rows[rowIndex].Cells[10].Value.ToString();
 
                 //设置要删除的图片文件名
-                tempDate = dgv_CurrentResult.Rows[rowIndex].Cells[9].Value.ToString().Replace("-","");
-                tempTime = dgv_CurrentResult.Rows[rowIndex].Cells[10].Value.ToString().Replace(":", "").Replace(".","");
+                tempDate = dgv_CurrentResult.Rows[rowIndex].Cells[11].Value.ToString().Replace("-","");
+                tempTime = dgv_CurrentResult.Rows[rowIndex].Cells[12].Value.ToString().Replace(":", "").Replace(".","");
                 reTest.fileName = tempDate+ tempTime+".png";
 
                 //设置要删除图片的文件目录
-                reTest.directoryPath = dgv_CurrentResult.Rows[rowIndex].Cells[13].Value.ToString() + "\\Image";
+                reTest.directoryPath = dgv_CurrentResult.Rows[rowIndex].Cells[15].Value.ToString() + "\\Image";
 
                 //设置layer索引为选中状态
                 dataGridView1.Rows[reTest.layerIndex].Selected = true;
