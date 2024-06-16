@@ -103,6 +103,17 @@ namespace TDRv
                 optParam.exportMode = 2;
                 radio_sn_auto.Checked = true;
             }
+
+            if (string.Compare(INI.GetValueFromIniFile("TDR", "RealCheck"), "True") == 0)
+            {
+                radio_realcheck.Checked = true;
+                optParam.realCheck = 1;
+            }
+            else
+            {
+                radio_normal.Checked = true;
+                optParam.testMode = 2;
+            }
         }
 
         public void OnSnChanged()
@@ -192,6 +203,17 @@ namespace TDRv
                 INI.WriteValueToIniFile("TDR", "HistoryFile", tx_history_report.Text);
 
                 INI.WriteValueToIniFile("TDR", "ExportFile", tx_export_report.Text);
+            }
+
+            if (radio_realcheck.Checked)
+            {
+                INI.WriteValueToIniFile("TDR", "RealCheck", "True");
+                optParam.realCheck = 1;
+            }
+            else if (radio_normal.Checked)
+            {
+                INI.WriteValueToIniFile("TDR", "RealCheck", "False");
+                optParam.realCheck = 2;
             }
 
             OnSnChanged();

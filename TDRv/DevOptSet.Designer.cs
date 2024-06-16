@@ -54,10 +54,14 @@
             this.radio_sn_manual = new System.Windows.Forms.RadioButton();
             this.btn_opt_ok = new System.Windows.Forms.Button();
             this.btn_opt_cancel = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radio_realcheck = new System.Windows.Forms.RadioButton();
+            this.radio_normal = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -66,7 +70,7 @@
             this.groupBox1.Controls.Add(this.radio_key_close);
             this.groupBox1.Location = new System.Drawing.Point(12, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(129, 69);
+            this.groupBox1.Size = new System.Drawing.Size(129, 56);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "键盘触发";
@@ -74,7 +78,7 @@
             // radio_key_space
             // 
             this.radio_key_space.AutoSize = true;
-            this.radio_key_space.Location = new System.Drawing.Point(16, 42);
+            this.radio_key_space.Location = new System.Drawing.Point(15, 36);
             this.radio_key_space.Name = "radio_key_space";
             this.radio_key_space.Size = new System.Drawing.Size(59, 16);
             this.radio_key_space.TabIndex = 1;
@@ -85,7 +89,7 @@
             // 
             this.radio_key_close.AutoSize = true;
             this.radio_key_close.Checked = true;
-            this.radio_key_close.Location = new System.Drawing.Point(16, 20);
+            this.radio_key_close.Location = new System.Drawing.Point(15, 17);
             this.radio_key_close.Name = "radio_key_close";
             this.radio_key_close.Size = new System.Drawing.Size(47, 16);
             this.radio_key_close.TabIndex = 0;
@@ -99,7 +103,7 @@
             this.groupBox2.Controls.Add(this.radio_pro_next);
             this.groupBox2.Controls.Add(this.radio_pro_manual);
             this.groupBox2.Controls.Add(this.radio_pro_pass);
-            this.groupBox2.Location = new System.Drawing.Point(12, 109);
+            this.groupBox2.Location = new System.Drawing.Point(12, 67);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(129, 109);
             this.groupBox2.TabIndex = 1;
@@ -109,7 +113,7 @@
             // radio_pro_only_pass
             // 
             this.radio_pro_only_pass.AutoSize = true;
-            this.radio_pro_only_pass.Location = new System.Drawing.Point(6, 86);
+            this.radio_pro_only_pass.Location = new System.Drawing.Point(15, 86);
             this.radio_pro_only_pass.Name = "radio_pro_only_pass";
             this.radio_pro_only_pass.Size = new System.Drawing.Size(83, 16);
             this.radio_pro_only_pass.TabIndex = 3;
@@ -120,7 +124,7 @@
             // 
             this.radio_pro_next.AutoSize = true;
             this.radio_pro_next.Checked = true;
-            this.radio_pro_next.Location = new System.Drawing.Point(6, 64);
+            this.radio_pro_next.Location = new System.Drawing.Point(15, 64);
             this.radio_pro_next.Name = "radio_pro_next";
             this.radio_pro_next.Size = new System.Drawing.Size(83, 16);
             this.radio_pro_next.TabIndex = 2;
@@ -131,7 +135,7 @@
             // radio_pro_manual
             // 
             this.radio_pro_manual.AutoSize = true;
-            this.radio_pro_manual.Location = new System.Drawing.Point(6, 42);
+            this.radio_pro_manual.Location = new System.Drawing.Point(15, 42);
             this.radio_pro_manual.Name = "radio_pro_manual";
             this.radio_pro_manual.Size = new System.Drawing.Size(47, 16);
             this.radio_pro_manual.TabIndex = 1;
@@ -141,7 +145,7 @@
             // radio_pro_pass
             // 
             this.radio_pro_pass.AutoSize = true;
-            this.radio_pro_pass.Location = new System.Drawing.Point(6, 20);
+            this.radio_pro_pass.Location = new System.Drawing.Point(15, 20);
             this.radio_pro_pass.Name = "radio_pro_pass";
             this.radio_pro_pass.Size = new System.Drawing.Size(47, 16);
             this.radio_pro_pass.TabIndex = 0;
@@ -326,11 +330,45 @@
             this.btn_opt_cancel.UseVisualStyleBackColor = true;
             this.btn_opt_cancel.Click += new System.EventHandler(this.btn_opt_cancel_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radio_realcheck);
+            this.groupBox3.Controls.Add(this.radio_normal);
+            this.groupBox3.Location = new System.Drawing.Point(12, 183);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(129, 55);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "量测方式";
+            // 
+            // radio_realcheck
+            // 
+            this.radio_realcheck.AutoSize = true;
+            this.radio_realcheck.Location = new System.Drawing.Point(15, 34);
+            this.radio_realcheck.Name = "radio_realcheck";
+            this.radio_realcheck.Size = new System.Drawing.Size(71, 16);
+            this.radio_realcheck.TabIndex = 1;
+            this.radio_realcheck.Text = "即时确认";
+            this.radio_realcheck.UseVisualStyleBackColor = true;
+            // 
+            // radio_normal
+            // 
+            this.radio_normal.AutoSize = true;
+            this.radio_normal.Checked = true;
+            this.radio_normal.Location = new System.Drawing.Point(15, 16);
+            this.radio_normal.Name = "radio_normal";
+            this.radio_normal.Size = new System.Drawing.Size(71, 16);
+            this.radio_normal.TabIndex = 0;
+            this.radio_normal.TabStop = true;
+            this.radio_normal.Text = "常规测试";
+            this.radio_normal.UseVisualStyleBackColor = true;
+            // 
             // DevOptSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 257);
+            this.ClientSize = new System.Drawing.Size(534, 256);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btn_opt_cancel);
             this.Controls.Add(this.btn_opt_ok);
             this.Controls.Add(this.groupBox5);
@@ -351,6 +389,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -383,5 +423,8 @@
         private System.Windows.Forms.RadioButton radio_save_date;
         private System.Windows.Forms.Button btn_opt_ok;
         private System.Windows.Forms.Button btn_opt_cancel;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radio_realcheck;
+        private System.Windows.Forms.RadioButton radio_normal;
     }
 }

@@ -30,6 +30,10 @@ namespace TDRv
         //报告的存储方式 1按日期；2.按量测参数
         public static int exportMode { get; set; } = 1;
 
+        //测试方式，1：即时确认 2:常规测试；
+        public static int realCheck { get; set; } = 2;
+
+
         //补偿值
         public static string offsetValue { get; set; } = "";
 

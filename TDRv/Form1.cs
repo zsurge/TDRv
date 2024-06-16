@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -65,6 +66,14 @@ namespace TDRv
         public static bool isExecuteIndex = true;
 
 
+        public bool is_real_check = false;
+
+        //实时数据读取及处理
+        private CancellationTokenSource cts;
+        private Task measTask;
+        private object loop_work_lock = new object(); // 加锁对象
+
+
         //配方列表
         List<TestResult> paramList = new List<TestResult>();
 
@@ -73,6 +82,9 @@ namespace TDRv
 
         //复测标志 add 2024.03.23
         ReTest reTest = new ReTest();
+		
+		//记录上一笔测试数据
+        LastTestData lastData = new LastTestData();
 
         //测试数据目录，该目录下有子目录
         public string fileDir = Environment.CurrentDirectory + "\\MeasureData";
@@ -665,8 +677,12 @@ namespace TDRv
                     }
                 }
 
-                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
-                SaveDataToCSVFile(result, logFileName);                
+                //即时确认不保存，数据量太大
+                if (optParam.realCheck == 2)
+                {
+                    logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
+                    SaveDataToCSVFile(result, logFileName);
+                }
             }
             catch (Exception ex)
             {
@@ -834,7 +850,7 @@ namespace TDRv
             if (isExecuteComplete)
             {
                 isExecuteComplete = false;
-                
+
                 //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
                 //{
                 //    optStatus.isConnect = false;
@@ -844,7 +860,15 @@ namespace TDRv
                 //    return;
                 //}
 
-                toDoWork();
+                if (optParam.realCheck == 2)
+                {
+                    toDoWork();
+                }
+                else
+                {
+                    loopWork();
+                }
+                    
             }
         }
 
@@ -979,6 +1003,120 @@ namespace TDRv
                 });
             }            
          
+        }
+
+        public void loopWork()
+        {
+            lock (loop_work_lock)
+            {
+                if (measTask == null || measTask.IsCompleted)
+                {
+                    bool ret = false;
+
+                    string result = string.Empty;
+                    int index = 0;
+
+                    int channel = paramList[measIndex.currentIndex].DevMode;
+
+                    if (channel == SINGLE)
+                    {
+                        index = MeasPosition.tdd22IndexValue;
+                    }
+                    else
+                    {
+                        index = MeasPosition.tdd11IndexValue;
+                    }
+
+                    SetLableText("", "Control");
+
+
+                    //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
+                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                    {
+                        E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType);
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                    {
+                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                    }
+                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                    {
+                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                    }
+
+
+                    cts = new CancellationTokenSource();
+                    measTask = Task.Factory.StartNew(() =>
+                    {
+                        while (!cts.Token.IsCancellationRequested)
+                        {
+
+                            if (optStatus.isConnect && optStatus.isGetIndex)
+                            {
+
+
+                                //这里循环读取数据并刷新到屏幕上去
+                                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                                {
+                                    E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                }
+                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                                {
+                                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                                }
+                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                                {
+                                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                }
+
+                                //量测并生成图表                    
+                                List<float> disResult = packetMaesData(result, index, channel);
+
+                                DisplayChartValue(chart1, disResult);
+
+
+                                isExecuteComplete = true;
+
+                            }
+                            else
+                            {
+                                CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
+                            }
+
+                        }
+                    }, cts.Token);
+
+                    // btnStart.Enabled = false;
+                }
+                //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
+            }
+        }
+
+        public void upgrade_data_ui()
+        {
+            //更新测试数据到主界面测试结果中
+            CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
+            CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+
+            if (optParam.testMode == 3)
+            {
+                //量测配方参数依次向后移
+                measIndex.incIndex();
+            }
+            else if (optParam.testMode == 1 || optParam.testMode == 4)
+            {
+                if (gTestResultValue == 1)
+                {
+                    //量测配方参数依次向后移
+                    measIndex.incIndex();
+                }
+            }
+            else if (optParam.testMode == 2)
+            {
+                measIndex.currentIndex = dataGridView1.CurrentCell.RowIndex; //是当前活动的单元格的行的索引
+            }
+
+            reFreshDatagridview(dataGridView1);
         }
 
         //获取复测记录的索引值
@@ -1222,7 +1360,20 @@ namespace TDRv
                         //    optStatus.isLoadXml = false;
                         //    return;
                         //}
-                        toDoWork();
+                        if (optParam.realCheck == 2)
+                        {
+                            toDoWork();
+                        }
+                        else
+                        {
+                            if (measTask != null && !measTask.IsCompleted)
+                            {
+                                cts.Cancel();
+                                measTask = null;
+                                upgrade_data_ui();
+                                loopWork();
+                            }
+                        }
                     }
                 }
             }
@@ -1345,6 +1496,13 @@ namespace TDRv
                     chart1.Series[0].LegendText = "平均值:" + tmpResult.Average().ToString("F2");
                     chart1.Series[1].LegendText = "最大值:" + tmpResult.Max().ToString("F2");
                     chart1.Series[2].LegendText = "最小值:" + tmpResult.Min().ToString("F2");
+
+                    if (optParam.realCheck == 1)
+                    {
+                        lastData.avg = tmpResult.Average().ToString("F2");
+                        lastData.max = tmpResult.Max().ToString("F2");
+                        lastData.min = tmpResult.Min().ToString("F2");
+                    }
                 }
                 else
                 {
@@ -1491,7 +1649,6 @@ namespace TDRv
                     chart1.ChartAreas[0].AxisX.Maximum = (float)originalDataPoints.Count; //设置X坐标最大值
                     chart1.ChartAreas[0].AxisX.Minimum = 0;//设置X坐标最小值
 
-
                     ////设置网格间距
                     //chart1.ChartAreas[0].AxisX.Interval = (float)newSeries.Count / 10;//X轴间距
                     //chart1.ChartAreas[0].AxisX.Maximum = (float)newSeries.Count; //设置X坐标最大值
@@ -1551,9 +1708,18 @@ namespace TDRv
                 }
                 else
                 {
-                    avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
-                    max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
-                    min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值              
+                    if (optParam.realCheck == 2)
+                    {
+                        avg = Convert.ToSingle(Regex.Replace(chart1.Series[0].LegendText, @"[^\d.\d]", "")); //设备平均值
+                        max = Convert.ToSingle(Regex.Replace(chart1.Series[1].LegendText, @"[^\d.\d]", "")); //设备最大值
+                        min = Convert.ToSingle(Regex.Replace(chart1.Series[2].LegendText, @"[^\d.\d]", "")); //设备最小值
+                    }
+                    else
+                    {
+                        avg = Convert.ToSingle(lastData.avg); //设备平均值
+                        max = Convert.ToSingle(lastData.max); //设备最大值
+                        min = Convert.ToSingle(lastData.min); //设备最小值
+                    }
                 }
 
 
@@ -2072,6 +2238,13 @@ namespace TDRv
             fileName = "";
             reTestFlag = false;
         }
+    }
+
+    public class LastTestData
+    {
+        public string avg { get; set; }
+        public string max { get; set; }
+        public string min { get; set; }
     }
 
     public class MeasIndex
