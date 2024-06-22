@@ -348,7 +348,7 @@
             this.radio_realcheck.Name = "radio_realcheck";
             this.radio_realcheck.Size = new System.Drawing.Size(71, 16);
             this.radio_realcheck.TabIndex = 1;
-            this.radio_realcheck.Text = "即时确认";
+            this.radio_realcheck.Text = "实时测试";
             this.radio_realcheck.UseVisualStyleBackColor = true;
             // 
             // radio_normal
