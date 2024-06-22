@@ -71,7 +71,7 @@ namespace TDRv
                 }
                 else
                 {
-                    MessageBox.Show("未正确装载配方文件");
+                    MessageBox.Show("未正确装载配方文件", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch(Exception ex)
@@ -175,7 +175,7 @@ namespace TDRv
         {
             if (dgv_param.Rows.Count == 0)
             {
-                MessageBox.Show("请新建配方");
+                MessageBox.Show("请新建配方", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -326,7 +326,7 @@ namespace TDRv
 
             if (dgv_param.Rows.Count == 0)
             {
-                MessageBox.Show("请先新建一条配方");
+                MessageBox.Show("请先新建一条配方", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 

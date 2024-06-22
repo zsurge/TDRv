@@ -37,8 +37,8 @@ namespace TDRv
         private bool isSelecting = false; // 标识是否正在进行选择操作
         private Point selectionStartPoint; // 记录选择操作的起点
         private Rectangle selectionRectangle = new Rectangle(); // 选择矩形
-        private List<DataPoint> originalDataPoints; // 存储原始数据点
-
+        private List<DataPoint> originalDataPoints = new List<DataPoint>(); // 存储原始数据点
+       
         //获取当前
         public string xmlFilePath = string.Empty;
 
@@ -64,9 +64,6 @@ namespace TDRv
 
         public static bool isExecuteComplete = true;
         public static bool isExecuteIndex = true;
-
-
-        public bool is_real_check = false;
 
         //实时数据读取及处理
         private CancellationTokenSource cts;
@@ -487,13 +484,13 @@ namespace TDRv
 
                 if (dataGridView1.Rows.Count == 0)
                 {
-                    MessageBox.Show("请先装载配方");
+                    MessageBox.Show("请先装载配方", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 if (!optStatus.isConnect)
                 {
-                    MessageBox.Show("请先连接设备");
+                    MessageBox.Show("请先连接设备", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -541,7 +538,7 @@ namespace TDRv
 
                 if (tdd11_array.Length < 200)
                 {
-                    MessageBox.Show("获取差分开路定义失败");
+                    MessageBox.Show("获取差分开路定义失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 //查找tdd11差分的索引值
@@ -677,10 +674,10 @@ namespace TDRv
                     }
                 }
 
+                logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
                 //即时确认不保存，数据量太大
                 if (optParam.realCheck == 2)
                 {
-                    logFileName = DateTime.Now.ToString("yyyyMMddHH:mm:ss.ff");
                     SaveDataToCSVFile(result, logFileName);
                 }
             }
@@ -1007,89 +1004,94 @@ namespace TDRv
 
         public void loopWork()
         {
-            lock (loop_work_lock)
+            int g_current_mode = 0;
+            int g_current_index = 0;
+
+            if (measTask == null || measTask.IsCompleted)
             {
-                if (measTask == null || measTask.IsCompleted)
+                bool ret = false;
+
+                string result = string.Empty;
+
+
+                g_current_mode = paramList[measIndex.currentIndex].DevMode;
+                //LoggerHelper.mlog.Info($"{g_current_mode}"+"   "+ $"{measIndex.currentIndex}");
+
+                if (g_current_mode == SINGLE)
                 {
-                    bool ret = false;
+                    g_current_index = MeasPosition.tdd22IndexValue;
+                }
+                else
+                {
+                    g_current_index = MeasPosition.tdd11IndexValue;
+                }
 
-                    string result = string.Empty;
-                    int index = 0;
+                //SetLableText("", "Control");
 
-                    int channel = paramList[measIndex.currentIndex].DevMode;
 
-                    if (channel == SINGLE)
+                //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
+                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                {
+                    E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                {
+                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
+                }
+                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                {
+                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+                }
+
+
+                cts = new CancellationTokenSource();
+                measTask = Task.Factory.StartNew(() =>
+                {
+                    while (!cts.Token.IsCancellationRequested)
                     {
-                        index = MeasPosition.tdd22IndexValue;
-                    }
-                    else
-                    {
-                        index = MeasPosition.tdd11IndexValue;
-                    }
 
-                    SetLableText("", "Control");
-
-
-                    //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
-                    if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-                    {
-                        E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                    {
-                        E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
-                    }
-                    else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                    {
-                        E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
-                    }
-
-
-                    cts = new CancellationTokenSource();
-                    measTask = Task.Factory.StartNew(() =>
-                    {
-                        while (!cts.Token.IsCancellationRequested)
+                        if (optStatus.isConnect && optStatus.isGetIndex)
                         {
 
-                            if (optStatus.isConnect && optStatus.isGetIndex)
+                            lock (loop_work_lock)
                             {
-
-
                                 //这里循环读取数据并刷新到屏幕上去
                                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
                                 {
-                                    E5080B.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                    E5080B.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
                                 }
                                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
                                 {
-                                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, channel, out result);
+                                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
                                 }
                                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
                                 {
-                                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, channel, gDevType, out result);
+                                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
                                 }
 
+                                //LoggerHelper.mlog.Debug($"Mode = {g_current_mode}" + "   index=" + $"{g_current_index}");
+
                                 //量测并生成图表                    
-                                List<float> disResult = packetMaesData(result, index, channel);
+                                List<float> disResult = packetMaesData(result, g_current_index, g_current_mode);
 
                                 DisplayChartValue(chart1, disResult);
 
 
                                 isExecuteComplete = true;
-
                             }
-                            else
-                            {
-                                CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
-                            }
-
                         }
-                    }, cts.Token);
+                        else
+                        {
+                            CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
+                        }
 
-                    // btnStart.Enabled = false;
-                }
-                //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
+                    }
+                }, cts.Token);
+
+                // btnStart.Enabled = false;
             }
+            //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
+
         }
 
         public void upgrade_data_ui()
@@ -1371,6 +1373,7 @@ namespace TDRv
                                 cts.Cancel();
                                 measTask = null;
                                 upgrade_data_ui();
+                                Thread.Sleep(200);
                                 loopWork();
                             }
                         }
@@ -1526,7 +1529,7 @@ namespace TDRv
                 DataPoint extraPoint = new DataPoint(result.Count, result[result.Count - 1]);
                 chart1.Series[0].Points.Add(extraPoint);
 
-                originalDataPoints = new List<DataPoint>();  // 初始化原始数据点列表
+                originalDataPoints.Clear();
                 foreach (var point in chart1.Series[0].Points)  // 将数据系列中的数据点复制到原始数据点列表
                 {
                     originalDataPoints.Add(point);
@@ -1583,11 +1586,11 @@ namespace TDRv
                 double newBegin = newSeries[xbegin].XValue / originalDataPoints.Count * 100;
                 double newEnd = newSeries[xend].XValue / originalDataPoints.Count * 100;
 
-                if (xend - xbegin < 2)
+                if (xend - xbegin < 2 )
                 {
                     //initChart();
                     gEmptyFlag = true;
-                    MessageBox.Show("未选到数据，请重新选择");
+                    MessageBox.Show("未选到数据，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 else
@@ -2095,6 +2098,16 @@ namespace TDRv
         private void SelectDataPoints()
         {
             var selectedPoints = new List<DataPoint>();
+
+            if (originalDataPoints.Count == 0 )
+            {
+                return;
+            }
+            else if (optParam.realCheck == 1)
+            {
+                MessageBox.Show("请关闭实时测试模式后再尝试该操作!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             // 遍历原始数据点，检查哪些点在选择矩形内
             foreach (var point in originalDataPoints)
             {
