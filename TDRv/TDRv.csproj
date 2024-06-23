@@ -134,6 +134,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -154,6 +155,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="32.ico" />
+    <None Include="Resources\Start.ico" />
+    <None Include="Resources\Start.bmp" />
+    <None Include="Icon\测试.png" />
+    <None Include="Icon\暂停.png" />
     <Content Include="度量.ico" />
   </ItemGroup>
   <ItemGroup>

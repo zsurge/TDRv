@@ -66,9 +66,11 @@ namespace TDRv
         public static bool isExecuteIndex = true;
 
         //实时数据读取及处理
-        private CancellationTokenSource cts;
-        private Task measTask;
-        private object loop_work_lock = new object(); // 加锁对象
+        private CancellationTokenSource cts; // 取消令牌源，用于发出取消信号
+        private Task measTask;               // 异步任务对象
+        private object loop_work_lock = new object(); // 加锁对象,用于同步
+
+        private bool isStarted = false;     //是否已经点击量测按键
 
 
         //配方列表
@@ -123,14 +125,7 @@ namespace TDRv
 
         private void tsb_DevParamSet_Click(object sender, EventArgs e)
         {
-            //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-            //{
-            //    optStatus.isConnect = false;
-            //    optStatus.isGetIndex = false;
-            //    optStatus.isLoadXml = false;
-            //    tsb_DevPOptSet.Enabled = false;
-            //    return;
-            //}
+            CloseRealTest();
 
             DevParamSet devParamSet = new DevParamSet(gdt);
             devParamSet.ChangeDgv += new DevParamSet.ChangeDgvHandler(Change_DataGridView);
@@ -454,6 +449,23 @@ namespace TDRv
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = Color.White;
         }
 
+
+        //防止用户在实时测试过程中，未结束实时测试，就重新开路定义或者配方设置
+        public void CloseRealTest()
+        {
+            
+            if (optParam.realCheck == 1 && isStarted)
+            {
+                tsb_StartTest.Text = "量测";
+                tsb_StartTest.Image = Properties.Resources.测试; // 假设start.png已经添加到项目资源
+                isStarted = false;
+
+                cts.Cancel();
+                measTask = null;
+
+            }
+        }
+
         private void tsb_GetTestIndex_Click(object sender, EventArgs e)
         {
             if (isDebugMode)
@@ -467,15 +479,7 @@ namespace TDRv
             if (isExecuteIndex)
             {
                 isExecuteIndex = false;
-
-                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                //{
-                //    optStatus.isConnect = false;
-                //    optStatus.isGetIndex = false;
-                //    optStatus.isLoadXml = false;
-                //    tsb_GetTestIndex.Enabled = false;
-                //    return;
-                //}
+                CloseRealTest();
 
                 List<float> tmpDiffMeasData = new List<float>();
                 List<float> tmpSingleMeasData = new List<float>();
@@ -836,7 +840,8 @@ namespace TDRv
             }
         }
 
-        private void tsb_StartTest_Click(object sender, EventArgs e)
+        // 提取公共方法
+        private void StartOrPauseTest()
         {
             if (tsb_Pnl_ID.Text.Length == 0)
             {
@@ -848,14 +853,6 @@ namespace TDRv
             {
                 isExecuteComplete = false;
 
-                //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                //{
-                //    optStatus.isConnect = false;
-                //    optStatus.isGetIndex = false;
-                //    optStatus.isLoadXml = false;
-                //    tsb_StartTest.Enabled = false;
-                //    return;
-                //}
 
                 if (optParam.realCheck == 2)
                 {
@@ -863,10 +860,35 @@ namespace TDRv
                 }
                 else
                 {
-                    loopWork();
+                    if (isStarted)
+                    {
+                        // 切换到“开始”状态
+                        tsb_StartTest.Text = "量测";
+                        tsb_StartTest.Image = Properties.Resources.测试; // 假设start.png已经添加到项目资源
+                        isStarted = false;
+
+                        cts.Cancel();
+                        measTask = null;
+
+                        initChart();
+                    }
+                    else
+                    {
+                        // 切换到“暂停”状态
+                        tsb_StartTest.Text = "暂停";
+                        tsb_StartTest.Image = Properties.Resources.暂停; // 假设pause.png已经添加到项目资源
+                        isStarted = true;
+
+                        loopWork();
+                    }
                 }
-                    
             }
+        }
+
+
+        private void tsb_StartTest_Click(object sender, EventArgs e)
+        {
+            StartOrPauseTest();
         }
 
         public void toDoWork()
@@ -1002,20 +1024,125 @@ namespace TDRv
          
         }
 
+        int g_current_mode = 0;
+        int g_current_index = 0;
+
+        /*
+         public void loopWork()
+         {
+             if (measTask == null || measTask.IsCompleted)
+             {
+                 bool ret = false;
+
+                 string result = string.Empty;
+
+                 int index = 0;
+
+                 //复测时，使用复测的layer索引
+                 if (reTest.reTestFlag)
+                 {
+                     measIndex.currentIndex = reTest.layerIndex;
+                 }
+
+
+                 g_current_mode = paramList[measIndex.currentIndex].DevMode;
+                 //LoggerHelper.mlog.Info($"{g_current_mode}"+"   "+ $"{measIndex.currentIndex}");
+
+                 if (g_current_mode == SINGLE)
+                 {
+                     g_current_index = MeasPosition.tdd22IndexValue;
+                 }
+                 else
+                 {
+                     g_current_index = MeasPosition.tdd11IndexValue;
+                 }
+
+
+
+                 //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
+                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                 {
+                     E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType);
+                 }
+                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                 {
+                     E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
+                 }
+                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                 {
+                     E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+                 }
+
+                 // 初始化取消令牌源
+                 cts = new CancellationTokenSource();
+
+                 // 启动新任务
+                 measTask = Task.Factory.StartNew(() =>
+                 {
+                     while (!cts.Token.IsCancellationRequested)  // 检查是否请求取消任务
+                     {
+
+                         if (optStatus.isConnect && optStatus.isGetIndex)
+                         {
+                             // 加锁，确保以下代码块是线程安全的
+                             lock (loop_work_lock)
+                             {
+                                 //这里循环读取数据并刷新到屏幕上去
+                                 if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+                                 {
+                                     E5080B.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+                                 }
+                                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+                                 {
+                                     E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
+                                 }
+                                 else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+                                 {
+                                     E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+                                 }
+
+                                 //LoggerHelper.mlog.Debug($"Mode = {g_current_mode}" + "   index=" + $"{g_current_index}");
+
+                                 //量测并生成图表                    
+                                 List<float> disResult = packetMaesData(result, g_current_index, g_current_mode);
+
+                                 DisplayChartValue(chart1, disResult);
+
+
+                                 isExecuteComplete = true;
+                             }
+                         }
+                         else
+                         {
+                             CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
+                         }
+
+                     }
+                 }, cts.Token);
+
+                 // btnStart.Enabled = false;
+             }
+             //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
+
+         }
+
+         */
+
         public void loopWork()
         {
-            int g_current_mode = 0;
-            int g_current_index = 0;
-
             if (measTask == null || measTask.IsCompleted)
             {
                 bool ret = false;
-
                 string result = string.Empty;
+                int index = 0;
 
+                // 复测时，使用复测的layer索引
+                if (reTest.reTestFlag)
+                {
+                    measIndex.currentIndex = reTest.layerIndex;
+                }
 
                 g_current_mode = paramList[measIndex.currentIndex].DevMode;
-                //LoggerHelper.mlog.Info($"{g_current_mode}"+"   "+ $"{measIndex.currentIndex}");
 
                 if (g_current_mode == SINGLE)
                 {
@@ -1026,57 +1153,24 @@ namespace TDRv
                     g_current_index = MeasPosition.tdd11IndexValue;
                 }
 
-                //SetLableText("", "Control");
+                // 预处理部分指令
+                PreMeasure();
 
-
-                //这里部分指令可以预处理一下，循环只需要读取数据然后刷新到屏幕即可
-                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-                {
-                    E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType);
-                }
-                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                {
-                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
-                }
-                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                {
-                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
-                }
-
-
+                // 初始化取消令牌源
                 cts = new CancellationTokenSource();
-                measTask = Task.Factory.StartNew(() =>
+
+                // 启动新任务
+                measTask = Task.Run(async () =>
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
-
                         if (optStatus.isConnect && optStatus.isGetIndex)
                         {
-
                             lock (loop_work_lock)
                             {
-                                //这里循环读取数据并刷新到屏幕上去
-                                if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
-                                {
-                                    E5080B.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
-                                }
-                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
-                                {
-                                    E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
-                                }
-                                else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
-                                {
-                                    E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
-                                }
-
-                                //LoggerHelper.mlog.Debug($"Mode = {g_current_mode}" + "   index=" + $"{g_current_index}");
-
-                                //量测并生成图表                    
-                                List<float> disResult = packetMaesData(result, g_current_index, g_current_mode);
-
+                                Measure(out result);
+                                var disResult = packetMaesData(result, g_current_index, g_current_mode);
                                 DisplayChartValue(chart1, disResult);
-
-
                                 isExecuteComplete = true;
                             }
                         }
@@ -1085,13 +1179,45 @@ namespace TDRv
                             CommonFuncs.ShowMsg(eHintInfoType.waring, "设备未连接或者未开路");
                         }
 
+                        await Task.Delay(300); // 添加延迟以避免CPU占用过高
                     }
                 }, cts.Token);
 
                 // btnStart.Enabled = false;
             }
-            //LoggerHelper.mlog.Debug("------" + exec_cnt++.ToString());
+        }
 
+        private void PreMeasure()
+        {
+            if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+            {
+                E5080B.pre_measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType);
+            }
+            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+            {
+                E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out _);
+            }
+            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+            {
+                E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out _);
+            }
+        }
+
+        private void Measure(out string result)
+        {
+            result = string.Empty;
+            if (CGloabal.g_curInstrument.strInstruName.Equals("E5080B"))
+            {
+                E5080B.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+            }
+            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5063A"))
+            {
+                E5063A.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, out result);
+            }
+            else if (CGloabal.g_curInstrument.strInstruName.Equals("E5071C"))
+            {
+                E5071C.measuration(CGloabal.g_curInstrument.nHandle, g_current_mode, gDevType, out result);
+            }
         }
 
         public void upgrade_data_ui()
@@ -1099,6 +1225,16 @@ namespace TDRv
             //更新测试数据到主界面测试结果中
             CreateResultDatagridview(dgv_CurrentResult, paramList[measIndex.currentIndex].DevMode, CURRENT_RECORD);
             CreateResultDatagridview(dgv_HistoryResult, paramList[measIndex.currentIndex].DevMode, HISTORY_RECORD);
+
+
+            if (reTest.reTestFlag)
+            {
+                findAndDeleteFile(reTest.directoryPath, reTest.fileName);
+            }
+
+            //清除复测数据 add 2024.03.23
+            reTest.clsData();
+
 
             if (optParam.testMode == 3)
             {
@@ -1119,7 +1255,28 @@ namespace TDRv
             }
 
             reFreshDatagridview(dataGridView1);
+
+            // 异步执行截图操作
+            Task.Run(() => CaptureScreenChart(chart1, paramList[measIndex.currentIndex].Curve_image));  // 请替换为实际路径
+
+            //// 异步执行截图操作
+            //Task.Run(() => CaptureScreenChart(chart1, @"C:\path\to\save"))
+            //    .ContinueWith(t =>
+            //    {
+            //        if (t.IsFaulted)
+            //        {
+            //    // 处理异常
+            //    MessageBox.Show($"截图失败: {t.Exception?.GetBaseException().Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        }
+            //    }, TaskScheduler.FromCurrentSynchronizationContext());
         }
+
+     
+
+
+
+
+
 
         //获取复测记录的索引值
         //设置layer层别
@@ -1355,25 +1512,25 @@ namespace TDRv
 
                     if (optParam.keyMode == 1)
                     {
-                        //if (20210817 - Convert.ToInt32(DateTime.Now.ToString("yyyyMMdd")) <= 0)
-                        //{
-                        //    optStatus.isConnect = false;
-                        //    optStatus.isGetIndex = false;
-                        //    optStatus.isLoadXml = false;
-                        //    return;
-                        //}
                         if (optParam.realCheck == 2)
                         {
                             toDoWork();
                         }
                         else
                         {
+                            if (optParam.realCheck== 1 && isStarted == false)
+                            {
+                                isExecuteComplete = true;
+                                StartOrPauseTest(); 
+                            }
+
                             if (measTask != null && !measTask.IsCompleted)
                             {
                                 cts.Cancel();
                                 measTask = null;
                                 upgrade_data_ui();
-                                Thread.Sleep(200);
+                                //Thread.Sleep(200);
+                                Task.Delay(300).Wait(); // 等待200毫秒
                                 loopWork();
                             }
                         }
@@ -1947,7 +2104,19 @@ namespace TDRv
             }
             else
             {
-                _dgv.CurrentCell = _dgv.Rows[measIndex.currentIndex].Cells[0];
+               // _dgv.CurrentCell = _dgv.Rows[measIndex.currentIndex].Cells[0];
+
+                if (_dgv.Rows.Count > 0)
+                {
+                    // 保存当前单元格
+                    var currentCell = _dgv.CurrentCell;
+
+                    // 临时设置当前单元格为另一个单元格
+                    _dgv.CurrentCell = _dgv.Rows[0].Cells[0];
+
+                    // 恢复当前单元格为目标单元格
+                    _dgv.CurrentCell = _dgv.Rows[measIndex.currentIndex].Cells[0];
+                }
             }
         }
 
@@ -2017,6 +2186,18 @@ namespace TDRv
             }
         }
 
+        public void realReTestRequest()
+        {
+            if ((optParam.realCheck == 1) && reTest.reTestFlag)
+            {
+                cts.Cancel();
+                measTask = null;
+                //Thread.Sleep(200);
+                Task.Delay(200).Wait(); // 等待200毫秒
+                loopWork();
+            }
+        }
+
         private void dgv_CurrentResult_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // 获取双击的单元格所在的行号
@@ -2028,6 +2209,13 @@ namespace TDRv
             // 检查行号是否有效（大于等于0，防止双击列标题等情况）
             if (rowIndex >= 0)
             {
+                if (optParam.realCheck == 1)
+                {
+                    cts.Cancel();
+             
+                    isExecuteComplete = true;
+                }
+
                 //设置状态为复测
                 reTest.reTestFlag = true;
                 //设置复测的记录索引 
@@ -2047,6 +2235,11 @@ namespace TDRv
 
                 //设置layer索引为选中状态
                 dataGridView1.Rows[reTest.layerIndex].Selected = true;
+
+
+                //实时测试模式下的复测请求
+                realReTestRequest();
+
 
                 //调试信息
                 //MessageBox.Show($"双击单元格所在行号为：{rowIndex + 1}\n layer行号为：{reTest.layerIndex + 1}\n 流水号为：{reTest.serialNo}\n 图片路径：{reTest.directoryPath}\n 图片名称：{reTest.fileName}");
